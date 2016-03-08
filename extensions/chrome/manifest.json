@@ -1,0 +1,23 @@
+{
+    // Required
+    "manifest_version": 2,
+    "name": "Find that Dress!",
+    "version": "0.8",
+
+    // Recommended
+    "description": "Click on the orange shopping button to see fashion items inspired by the image :)",
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "run_at": "document_start",
+            "js": ["run_ext.js"]
+        }
+    ],
+
+    "permissions": [
+        "https://extremeli.trendi.guru/*"
+    ],
+
+    "web_accessible_resources": []
+}

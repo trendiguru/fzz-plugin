@@ -5,7 +5,7 @@ import {getImageData} from 'modules/server';
 
 // Analytics
 
-import {analytics} from 'modules/analytics_wrapper';
+//import {analytics} from 'modules/analytics_wrapper';
 
 // React
 
@@ -19,12 +19,14 @@ let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), 
 
 window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
-    if (app.state.imageURL !== msg.data.imageUrl) {
-        getImageData(msg.data.imageUrl).then(data => {
+    if (app.props.imageURL !== msg.data.imageURL) {
+        getImageData(msg.data.imageURL).then(data => {
+            console.log(data);
             app = ReactDOM.render(
                 React.createElement(App, {onMount: attachAnalytics, imageURL: msg.data.imageURL, items: data.items}),
                 document.querySelector('div')
             );
+            console.log(app.props);
         });
     }
 });
@@ -33,19 +35,19 @@ window.addEventListener('message', msg => {
 
 function attachAnalytics () {
 
-    analytics.initializeInApp();
-
-    let main = document.querySelector('div');
-    let nav = document.querySelector('nav');
-
-    main.addEventListener('scroll', () => {analytics.track('Scrolled in App');});
-
-    [].forEach.call(nav.querySelectorAll('li'), tab => {
-        tab.addEventListener('click', () => {analytics.track('Scrolled in App');});
-    });
-
-    [].forEach.call(main.querySelectorAll('article'), article => {
-        article.addEventListener('click', () => {analytics.track('Scrolled in App');});
-    });
+//    analytics.initializeInApp();
+//
+//    let main = document.querySelector('div');
+//    let nav = document.querySelector('nav');
+//
+//    main.addEventListener('scroll', () => {analytics.track('Scrolled in App');});
+//
+//    [].forEach.call(nav.querySelectorAll('li'), tab => {
+//        tab.addEventListener('click', () => {analytics.track('Scrolled in App');});
+//    });
+//
+//    [].forEach.call(main.querySelectorAll('article'), article => {
+//        article.addEventListener('click', () => {analytics.track('Scrolled in App');});
+//    });
 
 }

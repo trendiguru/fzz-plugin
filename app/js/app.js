@@ -2,7 +2,7 @@
 
 import Assemblage from './assemblage';
 
-var body = document.body;
+let body = document.body;
 
 class App extends React.Component {
     constructor(props) {

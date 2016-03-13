@@ -28,7 +28,6 @@ let irrelevantElements = FZZ.irrelevantElements = {};
 //analytics.initializeInPublisher(iframeLoaded);
 //analytics.track('Page Hit', undefined, ['ga']);
 
-
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;
 window.addEventListener('scroll', function () {

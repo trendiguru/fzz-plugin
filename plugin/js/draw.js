@@ -107,14 +107,14 @@ function __createButtonDiv(tgImg){
 
 function __createButtonCallback(tgImg){
     let iframe = document.getElementById(IFRAME_ID);
-    let imageUrl = tgImg.url;
+    let imageURL = tgImg.url;
     return function(mouseEvent) {
         analytics.track('Trendi Button Clicked', {
-            'imageUrl': imageUrl,
+            'imageURL': imageURL,
             'pageUrl': window.location.href
         });
         var msg_data = {};
-        msg_data.imageUrl = imageUrl;       
+        msg_data.imageURL = imageURL;       
         iframe.contentWindow.postMessage(msg_data, '*');
         iframe.style.display = 'block';
         mouseEvent = mouseEvent || window.mouseEvent;

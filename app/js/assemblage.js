@@ -6,9 +6,10 @@ class Assemblage extends React.Component {
         this.state = {images: [], index: []};
         var images = [],
             processes = this.props.src.length;
-        this.props.src.forEach((url, i) => {
+        this.props.src.forEach((src, i) => {
             var image = document.createElement('img');
-            image.src = url;
+            image.src = src.url;
+            image.link = src.link;
             image.onload = () => {
                 images[i] = image;
                 processes--;
@@ -46,7 +47,8 @@ class Assemblage extends React.Component {
                     row--;
                 }
                 var style = {width: width, left: image.index * width, top: top * width, position: 'absolute'};
-                return <img key={i} src={image.src} style={style} />;
+                console.log(image.url);
+                return <img key={i} src={image.src} style={style} onClick={window.open.bind(null, image.link, '_blank')} />;
             });
         return <div style={{position: 'relative'}}>{images}</div>;
     }

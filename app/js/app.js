@@ -30,7 +30,7 @@ class App extends React.Component {
         if (this.props.imageURL && this.props.items) {
             var Categories = this.props.items.map((item, i) => {
                     var src = item.similar_results.map(result => {
-                        return result.images.XLarge;
+                        return {url: result.images.XLarge, link: result.clickUrl};
                     });
                     return (
                         <section key={i} className={(i === this.state.category ? 'select' : '')} style={{left: (i - this.state.category) * 100 + '%'}}>

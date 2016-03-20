@@ -27,6 +27,4 @@ The goal of this project is to create a framework that allows different UI’s a
 * Other guidelines
 
 ### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+@liorsbg

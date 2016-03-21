@@ -14,7 +14,7 @@ import App from './app';
 
 /*------ RENDER ------*/
 
-let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), document.querySelector('div'));
+let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), document.getElementById('main'));
 
 /*------ RECIEVE DATA FROM SERVER ------*/
 

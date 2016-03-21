@@ -177,7 +177,6 @@ function createIframe(src) {
 
 window.addEventListener('message', function(msg) {
     //let origin = msg.origin || msg.originalEvent.origin;
-    //console.log(msg);
     if (msg.data === 'show') {
         tg_show();
     } else if (msg.data === 'hide') {
@@ -192,8 +191,8 @@ function tg_show() {
 }
 
 function tg_hide() {
-    window.parent.document.getElementById(IFRAME_ID).style.display = 'none';
-    window.parent.document.body.style.overflow = 'visible';
+    document.getElementById(IFRAME_ID).style.display = 'none';
+    document.body.style.overflow = 'visible';
 }
 
 function loadStyle() {

@@ -43,12 +43,13 @@ class App extends React.Component {
                 });
             return (
                 <div id="lightbox">
-                <aside style={{backgroundImage: 'url("' + this.props.imageURL + '")'}}></aside>
-                <nav>
-                    <ul>{CategoryList}</ul>
-                    <div id="highlight" style={{left: this.state.category * 10 + 'em'}}></div>
-                </nav>
-                <main>{Categories}</main>
+                    <aside style={{backgroundImage: 'url("' + this.props.imageURL + '")'}}></aside>
+                    <nav>
+                        <ul>{CategoryList}</ul>
+                        <div id="highlight" style={{left: this.state.category * 10 + 'em'}}></div>
+                        {(this.props.close ? <aside><button id="close" onClick={this.props.close}>x</button></aside> : '')}
+                    </nav>
+                    <main>{Categories}</main>
                 </div>
             );
         } else {

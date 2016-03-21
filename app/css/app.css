@@ -1,8 +1,13 @@
 body {
     overflow: hidden;
-    background: rgba(0,0,0,0.2);
     font-family: 'Belleza', serif;
     margin: 0;
+}
+
+#shadow {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
 }
 
 #lightbox {
@@ -13,9 +18,10 @@ body {
     position: fixed;
     top: 5em;
     left: 5em;
+    z-index: 100;
 }
 
-aside {
+#lightbox > aside {
     width: 34%;
     height: 100%;
     background-position: center;
@@ -48,6 +54,15 @@ section.select {
 
 section img {
     position: absolute;
+    cursor: pointer;
+    transition: box-shadow .25s;
+    position: relative;
+    transform: scale(.9);
+}
+
+section img:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    z-index: 100;
 }
 
 nav {
@@ -56,6 +71,28 @@ nav {
     position: absolute;
     top: 0;
     left: 34%;
+    display: flex;
+}
+
+nav aside {
+    display: flex;
+}
+
+nav aside button {
+    width: 2em;
+    height: 2em;
+    background: none;
+    font: inherit;
+    font-size: 1.5em;
+    border: none;
+    padding: .6em;
+    transition: background .25s, color .25s;
+    cursor: pointer;
+}
+
+#close:hover {
+    background: red;
+    color: #fff;
 }
 
 nav ul {
@@ -67,11 +104,12 @@ nav ul {
 
 nav ul li {
     height: 1em;
-    flex-basis: 1;
+    flex-grow: 1;
     overflow: hidden;
     padding: .25em;
     font-size: 2em;
     cursor: pointer;
+    text-align: center;
 }
 
 @media (max-width: 640px) {

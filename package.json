@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "python -m SimpleHTTPServer",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "bundle": "jspm bundle-sfx app/js/mobile.js app/b_mobile.js && jspm bundle-sfx app/js/desktop.js app/b_desktop.js && jspm bundle-sfx plugin/js/plugin.js b_plugin.js"
     },
     "author": "",
     "license": "ISC",

@@ -1,56 +1,59 @@
 /* globals React */
 
 class Assemblage extends React.Component {
-    constructor (props) { // props = {src, x, col}
-        super (props);
-        this.state = {images: [], index: []};
-        var images = [],
-            processes = this.props.src.length;
-        this.props.src.forEach((src, i) => {
-            var image = document.createElement('img');
-            image.src = src.url;
-            image.link = src.link;
-            image.onload = () => {
-                images[i] = image;
+    constructor (props) {
+        super(props);
+        this.state = {index: [], images: []};
+    }
+    componentWillReceiveProps (props) {
+        let images = [],
+            processes = props.src.length; 
+        props.src.forEach((src, i) => {
+            let img = new Image();
+            img.src = src.url;
+            img.onload = () => {
+                images[i] = img;
                 processes--;
                 if (!processes) {
                     this.setState({images: images});
-                    this.init();
+                    this.index(props.col || this.props.col);
                 }
             };
         });
     }
-    init () {
-        var index = this.state.index;
-        this.state.images.forEach((image, i) => {
-            image.proportion = image.height / image.width;
-            image.index = i;
-            image.row = 0;
-            while (image.index - this.props.col >= 0) {
-                image.index -= this.props.col;
-                image.row++;
+    index (col) {
+        let index = [],
+            images = [];
+        this.state.images.forEach((img, i) => {
+            img.proportion = img.height / img.width;
+            img.index = i;
+            img.row = 0;
+            while (img.index - col >= 0) {
+                img.index -= col;
+                img.row++;
             }
-            if (index[image.row] == undefined)
-                index[image.row] = [];
-            index[image.row][image.index] = image;
+            if (img.row)
+                img.top = index[img.row - 1][img.index].top + index[img.row - 1][img.index].proportion;
+            else
+                img.top = 0;
+            if (index[img.row] == undefined)
+                index[img.row] = [];
+            index[img.row][img.index] = img;
+            images[i] = img;
         });
-        this.setState({index: index});
+        this.setState({index: index, images: images});
     }
     render () {
-        if (this.state.images.length)
-            var images = this.state.images.map((image, i) => {
-                var top = 0,
-                    row = image.row,
-                    width = this.props.x / this.props.col;
-                while (row - 1 > 0) {
-                    top += this.state.index[image.row - 1][image.index].proportion;
-                    row--;
-                }
-                var style = {width: width, left: image.index * width, top: top * width, position: 'absolute'};
-                console.log(image.url);
-                return <img key={i} src={image.src} style={style} onClick={window.open.bind(null, image.link, '_blank')} />;
+        let ImageNodes;
+        if (this.state.images.length) {
+            ImageNodes = this.state.images.map((img, i) => {
+                let width = this.props.x / this.props.col;
+                return (
+                    <img key={i} src={img.src} data-row={img.row} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}} onClick={window.open.bind(null, img.link, '_blank')} />
+                );
             });
-        return <div style={{position: 'relative'}}>{images}</div>;
+        }
+        return <div style={{position: 'relative'}}>{ImageNodes}</div>;
     }
 }
 

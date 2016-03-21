@@ -12,8 +12,8 @@ nginx.init = function(userId) {
     //var uaParser = new UAParser();
     //var uaResult = uaParser.getResult();
 
-    var bugArray = userId[0].split("%25");
-    nginx.trackingFields.userId = bugArray[0];
+    //var bugArray = userId[0].split("%25");
+    nginx.trackingFields.userId = userId;//bugArray[0];
     
     //nginx.trackingFields.userId = userId;
     

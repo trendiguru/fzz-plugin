@@ -2,6 +2,7 @@ import {values, entries, promiseWithTimeout} from 'modules/utils';
 import {GA_CODE, MIXPANEL_ID, HOST_DOMAIN} from 'constants';
 import runGASnippet from 'ext/ga-snippet';
 import runMixpanelSnippet from 'ext/mixpanel-snippet';
+import {nginx} from 'modules/nginx_analytics';
 //import {console} from 'modules/smartConsole';
 
 
@@ -121,8 +122,11 @@ for (let key of Object.keys(analytics)) {
     console.log(key);
   fakeAnalytics[key] = function(a,b,c,d,e,f){console.log(a);};
 }
-
 analytics = fakeAnalytics;
+
+nginx.init('test1234');
+analytics.track = nginx.track;
+
 export {analytics};
 
 // new Promise((resolve) => { resolve(val); }); // hardcore es 6! :)

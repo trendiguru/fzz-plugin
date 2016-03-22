@@ -1,17 +1,16 @@
 import runGASnippet from 'ext/ga-snippet';
 import {GA_CODE} from 'constants';
 
-let ga = {
-	loaded: () => {
+export default {
+	load: () => {
 		new Promise((resolve, reject) => {
                 logList.push("start _isLoaded function");
                 runGASnippet();
                 ga(resolve);
-        });
+        	});
 	},
     init: (cliendId) => {
     	new Promise((resolve,reject) => {
-                logList.push("start init function");
                 if (clientId){
                 	ga('create', GA_CODE, {
                     	name: this.identifier,
@@ -38,4 +37,3 @@ let ga = {
         });
     }   	
 };
-export{ga};

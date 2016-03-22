@@ -1,8 +1,8 @@
-//import {values, entries, promiseWithTimeout} from 'modules/utils';
-//import {GA_CODE, MIXPANEL_ID, HOST_DOMAIN} from 'constants';
-//import runGASnippet from 'ext/ga-snippet';
-//import runMixpanelSnippet from 'ext/mixpanel-snippet';
-import {nginx} from 'modules/ngnix_analytics';
+import {values, entries, promiseWithTimeout} from 'modules/utils';
+import {GA_CODE, MIXPANEL_ID, HOST_DOMAIN} from 'constants';
+import runGASnippet from 'ext/ga-snippet';
+import runMixpanelSnippet from 'ext/mixpanel-snippet';
+import {nginx} from 'modules/nginx_analytics';
 //import {console} from 'modules/smartConsole';
 
 

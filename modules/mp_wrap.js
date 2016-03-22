@@ -1,5 +1,5 @@
 import runMixpanelSnippet from 'ext/mixpanel-snippet';
-import {LIBNAME} from 'constants'
+import {LIBNAME, MIXPANEL_ID} from 'constants'
 
 
 export default {

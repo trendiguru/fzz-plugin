@@ -5,81 +5,38 @@ import runMixpanelSnippet from 'ext/mixpanel-snippet';
 import {nginx} from 'modules/nginx_analytics';
 //import {console} from 'modules/smartConsole';
 
+import ga_wrap from 'modules/ga_wrap';
+import mp_wrap from 'modules/mp_wrap';
 
-let analyticsLibs = {
-    ga: {
-        load: new Promise(function (resolve, reject) {
-            runGASnippet(); // cheng it 
-            ga(resolve);
-        }),
-        track: function (eventName, properties) {
-            let evCat = 'ALL';
-            let evAct = eventName;
-            let evLabel = '';
-            ga('fzz.send', {
-                hitType: 'event',
-                eventCategory: evCat,
-                eventAction: evAct,
-                eventLabel: evLabel
-            });
-        },
-        initializeInApp: function () {
-            console.log("ga initializing in app");
-            ga('create', GA_CODE, {
-                name: 'fzz'
-            });
-            ga(function () {
-                let fzz_tracker = ga.getByName('fzz');
-                tg_uid = fzz_tracker.get('clientId');
-                console.log('App got id, will post: ' + tg_uid);
-                window.parent.postMessage({
-                    fzz_id: tg_uid
-                }, '*');
-            });
-
-        },
-        initializeInPublisher: function (clientId) {
-            ga('create', GA_CODE, {
-                name: 'fzz',
-                clientId: clientId
-            });
-            ga('fzz.send', 'pageview');
-        }
-    },
-    mp: {
-        load: new Promise(function (resolve, reject) {
-            runMixpanelSnippet();
-            mixpanel.init(MIXPANEL_ID, {
-                loaded: function () {
-                    resolve();
-                }
-            }, 'fzz');
-        }),
-        track: function (eventName, properties) {
-            mixpanel.fzz.track(eventName, properties);
-        },
-        initializeInApp: function(){ return Promise.resolve();},
-        initializeInPublisher: function (clientId) {
-            mixpanel.fzz.identify(clientId);
-        }
-    }
+const analyticsLibs = {
+    ga: ga_wrap,
+    mp: mp_wrap,
+    nginx: nginx
 };
 
+
+ for (let a of values(analyticsLibs)) {
+    a.loaded = a.load();
+}
 
 let analytics = {};
 let tg_uid;
 analytics.analyticsLibs = analyticsLibs;
 
+analytics.getClientId = function(){
+    return 'TEST_ID_123';
+}
 
-analytics.initializeInApp = function(startPromise){
-    startPromise = startPromise || Promise.resolve();
+analytics.init = function(clientId){
     for (let a of values(analyticsLibs)) {
-        console.log(a);
-        a.ready = Promise.all([a.initializeInApp(), startPromise, a.load]);
+        a.inited = a.loaded.then(a.init(clientId));
     }
-};
+}
 
-analytics.initializeInPublisher = function (startPromise) {
+analytics.initializeInApp = function(){
+}
+
+analytics.initializeInPublisher = function () {
     startPromise = startPromise || Promise.resolve();
     
     // Create promise which starts on 'Publisher Received fzz_id'
@@ -106,26 +63,18 @@ analytics.initializeInPublisher = function (startPromise) {
     }
 };
 
+// libs is a list of library names to use to track this event
 analytics.track = function (eventName, properties, libs) {
+    // Use all libs if not specified
     libs = libs || Object.keys(analyticsLibs);
     for(let [lib, analyticsObj] of entries(analyticsLibs)){
         if(libs.indexOf(lib) > -1){
-            analyticsObj.ready.then(function(){
+            analyticsObj.inited.then(function(){
                 analyticsObj.track(eventName, properties);
             });
         }
     }
 };
-
-let fakeAnalytics = {};
-for (let key of Object.keys(analytics)) {
-    console.log(key);
-  fakeAnalytics[key] = function(a,b,c,d,e,f){console.log(a);};
-}
-analytics = fakeAnalytics;
-
-nginx.init('test1234');
-analytics.track = nginx.track;
 
 export {analytics};
 

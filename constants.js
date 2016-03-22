@@ -11,7 +11,8 @@ const constants = {
     IFRAME_SRC: HOST_DOMAIN + '/app/desktop.html',
     CSS_URL: HOST_DOMAIN + '/plugin/css/plugin.css',
     IFRAME_ID: 'fazzi',
-    INFO_URL: 'http://fazz.co'
+    INFO_URL: 'http://fazz.co',
+    LIBNAME: 'fzz'
 };
 
 export default constants;

@@ -13,23 +13,22 @@ export default {
     	new Promise((resolve,reject) => {
                 if (clientId){
                 	ga('create', GA_CODE, {
-                    	name: this.identifier,
+                    	name: identifier,
                     	clientId: clientId
                 	});
                 else {
                 	ga('create', GA_CODE, {
-                    name: this.identifier,
+                    name: identifier,
                 	});
                 }
                 ga(resolve);
         });
     },
  	track: (eventName, properties) => {
-            this.logList.push("start track function");
             let evCat = 'ALL';
             let evAct = eventName;
             let evLabel = '';
-            ga(this.identifier+'.send', {
+            ga(identifier+'.send', {
                 hitType: 'event',
                 eventCategory: evCat,
                 eventAction: evAct,

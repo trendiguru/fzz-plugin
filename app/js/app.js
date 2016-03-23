@@ -1,6 +1,7 @@
 /* globals React */
 
 import Assemblage from './assemblage';
+import Loading from './loading';
 
 let body = document.body;
 
@@ -53,7 +54,7 @@ class App extends React.Component {
                 </div>
             );
         } else {
-            return <div></div>;
+            return <Loading />;
         }
     }
 }

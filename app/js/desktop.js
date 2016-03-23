@@ -13,7 +13,10 @@ import App from './app';
 
 /*------ RENDER ------*/
 
-function close () {window.parent.postMessage('hide', '*');}
+function close () {
+    window.parent.postMessage('hide', '*');
+    app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+}
 
 let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
 

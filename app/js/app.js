@@ -1,6 +1,8 @@
 /* globals React */
 
+import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
+import Lightbox from './lightbox';
 import Loading from './loading';
 
 let body = document.body;
@@ -29,32 +31,25 @@ class App extends React.Component {
     }
     render () {
         if (this.props.imageURL && this.props.items) {
-            var Categories = this.props.items.map((item, i) => {
-                    var src = item.similar_results.map(result => {
-                        return {url: result.images.XLarge, link: result.clickUrl};
-                    });
-                    return (
-                        <section key={i} className={(i === this.state.category ? 'select' : '')} style={{left: (i - this.state.category) * 100 + '%'}}>
-                            <Assemblage src={src} x={this.state.width} col={this.state.col} />
-                        </section>
-                    );
-                }),
-                CategoryList = this.props.items.map((item, i) => {
-                    return <li key={i} onClick={this.setCategory.bind(this, i)}>{item.category}</li>;
+            var CategoryNodes = this.props.items.map((item, i) => {
+                var src = item.similar_results.map(result => {
+                    return {url: result.images.XLarge, link: result.clickUrl};
                 });
+                return (
+                    <Tab key={i} title={item.category}>
+                        <Assemblage src={src} x={this.state.width} col={this.state.col} />
+                    </Tab>
+                );
+            });
             return (
-                <div id="lightbox">
+                <Lightbox>
+                    {(this.props.close ? <aside><button id="close" onClick={this.props.close}>x</button></aside> : '')}
                     <aside style={{backgroundImage: 'url("' + this.props.imageURL + '")'}}></aside>
-                    <nav>
-                        <ul>{CategoryList}</ul>
-                        <div id="highlight" style={{left: this.state.category * 10 + 'em'}}></div>
-                        {(this.props.close ? <aside><button id="close" onClick={this.props.close}>x</button></aside> : '')}
-                    </nav>
-                    <main>{Categories}</main>
-                </div>
+                    <TabView>{CategoryNodes}</TabView>
+                </Lightbox>
             );
         } else {
-            return <Loading />;
+            return <Lightbox><Loading /></Lightbox>;
         }
     }
 }

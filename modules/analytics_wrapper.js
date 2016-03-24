@@ -35,10 +35,13 @@ analytics.getClientId = function () {
 
 
 analytics._init = function (clientId) {
-    console.log('Reached _init');
-    for (let a of values(analyticsLibs)) {
-        a.inited = a.loaded.then(a.init(clientId));
-    }
+    analytics.inited = new Promise(resolve => {
+        console.log('Reached _init');
+        for (let a of values(analyticsLibs)) {
+            a.inited = a.loaded.then(a.init(clientId));
+        }
+        resolve();
+    });
 };
 
 analytics.initializeInApp = function () {
@@ -72,15 +75,17 @@ analytics.initializeInPublisher = function () {
 
 // libs is a list of library names to use to track this event
 analytics.track = function (eventName, properties, libs) {
-    // Use all libs if not specified
-    libs = libs || Object.keys(analyticsLibs);
-    for (let [lib, analyticsObj] of entries(analyticsLibs)) {
-        if (libs.indexOf(lib) > -1) {
-            analyticsObj.inited.then(function () {
-                analyticsObj.track(eventName, properties);
-            });
+    analytics.inited.then(() => {
+        // Use all libs if not specified
+        libs = libs || Object.keys(analyticsLibs);
+        for (let [lib, analyticsObj] of entries(analyticsLibs)) {
+            if (libs.indexOf(lib) > -1) {
+                analyticsObj.inited.then(function () {
+                    analyticsObj.track(eventName, properties);
+                });
+            }
         }
-    }
+    });
 };
 
 export {analytics};

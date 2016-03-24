@@ -1,8 +1,8 @@
 /*global mixpanel*/
 
 import runMixpanelSnippet from 'ext/mixpanel-snippet';
-import {LIBNAME, MIXPANEL_ID}
-from 'constants';
+import constants from 'constants';
+const {LIBNAME, MIXPANEL_ID} = constants;
 
 
 export default {

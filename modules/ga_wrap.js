@@ -1,8 +1,8 @@
 /* global ga */
 
 import runGASnippet from 'ext/ga-snippet';
-import {GA_CODE, LIBNAME}
-from 'constants';
+import constants from 'constants';
+const {GA_CODE, LIBNAME}  = constants;
 
 export default {
     load: () => new Promise((resolve) => {

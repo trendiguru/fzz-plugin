@@ -1,7 +1,5 @@
-import {values, entries, promiseWithTimeout}
-from 'modules/utils';
-import {HOST_DOMAIN}
-from 'constants';
+import {values, entries, promiseWithTimeout} from 'modules/utils';
+
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
@@ -35,21 +33,26 @@ analytics.getClientId = function () {
 
 
 analytics._init = function (clientId) {
+    console.log('Reached _init');
+    for (let a of values(analyticsLibs)) {
+        a.inited = a.loaded.then(a.init(clientId));
+    }      
+};
+
+analytics.initializeInApp = function () {
     analytics.inited = new Promise(resolve => {
-        console.log('Reached _init');
-        for (let a of values(analyticsLibs)) {
-            a.inited = a.loaded.then(a.init(clientId));
-        }
+        analytics.getClientId().then(analytics._init);
         resolve();
     });
 };
 
-analytics.initializeInApp = function () {
-    analytics.getClientId().then(analytics._init);
-};
-
 analytics.initializeInPublisher = function () {
-    analytics.getClientId().then(analytics._init);
+    analytics.inited = new Promise(resolve => {
+        analytics.getClientId().then(analytics._init);
+        resolve();
+    });
+    
+    
 //    // Create promise which starts on 'Publisher Received fzz_id'
 //    let publisherReceivedAppMsg = new Promise(function (resolve, reject) {
 //        window.addEventListener('message', function (msg) {

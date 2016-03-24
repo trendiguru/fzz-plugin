@@ -1,9 +1,10 @@
 import {values, entries, promiseWithTimeout} from 'modules/utils';
-
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
 import nginx from 'modules/nginx_analytics';
+import constants from 'constants';
+const {HOST_DOMAIN} = constants;
 
 const analyticsLibs = {
     ga: ga_wrap,
@@ -18,62 +19,61 @@ for (let a of values(analyticsLibs)) {
 }
 
 let analytics = {};
-let tg_uid;
+let fzz_id;
 analytics.analyticsLibs = analyticsLibs;
 
-analytics.getClientId = function () {
-    /* Something like:
-    * 
-    * return analyticsLibs.ga.getClientId().then(clientId=>{tg_uid = clientId; return clientId});
-    * 
-    */
+analytics.getClientId = function () { 
+    let a = analyticsLibs.ga;
+    a.inited = a.loaded.then(a.init);
     
-    return Promise.resolve('TEST_ID_123');
+    return a.inited
+        .then(a.getClientId)
+        .then(clientId=>{fzz_id = clientId; return clientId;});
+    
+    
+    //return Promise.resolve('TEST_ID_123');
 };
 
 
 analytics._init = function (clientId) {
     console.log('Reached _init');
     for (let a of values(analyticsLibs)) {
-        a.inited = a.loaded.then(a.init(clientId));
+        if(a.inited !== undefined){
+            a.inited = a.loaded.then(a.init(clientId));
+        }
     }      
 };
 
 analytics.initializeInApp = function () {
-    analytics.inited = new Promise(resolve => {
-        analytics.getClientId().then(analytics._init);
-        resolve();
+    analytics.inited = analytics.getClientId().then(clientId=>{
+        analytics._init(clientId);
+        console.log('App got id, will post: ' + fzz_id);
+        window.parent.postMessage({
+            fzz_id: fzz_id
+        }, '*');
     });
 };
 
 analytics.initializeInPublisher = function () {
-    analytics.inited = new Promise(resolve => {
-        analytics.getClientId().then(analytics._init);
-        resolve();
+//    analytics.inited = new Promise(resolve => {
+//        analytics.getClientId().then(analytics._init).then(resolve);
+//    });
+    
+    let publisherReceivedAppMsg = new Promise((resolve) => {
+        window.addEventListener('message', function (msg) {
+            if (msg.origin === HOST_DOMAIN) {
+                console.log(`Right origin!`);
+                if (msg.data !== undefined && msg.data.fzz_id) {
+                    fzz_id = msg.data.fzz_id;
+                    resolve(fzz_id);
+                }
+            } else {
+                //console.log(`Wrong origin: ${msg.origin}`);
+            }
+        }, false);
     });
     
-    
-//    // Create promise which starts on 'Publisher Received fzz_id'
-//    let publisherReceivedAppMsg = new Promise(function (resolve, reject) {
-//        window.addEventListener('message', function (msg) {
-//            //console.log('Publisher Received postMessage: ');
-//            //console.log(msg);
-//            if (msg.origin === HOST_DOMAIN) {
-//                console.log(`Right origin!`);
-//                if (tg_uid === undefined && msg.data !== undefined && msg.data.fzz_id) {
-//                    tg_uid = msg.data.fzz_id;
-//                    resolve(tg_uid);
-//                }
-//            } else {
-//                //console.log(`Wrong origin: ${msg.origin}`);
-//            }
-//        }, false);
-//    });
-//
-//    for (let a of values(analyticsLibs)) {
-//        a.ready = Promise.all([publisherReceivedAppMsg, a.load])
-//            .then(a.initializePublisherAnalytics);
-//    }
+    analytics.inited = publisherReceivedAppMsg.then(analytics._init);
 };
 
 // libs is a list of library names to use to track this event

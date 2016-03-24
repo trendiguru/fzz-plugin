@@ -34,7 +34,8 @@ export default {
         });
     },
     getClientId: () => new Promise((resolve) => {
-        ga(function () {
+        ga(() => {
+            console.log('Here we are in ga.getClientId');
             let fzz_tracker = ga.getByName('fzz');
             resolve(fzz_tracker.get('clientId'));
         });

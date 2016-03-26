@@ -24,7 +24,7 @@ getImageData(imageURL).then(data => {
     console.log('got data');
     app = ReactDOM.render(
         React.createElement(App, {onMount: attachAnalytics, imageURL: imageURL, items: data.items}),
-        document.querySelector('div')
+        document.getElementById('main')
     );
 });
 

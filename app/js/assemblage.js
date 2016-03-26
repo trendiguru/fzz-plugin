@@ -4,19 +4,21 @@ class Assemblage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {index: [], images: []};
+        this.load();
     }
-    componentWillReceiveProps (props) {
+    load () {
         let images = [],
-            processes = props.src.length; 
-        props.src.forEach((src, i) => {
+            processes = this.props.src.length; 
+        this.props.src.forEach((source, i) => {
             let img = new Image();
-            img.src = src.url;
+            for (let key in source)
+                img[key] = source[key];
             img.onload = () => {
                 images[i] = img;
                 processes--;
                 if (!processes) {
                     this.setState({images: images});
-                    this.index(props.col || this.props.col);
+                    this.index(this.props.col);
                 }
             };
         });
@@ -49,7 +51,9 @@ class Assemblage extends React.Component {
             ImageNodes = this.state.images.map((img, i) => {
                 let width = this.props.x / this.props.col;
                 return (
-                    <img key={i} src={img.src} data-row={img.row} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}} onClick={window.open.bind(null, img.link, '_blank')} />
+                    <div key={i} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}}>
+                        {this.props.template(img)}
+                    </div>
                 );
             });
         }

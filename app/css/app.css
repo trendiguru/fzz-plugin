@@ -30,7 +30,7 @@ body {
 
 main {
     width: 66%;
-    height: calc(100% - 3em);
+    height: calc(100% - 5em);
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -112,6 +112,14 @@ nav ul li {
     text-align: center;
 }
 
+#indicator {
+    height: 2px;
+    background: #000;
+    position: absolute;
+    bottom: 0;
+    transition: left .4s;
+}
+
 @media (max-width: 640px) {
     #lightbox {
         width: 100%;
@@ -146,6 +154,7 @@ nav ul li {
 
 #loader {
     height: 4px;
+    overflow: hidden;
     position: relative;
     background: purple;
 }
@@ -156,12 +165,13 @@ nav ul li {
     background: #fff;
     position: absolute;
     top: 0;
+    left: -4px;
     animation-name: loader;
     animation-iteration-count: infinite;
 }
 
 @keyframes loader {
-    from {left: 0;}
+    from {left: -4px;}
     to {left: 100%;}
 }
 
@@ -172,3 +182,14 @@ nav ul li {
 #loader div:nth-child(5) {animation-duration: 2.3s;}
 #loader div:nth-child(6) {animation-duration: 2.5s;}
 #loader div:nth-child(7) {animation-duration: 2.7s;}
+
+footer {
+    width: calc(66% - 2em);
+    padding: .5em 1em;
+    background: #fff;
+    font-family: sans-serif;
+    position: absolute;
+    text-align: right;
+    bottom: 0;
+    right: 0;
+}

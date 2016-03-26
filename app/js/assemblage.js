@@ -4,11 +4,12 @@ class Assemblage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {index: [], images: []};
+        this.load();
     }
-    componentWillReceiveProps (props) {
+    load () {
         let images = [],
-            processes = props.src.length; 
-        props.src.forEach((src, i) => {
+            processes = this.props.src.length; 
+        this.props.src.forEach((src, i) => {
             let img = new Image();
             img.src = src.url;
             img.onload = () => {
@@ -16,7 +17,7 @@ class Assemblage extends React.Component {
                 processes--;
                 if (!processes) {
                     this.setState({images: images});
-                    this.index(props.col || this.props.col);
+                    this.index(this.props.col);
                 }
             };
         });

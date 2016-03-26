@@ -1,6 +1,6 @@
 /* globals React */
 
-class Lightbox extends React.Componet {
+class Lightbox extends React.Component {
     constructor (props) {
         super(props);
     }

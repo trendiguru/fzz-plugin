@@ -9,9 +9,10 @@ class Assemblage extends React.Component {
     load () {
         let images = [],
             processes = this.props.src.length; 
-        this.props.src.forEach((src, i) => {
+        this.props.src.forEach((source, i) => {
             let img = new Image();
-            img.src = src.url;
+            for (let key in source)
+                img[key] = source[key];
             img.onload = () => {
                 images[i] = img;
                 processes--;
@@ -50,7 +51,9 @@ class Assemblage extends React.Component {
             ImageNodes = this.state.images.map((img, i) => {
                 let width = this.props.x / this.props.col;
                 return (
-                    <img key={i} src={img.src} data-row={img.row} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}} onClick={window.open.bind(null, img.link, '_blank')} />
+                    <div key={i} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}}>
+                        {this.props.template(img)}
+                    </div>
                 );
             });
         }

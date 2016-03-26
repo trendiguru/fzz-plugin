@@ -33,11 +33,22 @@ class App extends React.Component {
         if (this.props.imageURL && this.props.items) {
             var CategoryNodes = this.props.items.map((item, i) => {
                 var src = item.similar_results.map(result => {
-                    return {url: result.images.XLarge, link: result.clickUrl};
+                    return {src: result.images.XLarge, href: result.clickUrl, price: result.price.price, brand: result.brand};
                 });
                 return (
                     <Tab key={i} title={item.category}>
-                        <Assemblage src={src} x={this.state.width} col={this.state.col} />
+                        <Assemblage
+                            src={src}
+                            x={this.state.width}
+                            col={this.state.col}
+                            template={img => <a href={img.href} target="_blank">
+                                                <img src={img.src} />
+                                                <div>
+                                                    <span className="price">{img.price}</span>
+                                                    <span className="brand">{img.brand}</span>
+                                                </div>
+                                            </a>}
+                        />
                     </Tab>
                 );
             });

@@ -1,6 +1,6 @@
 body {
     overflow: hidden;
-    font-family: 'Belleza', serif;
+    font-family: 'Belleza', sans-serif;
     margin: 0;
 }
 
@@ -52,17 +52,45 @@ section.select {
     overflow: visible;
 }
 
-section img {
-    position: absolute;
+section div > div {
     cursor: pointer;
     transition: box-shadow .25s;
-    position: relative;
     transform: scale(.9);
 }
 
-section img:hover {
+section div > div:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     z-index: 100;
+}
+
+section div > div img {
+    width: 100%;
+}
+
+section a {
+    color: inherit;
+}
+
+section a div {
+    width: calc(100% - 2em);
+    padding: 1em;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+section a span {
+    font-size: 1.2em;
+}
+
+.price {
+    float: left;
+}
+
+.brand {
+    float: right;
 }
 
 nav {
@@ -187,7 +215,6 @@ footer {
     width: calc(66% - 2em);
     padding: .5em 1em;
     background: #fff;
-    font-family: sans-serif;
     position: absolute;
     text-align: right;
     bottom: 0;

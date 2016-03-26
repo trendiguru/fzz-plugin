@@ -38,7 +38,7 @@ analytics.getClientId = function () {
 analytics._init = function (clientId) {
     console.log('Reached _init');
     for (let a of values(analyticsLibs)) {
-        if(a.inited !== undefined){
+        if(!a.hasOwnProperty('inited')){
             a.inited = a.loaded.then(a.init(clientId));
         }
     }      

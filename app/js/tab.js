@@ -20,7 +20,7 @@ class TabView extends React.Component {
     render () {
         let TitleNodes = [];
         let TabNodes = this.props.children.map((tab, i) => {
-            TitleNodes.push(<li key={i} onClick={this.select.bind(this, i)}>{tab.props.title}</li>);
+            TitleNodes.push(<li key={i} className={(i === this.state.selected ? 'select' : '')} onClick={this.select.bind(this, i)}>{tab.props.title}</li>);
             return <Tab key={i} index ={i} selected={this.state.selected}>{tab.props.children}</Tab>;
         });
         return (

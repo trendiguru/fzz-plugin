@@ -44,7 +44,6 @@ section {
     height: 100%;
     overflow: hidden;
     position: absolute;
-    -webkit-transition: left .4s;
     transition: left .4s;
 }
 
@@ -55,9 +54,7 @@ section.select {
 
 section div > div {
     cursor: pointer;
-    -webkit-transition: box-shadow .25s;
     transition: box-shadow .25s;
-    -webkit-transform: scale(.9);
     transform: scale(.9);
 }
 
@@ -78,7 +75,6 @@ section a div {
     width: calc(100% - 2em);
     padding: .5em 1em;
     overflow: hidden;
-    background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.3) 20%,rgba(0,0,0,0) 100%);
     background: linear-gradient(to top, rgba(0,0,0,0.3) 20%,rgba(0,0,0,0) 100%);
     color: #fff;
     position: absolute;
@@ -109,16 +105,10 @@ nav {
     position: absolute;
     top: 0;
     left: 34%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 
 nav aside {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 
@@ -130,7 +120,6 @@ nav aside button {
     font-size: 1.5em;
     border: none;
     padding: .6em;
-    -webkit-transition: background .25s, color .25s;
     transition: background .25s, color .25s;
     cursor: pointer;
 }
@@ -144,16 +133,10 @@ nav ul {
     width: 100%;
     padding: 0;
     margin: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 
 nav ul li {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
     flex: 1;
     overflow: hidden;
     padding: .65em 0;
@@ -171,7 +154,6 @@ nav ul li.select {
     background: #000;
     position: absolute;
     bottom: 0;
-    -webkit-transition: left .4s;
     transition: left .4s;
 }
 
@@ -221,15 +203,8 @@ nav ul li.select {
     position: absolute;
     top: 0;
     left: -4px;
-    -webkit-animation-name: loader;
     animation-name: loader;
-    -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-}
-
-@-webkit-keyframes loader {
-    from {left: -4px;}
-    to {left: 100%;}
 }
 
 @keyframes loader {
@@ -237,13 +212,13 @@ nav ul li.select {
     to {left: 100%;}
 }
 
-#loader div:nth-child(1) {-webkit-animation-duration: 1.5s;animation-duration: 1.5s;}
-#loader div:nth-child(2) {-webkit-animation-duration: 1.7s;animation-duration: 1.7s;}
-#loader div:nth-child(3) {-webkit-animation-duration: 1.9s;animation-duration: 1.9s;}
-#loader div:nth-child(4) {-webkit-animation-duration: 2.1s;animation-duration: 2.1s;}
-#loader div:nth-child(5) {-webkit-animation-duration: 2.3s;animation-duration: 2.3s;}
-#loader div:nth-child(6) {-webkit-animation-duration: 2.5s;animation-duration: 2.5s;}
-#loader div:nth-child(7) {-webkit-animation-duration: 2.7s;animation-duration: 2.7s;}
+#loader div:nth-child(1) {animation-duration: 1.5s;}
+#loader div:nth-child(2) {animation-duration: 1.7s;}
+#loader div:nth-child(3) {animation-duration: 1.9s;}
+#loader div:nth-child(4) {animation-duration: 2.1s;}
+#loader div:nth-child(5) {animation-duration: 2.3s;}
+#loader div:nth-child(6) {animation-duration: 2.5s;}
+#loader div:nth-child(7) {animation-duration: 2.7s;}
 
 footer {
     width: calc(66% - 2em);

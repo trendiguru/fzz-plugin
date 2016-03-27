@@ -40,6 +40,7 @@ function attachAnalytics () {
     
     console.log('AATTACH ALL THE ANALYTICS!');
     analytics.initializeInApp();
+    analytics.track('App Loaded');
 //
 //    let main = document.querySelector('div');
 //    let nav = document.querySelector('nav');

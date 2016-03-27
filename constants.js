@@ -1,5 +1,6 @@
 
-const HOST_DOMAIN =  'http://localhost:8000';
+//const HOST_DOMAIN =  'http://localhost:8000';
+const HOST_DOMAIN =  'https://localhost:4443';
 
 const constants = {
     HOST_DOMAIN : HOST_DOMAIN,

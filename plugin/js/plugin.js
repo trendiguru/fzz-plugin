@@ -26,7 +26,7 @@ let irrelevantElements = FZZ.irrelevantElements = {};
 //});
 
 analytics.initializeInPublisher();
-analytics.track('Page Hit', undefined, ['ga', 'mp','nginx']);
+analytics.track('Page Hit');
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;

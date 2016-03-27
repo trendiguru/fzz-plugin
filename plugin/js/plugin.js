@@ -25,8 +25,8 @@ let irrelevantElements = FZZ.irrelevantElements = {};
 //    });
 //});
 
-//analytics.initializeInPublisher(iframeLoaded);
-//analytics.track('Page Hit', undefined, ['ga']);
+analytics.initializeInPublisher();
+analytics.track('Page Hit');
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;

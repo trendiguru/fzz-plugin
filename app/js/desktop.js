@@ -5,7 +5,7 @@ import {getImageData} from 'modules/server';
 
 // Analytics
 
-//import {analytics} from 'modules/analytics_wrapper';
+import {analytics} from 'modules/analytics_wrapper';
 
 // React
 
@@ -40,8 +40,10 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-
-//    analytics.initializeInApp();
+    
+    console.log('AATTACH ALL THE ANALYTICS!');
+    analytics.initializeInApp();
+    analytics.track('App Loaded');
 //
 //    let main = document.querySelector('div');
 //    let nav = document.querySelector('nav');

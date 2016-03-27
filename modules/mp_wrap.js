@@ -1,10 +1,13 @@
+/*global mixpanel*/
+
 import runMixpanelSnippet from 'ext/mixpanel-snippet';
-import {LIBNAME} from 'constants'
+import constants from 'constants';
+const {LIBNAME, MIXPANEL_ID} = constants;
 
 
 export default {
-    load: function(){
-        return new Promise(function (resolve, reject) {
+    load: function () {
+        return new Promise(function (resolve) {
             runMixpanelSnippet();
             mixpanel.init(MIXPANEL_ID, {
                 loaded: function () {
@@ -13,28 +16,17 @@ export default {
             }, LIBNAME);
         });
     },
-    init: function(clientId){
-        return new Promise(function(resolve, reject){
-            if(clientId !== undefined){
+    init: function (clientId) {
+        return new Promise(function (resolve) {
+            if (clientId !== undefined) {
                 mixpanel[LIBNAME].identify(clientId);
-            }
-            else{
-                console.log('Mixpanel did not receive a client ID')
+            } else {
+                console.log('Mixpanel did not receive a client ID');
             }
             resolve();
         });
-    }
+    },
     track: function (eventName, properties) {
-            mixpanel[LIBNAME].track(eventName, properties);
-        },
-    init2: function (clientId) {
-        return new Promise(function(resolve, reject){
-            ga('create', GA_CODE, {
-                name: 'fzz',
-                clientId: clientId
-            });
-            ga(resolve);
-        })
-            
+        mixpanel[LIBNAME].track(eventName, properties);
     }
 };

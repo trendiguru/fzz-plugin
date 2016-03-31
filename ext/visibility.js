@@ -7,19 +7,21 @@ const VISIBLE_PADDING_TOP = 0.01; // 1% of element's width or/and height may be 
 const VISIBLE_PADDING_BOTTOM = 0.7;
 const VISIBLE_PADDING_LEFT = 0.7;
 const VISIBLE_PADDING_RIGHT = 0.3;
+const VISIBLE_PADDING = 0.3;// HERE YOU MAY CHANGE THE VISIBILITY AREA!!!
+const UNVISIBLE_PADDING = 1 - VISIBLE_PADDING;
 const LEVEL = 2; 
 
 //let tStyles = [['backgroundColor','rgba(0, 0, 0, 0)']];
 
 function isVisible(obj, rect, wndw) {
-	wndw = wndw || window;
+    wndw = wndw || window;
     rect = rect || obj.getBoundingClientRect();
     let x = rect.left;
     let y = rect.top;
     let w = rect.right - x;
     let h = rect.bottom - y;
     if (onScreen(x, y, w, h, wndw)){
-        return checkVisibility(x, y, w, h, LEVEL, obj);
+        return checkVisibility(x+w * UNVISIBLE_PADDING , y, w * VISIBLE_PADDING, h * VISIBLE_PADDING, LEVEL, obj);
     }
     return false;
 }

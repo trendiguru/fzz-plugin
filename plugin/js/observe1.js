@@ -1,5 +1,8 @@
 import {console} from 'modules/smartConsole';
 
+// This class may be used only on 78% of the browsers.
+
+
 const blackList = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
 const defConfig = {
     childList: true,
@@ -14,12 +17,12 @@ MUT.attrMut = [];
 
 
 class motationTracker {
-	constructor(target, executeFunc, config){
+	constructor(target){
 		this.muteTarget = target;
 		this.executor = executeFunc;
 		this.config = config || defConfig;
 		this.blackList = blackList;
-        this.mutObserver = null;
+        this.observers = [];
 	}
 
 	observe (target, executeFunc, config = defaultConfig) {
@@ -70,3 +73,4 @@ class motationTracker {
         return (forbiddenHTMLObjs.indexOf(node.tagName) === -1) && !node.classList.contains('fazz');
     }
 }
+// TODO: change the class for you'll have got an opportunity to use number of different Mutation observers in parallel with different canfiqurations 

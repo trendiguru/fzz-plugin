@@ -4,7 +4,6 @@ const {HOST_DOMAIN} = constants;
 const URL = `${HOST_DOMAIN}/b_plugin.js`;
 //const URL = `${HOST_DOMAIN}/fzz.min.js`;
 
-console.log('HELLOOOOOO');
 
 function getScript(url, callback) {
     var headTag = document.getElementsByTagName('head')[0];

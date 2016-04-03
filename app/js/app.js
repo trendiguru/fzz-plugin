@@ -27,7 +27,6 @@ class App extends React.Component {
     componentDidMount () {
         window.addEventListener('load', this.size.bind(this));
         window.addEventListener('resize', this.size.bind(this));
-        this.props.onMount();
     }
     render () {
         if (this.props.imageURL && this.props.items) {
@@ -41,6 +40,7 @@ class App extends React.Component {
                             src={src}
                             x={this.state.width}
                             col={this.state.col}
+                            onMount={this.props.onMount}
                             template={img => <a href={img.href} target="_blank">
                                                 <img src={img.src} />
                                                 <div>

@@ -1,5 +1,9 @@
 # Bundles #
 b_*
+*/run_ext.js
+fzz.min.js
+*.map
+*/*.map
 
 npm-debug.log
 

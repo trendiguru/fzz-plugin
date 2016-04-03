@@ -1,6 +1,7 @@
 
 //const HOST_DOMAIN =  'http://localhost:8000';
 const HOST_DOMAIN =  'https://localhost:4443';
+//const HOST_DOMAIN =  'https://fzz.storage.googleapis.com';
 
 const constants = {
     HOST_DOMAIN : HOST_DOMAIN,
@@ -13,7 +14,24 @@ const constants = {
     CSS_URL: `${HOST_DOMAIN}/plugin/css/plugin.css`,
     IFRAME_ID: 'fazzi',
     INFO_URL: 'http://fazz.co',
-    LIBNAME: 'fzz'
+    LIBNAME: 'fzz',
+    USER_CONFIG: loadUserConfig()
 };
+
+function loadUserConfig(){
+    let userConfig = {};
+    let fzzScript = document.getElementById('fzz-script');
+    
+    if(fzzScript){
+        let userConfigJSON = fzzScript.getAttribute('data-fzz');
+        if(userConfigJSON){
+            userConfig = JSON.parse(userConfigJSON);
+        }
+    }
+    
+    userConfig.whitelist = userConfig.whitelist || '*';
+    
+    return userConfig;
+}
 
 export default constants;

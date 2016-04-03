@@ -36,6 +36,10 @@ getImageData(imageURL).then(data => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
+    
+    analytics.initializeInApp();
+    analytics.track('App Loaded');
+
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
         a.addEventListener('click', () => analytics.track('Result Clicked'));
     });

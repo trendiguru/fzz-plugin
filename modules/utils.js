@@ -50,7 +50,7 @@ function selectorMatches(el, selector) {
 function getElementsToProcess(node) {
     node = node || document;
 
-    let parentElems = document.querySelectorAll(USER_CONFIG.whitelist);
+    let parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
     let allElems = Array.from(parentElems);
 
     if (selectorMatches(node, USER_CONFIG.whitelist) && node !== document) {
@@ -59,7 +59,9 @@ function getElementsToProcess(node) {
 
     if (USER_CONFIG.whitelist !== '*') {
         for (let el of parentElems) {
-            allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
+            if(el.querySelectorAll){
+                allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
+            }
         }
     }
     return new Set(allElems);

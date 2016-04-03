@@ -10,7 +10,7 @@ class Assemblage extends React.Component {
             let img = new Image();
             for (let key in source)
                 img[key] = source[key];
-            img.onerror = () => reject();
+            img.onerror = reject;
             img.onload = () => {
                 img.proportion = img.height / img.width;
                 let images = this.state.images;
@@ -20,17 +20,14 @@ class Assemblage extends React.Component {
             };
         });
     }
+    loadAll (i) {
+        if (i < this.props.src.length)
+            this.load(this.props.src[i]).then(() => this.loadAll(i + 1));
+        else if (typeof this.props.onMount === 'function')
+            this.props.onMount.call(this);
+    }
     componentDidMount () {
-        function loadTwo (i) {
-            if (this.props.src[i]) {
-                let promises = [];
-                if (this.props.src[i + 1])
-                    promises.push(this.load(this.props.src[i + 1]));
-                promises.push(this.load(this.props.src[i]));
-                Promise.all(promises).then(loadTwo.bind(this, i + 2));
-            }
-        }
-        loadTwo.call(this, 0);
+        this.loadAll.call(this, 0);
     }
     render () {
         let index = [];
@@ -42,15 +39,16 @@ class Assemblage extends React.Component {
             img.top = 0;
             if (img.row) {
                 img.top += index[img.row - 1][img.pos].proportion;
-                if (img.row - 1)
-                    img.top += index[img.row - 2][img.pos].proportion;
+                if (img.row - 1) {
+                    img.top += index[img.row - 1][img.pos].top;
+                }
             }
             index[img.row][img.pos] = img;
             img.width = document.body.clientWidth / this.props.col;
-            return this.props.template(img);
-        });
-        return <div className="assemblage" style={{position: 'relative'}}>{images}</div>;
-    }
+            return <div key={i} style={{width: img.width, left: img.width * img.pos, top: img.top * img.width, position: 'absolute'}}>{this.props.template(img)}</div>;
+});
+return <div className="assemblage" style={{position: 'relative'}}>{images}</div>;
+}
 }
 
 export default Assemblage;

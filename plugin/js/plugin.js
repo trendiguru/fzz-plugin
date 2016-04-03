@@ -8,17 +8,15 @@ import draw from './draw';
 import observe from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
+import {getElementsToProcess} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 
-const {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
+const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 
 const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
-let userConfig = {};
-
-loadUserConfig();
 
 analytics.initializeInPublisher();
 analytics.track('Page Hit');
@@ -32,25 +30,19 @@ window.addEventListener('scroll', function () {
     }
 });
 
-function loadUserConfig(){
-    let fzzScript = document.getElementById('fzz-script');
-    let userConfigJSON = fzzScript.getAttribute('data-fzz');
-    if(userConfigJSON){
-        userConfig = JSON.parse(userConfigJSON);
-    }
-    userConfig.whitelist = userConfig.whitelist || '*';
-}
 
 domready(function () {
     loadStyle();
     console.log('FZZ: domready');
     document.body.appendChild(createIframe());
-    let allElems = document.querySelectorAll(userConfig.whitelist);
-    console.log('FZZ: Will check ' + allElems.length + ' items.');
-
-    for (let i = 0; i < allElems.length; i++) {
-        processElement(allElems[i]);
+    let elementsToProcess = getElementsToProcess();
+    
+    console.log('FZZ: Will check ' + elementsToProcess.size + ' items.');
+    
+    for (let el of elementsToProcess) {
+        processElement(el);
     }
+    
     observe(document.body, processElement);
 });
 

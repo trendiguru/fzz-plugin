@@ -451,10 +451,30 @@ $__System.register('2', [], function (_export) {
     'use strict';
 
     var HOST_DOMAIN, constants;
+
+    function loadUserConfig() {
+        var userConfig = {};
+        var fzzScript = document.getElementById('fzz-script');
+
+        if (fzzScript) {
+            var userConfigJSON = fzzScript.getAttribute('data-fzz');
+            if (userConfigJSON) {
+                userConfig = JSON.parse(userConfigJSON);
+            }
+        }
+
+        userConfig.whitelist = userConfig.whitelist || '*';
+
+        return userConfig;
+    }
+
     return {
         setters: [],
         execute: function () {
             HOST_DOMAIN = 'https://localhost:4443';
+
+            //const HOST_DOMAIN =  'https://fzz.storage.googleapis.com';
+
             constants = {
                 HOST_DOMAIN: HOST_DOMAIN,
                 MIN_IMG_WIDTH: 201,
@@ -466,7 +486,8 @@ $__System.register('2', [], function (_export) {
                 CSS_URL: HOST_DOMAIN + '/plugin/css/plugin.css',
                 IFRAME_ID: 'fazzi',
                 INFO_URL: 'http://fazz.co',
-                LIBNAME: 'fzz'
+                LIBNAME: 'fzz',
+                USER_CONFIG: loadUserConfig()
             };
 
             _export('default', constants);
@@ -482,8 +503,8 @@ $__System.register('1', ['2'], function (_export) {
         var headTag = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.id = 'fzz-script';
-        script.setAttribute('data-fzz', '{"whitelist":"*"}');
+        //script.id = 'fzz-script';
+        //script.setAttribute('data-fzz', '{"whitelist":"*"}');
         script.src = url;
         script.onload = callback;
         script.onreadystatechange = function () {
@@ -501,7 +522,10 @@ $__System.register('1', ['2'], function (_export) {
         execute: function () {
             HOST_DOMAIN = constants.HOST_DOMAIN;
             URL = HOST_DOMAIN + '/b_plugin.js';
-            window.addEventListener('DOMContentLoaded', function () {
+
+            //const URL = `${HOST_DOMAIN}/fzz.min.js`;
+
+            console.log('HELLOOOOOO');window.addEventListener('DOMContentLoaded', function () {
                 getScript(URL, function () {
                     window.FZZ = { logList: [] };
                     window.FZZ.log = function (message) {

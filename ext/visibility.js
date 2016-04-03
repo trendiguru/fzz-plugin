@@ -69,7 +69,7 @@ function getStyle(obj, property) {
 }
  
 function isFazzDescendant(elem){
-    return elem.parentElement ? elem.parentElement.contains("fazz") : false
+    return (elem && elem.parentElement) ? elem.parentElement.classList.contains("fazz") : false
 }
 
 function visibleInPoint(x, y, obj, wndw){

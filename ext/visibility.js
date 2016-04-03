@@ -67,10 +67,16 @@ function getStyle(obj, property) {
         return obj.currentStyle[property];
     }
 }
+ 
+function isFazzDescendant(elem){
+    return elem.parentElement ? elem.parentElement.contains("fazz") : false
+}
 
 function visibleInPoint(x, y, obj, wndw){
     wndw = wndw || window;
- if (obj ===  wndw.document.elementFromPoint(x, y)){
+    let upperObj = wndw.document.elementFromPoint(x, y);
+    //Serey: if upper obj is the image itself or one of fuzz objects => the image is visible!!!
+    if (obj === upperObj || isFazzDescendant(upperObj)){
         return true;
     }
     return false;

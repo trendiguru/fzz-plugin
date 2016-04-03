@@ -6,7 +6,7 @@
     "scripts": {
 	   "start": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"&",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "bundle": "jspm bundle-sfx app/js/mobile.js app/b_mobile.js && jspm bundle-sfx app/js/desktop.js app/b_desktop.js && jspm bundle-sfx plugin/js/plugin.js b_plugin.js",
+        "bundle": "jspm bundle-sfx app/js/mobile.js app/b_mobile.js & jspm bundle-sfx app/js/desktop.js app/b_desktop.js & jspm bundle-sfx plugin/js/plugin.js b_plugin.js & wait",
         "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
         "deploy": "jspm bundle-sfx --minify app/js/mobile.js app/b_mobile.js && jspm bundle-sfx --minify app/js/desktop.js app/b_desktop.js && jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js"
     },

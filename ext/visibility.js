@@ -68,19 +68,15 @@ function getStyle(obj, property) {
     }
 }
  
-function isFazz(obj){
-    let ourParrent = obj.parentElement;
-    if (ourParrent.className === "fazz"){// here may me mistake in how i find the obj class.
-        return true;
-    } 
-    return false;
+function isFazzDescendant(elem){
+    return elem.parentElement ? elem.parentElement.contains("fazz") : false
 }
 
 function visibleInPoint(x, y, obj, wndw){
     wndw = wndw || window;
     let upperObj = wndw.document.elementFromPoint(x, y);
     //Serey: if upper obj is the image itself or one of fuzz objects => the image is visible!!!
-    if (obj === upperObj || isFazz(upperObj)){
+    if (obj === upperObj || isFazzDescendant(upperObj)){
         return true;
     }
     return false;

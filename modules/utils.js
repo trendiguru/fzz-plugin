@@ -38,7 +38,7 @@ function getParameterByName(name) {
 }
 
 function selectorMatches(el, selector) {
-    if(el === document) return ()=> true;
+    if(!(el instanceof Element)) return ()=> false;
     
     var p = Element.prototype;
     var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function (s) {
@@ -49,8 +49,12 @@ function selectorMatches(el, selector) {
 
 function getElementsToProcess(node) {
     node = node || document;
-
-    let parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
+    
+    
+    let parentElems = [];
+    if(node.querySelectorAll){
+        parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
+    }
     let allElems = Array.from(parentElems);
 
     if (selectorMatches(node, USER_CONFIG.whitelist) && node !== document) {

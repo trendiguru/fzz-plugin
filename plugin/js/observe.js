@@ -18,7 +18,7 @@ MUT.attrMut = [];
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
-    return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !node.classList.contains('fazz');
+    return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
 function observe (target, executeFunc, config = defaultConfig) {

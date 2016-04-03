@@ -10,8 +10,9 @@ function getScript(url, callback) {
     var headTag = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    //script.id = 'fzz-script';
-    //script.setAttribute('data-fzz', '{"whitelist":"*"}');
+    script.id = 'fzz-script';
+    script.setAttribute('data-fzz', '{"whitelist":"*"}');
+    //script.setAttribute('data-fzz', '{"whitelist":"section.image-gallery"}');
     script.src = url;
     script.onload = callback;
     script.onreadystatechange = function() {

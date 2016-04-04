@@ -3,62 +3,52 @@
 class Assemblage extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {index: [], images: []};
-        this.load();
+        this.state = {images: []};
     }
-    load () {
-        let images = [],
-            processes = this.props.src.length; 
-        this.props.src.forEach((source, i) => {
+    load (source) {
+        return new Promise((resolve, reject) => {
             let img = new Image();
             for (let key in source)
                 img[key] = source[key];
+            img.onerror = reject;
             img.onload = () => {
-                images[i] = img;
-                processes--;
-                if (!processes) {
-                    this.setState({images: images});
-                    this.index(this.props.col);
-                }
+                img.proportion = img.height / img.width;
+                let images = this.state.images;
+                images.push(img);
+                this.setState({images: images});
+                resolve();
             };
         });
     }
-    index (col) {
-        let index = [],
-            images = [];
-        this.state.images.forEach((img, i) => {
-            img.proportion = img.height / img.width;
-            img.index = i;
-            img.row = 0;
-            while (img.index - col >= 0) {
-                img.index -= col;
-                img.row++;
-            }
-            if (img.row)
-                img.top = index[img.row - 1][img.index].top + index[img.row - 1][img.index].proportion;
-            else
-                img.top = 0;
-            if (index[img.row] == undefined)
-                index[img.row] = [];
-            index[img.row][img.index] = img;
-            images[i] = img;
-        });
-        this.setState({index: index, images: images});
+    loadAll (i) {
+        if (i < this.props.src.length)
+            this.load(this.props.src[i]).then(() => this.loadAll(i + 1));
+        else if (typeof this.props.onMount === 'function')
+            this.props.onMount.call(this);
+    }
+    componentDidMount () {
+        this.loadAll.call(this, 0);
     }
     render () {
-        let ImageNodes;
-        if (this.state.images.length) {
-            ImageNodes = this.state.images.map((img, i) => {
-                let width = this.props.x / this.props.col;
-                return (
-                    <div key={i} style={{width: width, left: img.index * width, top: img.top * width, position: 'absolute'}}>
-                        {this.props.template(img)}
-                    </div>
-                );
-            });
-        }
-        return <div style={{position: 'relative'}}>{ImageNodes}</div>;
-    }
+        let index = [];
+        for (let i = 0; i < this.props.src.length / this.props.col; i++)
+            index.push([]);
+        let images = this.state.images.map((img, i) => {
+            img.pos = i % this.props.col;
+            img.row = Math.floor(i / this.props.col);
+            img.top = 0;
+            if (img.row) {
+                img.top += index[img.row - 1][img.pos].proportion;
+                if (img.row - 1) {
+                    img.top += index[img.row - 1][img.pos].top;
+                }
+            }
+            index[img.row][img.pos] = img;
+            img.width = document.body.clientWidth / this.props.col;
+            return <div key={i} style={{width: img.width, left: img.width * img.pos, top: img.top * img.width, position: 'absolute'}}>{this.props.template(img)}</div>;
+});
+return <div className="assemblage" style={{position: 'relative'}}>{images}</div>;
+}
 }
 
 export default Assemblage;

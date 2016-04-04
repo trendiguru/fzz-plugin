@@ -1,6 +1,6 @@
 /* globals React, ReactDOM */
 
-import domready from 'ext/domready';
+// import domready from 'ext/domready';
 import {getImageData} from 'modules/server';
 import {getParameterByName} from 'modules/utils';
 
@@ -14,7 +14,8 @@ import App from './app';
 
 /*------ RENDER ------*/
 
-let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), document.getElementById('main'));
+//let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), document.getElementById('main'));
+ReactDOM.render(React.createElement(App, {onMount: attachAnalytics}), document.getElementById('main'));
 
 /*------ RECIEVE DATA FROM SERVER ------*/
 
@@ -22,7 +23,11 @@ let imageURL = getParameterByName('imageURL');
 
 getImageData(imageURL).then(data => {
     console.log('got data');
-    app = ReactDOM.render(
+    //    app = ReactDOM.render(
+    //        React.createElement(App, {onMount: attachAnalytics, imageURL: imageURL, items: data.items}),
+    //        document.getElementById('main')
+    //    );
+    ReactDOM.render(
         React.createElement(App, {onMount: attachAnalytics, imageURL: imageURL, items: data.items}),
         document.getElementById('main')
     );
@@ -31,20 +36,11 @@ getImageData(imageURL).then(data => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
+    
+    analytics.initializeInApp();
+    analytics.track('App Loaded');
 
-//    analytics.initializeInApp();
-//
-//    let main = document.querySelector('div');
-//    let nav = document.querySelector('nav');
-//
-//    main.addEventListener('scroll', () => {analytics.track('Scrolled in App');});
-//
-//    [].forEach.call(nav.querySelectorAll('li'), tab => {
-//        tab.addEventListener('click', () => {analytics.track('Scrolled in App');});
-//    });
-//
-//    [].forEach.call(main.querySelectorAll('article'), article => {
-//        article.addEventListener('click', () => {analytics.track('Scrolled in App');});
-//    });
-
+    [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
+        a.addEventListener('click', () => analytics.track('Result Clicked'));
+    });
 }

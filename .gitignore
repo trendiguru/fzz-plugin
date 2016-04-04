@@ -1,5 +1,9 @@
 # Bundles #
 b_*
+*/run_ext.js
+fzz.min.js
+*.map
+*/*.map
 
 npm-debug.log
 
@@ -15,3 +19,6 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+fzz.min.js
+*.map
+run_ext.js

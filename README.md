@@ -1,24 +1,28 @@
 # README #
 
-The goal of this project is to create a framework that allows different UI’s and apps to be developed and integrates seamlessly and painlessly.
+The goal of this project is to create a framework that allows different UI’s and apps to be developed and integrated seamlessly and painlessly.
 
 * Plugin contains all the logic for loading on publisher websites and displaying a UI.
 * App contains the all the logic pertaining to the fzz application that pops up when the user clicks on the ui element
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Coming soon...
+
+### Workflow ###
+
+Once:
+- Load /extension/chrome as unpacked extension into Chrome.
+- npm run start
+
+After Every change:
+* npm run bundle
+* (If you made changes to HOST_DOMAIN or es6_run_exy.js):
+  * npm run bundle_chrome
+  * Reload extension at chrome://extensions
+* Reload web page 
+
 
 ### Contribution guidelines ###
 

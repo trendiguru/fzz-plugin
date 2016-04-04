@@ -40,22 +40,10 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    
-    console.log('AATTACH ALL THE ANALYTICS!');
     analytics.initializeInApp();
-    analytics.track('App Loaded');
-//
-//    let main = document.querySelector('div');
-//    let nav = document.querySelector('nav');
-//
-//    main.addEventListener('scroll', () => {analytics.track('Scrolled in App');});
-//
-//    [].forEach.call(nav.querySelectorAll('li'), tab => {
-//        tab.addEventListener('click', () => {analytics.track('Scrolled in App');});
-//    });
-//
-//    [].forEach.call(main.querySelectorAll('article'), article => {
-//        article.addEventListener('click', () => {analytics.track('Scrolled in App');});
-//    });
+    analytics.track('App Loaded');   
 
+    [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
+        a.addEventListener('click', () => analytics.track('Result Clicked'));
+    });
 }

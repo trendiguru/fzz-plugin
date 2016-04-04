@@ -16,9 +16,16 @@ MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
 
+let whiteList = [];
+let blackList = [];
+
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
+}
+
+function _isWhite(node){
+    return (whiteList.indexOf(node.className) !== -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
 function observe (target, executeFunc, config = defaultConfig) {
@@ -40,19 +47,19 @@ function observe (target, executeFunc, config = defaultConfig) {
             }
             //If in already exested object attribute was changed:
             if (mutation.type === 'attributes'){
+                let mutTarget = mutation.target;
                 //If src was changed (in image only):
-                if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
-                    //console.log('src mutation in obj: '+mutation.target.tagName );
-                    MUT.srcMut.push(mutation.target);
-                    executeFunc(mutation.target); 
+                if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
+                    MUT.srcMut.push(mutTarget);
+                    executeFunc(mutTarget); 
                 }
                 else {
                     //if backgroundImage was changed:
-                    let bckgndImg = mutation.target.style.backgroundImage;
+                    let bckgndImg = mutTarget.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutation.target)){
-                            MUT.attrMut.push(mutation.target);
-                            executeFunc(mutation.target);
+                        if (_objIsInteresting(mutTarget) || (whiteList && isWhite(mutTarget))){
+                            MUT.attrMut.push(mutTarget);
+                            executeFunc(mutTarget);
                         }
                     }
                 }
@@ -64,4 +71,19 @@ function observe (target, executeFunc, config = defaultConfig) {
     return observer;
 }
 
-export default observe;
+function customObserve(target, executeFunc, whitelist = null, config = defaultConfig){
+    if (!WhiteList){
+        observe(target, executeFunc, config = defaultConfig)
+    }else{
+        let config = {
+            childList: true,
+            subtree: true,
+        };
+        let observerGenerator = (target)=>{
+            observe(target, executeFunc);
+        };
+        observe(target, observerGenerator);
+    } 
+}
+
+export default customObserve;

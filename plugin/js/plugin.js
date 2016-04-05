@@ -5,7 +5,7 @@ import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
-import observe from './observe';
+import customObserve from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';

@@ -15,9 +15,10 @@ const MUT = window.MUT = window.MUT || {};
 MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
+const trackedTargets = window.trackedTargets || {};
 
-let whiteList = [];
-let blackList = [];
+let whiteList = undefined;
+let blackList = undefined;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
@@ -38,8 +39,8 @@ function observe (target, executeFunc, config = defaultConfig) {
                     
                     for (let el of allElems) {
                         if (_objIsInteresting(el)){
-                            //console.log('was added: '+el.tagName);
                             MUT.nodeMut.push(el);
+                            console.log('mutation was added: '+el.tagName);
                             executeFunc(el);
                         }
                     } 
@@ -57,7 +58,7 @@ function observe (target, executeFunc, config = defaultConfig) {
                     //if backgroundImage was changed:
                     let bckgndImg = mutTarget.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutTarget) || (whiteList && isWhite(mutTarget))){
+                        if (_objIsInteresting(mutTarget) || (whiteList!==undefined && isWhite(mutTarget))){
                             MUT.attrMut.push(mutTarget);
                             executeFunc(mutTarget);
                         }
@@ -71,8 +72,9 @@ function observe (target, executeFunc, config = defaultConfig) {
     return observer;
 }
 
-function customObserve(target, executeFunc, whitelist = null, config = defaultConfig){
-    if (!WhiteList){
+function customObserve(target, executeFunc, config = defaultConfig, whlist ){
+    let whList = whList || whiteList;
+    if (whList === undefined){
         observe(target, executeFunc, config = defaultConfig)
     }else{
         let config = {
@@ -80,6 +82,8 @@ function customObserve(target, executeFunc, whitelist = null, config = defaultCo
             subtree: true,
         };
         let observerGenerator = (target)=>{
+            trackedTargets.target.className = target;
+            console.log("create sub observer");
             observe(target, executeFunc);
         };
         observe(target, observerGenerator);

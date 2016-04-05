@@ -43,7 +43,7 @@ domready(function () {
         processElement(el);
     }
     
-    observe(document.body, processElement);
+    customObserve(document.body, processElement);
 });
 
 function processElement(el) {

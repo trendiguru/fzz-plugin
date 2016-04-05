@@ -15,7 +15,7 @@ const MUT = window.MUT = window.MUT || {};
 MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
-const trackedTargets = window.trackedTargets || {};
+const trackedTargets= window.trackedTargets = window.trackedTargets || {};
 
 let whiteList = undefined;
 let blackList = undefined;
@@ -38,7 +38,7 @@ function observe (target, executeFunc, config = defaultConfig) {
                     let allElems = getElementsToProcess(addedNode, USER_CONFIG.whitelist);
                     
                     for (let el of allElems) {
-                        if (_objIsInteresting(el)){
+                        if ((_objIsInteresting(el) && whiteList===undefined) || (whiteList!==undefined && _isWhite(el))){
                             MUT.nodeMut.push(el);
                             console.log('mutation was added: '+el.tagName);
                             executeFunc(el);
@@ -48,6 +48,7 @@ function observe (target, executeFunc, config = defaultConfig) {
             }
             //If in already exested object attribute was changed:
             if (mutation.type === 'attributes'){
+                console.log("attribute mutation");
                 let mutTarget = mutation.target;
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
@@ -58,7 +59,7 @@ function observe (target, executeFunc, config = defaultConfig) {
                     //if backgroundImage was changed:
                     let bckgndImg = mutTarget.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutTarget) || (whiteList!==undefined && isWhite(mutTarget))){
+                        if (_objIsInteresting(mutTarget)){
                             MUT.attrMut.push(mutTarget);
                             executeFunc(mutTarget);
                         }
@@ -72,9 +73,9 @@ function observe (target, executeFunc, config = defaultConfig) {
     return observer;
 }
 
-function customObserve(target, executeFunc, config = defaultConfig, whlist ){
-    let whList = whList || whiteList;
-    if (whList === undefined){
+function customObserve(target, executeFunc, config = defaultConfig, whList ){
+    let whiteList = whList || whiteList;
+    if (whList === undefined || whList === null){
         observe(target, executeFunc, config = defaultConfig)
     }else{
         let config = {
@@ -82,8 +83,8 @@ function customObserve(target, executeFunc, config = defaultConfig, whlist ){
             subtree: true,
         };
         let observerGenerator = (target)=>{
-            trackedTargets.target.className = target;
-            console.log("create sub observer");
+            trackedTargets[target.className] = target;
+            console.log("create sub observer "+executeFunc);
             observe(target, executeFunc);
         };
         observe(target, observerGenerator);

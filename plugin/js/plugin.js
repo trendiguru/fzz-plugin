@@ -43,7 +43,7 @@ domready(function () {
         processElement(el);
     }
     
-    customObserve(document.body, processElement);
+    customObserve(document.body, processElement, null,  ["post-content entry-content cf"]);
 });
 
 function processElement(el) {

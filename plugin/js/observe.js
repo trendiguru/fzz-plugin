@@ -73,22 +73,23 @@ function observe (target, executeFunc, config = defaultConfig) {
 let whiteList = ["body"];
 
 function watchForTgSourses(node, whiteList, executeFunc){
-    //the function obtains node, whiteList and execute function.
+    //the function obtains node, whiteList and executefunction.
     //1. scans all child objects of the obtainable Node.
-    //2. adds to it Observer (which listens to all mutations: add and attributes).
+    //2. adds to it Observer (which listens to all mutations: add and attributes) but only if them are in whiteList.
 
     //-----getElementsToProcess(node, whiteList) function gets node and list of selectors----------//
     // returns list of child objects of the obtainable node (include the node itself if it is "suitable" (in whiteList)), 
     // if whiteList is empty => returns empty list, 
     // if you track all page you need add a "body" selector to white list. in this case 
     // the function will return list with only document.body in it. 
-    // if a selector is "*" will return ALL objects 
+    // if a selector is "*" will return ALL objects.
     let tgSourses = getElementsToProcess(node, whiteList);
     for (let tgSourse of tgSourses){
         let elems = getElementsToProcess(tgSourse, ["*"]);
         for (let elem of elems){
             if (_objIsInteresting(el)){
                 executeFunc(elem);
+                MUT.nodeMut.push(elem);
             }
             // here we set an mutation observer for each tgSourse 
         Observe(tgSourse, 

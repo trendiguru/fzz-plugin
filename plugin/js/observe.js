@@ -82,16 +82,14 @@ function watchForTgSourses(node, whiteList, executeFunc){
     // if whiteList is empty => returns empty list, 
     // if you track all page you need add a "body" selector to white list. in this case 
     // the function will return list with only document.body in it. 
+    // if a selector is "*" will return ALL objects 
     let tgSourses = getElementsToProcess(node, whiteList);
     for (let tgSourse of tgSourses){
-        // the exstractInterestingElements function  obtains an 
-        //element (in this case we already know that this object is in white list).
-        //and returns all its child elements which contains image or beckgroundImage.
-        // that means that all filter which previously we used inside mutation observer 
-        // by now will be outside (in utils i think) or perhaps we may create a new module for these functions.
-        let elems = exstractInterestingElements(tgSourse);
+        let elems = getElementsToProcess(tgSourse, ["*"]);
         for (let elem of elems){
-            executeFunc(elem);
+            if (_objIsInteresting(el)){
+                executeFunc(elem);
+            }
             // here we set an mutation observer for each tgSourse 
         Observe(tgSourse, 
                 {childList: true, 
@@ -103,7 +101,6 @@ function watchForTgSourses(node, whiteList, executeFunc){
 
     }
 }
- function 
 
 
 

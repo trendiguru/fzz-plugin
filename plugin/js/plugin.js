@@ -43,7 +43,7 @@ domready(function () {
         processElement(el);
     }
     
-    customObserve(document.body, processElement, null,  ["post-content entry-content cf"]);
+    customObserve(document.body, processElement, null,  ["slide-Image"]);
 });
 
 function processElement(el) {

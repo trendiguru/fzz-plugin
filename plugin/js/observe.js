@@ -15,18 +15,10 @@ const MUT = window.MUT = window.MUT || {};
 MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
-const trackedTargets= window.trackedTargets = window.trackedTargets || {};
-
-let whiteList = undefined;
-let blackList = undefined;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
-}
-
-function _isWhite(node){
-    return (whiteList.indexOf(node.className) !== -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
 function observe (target, executeFunc, config = defaultConfig) {
@@ -34,34 +26,36 @@ function observe (target, executeFunc, config = defaultConfig) {
         for (let mutation of mutations) {
             //If object was added To DOM:
             if(mutation.type === 'childList'){
+                // for(let addedNode of mutation.addedNodes){
+                //     let allElems = getElementsToProcess(addedNode, USER_CONFIG.whitelist);   
+                //     for (let el of allElems) {
+                //         if (_objIsInteresting(el)){
+                //             //console.log('was added: '+el.tagName);
+                //             MUT.nodeMut.push(el);
+                //             executeFunc(el);
+                //         }
+                //     } 
+                // }
+                //executeFunc(mutation.addedNodes);
                 for(let addedNode of mutation.addedNodes){
-                    let allElems = getElementsToProcess(addedNode, USER_CONFIG.whitelist);
-                    
-                    for (let el of allElems) {
-                        if ((_objIsInteresting(el) && whiteList===undefined) || (whiteList!==undefined && _isWhite(el))){
-                            MUT.nodeMut.push(el);
-                            console.log('mutation was added: '+el.tagName);
-                            executeFunc(el);
-                        }
-                    } 
+                    watchForTgSourses(addedNode, whiteList, executeFunc){
                 }
             }
             //If in already exested object attribute was changed:
             if (mutation.type === 'attributes'){
-                console.log("attribute mutation");
-                let mutTarget = mutation.target;
                 //If src was changed (in image only):
-                if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
-                    MUT.srcMut.push(mutTarget);
-                    executeFunc(mutTarget); 
+                if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
+                    //console.log('src mutation in obj: '+mutation.target.tagName );
+                    MUT.srcMut.push(mutation.target);
+                    executeFunc(mutation.target); 
                 }
                 else {
                     //if backgroundImage was changed:
-                    let bckgndImg = mutTarget.style.backgroundImage;
+                    let bckgndImg = mutation.target.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutTarget)){
-                            MUT.attrMut.push(mutTarget);
-                            executeFunc(mutTarget);
+                        if (_objIsInteresting(mutation.target)){
+                            MUT.attrMut.push(mutation.target);
+                            executeFunc(mutation.target);
                         }
                     }
                 }
@@ -73,22 +67,46 @@ function observe (target, executeFunc, config = defaultConfig) {
     return observer;
 }
 
-function customObserve(target, executeFunc, config = defaultConfig, whList ){
-    let whiteList = whList || whiteList;
-    if (whList === undefined || whList === null){
-        observe(target, executeFunc, config = defaultConfig)
-    }else{
-        let config = {
-            childList: true,
-            subtree: true,
-        };
-        let observerGenerator = (target)=>{
-            trackedTargets[target.className] = target;
-            console.log("create sub observer "+executeFunc);
-            observe(target, executeFunc);
-        };
-        observe(target, observerGenerator);
-    } 
-}
 
-export default customObserve;
+//----------------------test--------------------------------
+
+let whiteList = ["body"];
+
+function watchForTgSourses(node, whiteList, executeFunc){
+    //the function obtains node, whiteList and execute function.
+    //1. scans all child objects of the obtainable Node.
+    //2. adds to it Observer (which listens to all mutations: add and attributes).
+
+    //-----getElementsToProcess(node, whiteList) function gets node and list of selectors----------//
+    // returns list of child objects of the obtainable node (include the node itself if it is "suitable" (in whiteList)), 
+    // if whiteList is empty => returns empty list, 
+    // if you track all page you need add a "body" selector to white list. in this case 
+    // the function will return list with only document.body in it. 
+    let tgSourses = getElementsToProcess(node, whiteList);
+    for (let tgSourse of tgSourses){
+        // the exstractInterestingElements function  obtains an 
+        //element (in this case we already know that this object is in white list).
+        //and returns all its child elements which contains image or beckgroundImage.
+        // that means that all filter which previously we used inside mutation observer 
+        // by now will be outside (in utils i think) or perhaps we may create a new module for these functions.
+        let elems = exstractInterestingElements(tgSourse);
+        for (let elem of elems){
+            executeFunc(elem);
+            // here we set an mutation observer for each tgSourse 
+        Observe(tgSourse, 
+                {childList: true, 
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['src', 'style']},
+                executeFunc);// execute function is differen for attributes and for adding now:((((( try think how to repair it!!!!
+        }
+
+    }
+}
+ function 
+
+
+
+//----------------------------------------------------------
+
+export default observe;

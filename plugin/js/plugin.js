@@ -5,7 +5,7 @@ import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
-import customObserve from './observe';
+import mutObserver from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
@@ -35,21 +35,11 @@ domready(function () {
     loadStyle();
     console.log('FZZ: domready');
     document.body.appendChild(createIframe());
-    let elementsToProcess = getElementsToProcess();
-    
     console.log('FZZ: Will check ' + elementsToProcess.size + ' items.');
-    
-    // for (let el of elementsToProcess) {
-    //     processElement(el);
-    // }
-    
-    // customObserve(document.body, processElement, null,  ["slide-Image"]);
-
-    watchForTgSourses(document.body, processElement);
-    observe(document.body, {
-                childList: true,
-                subtree: true
-            }, processElement);
+    mutObserver.scanForever(document.body, processElement);
+    mutObserver.observe(document.body, 
+            {childList: true,ubtree: true},
+            processElement);
 
 function processElement(el) {
     return Promise.resolve(el)

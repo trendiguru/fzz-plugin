@@ -16,14 +16,14 @@ MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
 
-let MutObserver = null;
+let mutObserver = null;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
-function observe (target, executeFunc, config = defaultConfig) {
+mutObserver = observe (target, executeFunc, config = defaultConfig) => {
     let handleMutations = function (mutations) {
         for (let mutation of mutations) {
             //If object was added To DOM:
@@ -56,10 +56,10 @@ function observe (target, executeFunc, config = defaultConfig) {
     let observer = new MutationObserver(handleMutations);
     observer.observe(target, config);
     return observer;
-}
+};
 
 
-function scanForever(node, executeFunc) {
+mutObserver = scanForever(node, executeFunc) => {
     node = node || document.body;
     
     let parentElems = [];
@@ -101,6 +101,6 @@ function scanForever(node, executeFunc) {
         }
     }
     //return new Set(allElems);
-}
+};
 
-export default observe;
+export default mutObserver;

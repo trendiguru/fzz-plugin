@@ -16,6 +16,8 @@ MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
 
+let MutObserver = null;
+
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
@@ -26,19 +28,8 @@ function observe (target, executeFunc, config = defaultConfig) {
         for (let mutation of mutations) {
             //If object was added To DOM:
             if(mutation.type === 'childList'){
-                // for(let addedNode of mutation.addedNodes){
-                //     let allElems = getElementsToProcess(addedNode, USER_CONFIG.whitelist);   
-                //     for (let el of allElems) {
-                //         if (_objIsInteresting(el)){
-                //             //console.log('was added: '+el.tagName);
-                //             MUT.nodeMut.push(el);
-                //             executeFunc(el);
-                //         }
-                //     } 
-                // }
-                //executeFunc(mutation.addedNodes);
                 for(let addedNode of mutation.addedNodes){
-                    watchForTgSourses(addedNode, whiteList, executeFunc){
+                    scanForever(addedNode, executeFunc){
                 }
             }
             //If in already exested object attribute was changed:
@@ -68,43 +59,48 @@ function observe (target, executeFunc, config = defaultConfig) {
 }
 
 
-//----------------------test--------------------------------
-
-let whiteList = ["body"];
-
-function watchForTgSourses(node, whiteList, executeFunc){
-    //the function obtains node, whiteList and executefunction.
-    //1. scans all child objects of the obtainable Node.
-    //2. adds to it Observer (which listens to all mutations: add and attributes) but only if them are in whiteList.
-
-    //-----getElementsToProcess(node, whiteList) function gets node and list of selectors----------//
-    // returns list of child objects of the obtainable node (include the node itself if it is "suitable" (in whiteList)), 
-    // if whiteList is empty => returns empty list, 
-    // if you track all page you need add a "body" selector to white list. in this case 
-    // the function will return list with only document.body in it. 
-    // if a selector is "*" will return ALL objects.
-    let tgSourses = getElementsToProcess(node, whiteList);
-    for (let tgSourse of tgSourses){
-        let elems = getElementsToProcess(tgSourse, ["*"]);
-        for (let elem of elems){
-            if (_objIsInteresting(el)){
-                executeFunc(elem);
-                MUT.nodeMut.push(elem);
-            }
-            // here we set an mutation observer for each tgSourse 
-        Observe(tgSourse, 
-                {childList: true, 
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['src', 'style']},
-                executeFunc);// execute function is differen for attributes and for adding now:((((( try think how to repair it!!!!
-        }
-
+function scanForever(node, executeFunc) {
+    node = node || document.body;
+    
+    let parentElems = [];
+    if(node.querySelectorAll){
+        parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
     }
+
+    let allElems = Array.from(parentElems);
+
+    if (selectorMatches(node, USER_CONFIG.whitelist) && node !== document && node !== document.body) {
+        allElems.push(node);
+    }
+
+    if (USER_CONFIG.whitelist !== '*') {
+        for (let el of parentElems) {
+            //add attribute observer
+            // If notParentWhiteObject => Then 
+            observe(el, 
+                {subtree: true,
+                 attributes: true,
+                 attributeFilter: ['src', 'style']},executeFunc);
+            if(el.querySelectorAll){
+                allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
+            }
+        }
+    }
+    // if whiteList is empty => listen to all document.body
+    else{
+        observe(node, 
+            {subtree: true,
+             attributes: true,
+             attributeFilter: ['src', 'style']},executeFunc);
+    }
+    for (let el of allElems){
+        // check el before executing.
+        if (_objIsInteresting(el)){
+            executeFunc(elem);
+            MUT.nodeMut.push(elem);
+        }
+    }
+    //return new Set(allElems);
 }
-
-
-
-//----------------------------------------------------------
 
 export default observe;

@@ -39,12 +39,17 @@ domready(function () {
     
     console.log('FZZ: Will check ' + elementsToProcess.size + ' items.');
     
-    for (let el of elementsToProcess) {
-        processElement(el);
-    }
+    // for (let el of elementsToProcess) {
+    //     processElement(el);
+    // }
     
-    customObserve(document.body, processElement, null,  ["slide-Image"]);
-});
+    // customObserve(document.body, processElement, null,  ["slide-Image"]);
+
+    watchForTgSourses(document.body, processElement);
+    observe(document.body, {
+                childList: true,
+                subtree: true
+            }, processElement);
 
 function processElement(el) {
     return Promise.resolve(el)

@@ -1,4 +1,4 @@
-import {getElementsToProcess} from 'modules/utils';
+import {selectorMatches} from 'modules/utils';
 import constants from 'constants';
 const {USER_CONFIG} = constants;
 
@@ -93,6 +93,7 @@ mutObserver.scanForever = (node, executeFunc) => {
              attributes: true,
              attributeFilter: ['src', 'style']},executeFunc);
     }
+    console.log('FZZ: Will check ' + allElems.size + ' items.');
     for (let el of allElems){
         // check el before executing.
         if (_objIsInteresting(el)){

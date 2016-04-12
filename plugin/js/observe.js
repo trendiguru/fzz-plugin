@@ -16,14 +16,12 @@ MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
 
-let mutObserver = {};
-
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
-mutObserver.observe = (target, executeFunc, config = defaultConfig) => {
+let observe = (target, executeFunc, config = defaultConfig) => {
     let handleMutations = function (mutations) {
         for (let mutation of mutations) {
             //If object was added To DOM:
@@ -54,12 +52,13 @@ mutObserver.observe = (target, executeFunc, config = defaultConfig) => {
         }
     };
     let observer = new MutationObserver(handleMutations);
+    console.log(config);
     observer.observe(target, config);
     return observer;
 };
 
 
-mutObserver.scanForever = (node, executeFunc) => {
+let scanForever = (node, executeFunc) => {
     node = node || document.body;
     
     let parentElems = [];
@@ -88,20 +87,20 @@ mutObserver.scanForever = (node, executeFunc) => {
     }
     // if whiteList is empty => listen to all document.body
     else{
-        observe(node, 
+        observe(node,executeFunc, 
             {subtree: true,
              attributes: true,
-             attributeFilter: ['src', 'style']},executeFunc);
+             attributeFilter: ['src', 'style']});
     }
-    console.log('FZZ: Will check ' + allElems.size + ' items.');
+    console.log('FZZ: Will check ' + allElems.length + ' items.');
     for (let el of allElems){
         // check el before executing.
         if (_objIsInteresting(el)){
-            executeFunc(elem);
-            MUT.nodeMut.push(elem);
+            executeFunc(el);
+            MUT.nodeMut.push(el);
         }
     }
     //return new Set(allElems);
 };
 
-export default mutObserver;
+export  {scanForever, observe};

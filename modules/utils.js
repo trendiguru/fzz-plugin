@@ -46,4 +46,4 @@ function selectorMatches(el, selector) {
     };
     return f.call(el, selector);
 }
-export {entries, values, delay, promiseWithTimeout, getParameterByName, getElementsToProcess};
+export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches};

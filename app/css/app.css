@@ -33,7 +33,7 @@ body {
 
 main {
     width: 66%;
-    height: calc(100% - 5em);
+    height: calc(100% - 3em);
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -168,6 +168,7 @@ nav ul li {
     font-size: 1.2em;
     cursor: pointer;
     text-align: center;
+    text-transform: capitalize;
 }
 
 nav ul li.select {
@@ -255,10 +256,15 @@ nav ul li.select {
 
 footer {
     width: calc(66% - 2em);
+    overflow: hidden;
     padding: .5em 1em;
-    background: #fff;
     position: absolute;
     text-align: right;
     bottom: 0;
     right: 0;
+    z-index: 100;
+}
+
+footer img {
+    height: 2em;
 }

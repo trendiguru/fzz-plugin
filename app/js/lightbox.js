@@ -8,7 +8,11 @@ class Lightbox extends React.Component {
         return (
             <div id="lightbox">
                 {this.props.children}
-                <footer>Powered by Fazz™</footer>
+                <footer>
+                    <a href="fazz.co">
+                        <img src="img/fazz_trump.svg" />
+                    </a>
+                </footer>
             </div>
         );
     }

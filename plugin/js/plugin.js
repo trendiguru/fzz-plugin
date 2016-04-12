@@ -40,6 +40,7 @@ domready(function () {
     mutObserver.observe(document.body, 
             {childList: true,ubtree: true},
             processElement);
+}
 
 function processElement(el) {
     return Promise.resolve(el)

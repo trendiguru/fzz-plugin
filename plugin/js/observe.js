@@ -16,20 +16,20 @@ MUT.srcMut = [];
 MUT.nodeMut = [];
 MUT.attrMut = [];
 
-let mutObserver = null;
+let mutObserver = {};
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
-mutObserver = observe (target, executeFunc, config = defaultConfig) => {
+mutObserver.observe = (target, executeFunc, config = defaultConfig) => {
     let handleMutations = function (mutations) {
         for (let mutation of mutations) {
             //If object was added To DOM:
             if(mutation.type === 'childList'){
                 for(let addedNode of mutation.addedNodes){
-                    scanForever(addedNode, executeFunc){
+                    scanForever(addedNode, executeFunc);
                 }
             }
             //If in already exested object attribute was changed:
@@ -59,7 +59,7 @@ mutObserver = observe (target, executeFunc, config = defaultConfig) => {
 };
 
 
-mutObserver = scanForever(node, executeFunc) => {
+mutObserver.scanForever = (node, executeFunc) => {
     node = node || document.body;
     
     let parentElems = [];

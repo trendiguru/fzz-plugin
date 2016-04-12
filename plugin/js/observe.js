@@ -27,6 +27,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
             //If object was added To DOM:
             if(mutation.type === 'childList'){
                 for(let addedNode of mutation.addedNodes){
+                    console.log("added new node to document: "+addedNode);
                     scanForever(addedNode, executeFunc);
                 }
             }
@@ -76,10 +77,9 @@ let scanForever = (node, executeFunc) => {
         for (let el of parentElems) {
             //add attribute observer
             // If notParentWhiteObject => Then 
-            observe(el, 
+            observe(el,executeFunc, 
                 {subtree: true,
-                 attributes: true,
-                 attributeFilter: ['src', 'style']},executeFunc);
+                 attributes: true});
             if(el.querySelectorAll){
                 allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
             }

@@ -75,7 +75,7 @@ function processElement(el) {
 
 function TGImage(elem, url) {
     if (elem.nodeName == 'IMG') {
-        this.url = url || elem.src;
+        this.url = url || elem.src || (location.origin + elem.srcset);
     } else {
         //TODO: Get the size if possible
         this.url = url || getBackgroundImage(elem);

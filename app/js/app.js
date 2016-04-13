@@ -54,9 +54,14 @@ class App extends React.Component {
             });
             return (
                 <Lightbox>
-                    {(this.props.close ? <aside><button id="close" onClick={this.props.close}>x</button></aside> : '')}
                     <aside style={{backgroundImage: 'url("' + this.props.imageURL + '")'}}></aside>
-                    <TabView>{CategoryNodes}</TabView>
+                    <TabView
+                        nav={
+                            <aside>
+                                {(this.props.close ? <button id="close" onClick={this.props.close}><i className="md-icon">cancel</i></button> : '')}
+                            </aside>
+                        }
+                        >{CategoryNodes}</TabView>
                 </Lightbox>
             );
         } else {

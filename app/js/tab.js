@@ -28,10 +28,13 @@ class TabView extends React.Component {
         });
         return (
             <div>
-                <nav><ul>
-                    {TitleNodes}
-                    <div id="indicator" style={{width: 100 / TabNodes.length + '%', left: this.state.selected / TabNodes.length * 100 + '%'}}></div>
-                    </ul></nav>
+                <nav>
+                    <ul>
+                        {TitleNodes}
+                        <div id="indicator" style={{width: 100 / TabNodes.length + '%', left: this.state.selected / TabNodes.length * 100 + '%'}}></div>
+                    </ul>
+                    {this.props.nav}
+                </nav>
                 <main ref="main">{TabNodes}</main>
             </div>
         );

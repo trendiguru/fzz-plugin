@@ -5,7 +5,7 @@ let nginx = nginx || {
     trackingFields: {
         ver: '0.1'
     },
-    serverUrl: '//104.154.40.165/tr/web?'
+    serverUrl: '//track.trendi.guru/tr/web?'
 };
 
 nginx.load = function () {

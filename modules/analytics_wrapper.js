@@ -7,9 +7,9 @@ import constants from 'constants';
 const {HOST_DOMAIN} = constants;
 
 const analyticsLibs = {
+    nginx: nginx,
     ga: ga_wrap,
-    mp: mp_wrap,
-    nginx: nginx
+    mp: mp_wrap
 };
 
 
@@ -29,14 +29,10 @@ analytics.getClientId = function () {
     return a.inited
         .then(a.getClientId)
         .then(clientId=>{fzz_id = clientId; return clientId;});
-    
-    
-    //return Promise.resolve('TEST_ID_123');
 };
 
 
 analytics._init = function (clientId) {
-    console.log('Reached _init');
     for (let a of values(analyticsLibs)) {
         if(!a.hasOwnProperty('inited')){
             a.inited = a.loaded.then(a.init(clientId));
@@ -47,22 +43,17 @@ analytics._init = function (clientId) {
 analytics.initializeInApp = function () {
     analytics.inited = analytics.getClientId().then(clientId=>{
         analytics._init(clientId);
-        console.log('App got id, will post: ' + fzz_id);
         window.parent.postMessage({
             fzz_id: fzz_id
         }, '*');
     });
 };
 
-analytics.initializeInPublisher = function () {
-//    analytics.inited = new Promise(resolve => {
-//        analytics.getClientId().then(analytics._init).then(resolve);
-//    });
-    
+analytics.initializeInPublisher = function () {    
     let publisherReceivedAppMsg = new Promise((resolve) => {
         window.addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {
-                console.log(`Right origin!`);
+                //console.log(`Right origin!`);
                 if (msg.data !== undefined && msg.data.fzz_id) {
                     fzz_id = msg.data.fzz_id;
                     resolve(fzz_id);

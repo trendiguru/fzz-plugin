@@ -58,7 +58,7 @@ class App extends React.Component {
                     <TabView
                         nav={
                             <aside>
-                                {(this.props.close ? <button id="close" onClick={this.props.close}><i className="md-icon">cancel</i></button> : '')}
+                                {(this.props.close ? <button id="close" onClick={this.props.close}><i className="md-icon">close</i></button> : '')}
                             </aside>
                         }
                         >{CategoryNodes}</TabView>

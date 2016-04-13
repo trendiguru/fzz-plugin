@@ -26,12 +26,21 @@ body {
     z-index: 100;
 }
 
-#lightbox #logo {
-    height: 2em;
+#credit {
+    width: 6em;
     position: absolute;
-    top: 1em;
-    left: 1em;
+    bottom: 1em;
+    right: 1em;
+    text-decoration: none;
+    font-size: .8em;
     z-index: 100;
+    text-align: center;
+}
+
+#credit img {
+    height: 3em;
+    display: block;
+    margin: .5em auto;
 }
 
 #lightbox > aside {
@@ -103,7 +112,7 @@ section a span {
 
 .price {
     font-size: 1.75em;
-    font-weight: 600;
+    font-weight: 400;
     font-family: Baskerville, serif;
     margin-right: .25em;
     display: block;
@@ -164,6 +173,7 @@ nav ul {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    position: relative;
 }
 
 nav ul li {
@@ -181,11 +191,12 @@ nav ul li {
 
 nav ul li.select {
     font-weight: bold;
+    color: #6857B2;
 }
 
 #indicator {
     height: 2px;
-    background: #000;
+    background: #6857B2;
     position: absolute;
     bottom: 0;
     -webkit-transition: left .4s;
@@ -228,7 +239,7 @@ nav ul li.select {
     height: 4px;
     overflow: hidden;
     position: relative;
-    background: purple;
+    background: #6857B2;
 }
 
 #loader div {

@@ -5,7 +5,9 @@ class Tab extends React.Component {
         super(props);
     }
     render () {
-        return <section className={(this.props.index === this.props.selected ? 'select' : '')} style={{left: (this.props.index - this.props.selected) * 100 + '%'}}>{this.props.children}</section>;
+        return <section
+                   style={{left: (this.props.index - this.props.selected) * 100 + '%'}}
+                   >{this.props.children}</section>;
     }
 }
 
@@ -13,6 +15,7 @@ class TabView extends React.Component {
     constructor (props) {
         super(props);
         this.state = {selected: 0};
+
     }
     select (i) {
         this.setState({selected: i});
@@ -20,7 +23,7 @@ class TabView extends React.Component {
     render () {
         let TitleNodes = [];
         let TabNodes = this.props.children.map((tab, i) => {
-            TitleNodes.push(<li key={i} className={(i === this.state.selected ? 'select' : '')} onClick={this.select.bind(this, i)}>{tab.props.title}</li>);
+            TitleNodes.push(<li key={i} onClick={this.select.bind(this, i)}>{tab.props.title}</li>);
             return <Tab key={i} index ={i} selected={this.state.selected}>{tab.props.children}</Tab>;
         });
         return (
@@ -29,7 +32,7 @@ class TabView extends React.Component {
                     {TitleNodes}
                     <div id="indicator" style={{width: 100 / TabNodes.length + '%', left: this.state.selected / TabNodes.length * 100 + '%'}}></div>
                     </ul></nav>
-                <main>{TabNodes}</main>
+                <main ref="main" onScroll={this.scroll.bind(this)}>{TabNodes}</main>
             </div>
         );
     }

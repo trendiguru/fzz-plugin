@@ -4,6 +4,11 @@ body {
     margin: 0;
 }
 
+.md-icon {
+    font-family: 'Material Icons';
+    font-style: normal;
+}
+
 #shadow {
     width: 100%;
     height: 100%;
@@ -18,6 +23,14 @@ body {
     position: fixed;
     top: 5em;
     left: 5em;
+    z-index: 100;
+}
+
+#lightbox #logo {
+    height: 2em;
+    position: absolute;
+    top: 1em;
+    left: 1em;
     z-index: 100;
 }
 
@@ -90,8 +103,8 @@ section a span {
 
 .price {
     font-size: 1.75em;
-    font-weight: 400;
-    font-family: 'Libre Baskerville', serif;
+    font-weight: 600;
+    font-family: Baskerville, serif;
     margin-right: .25em;
     display: block;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)
@@ -132,7 +145,7 @@ nav aside button {
     font: inherit;
     font-size: 1.5em;
     border: none;
-    padding: .6em;
+    padding: .4em;
     -webkit-transition: background .25s, color .25s;
     transition: background .25s, color .25s;
     cursor: pointer;
@@ -248,18 +261,3 @@ nav ul li.select {
 #loader div:nth-child(5) {-webkit-animation-duration: 2.3s;animation-duration: 2.3s;}
 #loader div:nth-child(6) {-webkit-animation-duration: 2.5s;animation-duration: 2.5s;}
 #loader div:nth-child(7) {-webkit-animation-duration: 2.7s;animation-duration: 2.7s;}
-
-footer {
-    width: calc(66% - 2em);
-    overflow: hidden;
-    padding: .5em 1em;
-    position: absolute;
-    text-align: right;
-    bottom: 0;
-    right: 0;
-    z-index: 100;
-}
-
-footer img {
-    height: 2em;
-}

@@ -22,14 +22,18 @@ nginx.init = function (userId) {
     });
 };
 
-nginx.track = function (event) {
+nginx.track = function (event, properties) {
     var fields = '';
     var rv = Math.floor(Math.random() * 1000000000);
+    
+    for(let key of Object.keys(properties)){
+        nginx.trackingFields[key] = properties[key];
+    }
 
     for (var key in nginx.trackingFields) {
         var attrName = key;
         var attrValue = nginx.trackingFields[key];
-        console.log(attrName + ' : ' + attrValue);
+        //console.log(attrName + ' : ' + attrValue);
         fields += '&' + attrName + '=' + encodeURIComponent(attrValue);
     }
 

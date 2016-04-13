@@ -15,10 +15,10 @@ import App from './app';
 
 function close () {
     window.parent.postMessage('hide', '*');
-    app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+    window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
 }
 
-let app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
 
 document.getElementById('shadow').addEventListener('click', close);
 
@@ -26,13 +26,13 @@ document.getElementById('shadow').addEventListener('click', close);
 
 window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
-    if (app.props.imageURL !== msg.data.imageURL) {
+    if (window.app.props.imageURL !== msg.data.imageURL) {
         getImageData(msg.data.imageURL).then(data => {
-            app = ReactDOM.render(
+            window.app = ReactDOM.render(
                 React.createElement(App, {onMount: attachAnalytics, close: close, imageURL: msg.data.imageURL, items: data.items}),
                 document.getElementById('main')
             );
-            console.log(app.props);
+            console.log(window.app.props);
         });
     }
 });

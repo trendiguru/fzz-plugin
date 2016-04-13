@@ -32,7 +32,7 @@ class TabView extends React.Component {
                     {TitleNodes}
                     <div id="indicator" style={{width: 100 / TabNodes.length + '%', left: this.state.selected / TabNodes.length * 100 + '%'}}></div>
                     </ul></nav>
-                <main ref="main" onScroll={this.scroll.bind(this)}>{TabNodes}</main>
+                <main ref="main">{TabNodes}</main>
             </div>
         );
     }

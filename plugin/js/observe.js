@@ -1,5 +1,6 @@
 import {selectorMatches} from 'modules/utils';
 import constants from 'constants';
+import {MUT} from 'modules/devTools';
 const {USER_CONFIG} = constants;
 
 
@@ -11,10 +12,7 @@ const defaultConfig = {
     attributeFilter: ['src', 'style']
 };
 
-const MUT = window.MUT = window.MUT || {};
-MUT.srcMut = [];
-MUT.nodeMut = [];
-MUT.attrMut = [];
+MUT.active = true;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
@@ -36,7 +34,9 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
                     //console.log('src mutation in obj: '+mutation.target.tagName );
-                    MUT.srcMut.push(mutation.target);
+                    //MUT.srcMut.push(mutation.target);
+                    MUT.set(mutation.target, "src");
+
                     executeFunc(mutation.target); 
                 }
                 else {
@@ -44,7 +44,8 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                     let bckgndImg = mutation.target.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
                         if (_objIsInteresting(mutation.target)){
-                            MUT.attrMut.push(mutation.target);
+                            //MUT.attrMut.push(mutation.target);
+                            MUT.set(mutation.target, "attribute");
                             executeFunc(mutation.target);
                         }
                     }
@@ -97,7 +98,8 @@ let scanForever = (node, executeFunc) => {
         // check el before executing.
         if (_objIsInteresting(el)){
             executeFunc(el);
-            MUT.nodeMut.push(el);
+            //MUT.nodeMut.push(el);
+            MUT.set(el, "node");
         }
     }
     //return new Set(allElems);

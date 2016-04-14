@@ -3,14 +3,41 @@
 //TODO: add to this object also FZZ object and MUT object.
 const devTools = window.devTools = window.devTools || {};
 
-devTools.markImages = {
-	active: true,
+
+let MUT = devTools.MUT = {
+	active: false,
+	srcMut: [],
+	nodeMut: [],
+	attrMut: [],
+	mainObserver: [],
+	observers: [],
+	set: (obj, mType)=>{
+		if (this.active === true){
+			if (mType === "node"){
+				this.nodeMut.push(obj);
+			}
+			if (mType === "attribute"){
+				this.attrMut.push(obj);
+			}
+			if (mType === "src"){
+				this.srcMut.push(obj);
+			}
+			if (mType === "mainObserver"){
+				this.mainObserver.push(obj);
+			}
+			if (mType === "observer"){
+				this.observer.push(obj);
+			}
+		}
+	}
+};
+
+
+let MARK = devTools.markImages = {
+	active: false,
 	relevantImgsColor: "Red",
 	irrelevantImgsColor: "green",
-	irrelevantElementsColor: "black", 
-	relevantImgs: [],
-	irrelevantImgs: [],
-	irrelevantElements: [],
+	irrelevantElementsColor: "black",
 	set: (img, mType) => {
 		if (this.active === true){
 			img.style.opacity = "0.2";
@@ -28,30 +55,7 @@ devTools.markImages = {
 };
 
 
-devTools.MUT = {
-	active: true,
-	srcMut: [],
-	nodeMut: [],
-	attrMut: [],
-	mainObserver: {},
-	observers: {},
-	set: (obj, mType)=>{
-		if (this.active === true){
-			if (mType === "node"){
-				this.nodeMut.push(obj);
-			}
-			if (mType === "attribute"){
-				this.attrMut.push(obj);
-			}
-			if (mType === "src"){
-				this.srcMut.push(obj);
-			}
-		}
-	}
-};
-
-
-devTools.FZZ = {
+let FZZ = devTools.FZZ = {
 	active: false;
 	FZZ.relevantImgs: {},
 	FZZ.irrelevantImgs: {},
@@ -75,4 +79,4 @@ devTools.FZZ = {
 
 
 
-export {devTools};
+export {MUT, FZZ, MARK};

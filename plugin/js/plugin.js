@@ -14,7 +14,7 @@ import {FZZ} from 'modules/devTools';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 
-FZZ.active = false;
+FZZ.active = true;
 
 analytics.initializeInPublisher();
 analytics.track('Page Hit');
@@ -62,7 +62,7 @@ function processElement(el) {
                 FZZ.set(irrelevantImg, irrelevantImg.url, 'irrelevantImgs', true);
             } else {
                 //logIrrelevant(irrelevantImg);
-                FZZ.set(irrelevantImg, "empty", "irrelevantElements", true);
+                FZZ.set(irrelevantImg, "empty", "irrelevantElements", );
             }
         });
 }

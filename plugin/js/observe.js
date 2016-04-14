@@ -34,9 +34,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
                     //console.log('src mutation in obj: '+mutation.target.tagName );
-                    //MUT.srcMut.push(mutation.target);
                     MUT.set(mutation.target, "src");
-
                     executeFunc(mutation.target); 
                 }
                 else {
@@ -44,7 +42,6 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                     let bckgndImg = mutation.target.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
                         if (_objIsInteresting(mutation.target)){
-                            //MUT.attrMut.push(mutation.target);
                             MUT.set(mutation.target, "attribute");
                             executeFunc(mutation.target);
                         }
@@ -88,17 +85,17 @@ let scanForever = (node, executeFunc) => {
     }
     // if whiteList is empty => listen to all document.body
     else{
-        observe(node,executeFunc, 
+        let mObserver = observe(node,executeFunc, 
             {subtree: true,
              attributes: true,
              attributeFilter: ['src', 'style']});
+        MUT.set(mObserver, "observer"); 
     }
     console.log('FZZ: Will check ' + allElems.length + ' items.');
     for (let el of allElems){
         // check el before executing.
         if (_objIsInteresting(el)){
             executeFunc(el);
-            //MUT.nodeMut.push(el);
             MUT.set(el, "node");
         }
     }

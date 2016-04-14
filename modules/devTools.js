@@ -1,6 +1,3 @@
-
-
-//TODO: add to this object also FZZ object and MUT object.
 const devTools = window.devTools = window.devTools || {};
 
 
@@ -12,71 +9,91 @@ let MUT = devTools.MUT = {
 	mainObserver: [],
 	observers: [],
 	set: (obj, mType)=>{
-		if (this.active === true){
+		let owner = devTools.MUT;
+		if (owner.active === true){
 			if (mType === "node"){
-				this.nodeMut.push(obj);
+				owner.nodeMut.push(obj);
 			}
 			if (mType === "attribute"){
-				this.attrMut.push(obj);
+				owner.attrMut.push(obj);
 			}
 			if (mType === "src"){
-				this.srcMut.push(obj);
+				owner.srcMut.push(obj);
 			}
 			if (mType === "mainObserver"){
-				this.mainObserver.push(obj);
+				owner.mainObserver.push(obj);
 			}
 			if (mType === "observer"){
-				this.observer.push(obj);
+				owner.observers.push(obj);
 			}
 		}
 	}
 };
 
 
-let MARK = devTools.markImages = {
-	active: false,
-	relevantImgsColor: "Red",
-	irrelevantImgsColor: "green",
-	irrelevantElementsColor: "black",
-	set: (img, mType) => {
-		if (this.active === true){
-			img.style.opacity = "0.2";
-			if (mType === "relevantImgs"){
-				img.style.backgroundColor = this.relevantImgsColor;
-			}
-			if (mType === "irrelevantImgs"){
-				img.style.backgroundColor = this.irrelevantImgsColor;
-			}
-			if (mType === "irrelevantElements"){
-				img.style.backgroundColor = this.irrelevantImgsColor;
-			}
-		}
-	}
-};
+// let MARK = devTools.markImages = {
+// 	active: false,
+// 	relevantImgsColor: "Red",
+// 	irrelevantImgsColor: "green",
+// 	irrelevantElementsColor: "black",
+// 	set: (img, mType) => {
+// 		let owner = devTools.markImages;
+// 		if (owner.active === true){
+// 			img.style.opacity = "0.2";
+// 			if (mType === "relevantImgs"){
+// 				img.style.backgroundColor = owner.relevantImgsColor;
+// 			}
+// 			if (mType === "irrelevantImgs"){
+// 				img.style.backgroundColor = owner.irrelevantImgsColor;
+// 			}
+// 			if (mType === "irrelevantElements"){
+// 				img.style.backgroundColor = owner.irrelevantImgsColor;
+// 			}
+// 		}
+// 	}
+// };
 
 
 let FZZ = devTools.FZZ = {
-	active: false;
-	FZZ.relevantImgs: {},
-	FZZ.irrelevantImgs: {},
-	FZZ.irrelevantElements: {},
-	set: (obj, key, mType)=>{
-		if (this.active === true){
+	active: false,
+	relevantImgs: {},
+	irrelevantImgs: {},
+	irrelevantElements: {},
+	relevantImgsColor: "Red",
+	irrelevantImgsColor: "green",
+	irrelevantElementsColor: "black",
+	set: (obj, key, mType, colorFlag)=>{
+		let owner = devTools.FZZ; 
+		if (owner.active === true){
 			if (mType === "relevantImgs"){
-				this.relevantImgs[key] = obj;
+				owner.relevantImgs[key] = obj;
+				if (colorFlag === true){
+					obj.style.opacity = "0.2";
+					obj.style.backgroundColor = owner.relevantImgsColor;
+				}
 			}
 			if (mType === "irrelevantImgs"){
-				this.irrelevantImgs[key] = obj;
+				owner.irrelevantImgs[key] = obj;
+				if (colorFlag === true){
+					obj.style.opacity = "0.2";
+					obj.style.backgroundColor = owner.irrelevantImgsColor;
+				}
 			}
 			if (mType === "irrelevantElements"){
-				this.irrelevantElements[key] = obj;
+				let error = obj;
+				let errName = error.name;
+    			let errElement = error.element;
+    			let errorCounts =  devTools.FZZ.irrelevantElements[errName] || {};
+    			let errorCountforElem = errorCounts[errElement] || 0;
+    			errorCountforElem += 1;
+				// if (colorFlag === true){
+				// 	obj.style.opacity = "0.2";
+				// 	obj.style.backgroundColor = owner.irrelevantImgsColor;
+				// }
 			}
 		}
 	}
-
 };
 
 
-
-
-export {MUT, FZZ, MARK};
+export {MUT, FZZ};

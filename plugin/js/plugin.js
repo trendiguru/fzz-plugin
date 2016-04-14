@@ -9,14 +9,12 @@ import {scanForever, observe} from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
+import {FZZ} from 'modules/devTools';
 //import {console} from 'modules/smartConsole';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 
-const FZZ = window.FZZ = window.FZZ || {};
-let relevantImgs = FZZ.relevantImgs = {};
-let irrelevantImgs = FZZ.irrelevantImgs = {};
-let irrelevantElements = FZZ.irrelevantElements = {};
+FZZ.active = false;
 
 analytics.initializeInPublisher();
 analytics.track('Page Hit');
@@ -52,16 +50,19 @@ function processElement(el) {
         function (relevantImg) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
-            relevantImgs[relevantImg.url] = relevantImg;
+            //relevantImgs[relevantImg.url] = relevantImg;
+            FZZ.set(relevantImg, relevantImg.url, 'relevantImgs', true);
             draw(relevantImg);
         },
         function (irrelevantImg) {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
-                irrelevantImgs[irrelevantImg.url] = irrelevantImg;
+                //irrelevantImgs[irrelevantImg.url] = irrelevantImg;
+                FZZ.set(irrelevantImg, irrelevantImg.url, 'irrelevantImgs', true);
             } else {
-                logIrrelevant(irrelevantImg);
+                //logIrrelevant(irrelevantImg);
+                FZZ.set(irrelevantImg, "empty", "irrelevantElements", true);
             }
         });
 }
@@ -82,14 +83,14 @@ function TGImage(elem, url) {
     this.element = elem;
 }
 
-function logIrrelevant(error) {
-    //console.log('reached logIrrelevant');
-    let errName = error.name;
-    let errElement = error.element;
-    let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
-    let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
-    errorCountforElem += 1;
-}
+// function logIrrelevant(error) {
+//     //console.log('reached logIrrelevant');
+//     let errName = error.name;
+//     let errElement = error.element;
+//     let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
+//     let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
+//     errorCountforElem += 1;
+// }
 
 function ensureNew(tgImg) {
     if (tgImg.url in relevantImgs || tgImg.url in irrelevantImgs) {

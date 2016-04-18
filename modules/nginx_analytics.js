@@ -18,7 +18,7 @@ nginx.init = function (userId) {
         let vp = viewport();
         nginx.trackingFields.winWidth = vp.width;
         nginx.trackingFields.winHeight = vp.height;
-        nginx.trackingFields.refererDomain = window.location.hostname;
+        nginx.trackingFields.refererDomain = window.location.hostname.replace("www.", "");
         resolve();
     });
 };

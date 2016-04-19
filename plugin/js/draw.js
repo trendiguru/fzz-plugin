@@ -117,6 +117,7 @@ function __createButtonCallback(tgImg){
         msg_data.imageURL = imageURL;
         iframe.contentWindow.postMessage(msg_data, '*');
         iframe.style.display = 'block';
+        document.body.style.overflow = 'hidden';
         mouseEvent = mouseEvent || window.mouseEvent;
         mouseEvent.preventDefault();
         if (mouseEvent.stopPropagation) {

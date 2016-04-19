@@ -75,14 +75,15 @@ let scanForever = (node, executeFunc) => {
         allElems.push(node);
     }
 
-    if (USER_CONFIG.whitelist !== '*' && (node === document.body)) {
+    if (USER_CONFIG.whitelist !== '*') {
         for (let el of parentElems) {
             //add attribute observer
             // If notParentWhiteObject => Then 
-            observe(el,executeFunc, 
+            let mObserver = observe(el,executeFunc, 
                 {subtree: true,
                  attributes: true,
                  attributeFilter: ['src', 'style']});
+            MUT.set(mObserver, "observer"); 
             if(el.querySelectorAll){
                 allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
             }
@@ -90,11 +91,13 @@ let scanForever = (node, executeFunc) => {
     }
     // if whiteList is empty => listen to all document.body
     else{
-        let mObserver = observe(node,executeFunc, 
-            {subtree: true,
-             attributes: true,
-             attributeFilter: ['src', 'style']});
-        MUT.set(mObserver, "observer"); 
+        if (node === document.body){
+            let mObserver = observe(node,executeFunc, 
+                {subtree: true,
+                attributes: true,
+                attributeFilter: ['src', 'style']});
+            MUT.set(mObserver, "mainObserver"); 
+        }
     }
     console.log('FZZ: Will check ' + allElems.length + ' items.');
     

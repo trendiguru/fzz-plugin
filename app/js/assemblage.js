@@ -44,11 +44,11 @@ class Assemblage extends React.Component {
                 }
             }
             index[img.row][img.pos] = img;
-            img.width = document.body.clientWidth / this.props.col;
+            img.width = this.props.x / this.props.col;
             return <div key={i} style={{width: img.width, left: img.width * img.pos, top: img.top * img.width, position: 'absolute'}}>{this.props.template(img)}</div>;
-});
-return <div className="assemblage" style={{position: 'relative'}}>{images}</div>;
-}
+        });
+        return <div className="assemblage">{images}</div>;
+    }
 }
 
 export default Assemblage;

@@ -114,7 +114,7 @@ function __createButtonCallback(tgImg){
             'pageUrl': window.location.href
         });
         var msg_data = {};
-        msg_data.imageURL = imageURL;       
+        msg_data.imageURL = imageURL;
         iframe.contentWindow.postMessage(msg_data, '*');
         iframe.style.display = 'block';
         mouseEvent = mouseEvent || window.mouseEvent;

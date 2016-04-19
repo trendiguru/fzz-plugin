@@ -5,7 +5,7 @@ import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
-import {scanForever, observe} from './observe';
+import observe from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
@@ -35,8 +35,15 @@ domready(function () {
     loadStyle();
     console.log('FZZ: domready');
     document.body.appendChild(createIframe());
-    scanForever(document.body, processElement);
-    observe(document.body, processElement, {childList: true,subtree: true});
+    let elementsToProcess = getElementsToProcess();
+    
+    console.log('FZZ: Will check ' + elementsToProcess.size + ' items.');
+    
+    for (let el of elementsToProcess) {
+        processElement(el);
+    }
+    
+    observe(document.body, processElement);
 });
 
 function processElement(el) {

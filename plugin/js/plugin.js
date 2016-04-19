@@ -13,14 +13,10 @@ import {getElementsToProcess} from 'modules/utils';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 
-<<<<<<< HEAD
-FZZ.active = true;
-=======
 const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
->>>>>>> go_back_from_FZZ_implementation
 
 analytics.initializeInPublisher();
 analytics.track('Page Hit');
@@ -65,12 +61,7 @@ function processElement(el) {
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
             } else {
-<<<<<<< HEAD
-                //logIrrelevant(irrelevantImg);
-                FZZ.set(irrelevantImg, "empty", "irrelevantElements", );
-=======
                 logIrrelevant(irrelevantImg);
->>>>>>> go_back_from_FZZ_implementation
             }
         });
 }

@@ -3,10 +3,12 @@
  * Description: Checks if a DOM element is truly visible.
  */
 
+// relates to "is on screen or not" calculation.
 const VISIBLE_PADDING_TOP = 0.01; // 1% of element's width or/and height may be not visible.
 const VISIBLE_PADDING_BOTTOM = 0.7;
 const VISIBLE_PADDING_LEFT = 0.7;
 const VISIBLE_PADDING_RIGHT = 0.3;
+// relates to "is under to any object on screen, or not" calculation.
 const VISIBLE_PADDING = 0.3;// HERE YOU MAY CHANGE THE VISIBILITY AREA!!!
 const UNVISIBLE_PADDING = 1 - VISIBLE_PADDING;
 const LEVEL = 2; 

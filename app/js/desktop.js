@@ -2,14 +2,14 @@
 /* globals React, ReactDOM */
 
 import {getImageData} from 'modules/server';
-
 // Analytics
-
 import {analytics} from 'modules/analytics_wrapper';
-
 // React
-
 import App from './app';
+
+
+let publisherDomain;
+let imageURL;
 
 /*------ RENDER ------*/
 
@@ -27,6 +27,8 @@ document.getElementById('shadow').addEventListener('click', close);
 window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
+        publisherDomain = msg.data.publisherDomain;
+        imageURL = msg.data.imageURL;
         getImageData(msg.data.imageURL).then(data => {
             window.app = ReactDOM.render(
                 React.createElement(App, {onMount: attachAnalytics, close: close, imageURL: msg.data.imageURL, items: data.items}),
@@ -40,10 +42,10 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    analytics.initializeInApp();
+    analytics.initializeInApp(publisherDomain);
     analytics.track('App Loaded');   
 
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
-        a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href}));
+        a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href, imageURL: imageURL}));
     });
 }

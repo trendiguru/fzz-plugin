@@ -6,6 +6,8 @@ import nginx from 'modules/nginx_analytics';
 import constants from 'constants';
 const {HOST_DOMAIN} = constants;
 
+let initProperties = {};
+
 const analyticsLibs = {
     nginx: nginx,
     ga: ga_wrap,
@@ -40,16 +42,18 @@ analytics._init = function (clientId) {
     }      
 };
 
-analytics.initializeInApp = function () {
+analytics.initializeInApp = function (initProperties) {
+    initProperties = initProperties;
     analytics.inited = analytics.getClientId().then(clientId=>{
-        analytics._init(clientId);
+        analytics._init(clientId, initProperties);
         window.parent.postMessage({
             fzz_id: fzz_id
         }, '*');
     });
 };
 
-analytics.initializeInPublisher = function () {    
+analytics.initializeInPublisher = function (initProperties) {
+    initProperties = initProperties;
     let publisherReceivedAppMsg = new Promise((resolve) => {
         window.addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {

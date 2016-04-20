@@ -46,4 +46,11 @@ function selectorMatches(el, selector) {
     };
     return f.call(el, selector);
 }
+
+function dictMerge (dict1, dict2)=>{
+    let mergedDict = {};
+    for (let [lib, analyticsObj] of entries(analyticsLibs)) {
+
+    }
+};
 export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches};

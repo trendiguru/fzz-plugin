@@ -1,0 +1,23 @@
+diff a/modules/analytics_wrapper.js b/modules/analytics_wrapper.js	(rejected hunks)
+@@ -42,16 +42,18 @@
+     }      
+ };
+ 
+-analytics.initializeInApp = function () {
++analytics.initializeInApp = function (initProperties) {
++    initProperties = initProperties;
+     analytics.inited = analytics.getClientId().then(clientId=>{
+-        analytics._init(clientId);
++        analytics._init(clientId, initProperties);
+         window.parent.postMessage({
+             fzz_id: fzz_id
+         }, '*');
+     });
+ };
+ 
+-analytics.initializeInPublisher = function () {    
++analytics.initializeInPublisher = function (initProperties) {
++    initProperties = initProperties;
+     let publisherReceivedAppMsg = new Promise((resolve) => {
+         window.addEventListener('message', function (msg) {
+             if (msg.origin === HOST_DOMAIN) {

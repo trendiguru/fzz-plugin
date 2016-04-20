@@ -29,7 +29,7 @@ function loadUserConfig(){
         }
     }
     
-    userConfig.whitelist = userConfig.whitelist || '*';
+    userConfig.whitelist = userConfig.whitelist || "*";
     
     return userConfig;
 }

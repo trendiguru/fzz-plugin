@@ -2,7 +2,7 @@ import constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import scrollMonitor from 'ext/scrollMonitor';
 import {analytics} from 'modules/analytics_wrapper';
-var buttonConstructor =  require(`./${constants.BUTTON_TYPE}`);
+import buttonConstructor from './button/round';
 
 const {INFO_URL, IFRAME_ID} = constants;
 
@@ -53,11 +53,11 @@ function __redraw(el, buttonDiv, scrollWatcher){
         buttonDiv.setAttribute(
             'style',
             `width: ${imgRect.width}px;
-            height: ${imgRect.height}px;
-            top: ${imgRect.top + window.scrollY}px;
-            left: ${imgRect.left}px;
-            visibility: visible;
-            z-index: 10000000000;`
+height: ${imgRect.height}px;
+top: ${imgRect.top + window.scrollY}px;
+left: ${imgRect.left}px;
+visibility: visible;
+z-index: 10000000000;`
         );
     }
     else{
@@ -89,52 +89,49 @@ function __trackButtonSeen(scrollWatcher){
  */
 
 function __createButtonDiv (tgImg) {
-    tgImg.buttonDiv           = document.createElement('div'); // wrap
-    tgImg.buttonDiv.button    = document.createElement('button'); // button
-    tgImg.buttonDiv.info      = document.createElement('button'); // info
+    tgImg.buttonDiv           = document.createElement('div');
+    tgImg.buttonDiv.button    = document.createElement('button');
+    tgImg.buttonDiv.info      = document.createElement('button');
     tgImg.buttonDiv.appendChild(tgImg.buttonDiv.button);
     tgImg.buttonDiv.appendChild(tgImg.buttonDiv.info);
     document.body.appendChild(tgImg.buttonDiv);
-    tgImg.classList.add('fazz', 'fzz_overlay');
-    tgImg.buttonDiv.button.addEventListener('click', __createButtonCallback);
-    tgImg.buttonDiv.info.addEventListener('click', __createInfoButtonCallback);
+    tgImg.buttonDiv.classList.add('fazz', 'fzz_overlay');
+    tgImg.buttonDiv.button.addEventListener('click', __buttonCallback.bind(tgImg));
+    tgImg.buttonDiv.info.addEventListener('click', __infoCallback);
     buttonConstructor(tgImg);
+    return tgImg.buttonDiv;
 }
 
-function __createButtonCallback(tgImg){
-    let iframe = document.getElementById(IFRAME_ID);
-    let imageURL = tgImg.url;
-    return function(mouseEvent) {
-        analytics.track('Trendi Button Clicked', {
-            'imageURL': imageURL,
-            'pageUrl': window.location.href
-        });
-        var msg_data = {};
-        msg_data.imageURL = imageURL;       
-        iframe.contentWindow.postMessage(msg_data, '*');
-        iframe.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        mouseEvent = mouseEvent || window.mouseEvent;
-        mouseEvent.preventDefault();
-        if (mouseEvent.stopPropagation) {
-            mouseEvent.stopPropagation();
-        } else {
-            mouseEvent.cancelBubble = true;
-        }
-    };
+function __buttonCallback (e) {
+    let iframe = document.getElementById(IFRAME_ID),
+        imageURL = this.url;
+    analytics.track('Trendi Button Clicked', {
+        'imageURL': imageURL,
+        'pageUrl': window.location.href
+    });
+    var msg_data = {};
+    msg_data.imageURL = imageURL;       
+    iframe.contentWindow.postMessage(msg_data, '*');
+    iframe.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
 }
 
-function __createInfoButtonCallback(){
+function __infoCallback(e){
     analytics.track('Info Button Clicked');
 
     window.open(INFO_URL, '_blank');
 
-    let mouseEvent = mouseEvent || window.mouseEvent;
-    mouseEvent.preventDefault();
-    if (mouseEvent.stopPropagation) {
-        mouseEvent.stopPropagation();
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
     } else {
-        mouseEvent.cancelBubble = true;
+        e.cancelBubble = true;
     }
 }
 

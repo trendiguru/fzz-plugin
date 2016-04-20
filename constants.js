@@ -15,8 +15,7 @@ const constants = {
     IFRAME_ID: 'fazzi',
     INFO_URL: 'http://fazz.co',
     LIBNAME: 'fzz',
-    USER_CONFIG: loadUserConfig(),
-    BUTTON_TYPE: 'round'
+    USER_CONFIG: loadUserConfig()
 };
 
 function loadUserConfig(){

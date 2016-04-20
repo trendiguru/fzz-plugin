@@ -4,7 +4,7 @@
     pointer-events: none;
 }
 
-.fazz button {
+.fazz.round button {
     width: 3em;
     height: 3em;
     padding: 0;
@@ -23,16 +23,23 @@
     transition: box-shadow .25s, -webkit-transform .3s;
     transition: box-shadow .25s, transform .3s;
     transition: box-shadow .25s, transform .3s, -webkit-transform .3s;
+    animation: float .25s infinite;
     cursor: pointer;
     margin: 0;
     pointer-events: all;
 }
 
-.fazz button:first-of-type {
+@keyframes float {
+    0% {box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)}
+    100% {box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);}
+    
+}
+
+.fazz.round button:first-of-type {
     z-index: 100;
 }
 
-.fazz button + button {
+.fazz.round button + button {
     width: 1em;
     height: 1em;
     background-image: url('https://storage.googleapis.com/fzz/img/ic_info_grey_24px.svg');
@@ -44,11 +51,11 @@
     z-index: 0;
 }
 
-.fazz button:hover {
+.fazz.round button:hover {
     box-shadow:         0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.fazz button:hover + button, .fazz button + button:hover {
+.fazz.round button:hover + button, .fazz button + button:hover {
     -webkit-transition-delay: .5s;
     transition-delay: .5s;
     -webkit-transform-origin:   center;
@@ -58,7 +65,7 @@
     z-index: 1;
 }
 
-.fazz button + button:hover {
+.fazz.round button + button:hover {
     box-shadow:         0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 

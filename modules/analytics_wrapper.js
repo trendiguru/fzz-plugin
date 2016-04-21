@@ -6,13 +6,13 @@ import nginx from 'modules/nginx_analytics';
 import constants from 'constants';
 const {HOST_DOMAIN} = constants;
 
-let initProperties = {};
-
 const analyticsLibs = {
     nginx: nginx,
     ga: ga_wrap,
     mp: mp_wrap
 };
+
+let initProperties = {};
 
 
 // First start loading all the necessary snippets and libs
@@ -45,7 +45,7 @@ analytics._init = function (clientId) {
 analytics.initializeInApp = function (initProperties) {
     initProperties = initProperties;
     analytics.inited = analytics.getClientId().then(clientId=>{
-        analytics._init(clientId, initProperties);
+        analytics._init(clientId);
         window.parent.postMessage({
             fzz_id: fzz_id
         }, '*');
@@ -73,6 +73,7 @@ analytics.initializeInPublisher = function (initProperties) {
 
 // libs is a list of library names to use to track this event
 analytics.track = function (eventName, properties, libs) {
+    properties  = dictMerge(properties, initProperties);
     analytics.inited.then(() => {
         // Use all libs if not specified
         libs = libs || Object.keys(analyticsLibs);

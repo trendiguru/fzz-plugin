@@ -46,7 +46,6 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    alert("stop working!");
     analytics.track('App Loaded');   
     REQUESTS.desktop +=1;
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {

@@ -7,8 +7,6 @@ const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
 let doUpdateScroll = false;
-analytics.initProperties = {refererDomain: window.location.hostname.replace("www.", ""), 
-                            publisherDomain: window.location.hostname.replace("www.", "")};
 
 window.setInterval(function(){
     doUpdateScroll = true;

@@ -55,4 +55,4 @@ let dictMerge = (dict1, dict2)=>{
 };
 
 devTools.dictMerge = dictMerge;// only for test 
-export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches};
+export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches, dictMerge};

@@ -96,4 +96,4 @@ let FZZ = devTools.FZZ = {
 };
 
 
-export {MUT, FZZ};
+export {MUT, FZZ, devTools};

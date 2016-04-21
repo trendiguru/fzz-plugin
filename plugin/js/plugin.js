@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-
+import {variable} from 'modules/test';
 import domready from 'ext/domready';
 //import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} from 'constants';
 import constants from 'constants';
@@ -17,6 +17,7 @@ const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
+
 
 analytics.initializeInPublisher( {refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: window.location.hostname.replace("www.", "")});
 analytics.track('Page Hit');

@@ -23,8 +23,10 @@ class Assemblage extends React.Component {
     loadAll (i) {
         if (i < this.props.src.length)
             this.load(this.props.src[i]).then(() => this.loadAll(i + 1));
-        else if (typeof this.props.onMount === 'function')
-            this.props.onMount.call(this);
+        else {
+            let loadEvent = new CustomEvent('load', function(e) {process(e.detail);});
+            this.refs.container.dispatchEvent(loadEvent);
+        }
     }
     componentDidMount () {
         this.loadAll.call(this, 0);
@@ -47,7 +49,7 @@ class Assemblage extends React.Component {
             img.width = this.props.x / this.props.col;
             return <div key={i} style={{width: img.width, left: img.width * img.pos, top: img.top * img.width, position: 'absolute'}}>{this.props.template(img)}</div>;
         });
-        return <div className="assemblage">{images}</div>;
+        return <div className="assemblage" ref="container">{images}</div>;
     }
 }
 

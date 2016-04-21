@@ -18,14 +18,14 @@ let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 
-analytics.initializeInPublisher();
+analytics.initializeInPublisher( {refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: window.location.hostname.replace("www.", "")});
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;
 window.addEventListener('scroll', function () {
     if (window.scrollY - initScrollTop > 20) {
-        analytics.track('Publisher Scroll', ['ga']);
+        analytics.track('Publisher Scroll', libs=['ga']);
         initScrollTop = 100000000;
     }
 });

@@ -45,11 +45,15 @@ function selectorMatches(el, selector) {
 
 let dictMerge = (dict1, dict2)=>{
     let mergedDict = {};
-    for (let [key, obj] of entries(dict1)) {
-        mergedDict[key] = obj;
+    if (dict1){
+        for (let [key, obj] of entries(dict1)) {
+            mergedDict[key] = obj;
+        }
     }
-    for (let [key, obj] of entries(dict2)) {
-        mergedDict[key] = obj;
+    if (dict2){
+        for (let [key, obj] of entries(dict2)) {
+            mergedDict[key] = obj;
+        }
     }
     return mergedDict
 };

@@ -42,7 +42,7 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    analytics.initializeInApp(publisherDomain);
+    analytics.initializeInApp(publisherDomain, {refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain});
     analytics.track('App Loaded');   
 
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {

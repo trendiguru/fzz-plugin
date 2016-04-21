@@ -1,4 +1,4 @@
-import {values, entries, promiseWithTimeout} from 'modules/utils';
+import {values, entries, promiseWithTimeout, dictMerge} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';

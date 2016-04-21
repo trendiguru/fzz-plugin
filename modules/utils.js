@@ -1,4 +1,6 @@
 import constants from 'constants';
+import {devTools} from 'modules/devTools';// with its help we can access to functions from brouser and test them on realLife.
+
 const {USER_CONFIG} = constants;
 
 function* entries(obj) {
@@ -6,12 +8,6 @@ function* entries(obj) {
         yield [key, obj[key]];
     }
 }
-
-/** Usage:
- * for (let [key, value] of entries(myObj)) {
- *   // do something with key|value
- *}
- **/
 
 function* values(obj) {
     for (let key of Object.keys(obj)) {
@@ -47,10 +43,16 @@ function selectorMatches(el, selector) {
     return f.call(el, selector);
 }
 
-function dictMerge (dict1, dict2)=>{
+let dictMerge = (dict1, dict2)=>{
     let mergedDict = {};
-    for (let [lib, analyticsObj] of entries(analyticsLibs)) {
-
+    for (let [key, obj] of entries(dict1)) {
+        mergedDict[key] = obj;
     }
+    for (let [key, obj] of entries(dict2)) {
+        mergedDict[key] = obj;
+    }
+    return mergedDict
 };
+
+devTools.dictMerge = dictMerge;// only for test 
 export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches};

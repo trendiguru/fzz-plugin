@@ -13,12 +13,16 @@ import App from './app';
 
 /*------ RENDER ------*/
 
-function close () {
-    window.parent.postMessage('hide', '*');
-    window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+function render (props) {
+    window.app = ReactDOM.render(React.createElement(App, Object.assign({close: close}, props)), document.getElementById('main'));
 }
 
-window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+function close () {
+    window.parent.postMessage('hide', '*');
+    render();
+}
+
+render();
 
 document.getElementById('shadow').addEventListener('click', close);
 
@@ -28,10 +32,7 @@ window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
         getImageData(msg.data.imageURL).then(data => {
-            window.app = ReactDOM.render(
-                React.createElement(App, {onMount: attachAnalytics, close: close, imageURL: msg.data.imageURL, items: data.items}),
-                document.getElementById('main')
-            );
+            render({onMount: attachAnalytics, imageURL: msg.data.imageURL, items: data.items});
             console.log(window.app.props);
         });
     }

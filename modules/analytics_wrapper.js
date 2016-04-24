@@ -1,9 +1,10 @@
-import {values, entries, promiseWithTimeout} from 'modules/utils';
+import {values, entries, promiseWithTimeout, dictMerge} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
 import nginx from 'modules/nginx_analytics';
 import constants from 'constants';
+import {REQUESTS} from 'modules/devTools';
 const {HOST_DOMAIN} = constants;
 
 const analyticsLibs = {
@@ -12,7 +13,6 @@ const analyticsLibs = {
     mp: mp_wrap
 };
 
-
 // First start loading all the necessary snippets and libs
 for (let a of values(analyticsLibs)) {
     a.loaded = a.load();
@@ -20,6 +20,7 @@ for (let a of values(analyticsLibs)) {
 
 let analytics = {};
 let fzz_id;
+analytics.initProperties = {};
 analytics.analyticsLibs = analyticsLibs;
 
 analytics.getClientId = function () { 
@@ -40,7 +41,8 @@ analytics._init = function (clientId) {
     }      
 };
 
-analytics.initializeInApp = function () {
+analytics.initializeInApp = function (initProperties) {
+    initProperties = initProperties;
     analytics.inited = analytics.getClientId().then(clientId=>{
         analytics._init(clientId);
         window.parent.postMessage({
@@ -49,7 +51,8 @@ analytics.initializeInApp = function () {
     });
 };
 
-analytics.initializeInPublisher = function () {    
+analytics.initializeInPublisher = function (initProperties) {
+    initProperties = initProperties;
     let publisherReceivedAppMsg = new Promise((resolve) => {
         window.addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {
@@ -69,11 +72,13 @@ analytics.initializeInPublisher = function () {
 
 // libs is a list of library names to use to track this event
 analytics.track = function (eventName, properties, libs) {
+    properties  = dictMerge(properties, analytics.initProperties);
     analytics.inited.then(() => {
         // Use all libs if not specified
         libs = libs || Object.keys(analyticsLibs);
         for (let [lib, analyticsObj] of entries(analyticsLibs)) {
             if (libs.indexOf(lib) > -1) {
+                REQUESTS.set(properties, "property");
                 analyticsObj.inited.then(function () {
                     analyticsObj.track(eventName, properties);
                 });

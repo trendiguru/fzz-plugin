@@ -2,14 +2,18 @@
 /* globals React, ReactDOM */
 
 import {getImageData} from 'modules/server';
-
 // Analytics
-
 import {analytics} from 'modules/analytics_wrapper';
-
 // React
-
 import App from './app';
+//developer tools
+import {REQUESTS} from 'modules/devTools';
+
+let publisherDomain;
+let imageURL;
+REQUESTS.desktop = 0;
+analytics.initializeInApp({refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain});
+
 
 /*------ RENDER ------*/
 
@@ -27,6 +31,8 @@ document.getElementById('shadow').addEventListener('click', close);
 window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
+        publisherDomain = msg.data.publisherDomain;
+        imageURL = msg.data.imageURL;
         getImageData(msg.data.imageURL).then(data => {
             window.app = ReactDOM.render(
                 React.createElement(App, {onMount: attachAnalytics, close: close, imageURL: msg.data.imageURL, items: data.items}),
@@ -40,10 +46,10 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    analytics.initializeInApp();
     analytics.track('App Loaded');   
-
+    REQUESTS.desktop +=1;
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
-        a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href}));
+        alert(a.parentElement.title);
+        a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href, imageURL: imageURL}));
     });
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-
+import {variable} from 'modules/test';
 import domready from 'ext/domready';
 //import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} from 'constants';
 import constants from 'constants';
@@ -17,15 +17,16 @@ const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
-
-analytics.initializeInPublisher();
+let refererDomain = window.location.hostname.replace("www.", "");
+let publisherDomain = referrerDomain;
+analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: publisherDomain});
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;
 window.addEventListener('scroll', function () {
     if (window.scrollY - initScrollTop > 20) {
-        analytics.track('Publisher Scroll', ['ga']);
+        analytics.track('Publisher Scroll', libs=['ga']);
         initScrollTop = 100000000;
     }
 });

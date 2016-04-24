@@ -95,5 +95,17 @@ let FZZ = devTools.FZZ = {
 	}
 };
 
+let REQUESTS = devTools.REQUESTS = {
+	active: false,
+	queue: [],
+	set: (reuestProperties, mType) => {
+		if (REQUESTS.active){
+			if (mType === "property"){
+				REQUESTS.queue.push(reuestProperties);
+			}
+		}
+	}
+}
 
-export {MUT, FZZ};
+
+export {MUT, FZZ, REQUESTS, devTools};

@@ -17,9 +17,9 @@ const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
-
-
-analytics.initializeInPublisher( {refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: window.location.hostname.replace("www.", "")});
+let refererDomain = window.location.hostname.replace("www.", "");
+let publisherDomain = window.location.hostname.replace("www.", "");
+analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: publisherDomain});
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher

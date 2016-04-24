@@ -1,6 +1,4 @@
 import constants from 'constants';
-import {devTools} from 'modules/devTools';// with its help we can access to functions from brouser and test them on realLife.
-
 const {USER_CONFIG} = constants;
 
 function* entries(obj) {
@@ -57,6 +55,4 @@ let dictMerge = (dict1, dict2)=>{
     }
     return mergedDict
 };
-
-devTools.dictMerge = dictMerge;// only for test 
 export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches, dictMerge};

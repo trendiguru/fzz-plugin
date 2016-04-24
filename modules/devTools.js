@@ -96,10 +96,13 @@ let FZZ = devTools.FZZ = {
 };
 
 let REQUESTS = devTools.REQUESTS = {
+	active: false,
 	queue: [],
 	set: (reuestProperties, mType) => {
-		if (mType === "property"){
-			REQUESTS.queue.push(reuestProperties);
+		if (REQUESTS.active){
+			if (mType === "property"){
+				REQUESTS.queue.push(reuestProperties);
+			}
 		}
 	}
 }

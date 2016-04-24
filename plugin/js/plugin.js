@@ -165,12 +165,18 @@ function createIframe(src) {
 
 window.addEventListener('message', function(msg) {
     //let origin = msg.origin || msg.originalEvent.origin;
-    if (msg.data === 'hide') {
+    if (msg.data === 'show') {
+        tg_show();
+    } else if (msg.data === 'hide') {
         tg_hide();
     } else if (msg.data.fzz_id){
         console.log('Received fzz_id: ' + msg.data.fzz_id);
     }
 }, false);
+
+function tg_show() {
+    document.body.style.overflow = 'hidden';
+}
 
 function tg_hide() {
     document.getElementById(IFRAME_ID).style.display = 'none';

@@ -124,9 +124,7 @@ function __buttonCallback (e) {
 
 function __infoCallback(e){
     analytics.track('Info Button Clicked');
-
     window.open(INFO_URL, '_blank');
-
     e.preventDefault();
     if (e.stopPropagation) {
         e.stopPropagation();

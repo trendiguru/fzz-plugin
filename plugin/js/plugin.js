@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-
+import {variable} from 'modules/test';
 import domready from 'ext/domready';
 //import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} from 'constants';
 import constants from 'constants';
@@ -17,15 +17,16 @@ const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
-
-analytics.initializeInPublisher();
+let refererDomain = window.location.hostname.replace("www.", "");
+let publisherDomain = referrerDomain;
+analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: publisherDomain});
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;
 window.addEventListener('scroll', function () {
     if (window.scrollY - initScrollTop > 20) {
-        analytics.track('Publisher Scroll', ['ga']);
+        analytics.track('Publisher Scroll', libs=['ga']);
         initScrollTop = 100000000;
     }
 });
@@ -165,12 +166,18 @@ function createIframe(src) {
 
 window.addEventListener('message', function(msg) {
     //let origin = msg.origin || msg.originalEvent.origin;
-    if (msg.data === 'hide') {
+    if (msg.data === 'show') {
+        tg_show();
+    } else if (msg.data === 'hide') {
         tg_hide();
     } else if (msg.data.fzz_id){
         console.log('Received fzz_id: ' + msg.data.fzz_id);
     }
 }, false);
+
+function tg_show() {
+    document.body.style.overflow = 'hidden';
+}
 
 function tg_hide() {
     document.getElementById(IFRAME_ID).style.display = 'none';

@@ -7,12 +7,6 @@ function* entries(obj) {
     }
 }
 
-/** Usage:
- * for (let [key, value] of entries(myObj)) {
- *   // do something with key|value
- *}
- **/
-
 function* values(obj) {
     for (let key of Object.keys(obj)) {
         yield obj[key];
@@ -46,4 +40,19 @@ function selectorMatches(el, selector) {
     };
     return f.call(el, selector);
 }
-export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches};
+
+let dictMerge = (dict1, dict2)=>{
+    let mergedDict = {};
+    if (dict1){
+        for (let [key, obj] of entries(dict1)) {
+            mergedDict[key] = obj;
+        }
+    }
+    if (dict2){
+        for (let [key, obj] of entries(dict2)) {
+            mergedDict[key] = obj;
+        }
+    }
+    return mergedDict
+};
+export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches, dictMerge};

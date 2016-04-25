@@ -25,7 +25,6 @@ let observe = (target, executeFunc, config = defaultConfig) => {
             //If object was added To DOM:
             if(mutation.type === 'childList'){
                 for(let addedNode of mutation.addedNodes){
-                    console.log("added new node to document: "+ JSON.stringify(addedNode));
                     scanForever(addedNode, executeFunc);
                 }
             }
@@ -33,7 +32,6 @@ let observe = (target, executeFunc, config = defaultConfig) => {
             if (mutation.type === 'attributes'){
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
-                    //console.log('src mutation in obj: '+mutation.target.tagName );
                     MUT.set(mutation.target, "src");
                     executeFunc(mutation.target); 
                 }
@@ -51,7 +49,6 @@ let observe = (target, executeFunc, config = defaultConfig) => {
         }
     };
     let observer = new MutationObserver(handleMutations);
-    console.log(config);
     observer.observe(target, config);
     return observer;
 };
@@ -99,7 +96,6 @@ let scanForever = (node, executeFunc) => {
             MUT.set(mObserver, "mainObserver"); 
         }
     }
-    console.log('FZZ: Will check ' + allElems.length + ' items.');
     
     //Initial scan
     for (let el of allElems){

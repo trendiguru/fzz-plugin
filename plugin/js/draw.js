@@ -2,6 +2,7 @@ import constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import scrollMonitor from 'ext/scrollMonitor';
 import {analytics} from 'modules/analytics_wrapper';
+import buttonConstructor from './button/round';
 
 const {INFO_URL, IFRAME_ID} = constants;
 
@@ -11,7 +12,6 @@ let doUpdateScroll = false;
 window.setInterval(function(){
     doUpdateScroll = true;
 }, 1000);
-
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);
@@ -26,7 +26,7 @@ function _initialDrawButton(tgImg){
     let buttonDiv = tgImg.buttonDiv || __createButtonDiv(tgImg);
     let scrollWatcher = tgImg.scrollWatcher || scrollMonitor.create(buttonDiv);
     tgImg.scrollWatcher = scrollWatcher;
-    
+
     __redraw(el, buttonDiv, scrollWatcher);
 }
 
@@ -52,12 +52,12 @@ function __redraw(el, buttonDiv, scrollWatcher){
         }
         buttonDiv.setAttribute(
             'style',
-            'width: ' + imgRect.width + 'px;' +
-            'height: ' + imgRect.height + 'px; ' +
-            'top: ' + (imgRect.top + window.scrollY) + 'px;' +
-            'left: ' + imgRect.left + 'px;' +
-            'visibility: ' + 'visible;'+
-            'z-index: 10000000000;'
+            `width: ${imgRect.width}px;
+height: ${imgRect.height}px;
+top: ${imgRect.top + window.scrollY}px;
+left: ${imgRect.left}px;
+visibility: visible;
+z-index: 10000000000;`
         );
     }
     else{
@@ -87,61 +87,52 @@ function __trackButtonSeen(scrollWatcher){
  * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
  * @returns {object} buttonDiv that was created and attached.
  */
-function __createButtonDiv(tgImg){
-    if(tgImg.buttonDiv === undefined){
-        let buttonDiv = document.createElement('div');
-        buttonDiv.classList.add('fazz', 'fzz_overlay');
-        let tgButton = document.createElement('button');
-        tgButton.addEventListener('click', __createButtonCallback(tgImg), false);
-        tgButton.classList.add('fazz');
-        buttonDiv.appendChild(tgButton);
-        let infoButton = document.createElement('button');
-        infoButton.addEventListener('click', __createInfoButtonCallback(), false);
-        infoButton.classList.add('fazz');
-        buttonDiv.appendChild(infoButton);
-        tgImg.buttonDiv = buttonDiv;
-        document.body.appendChild(buttonDiv);
-    }
+
+function __createButtonDiv (tgImg) {
+    tgImg.buttonDiv           = document.createElement('div');
+    tgImg.buttonDiv.button    = document.createElement('button');
+    tgImg.buttonDiv.info      = document.createElement('button');
+    tgImg.buttonDiv.appendChild(tgImg.buttonDiv.button);
+    tgImg.buttonDiv.appendChild(tgImg.buttonDiv.info);
+    document.body.appendChild(tgImg.buttonDiv);
+    tgImg.buttonDiv.classList.add('fazz', 'fzz_overlay');
+    tgImg.buttonDiv.button.addEventListener('click', __buttonCallback.bind(tgImg));
+    tgImg.buttonDiv.info.addEventListener('click', __infoCallback);
+    buttonConstructor(tgImg);
     return tgImg.buttonDiv;
 }
 
-function __createButtonCallback(tgImg){
-    let iframe = document.getElementById(IFRAME_ID);
-    let imageURL = tgImg.url;
-    return function(mouseEvent) {
-        analytics.track('Trendi Button Clicked', {
-            'imageURL': imageURL,
-            'pageUrl': window.location.href
-        });
-        var msg_data = {};
-        msg_data.imageURL = imageURL;
-        iframe.contentWindow.postMessage(msg_data, '*');
-        iframe.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        mouseEvent = mouseEvent || window.mouseEvent;
-        mouseEvent.preventDefault();
-        if (mouseEvent.stopPropagation) {
-            mouseEvent.stopPropagation();
-        } else {
-            mouseEvent.cancelBubble = true;
-        }
-    };
+function __buttonCallback (e) {
+    let iframe = document.getElementById(IFRAME_ID),
+        imageURL = this.url;
+    analytics.track('Trendi Button Clicked', {
+        'imageURL': imageURL,
+        'pageUrl': window.location.href
+    });
+    var msg_data = {};
+    msg_data.imageURL = imageURL;       
+    iframe.contentWindow.postMessage(msg_data, '*');
+    iframe.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
 }
 
-function __createInfoButtonCallback(){
-    return function(){
-        analytics.track('Info Button Clicked');
+function __infoCallback(e){
+    analytics.track('Info Button Clicked');
 
-        window.open(INFO_URL, '_blank');
+    window.open(INFO_URL, '_blank');
 
-        let mouseEvent = mouseEvent || window.mouseEvent;
-        mouseEvent.preventDefault();
-        if (mouseEvent.stopPropagation) {
-            mouseEvent.stopPropagation();
-        } else {
-            mouseEvent.cancelBubble = true;
-        }
-    };
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
 }
 
 export default draw;

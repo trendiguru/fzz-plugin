@@ -6,10 +6,14 @@ import {getImageData} from 'modules/server';
 import {analytics} from 'modules/analytics_wrapper';
 // React
 import App from './app';
-
+//developer tools
+import {REQUESTS} from 'modules/devTools';
 
 let publisherDomain;
 let imageURL;
+REQUESTS.desktop = 0;
+analytics.initializeInApp({refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain});
+
 
 /*------ RENDER ------*/
 
@@ -42,10 +46,10 @@ window.addEventListener('message', msg => {
 /*------ ANALYTICS ------*/
 
 function attachAnalytics () {
-    analytics.initializeInApp(publisherDomain);
     analytics.track('App Loaded');   
-
+    REQUESTS.desktop +=1;
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
+        alert(a.parentElement.title);
         a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href, imageURL: imageURL}));
     });
 }

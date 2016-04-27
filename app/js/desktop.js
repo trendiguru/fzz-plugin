@@ -8,9 +8,10 @@ import {analytics} from 'modules/analytics_wrapper';
 import App from './app';
 //developer tools
 import {REQUESTS} from 'modules/devTools';
+//utils
+import {getDomainName} from 'modules/utils';
 
 let publisherDomain;
-let imageURL;
 REQUESTS.desktop = 0;
 
 
@@ -30,9 +31,9 @@ document.getElementById('shadow').addEventListener('click', close);
 window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
-        publisherDomain = msg.origin;
-        imageURL = msg.data.imageURL;
-        alert(publisherDomain);
+        publisherDomain = getDomainName(msg.origin)[1];
+        let imageURL = msg.data.imageURL;
+        alert(publisherDomain.replace("www.", ""));
         analytics.initializeInApp({refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain.replace("www.", "")});
         getImageData(msg.data.imageURL).then(data => {
             window.app = ReactDOM.render(

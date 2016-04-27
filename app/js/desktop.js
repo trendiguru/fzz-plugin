@@ -33,7 +33,6 @@ window.addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         publisherDomain = getDomainName(msg.origin)[1];
         let imageURL = msg.data.imageURL;
-        alert(publisherDomain.replace("www.", ""));
         analytics.initializeInApp({refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain.replace("www.", "")});
         getImageData(msg.data.imageURL).then(data => {
             window.app = ReactDOM.render(

@@ -49,7 +49,6 @@ function attachAnalytics () {
     analytics.track('App Loaded');   
     REQUESTS.desktop +=1;
     [].forEach.call(ReactDOM.findDOMNode(this).querySelectorAll('a'), a => {
-        alert(a.parentElement.title);
         a.addEventListener('click', () => analytics.track('Result Clicked', {clickUrl: a.href, imageURL: imageURL}));
     });
 }

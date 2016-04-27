@@ -18,8 +18,7 @@ let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace("www.", "");
-let publisherDomain = referrerDomain;
-analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: publisherDomain});
+analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher

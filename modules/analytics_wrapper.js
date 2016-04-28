@@ -12,6 +12,7 @@ const analyticsLibs = {
     ga: ga_wrap,
     mp: mp_wrap
 };
+REQUESTS.active = true;
 
 // First start loading all the necessary snippets and libs
 for (let a of values(analyticsLibs)) {
@@ -42,7 +43,7 @@ analytics._init = function (clientId) {
 };
 
 analytics.initializeInApp = function (initProperties) {
-    initProperties = initProperties;
+    analytics.initProperties = initProperties;
     analytics.inited = analytics.getClientId().then(clientId=>{
         analytics._init(clientId);
         window.parent.postMessage({
@@ -52,7 +53,7 @@ analytics.initializeInApp = function (initProperties) {
 };
 
 analytics.initializeInPublisher = function (initProperties) {
-    initProperties = initProperties;
+    analytics.initProperties = initProperties;
     let publisherReceivedAppMsg = new Promise((resolve) => {
         window.addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {

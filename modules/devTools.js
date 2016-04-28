@@ -1,3 +1,4 @@
+import {getDomainName} from 'modules/utils';
 const devTools = window.devTools = window.devTools || {};
 
 
@@ -29,29 +30,6 @@ let MUT = devTools.MUT = {
 		}
 	}
 };
-
-
-// let MARK = devTools.markImages = {
-// 	active: false,
-// 	relevantImgsColor: "Red",
-// 	irrelevantImgsColor: "green",
-// 	irrelevantElementsColor: "black",
-// 	set: (img, mType) => {
-// 		let owner = devTools.markImages;
-// 		if (owner.active === true){
-// 			img.style.opacity = "0.2";
-// 			if (mType === "relevantImgs"){
-// 				img.style.backgroundColor = owner.relevantImgsColor;
-// 			}
-// 			if (mType === "irrelevantImgs"){
-// 				img.style.backgroundColor = owner.irrelevantImgsColor;
-// 			}
-// 			if (mType === "irrelevantElements"){
-// 				img.style.backgroundColor = owner.irrelevantImgsColor;
-// 			}
-// 		}
-// 	}
-// };
 
 
 let FZZ = devTools.FZZ = {
@@ -107,5 +85,33 @@ let REQUESTS = devTools.REQUESTS = {
 	}
 }
 
+//______ective_functions______//
+
+devTools.modules = {};
+let utils = devTools.modules.utils = {};
+utils.getDomainName = getDomainName;
+
+
+// let MARK = devTools.markImages = {
+// 	active: false,
+// 	relevantImgsColor: "Red",
+// 	irrelevantImgsColor: "green",
+// 	irrelevantElementsColor: "black",
+// 	set: (img, mType) => {
+// 		let owner = devTools.markImages;
+// 		if (owner.active === true){
+// 			img.style.opacity = "0.2";
+// 			if (mType === "relevantImgs"){
+// 				img.style.backgroundColor = owner.relevantImgsColor;
+// 			}
+// 			if (mType === "irrelevantImgs"){
+// 				img.style.backgroundColor = owner.irrelevantImgsColor;
+// 			}
+// 			if (mType === "irrelevantElements"){
+// 				img.style.backgroundColor = owner.irrelevantImgsColor;
+// 			}
+// 		}
+// 	}
+// };
 
 export {MUT, FZZ, REQUESTS, devTools};

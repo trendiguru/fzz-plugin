@@ -41,7 +41,7 @@ function selectorMatches(el, selector) {
     return f.call(el, selector);
 }
 
-let dictMerge = (dict1, dict2)=>{
+function dictMerge(dict1, dict2){
     let mergedDict = {};
     if (dict1){
         for (let [key, obj] of entries(dict1)) {
@@ -54,5 +54,17 @@ let dictMerge = (dict1, dict2)=>{
         }
     }
     return mergedDict
-};
-export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches, dictMerge};
+}
+
+function getDomainName(urlStr){
+    return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
+}
+
+export {entries, 
+        values, 
+        delay, 
+        promiseWithTimeout, 
+        getParameterByName, 
+        selectorMatches, 
+        dictMerge, 
+        getDomainName};

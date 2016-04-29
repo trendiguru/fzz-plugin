@@ -11,7 +11,7 @@ function getScript(url, callback) {
     script.type = 'text/javascript';
     script.id = 'fzz-script';
     script.setAttribute('data-fzz', '{"whitelist":"*"}');
-    //script.setAttribute('data-fzz', '{"whitelist":"section.image-gallery"}');
+    script.setAttribute('data-pid', 'chrome_ext_dev');
     script.src = url;
     script.onload = callback;
     script.onreadystatechange = function() {

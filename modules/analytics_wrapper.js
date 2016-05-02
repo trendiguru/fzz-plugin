@@ -37,7 +37,7 @@ analytics.getClientId = function () {
 analytics._init = function (clientId) {
     for (let a of values(analyticsLibs)) {
         if(!a.hasOwnProperty('inited')){
-            a.inited = a.loaded.then(a.init(clientId));
+            a.inited = a.loaded.then(()=>{a.init(clientId);});
         }
     }      
 };

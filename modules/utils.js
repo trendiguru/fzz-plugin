@@ -1,5 +1,5 @@
-import constants from 'constants';
-const {USER_CONFIG} = constants;
+//import constants from 'constants';
+//const {USER_CONFIG} = constants;
 
 function* entries(obj) {
     for (let key of Object.keys(obj)) {
@@ -22,6 +22,19 @@ function delay(ms) {
 // Which ever Promise fulfills first is the result passed to our handler
 function promiseWithTimeout(p, ms) {
     return Promise.race([p, delay(ms)]);
+}
+
+/* Usage:
+var l = getLocation("http://example.com/path");
+console.debug(l.hostname)
+>> "example.com"
+console.debug(l.pathname)
+>> "/path"
+*/
+function getLocation(href) {
+    let l = document.createElement('a');
+    l.href = href;
+    return l;
 }
 
 function getParameterByName(name) {
@@ -53,7 +66,7 @@ function dictMerge(dict1, dict2){
             mergedDict[key] = obj;
         }
     }
-    return mergedDict
+    return mergedDict;
 }
 
 function getDomainName(urlStr){
@@ -63,7 +76,8 @@ function getDomainName(urlStr){
 export {entries, 
         values, 
         delay, 
-        promiseWithTimeout, 
+        promiseWithTimeout,
+        getLocation,
         getParameterByName, 
         selectorMatches, 
         dictMerge, 

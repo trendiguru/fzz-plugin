@@ -11,18 +11,21 @@ import {REQUESTS} from 'modules/devTools';
 //utils
 import {getDomainName} from 'modules/utils';
 
-let publisherDomain;
+let publisherDomain = new URL(document.referrer).hostname.replace('www.', '');
+let imageURL;
+
 REQUESTS.desktop = 0;
 
+analytics.initializeInApp({publisherDomain: publisherDomain});
 
 /*------ RENDER ------*/
 
 function close () {
     window.parent.postMessage('hide', '*');
-    window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+    window.app = ReactDOM.render(React.createElement(App, {close: close}), document.getElementById('main'));
 }
 
-window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
+window.app = ReactDOM.render(React.createElement(App, {close: close}), document.getElementById('main'));
 
 document.getElementById('shadow').addEventListener('click', close);
 
@@ -32,14 +35,13 @@ window.addEventListener('message', msg => {
     console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
         publisherDomain = getDomainName(msg.origin)[1];
-        let imageURL = msg.data.imageURL;
-        analytics.initializeInApp({refererDomain: window.location.hostname.replace("www.", ""), publisherDomain: publisherDomain.replace("www.", "")});
+        imageURL = msg.data.imageURL;
         getImageData(msg.data.imageURL).then(data => {
             window.app = ReactDOM.render(
                 React.createElement(App, {onMount: attachAnalytics, close: close, imageURL: msg.data.imageURL, items: data.items}),
                 document.getElementById('main')
             );
-            console.log(window.app.props);
+            //console.log(window.app.props);
         });
     }
 });

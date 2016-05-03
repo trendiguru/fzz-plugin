@@ -24,6 +24,14 @@ function close () {
 
 window.app = ReactDOM.render(React.createElement(App, {onMount: attachAnalytics, close: close}), document.getElementById('main'));
 
+/// super exp
+
+let interval = setInterval(() => {
+    console.log(window.app.props.children);
+}, 10);
+    
+///
+
 document.getElementById('shadow').addEventListener('click', close);
 
 /*------ RECIEVE MESSAGES FROM MAIN ------*/

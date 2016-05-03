@@ -3,11 +3,13 @@ import {isVisible} from 'ext/visibility';
 import scrollMonitor from 'ext/scrollMonitor';
 import {analytics} from 'modules/analytics_wrapper';
 import buttonConstructor from './button/round';
+import {REQUESTS} from 'modules/devTools';
 
 const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
 let doUpdateScroll = false;
+REQUESTS.active = true;
 
 window.setInterval(function(){
     doUpdateScroll = true;
@@ -53,11 +55,11 @@ function __redraw(el, buttonDiv, scrollWatcher){
         buttonDiv.setAttribute(
             'style',
             `width: ${imgRect.width}px;
-height: ${imgRect.height}px;
-top: ${imgRect.top + window.scrollY}px;
-left: ${imgRect.left}px;
-visibility: visible;
-z-index: 10000000000;`
+            height: ${imgRect.height}px;
+            top: ${imgRect.top + window.scrollY}px;
+            left: ${imgRect.left}px;
+            visibility: visible;
+            z-index: 10000000000;`
         );
     }
     else{
@@ -76,6 +78,7 @@ function __trackButtonSeen(scrollWatcher){
             if(doTrackVisible && scrollWatcher.isFullyInViewport){
                 doTrackVisible = false;
                 analytics.track('Button Seen');
+                REQUESTS.set('Button Seen',"property");
                 scrollMonitor.stop();
             }
         }, 1000);

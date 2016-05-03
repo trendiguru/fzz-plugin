@@ -1,5 +1,5 @@
-import constants from 'constants';
-const {USER_CONFIG} = constants;
+//import constants from 'constants';
+//const {USER_CONFIG} = constants;
 
 function* entries(obj) {
     for (let key of Object.keys(obj)) {
@@ -24,6 +24,19 @@ function promiseWithTimeout(p, ms) {
     return Promise.race([p, delay(ms)]);
 }
 
+/* Usage:
+var l = getLocation("http://example.com/path");
+console.debug(l.hostname)
+>> "example.com"
+console.debug(l.pathname)
+>> "/path"
+*/
+function getLocation(href) {
+    let l = document.createElement('a');
+    l.href = href;
+    return l;
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
@@ -41,7 +54,7 @@ function selectorMatches(el, selector) {
     return f.call(el, selector);
 }
 
-let dictMerge = (dict1, dict2)=>{
+function dictMerge(dict1, dict2){
     let mergedDict = {};
     if (dict1){
         for (let [key, obj] of entries(dict1)) {
@@ -53,6 +66,19 @@ let dictMerge = (dict1, dict2)=>{
             mergedDict[key] = obj;
         }
     }
-    return mergedDict
-};
-export {entries, values, delay, promiseWithTimeout, getParameterByName, selectorMatches, dictMerge};
+    return mergedDict;
+}
+
+function getDomainName(urlStr){
+    return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
+}
+
+export {entries, 
+        values, 
+        delay, 
+        promiseWithTimeout,
+        getLocation,
+        getParameterByName, 
+        selectorMatches, 
+        dictMerge, 
+        getDomainName};

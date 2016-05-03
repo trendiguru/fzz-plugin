@@ -23,7 +23,7 @@
     transition: box-shadow .25s, -webkit-transform .3s;
     transition: box-shadow .25s, transform .3s;
     transition: box-shadow .25s, transform .3s, -webkit-transform .3s;
-    animation: float .25s infinite;
+    /*animation: float .25s infinite;*/
     cursor: pointer;
     margin: 0;
     pointer-events: all;

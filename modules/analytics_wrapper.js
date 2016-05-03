@@ -1,4 +1,4 @@
-import {values, entries, promiseWithTimeout, dictMerge} from 'modules/utils';
+import {values, entries, dictMerge} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
@@ -12,6 +12,7 @@ const analyticsLibs = {
     ga: ga_wrap,
     mp: mp_wrap
 };
+REQUESTS.active = true;
 
 // First start loading all the necessary snippets and libs
 for (let a of values(analyticsLibs)) {
@@ -36,13 +37,13 @@ analytics.getClientId = function () {
 analytics._init = function (clientId) {
     for (let a of values(analyticsLibs)) {
         if(!a.hasOwnProperty('inited')){
-            a.inited = a.loaded.then(a.init(clientId));
+            a.inited = a.loaded.then(()=>{a.init(clientId);});
         }
     }      
 };
 
 analytics.initializeInApp = function (initProperties) {
-    initProperties = initProperties;
+    analytics.initProperties = initProperties;
     analytics.inited = analytics.getClientId().then(clientId=>{
         analytics._init(clientId);
         window.parent.postMessage({
@@ -52,7 +53,7 @@ analytics.initializeInApp = function (initProperties) {
 };
 
 analytics.initializeInPublisher = function (initProperties) {
-    initProperties = initProperties;
+    analytics.initProperties = initProperties;
     let publisherReceivedAppMsg = new Promise((resolve) => {
         window.addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {
@@ -78,7 +79,7 @@ analytics.track = function (eventName, properties, libs) {
         libs = libs || Object.keys(analyticsLibs);
         for (let [lib, analyticsObj] of entries(analyticsLibs)) {
             if (libs.indexOf(lib) > -1) {
-                REQUESTS.set(properties, "property");
+                REQUESTS.set(properties, 'property');
                 analyticsObj.inited.then(function () {
                     analyticsObj.track(eventName, properties);
                 });

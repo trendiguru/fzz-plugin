@@ -50,7 +50,7 @@ function __redraw(el, buttonDiv, scrollWatcher){
     let imgRect = el.getBoundingClientRect();
     if(isVisible(el, imgRect)){
         if(doTrackVisible){
-            __trackButtonSeen(scrollWatcher);
+            __trackButtonSeen(el, imgRect);
         }
         buttonDiv.setAttribute(
             'style',
@@ -67,15 +67,12 @@ function __redraw(el, buttonDiv, scrollWatcher){
     }
 }
 
-function __trackButtonSeen(scrollWatcher){
-    if(doUpdateScroll){
-        scrollMonitor.update();
-        doUpdateScroll = false;
-    }
-    if(scrollWatcher.isFullyInViewport){
+function __trackButtonSeen(el, rect){
+    if(isVisible(el, rect)){
         // Make sure the user sees the button for more than an instant.
         window.setTimeout(function(){
-            if(doTrackVisible && scrollWatcher.isFullyInViewport){
+            console.log("001")
+            if(doTrackVisible && isVisible(el, rect)){
                 doTrackVisible = false;
                 analytics.track('Button Seen');
                 REQUESTS.set('Button Seen',"property");

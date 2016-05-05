@@ -7,12 +7,9 @@ import {REQUESTS} from 'modules/devTools';
 const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
-let doUpdateScroll = false;
+
 REQUESTS.active = true;
 
-window.setInterval(function(){
-    doUpdateScroll = true;
-}, 1000);
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);
@@ -67,7 +64,7 @@ function __trackButtonSeen(el, rect){
             if(doTrackVisible && isVisible(el, rect)){
                 doTrackVisible = false;
                 analytics.track('Button Seen');
-                REQUESTS.set('Button Seen',"property");
+                REQUESTS.set('Button Seen','property');
             }
         }, 1000);
     }

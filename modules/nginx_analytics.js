@@ -1,6 +1,4 @@
 import {entries} from 'modules/utils';
-// import timeme from 'ext/timeme';
-
 
 let nginx = {
     // more fields are added in init()
@@ -64,12 +62,5 @@ function viewport() {
     }
     return viewport;
 }
-
-// timeme();
-// window.onbeforeunload = function (event) {
-//     xmlhttp=new XMLHttpRequest();
-//     xmlhttp.open("GET","https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=" + TimeMe.getTimeOnCurrentPageInSeconds(),false);
-//     xmlhttp.send();
-// };
 
 export default nginx;

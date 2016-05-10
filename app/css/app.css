@@ -1,6 +1,6 @@
 body {
     overflow: hidden;
-    font-family: 'Belleza', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     margin: 0;
 }
 
@@ -77,8 +77,6 @@ section div > div {
     cursor: pointer;
     -webkit-transition: box-shadow .25s;
     transition: box-shadow .25s;
-    -webkit-transform: scale(.9);
-    transform: scale(.9);
 }
 
 section div > div:hover {
@@ -94,38 +92,46 @@ section a {
     color: inherit;
 }
 
-section a div {
-    width: calc(100% - 2em);
-    padding: .5em 1em;
-    overflow: hidden;
-    background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.3) 20%,rgba(0,0,0,0) 100%);
-    background: linear-gradient(to top, rgba(0,0,0,0.3) 40%,rgba(0,0,0,0) 100%);
-    color: #fff;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.assemblage a {
+    text-decoration: none;
 }
 
-section a span {
-    font-size: 1.2em;
+[data-color="pink"] {
+    color: #ff4d8b;
 }
 
 .price {
-    font-size: 1.75em;
+    font-size: 1.4em;
     font-weight: 400;
-    font-family: Baskerville, serif;
-    margin-right: .25em;
+    font-family: 'Rozha One', serif;
+    text-align: right;
+    color: #000;
+    opacity: 0.7;
     display: block;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8)
 }
 
 .price:before {
     content: '$';
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: .75em;
+    font-weight: bold;
 }
 
-.brand {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6)
+.indicator {
+    height: 3px;
+    background: #ff4d8b;
+    position: absolute;
+    bottom: 0;
+}
+
+.tag {
+    width: calc(100% - 1em);
+    padding: .5em;
+    background: #fff;
+    color: #ff4d8b;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 nav {
@@ -138,6 +144,7 @@ nav {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    text-transform: uppercase;
 }
 
 nav aside {
@@ -191,7 +198,7 @@ nav ul li {
 
 nav ul li.select {
     font-weight: bold;
-    color: #6857B2;
+    color: #ff4d8b;
 }
 
 #indicator {

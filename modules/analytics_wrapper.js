@@ -55,11 +55,12 @@ analytics.initializeInApp = function (initProperties) {
         console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
         window.onbeforeunload = function (event) {
             let xmlhttp=new XMLHttpRequest();
-            xmlhttp.open("GET","https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=" + TimeMe.getTimeOnCurrentPageInSeconds()+'&refererDomain='+analytics.initProperties.refererDomain+'&publisherDomain='+nalytics.initProperties.publisherDomain,false);
+            xmlhttp.open("GET",'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' + TimeMe.getTimeOnCurrentPageInSeconds()+'&refererDomain='+analytics.initProperties.refererDomain+'&publisherDomain='+nalytics.initProperties.publisherDomain,false);
             xmlhttp.send();
         };
     });
 };
+
 
 analytics.initializeInPublisher = function (initProperties) {
     analytics.initProperties = initProperties;

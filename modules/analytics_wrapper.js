@@ -50,16 +50,16 @@ analytics.initializeInApp = function (initProperties) {
         window.parent.postMessage({
             fzz_id: fzz_id
         }, '*');
-    }).then(()=>{    
-        timeme();
-        console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
-        console.log(window);
-         window.onbeforeunload = function (event) {
-            let xmlhttp=new XMLHttpRequest();
-            xmlhttp.open("GET",'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' + TimeMe.getTimeOnCurrentPageInSeconds()+'&publisherDomain='+analytics.initProperties.publisherDomain,false);
-            xmlhttp.send();
-         };
     });
+    
+    timeme();
+    console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
+    console.log(window);
+     window.onbeforeunload = function (event) {
+        let xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("GET",'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' + TimeMe.getTimeOnCurrentPageInSeconds()+'&publisherDomain='+analytics.initProperties.publisherDomain,false);
+        xmlhttp.send();
+     };
 };
 
 

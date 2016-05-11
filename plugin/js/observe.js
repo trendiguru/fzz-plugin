@@ -12,6 +12,7 @@ const defaultConfig = {
     attributeFilter: ['src', 'style']
 };
 
+let observeTgElems;
 MUT.active = true;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
@@ -107,4 +108,5 @@ let scanForever = (node, executeFunc) => {
     }
 };
 
-export  {scanForever, observe};
+
+export  {scanForever, observe, observeTgElems};

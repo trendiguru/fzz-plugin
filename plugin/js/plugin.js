@@ -3,16 +3,15 @@
 import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
-import draw from './draw';
-import {scanForever, observe} from './observe';
+import {draw,drawTgElems} from './draw';
+import {scanForever, observe, observeTgElems} from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
-//import {console} from 'modules/smartConsole';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
-
 const FZZ = window.FZZ = window.FZZ || {};
+
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};

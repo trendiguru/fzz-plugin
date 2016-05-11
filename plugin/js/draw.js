@@ -7,8 +7,9 @@ import {REQUESTS} from 'modules/devTools';
 const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
-let dTgElems = [];
+
 REQUESTS.active = true;
+
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);
@@ -122,7 +123,4 @@ function __infoCallback(e){
     }
 }
 
-function dSetTgElems(tgElems){
-    let dTgElemes = tgElems;
-}
-export {draw, dSetTgElems};
+export default draw;

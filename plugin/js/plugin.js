@@ -3,8 +3,8 @@
 import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
-import {draw,dSetTgElems} from './draw';
-import {scanForever, observe, oSetTgElems} from './observe';
+import draw from './draw';
+import {scanForever, observe, oTgElems} from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
@@ -12,14 +12,11 @@ import {getElementsToProcess} from 'modules/utils';
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ = window.FZZ || {};
 
-let tgElems = [];
+let tgElems = oTgElems;
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace('www.', '');
-//observe draw and plugin need cooperate between each other, on my opinion that is the most optimal solution:
-dSetTgElems(tgElems);
-oSetTgElems(tgElems);
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 
@@ -82,6 +79,7 @@ function TGImage(elem, url) {
         }
     }
     this.element = elem;
+    this.mutFlag = true;
     tgElems.push(this);
 }
 

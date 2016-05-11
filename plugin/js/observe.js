@@ -136,8 +136,4 @@ let publishMutation = (mutKinds)=>{
     }
 };
 
-let oSetTgElems = (tgElems)=>{
-    let oTgElems = tgElems;
-}
-
-export  {scanForever, observe, oSetTgElems};
+export  {scanForever, observe, oTgElems};

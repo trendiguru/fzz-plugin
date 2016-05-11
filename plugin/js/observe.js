@@ -13,7 +13,7 @@ const defaultConfig = {
 };
 
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
-let observeTgElems = [];
+let oTgElems = [];
  //list of mutation types which may influence on tgElements.
 let visibleMutTypes =["childList",'attributes'];
 MUT.active = true;
@@ -130,11 +130,14 @@ let publishMutation = (mutKinds)=>{
         }
     }
     if (mutIsSuitable){
-        for (let elem of observeTgElems){
+        for (let elem of oTgElems){
             elem.mutFlag = true;
         }
     }
 };
 
+let oSetTgElems = (tgElems)=>{
+    let oTgElems = tgElems;
+}
 
-export  {scanForever, observe, observeTgElems};
+export  {scanForever, observe, oSetTgElems};

@@ -3,8 +3,8 @@
 import domready from 'ext/domready';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
-import {draw,drawTgElems} from './draw';
-import {scanForever, observe, observeTgElems} from './observe';
+import {draw,dSetTgElems} from './draw';
+import {scanForever, observe, oSetTgElems} from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
@@ -17,8 +17,9 @@ let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace('www.', '');
-drawTgElems = tgElems;
-observeTgElems = tgElems;
+//observe draw and plugin need cooperate between each other, on my opinion that is the most optimal solution:
+dSetTgElems(tgElems);
+oSetTgElems(tgElems);
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 

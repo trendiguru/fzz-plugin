@@ -13,19 +13,18 @@ REQUESTS.active = true;
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);
-    _drawForever(tgImg.element, tgImg.buttonDiv);
+    _drawForever(tgImg, tgImg.buttonDiv);
 }
 
 function _initialDrawButton(tgImg){
-    let el = tgImg.element;
     let buttonDiv = tgImg.buttonDiv || __createButtonDiv(tgImg);
-    __redraw(el, buttonDiv);
+    __redraw(tgImg, buttonDiv);
 }
 
-function _drawForever(el, buttonDiv){
-    __redraw(el, buttonDiv);
+function _drawForever(tgImg, buttonDiv){
+    __redraw(tgImg, buttonDiv);
     window.requestAnimationFrame(function(){
-        _drawForever(el, buttonDiv);
+        _drawForever(tgImg, buttonDiv);
     });
 }
 
@@ -36,24 +35,29 @@ function _drawForever(el, buttonDiv){
  * @param {[[Type]]} el        [[Description]]
  * @param {object}   buttonDiv [[Description]]
  */
-function __redraw(el, buttonDiv){
-    let imgRect = el.getBoundingClientRect();
-    if(isVisible(el, imgRect)){
-        if(doTrackVisible){
-            __trackButtonSeen(el, imgRect);
+function __redraw(tgImg, buttonDiv){
+    //draw only the first time or after a "suitable" mutation.
+    if (tgImg.mutFlag){
+        tgImg.mutFlag = false;
+        let el = tgImg.element;
+        let imgRect = el.getBoundingClientRect();
+        if(isVisible(el, imgRect)){
+            if(doTrackVisible){
+                __trackButtonSeen(el, imgRect);
+            }
+            buttonDiv.setAttribute(
+                'style',
+                `width: ${imgRect.width}px;
+                height: ${imgRect.height}px;
+                top: ${imgRect.top + window.scrollY}px;
+                left: ${imgRect.left}px;
+                visibility: visible;
+                z-index: 10000000000;`
+            );
         }
-        buttonDiv.setAttribute(
-            'style',
-            `width: ${imgRect.width}px;
-            height: ${imgRect.height}px;
-            top: ${imgRect.top + window.scrollY}px;
-            left: ${imgRect.left}px;
-            visibility: visible;
-            z-index: 10000000000;`
-        );
-    }
-    else{
-        buttonDiv.style.visibility = 'hidden';
+        else{
+            buttonDiv.style.visibility = 'hidden';
+        }
     }
 }
 

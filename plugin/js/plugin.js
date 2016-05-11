@@ -12,6 +12,7 @@ import {getElementsToProcess} from 'modules/utils';
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ = window.FZZ || {};
 
+let tgElems = [];
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};

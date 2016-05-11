@@ -12,7 +12,10 @@ const defaultConfig = {
     attributeFilter: ['src', 'style']
 };
 
-let observeTgElems;
+let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
+let observeTgElems = [];
+ //list of mutation types which may influence on tgElements.
+let visibleMutTypes =["childList",'attributes'];
 MUT.active = true;
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
@@ -22,32 +25,38 @@ function _objIsInteresting(node){
 
 let observe = (target, executeFunc, config = defaultConfig) => {
     let handleMutations = function (mutations) {
+        let mutTypes = [];
         for (let mutation of mutations) {
+            let mutTarget = mutation.target;
             //If object was added To DOM:
             if(mutation.type === 'childList'){
+                console.log("childL: "+mutation.attributeName);
                 for(let addedNode of mutation.addedNodes){
                     scanForever(addedNode, executeFunc);
                 }
             }
-            //If in already exested object attribute was changed:
+            //If in already existed object attribute was changed:
             if (mutation.type === 'attributes'){
+                console.log("attr: "+mutation.attributeName);
                 //If src was changed (in image only):
-                if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
-                    MUT.set(mutation.target, "src");
-                    executeFunc(mutation.target); 
+                if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
+                    MUT.set(mutTarget, "src");
+                    executeFunc(mutTarget); 
                 }
                 else {
                     //if backgroundImage was changed:
-                    let bckgndImg = mutation.target.style.backgroundImage;
+                    let bckgndImg = mutTarget.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutation.target)){
-                            MUT.set(mutation.target, "attribute");
-                            executeFunc(mutation.target);
+                        if (_objIsInteresting(mutTarget)){
+                            MUT.set(mutTarget, "attribute");
+                            executeFunc(mutTarget);
                         }
                     }
                 }
             }
+            mutTypes.push(mutation.type);
         }
+
     };
     let observer = new MutationObserver(handleMutations);
     observer.observe(target, config);
@@ -104,6 +113,25 @@ let scanForever = (node, executeFunc) => {
         if (_objIsInteresting(el)){
             executeFunc(el);
             MUT.set(el, "node");
+        }
+    }
+};
+
+let publishMutation = (mutKinds)=>{
+    let mutIsSuitable = false;
+    let len = mutKinds.length;
+    let i = 0;
+    if (len > 0){
+        while (!mutIsSuitable && i<len){
+            if(visibleMutTypes.indexOf(mutKinds[i]) !== -1){
+                mutIsSuitable = true;
+            }
+            i++;
+        }
+    }
+    if (mutIsSuitable){
+        for (let elem of observeTgElems){
+            elem.mutFlag = true;
         }
     }
 };

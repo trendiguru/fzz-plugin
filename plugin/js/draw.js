@@ -7,9 +7,8 @@ import {REQUESTS} from 'modules/devTools';
 const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
+let drawTgElems = [];
 REQUESTS.active = true;
-//global variable which depends on Documents mutations (from observe module).
-let drawTgElems;
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);

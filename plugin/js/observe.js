@@ -56,7 +56,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
             }
             mutTypes.push(mutation.type);
         }
-
+        publishMutation(mutTypes);
     };
     let observer = new MutationObserver(handleMutations);
     observer.observe(target, config);

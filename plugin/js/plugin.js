@@ -17,6 +17,8 @@ let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace('www.', '');
+drawTgElems = tgElems;
+observeTgElems = tgElems;
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 
@@ -79,6 +81,7 @@ function TGImage(elem, url) {
         }
     }
     this.element = elem;
+    tgElems.push(this);
 }
 
 function logIrrelevant(error) {

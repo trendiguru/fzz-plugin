@@ -8,7 +8,7 @@ import {analytics} from '../modules/analytics_wrapper';
 
 import {REQUESTS} from '../modules/devTools';
 
-import {getDomainName} from '../modules/utils';
+import {getLocation} from '../modules/utils';
 
 let publisherDomain;
 
@@ -34,10 +34,8 @@ document.getElementById('shadow').addEventListener('click', close);
 addEventListener('app close', close);
 
 addEventListener('message', msg => {
-    //console.log('FZZ: iframe received message: ' + msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
-        publisherDomain = getDomainName(msg.origin)[1];
-        analytics.initializeInApp({refererDomain: window.location.hostname.replace('www.', ''), publisherDomain: publisherDomain.replace('www.', '')});
+        //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
         getImageData(msg.data.imageURL).then(data => {
             render({imageURL: msg.data.imageURL, items: data.items});
         });
@@ -45,6 +43,10 @@ addEventListener('message', msg => {
 });
 
 /*------ ANALYTICS ------*/
+
+publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
+
+analytics.initializeInApp({publisherDomain: publisherDomain}); 
 
 analytics.track('App Loaded');
 

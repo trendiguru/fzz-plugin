@@ -1,4 +1,4 @@
-import {values, entries, promiseWithTimeout, dictMerge} from 'modules/utils';
+import {values, entries, dictMerge} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
@@ -37,7 +37,7 @@ analytics.getClientId = function () {
 analytics._init = function (clientId) {
     for (let a of values(analyticsLibs)) {
         if(!a.hasOwnProperty('inited')){
-            a.inited = a.loaded.then(a.init(clientId));
+            a.inited = a.loaded.then(()=>{a.init(clientId);});
         }
     }      
 };
@@ -79,7 +79,7 @@ analytics.track = function (eventName, properties, libs) {
         libs = libs || Object.keys(analyticsLibs);
         for (let [lib, analyticsObj] of entries(analyticsLibs)) {
             if (libs.indexOf(lib) > -1) {
-                REQUESTS.set(properties, "property");
+                REQUESTS.set(properties, 'property');
                 analyticsObj.inited.then(function () {
                     analyticsObj.track(eventName, properties);
                 });

@@ -1,7 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
-import {variable} from 'modules/test';
+
 import domready from 'ext/domready';
-//import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} from 'constants';
 import constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
@@ -17,7 +16,7 @@ const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
-let refererDomain = window.location.hostname.replace("www.", "");
+let refererDomain = window.location.hostname.replace('www.', '');
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 
@@ -25,7 +24,7 @@ analytics.track('Page Hit');
 let initScrollTop = window.scrollY;
 window.addEventListener('scroll', function () {
     if (window.scrollY - initScrollTop > 20) {
-        analytics.track('Publisher Scroll', libs=['ga']);
+        analytics.track('Publisher Scroll', undefined, ['ga']);
         initScrollTop = 100000000;
     }
 });

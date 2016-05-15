@@ -5,6 +5,7 @@ import mp_wrap from 'modules/mp_wrap';
 import nginx from 'modules/nginx_analytics';
 import constants from 'constants';
 import {REQUESTS} from 'modules/devTools';
+import timeme from 'ext/timeme';
 const {HOST_DOMAIN} = constants;
 
 const analyticsLibs = {
@@ -50,7 +51,17 @@ analytics.initializeInApp = function (initProperties) {
             fzz_id: fzz_id
         }, '*');
     });
+    
+    timeme();
+    console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
+    console.log(window);
+     window.onbeforeunload = function (event) {
+        let xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("GET",'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' + TimeMe.getTimeOnCurrentPageInSeconds()+'&publisherDomain='+analytics.initProperties.publisherDomain,false);
+        xmlhttp.send();
+     };
 };
+
 
 analytics.initializeInPublisher = function (initProperties) {
     analytics.initProperties = initProperties;

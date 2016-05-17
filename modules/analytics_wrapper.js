@@ -3,7 +3,7 @@ import {values, entries, dictMerge} from 'modules/utils';
 import ga_wrap from 'modules/ga_wrap';
 import mp_wrap from 'modules/mp_wrap';
 import nginx from 'modules/nginx_analytics';
-import constants from 'constants';
+import * as constants from 'constants';
 import {REQUESTS} from 'modules/devTools';
 import timeme from 'ext/timeme';
 const {HOST_DOMAIN} = constants;
@@ -25,10 +25,10 @@ let fzz_id;
 analytics.initProperties = {};
 analytics.analyticsLibs = analyticsLibs;
 
-analytics.getClientId = function () { 
+analytics.getClientId = function () {
     let a = analyticsLibs.ga;
     a.inited = a.loaded.then(a.init);
-    
+
     return a.inited
         .then(a.getClientId)
         .then(clientId=>{fzz_id = clientId; return clientId;});
@@ -40,7 +40,7 @@ analytics._init = function (clientId) {
         if(!a.hasOwnProperty('inited')){
             a.inited = a.loaded.then(()=>{a.init(clientId);});
         }
-    }      
+    }
 };
 
 analytics.initializeInApp = function (initProperties) {
@@ -51,7 +51,7 @@ analytics.initializeInApp = function (initProperties) {
             fzz_id: fzz_id
         }, '*');
     });
-    
+
     timeme();
     console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
     console.log(window);
@@ -78,7 +78,7 @@ analytics.initializeInPublisher = function (initProperties) {
             }
         }, false);
     });
-    
+
     analytics.inited = publisherReceivedAppMsg.then(analytics._init);
 };
 

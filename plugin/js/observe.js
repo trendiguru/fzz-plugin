@@ -1,5 +1,5 @@
 import {selectorMatches} from 'modules/utils';
-import constants from 'constants';
+import * as constants from 'constants';
 import {MUT} from 'modules/devTools';
 const {USER_CONFIG} = constants;
 
@@ -33,7 +33,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
                     MUT.set(mutation.target, "src");
-                    executeFunc(mutation.target); 
+                    executeFunc(mutation.target);
                 }
                 else {
                     //if backgroundImage was changed:
@@ -55,12 +55,12 @@ let observe = (target, executeFunc, config = defaultConfig) => {
 
 
 /*
-For a given node, scan for relevant elements and then 
+For a given node, scan for relevant elements and then
 watch them for changes.
 */
 let scanForever = (node, executeFunc) => {
     node = node || document.body;
-    
+
     let parentElems = [];
     if(node.querySelectorAll){
         parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
@@ -75,12 +75,12 @@ let scanForever = (node, executeFunc) => {
     if (USER_CONFIG.whitelist !== '*') {
         for (let el of parentElems) {
             //add attribute observer
-            // If notParentWhiteObject => Then 
-            let mObserver = observe(el,executeFunc, 
+            // If notParentWhiteObject => Then
+            let mObserver = observe(el,executeFunc,
                 {subtree: true,
                  attributes: true,
                  attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "observer"); 
+            MUT.set(mObserver, "observer");
             if(el.querySelectorAll){
                 allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
             }
@@ -89,14 +89,14 @@ let scanForever = (node, executeFunc) => {
     // if whiteList is empty => listen to all document.body
     else{
         if (node === document.body){
-            let mObserver = observe(node,executeFunc, 
+            let mObserver = observe(node,executeFunc,
                 {subtree: true,
                 attributes: true,
                 attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "mainObserver"); 
+            MUT.set(mObserver, "mainObserver");
         }
     }
-    
+
     //Initial scan
     for (let el of allElems){
         // check el before executing.

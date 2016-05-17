@@ -1,4 +1,4 @@
-import constants from 'constants';
+import * as constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
 import buttonConstructor from './button/round';
@@ -98,7 +98,7 @@ function __buttonCallback (e) {
         'pageUrl': window.location.href
     });
     var msg_data = {};
-    msg_data.imageURL = imageURL;       
+    msg_data.imageURL = imageURL;
     iframe.contentWindow.postMessage(msg_data, '*');
     iframe.style.display = 'block';
     document.body.style.overflow = 'hidden';

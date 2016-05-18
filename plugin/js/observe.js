@@ -32,7 +32,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
             if (mutation.type === 'attributes'){
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
-                    MUT.set(mutation.target, "src");
+                    MUT.set(mutation.target, 'src');
                     executeFunc(mutation.target);
                 }
                 else {
@@ -40,7 +40,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                     let bckgndImg = mutation.target.style.backgroundImage;
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
                         if (_objIsInteresting(mutation.target)){
-                            MUT.set(mutation.target, "attribute");
+                            MUT.set(mutation.target, 'attribute');
                             executeFunc(mutation.target);
                         }
                     }
@@ -80,7 +80,7 @@ let scanForever = (node, executeFunc) => {
                 {subtree: true,
                  attributes: true,
                  attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "observer");
+            MUT.set(mObserver, 'observer');
             if(el.querySelectorAll){
                 allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
             }
@@ -93,7 +93,7 @@ let scanForever = (node, executeFunc) => {
                 {subtree: true,
                 attributes: true,
                 attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "mainObserver");
+            MUT.set(mObserver, 'mainObserver');
         }
     }
 
@@ -102,7 +102,7 @@ let scanForever = (node, executeFunc) => {
         // check el before executing.
         if (_objIsInteresting(el)){
             executeFunc(el);
-            MUT.set(el, "node");
+            MUT.set(el, 'node');
         }
     }
 };

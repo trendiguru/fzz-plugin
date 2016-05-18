@@ -13,6 +13,14 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     IFRAME_ID = 'fazzi',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
+    UI = {
+        'gala.de': {
+            button: {
+                round: 0.1,
+                text: 0.9
+            }
+        }
+    },
     USER_CONFIG = loadUserConfig();
 
 function loadUserConfig(){

@@ -43,23 +43,6 @@
   "npm:es6-promise@3.0.2": {
     "process": "github:jspm/nodelibs-process@^0.1.0"
   },
-  "npm:js-cookie@2.0.4": {
-    "url": "github:jspm/nodelibs-url@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0"
-  },
-  "npm:url@0.10.3": {
-    "punycode": "npm:punycode@1.3.2",
-    "querystring": "npm:querystring@0.2.0",
-    "assert": "github:jspm/nodelibs-assert@^0.1.0",
-    "util": "github:jspm/nodelibs-util@^0.1.0"
-  },
-  "github:jspm/nodelibs-url@0.1.0": {
-    "url": "npm:url@^0.10.1"
-  },
-  "npm:querystring@0.2.0": {},
-  "npm:punycode@1.3.2": {
-    "process": "github:jspm/nodelibs-process@^0.1.0"
-  },
   "npm:mixpanel-browser@2.7.2": {
     "process": "github:jspm/nodelibs-process@^0.1.0"
   },
@@ -96,5 +79,22 @@
     "fs": "github:jspm/nodelibs-fs@^0.1.0",
     "child_process": "github:jspm/nodelibs-child_process@^0.1.0",
     "process": "github:jspm/nodelibs-process@^0.1.0"
+  },
+  "npm:js-cookie@2.1.1": {
+    "url": "github:jspm/nodelibs-url@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0"
+  },
+  "npm:url@0.10.3": {
+    "punycode": "npm:punycode@1.3.2",
+    "querystring": "npm:querystring@0.2.0",
+    "assert": "github:jspm/nodelibs-assert@^0.1.0",
+    "util": "github:jspm/nodelibs-util@^0.1.0"
+  },
+  "npm:querystring@0.2.0": {},
+  "npm:punycode@1.3.2": {
+    "process": "github:jspm/nodelibs-process@^0.1.0"
+  },
+  "github:jspm/nodelibs-url@0.1.0": {
+    "url": "npm:url@^0.10.1"
   }
 }

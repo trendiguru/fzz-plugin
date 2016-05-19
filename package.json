@@ -18,7 +18,7 @@
       "css": "github:systemjs/plugin-css@^0.1.20",
       "es6-promise": "npm:es6-promise@^3.0.2",
       "imagesloaded": "npm:imagesloaded@^3.2.0",
-      "js-cookie": "npm:js-cookie@^2.0.4",
+      "js-cookie": "npm:js-cookie@^2.1.1",
       "mixpanel-browser": "npm:mixpanel-browser@^2.7.2",
       "whatwg-fetch": "npm:whatwg-fetch@^0.10.1"
     },
@@ -30,9 +30,6 @@
   },
   "devDependencies": {
     "jspm": "^0.16.14"
-  },
-  "dependencies": {
-    "whatwg-fetch": "^0.10.1"
   },
   "eslintConfig": {
     "rules": {

@@ -3,13 +3,13 @@
 import * as constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
-import * as buttons from './button';
+import * as button from './button';
 import {REQUESTS} from 'modules/devTools';
 import getUI from './ui';
 
 const {INFO_URL, IFRAME_ID} = constants;
 
-let ui = getUI({button: buttons});
+let ui = getUI({button});
 
 let doTrackVisible = true;
 

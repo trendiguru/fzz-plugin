@@ -65,6 +65,25 @@ QUnit.test('malformed cookie value in IE', function (assert) {
 	document.body.appendChild(iframe);
 });
 
+// github.com/js-cookie/js-cookie/pull/171
+QUnit.test('missing leading semicolon', function (assert) {
+	assert.expect(1);
+	var done = assert.async();
+	// Sandbox in an iframe so that we can poke around with document.cookie.
+	var iframe = document.createElement('iframe');
+	var loadedSuccessfully = true;
+	iframe.src = 'missing_semicolon.html';
+
+	addEvent(iframe, 'load', function () {
+		iframe.contentWindow.onerror = function () {
+			loadedSuccessfully = false;
+		};
+		assert.strictEqual(loadedSuccessfully, true, 'can\'t throw Object is not a function error');
+		done();
+	});
+	document.body.appendChild(iframe);
+});
+
 QUnit.test('Call to read all when there are cookies', function (assert) {
 	Cookies.set('c', 'v');
 	Cookies.set('foo', 'bar');
@@ -89,6 +108,13 @@ QUnit.test('Call to read cookie when there is another unrelated cookie with malf
 	assert.strictEqual(Cookies.get('c'), 'v', 'should not throw a URI malformed exception when retrieving a single cookie');
 	assert.deepEqual(Cookies.get(), { c: 'v' }, 'should not throw a URI malformed exception when retrieving all cookies');
 	Cookies.withConverter(unescape).remove('invalid');
+});
+
+// github.com/js-cookie/js-cookie/issues/145
+QUnit.test('Call to read cookie when passing an Object Literal as the second argument', function (assert) {
+	assert.expect(1);
+	Cookies.get('name', { path: '' });
+	assert.strictEqual(document.cookie, '', 'should not create a cookie');
 });
 
 QUnit.module('write', lifecycle);
@@ -279,6 +305,28 @@ QUnit.test('should be able to conditionally decode a single malformed cookie', f
 		});
 	});
 	assert.strictEqual(document.cookie, '', 'should remove everything');
+});
+
+// github.com/js-cookie/js-cookie/issues/70
+QUnit.test('should be able to create a write decoder', function (assert) {
+	assert.expect(1);
+	Cookies.withConverter({
+		write: function (value) {
+			return value.replace('+', '%2B');
+		}
+	}).set('c', '+');
+	assert.strictEqual(document.cookie, 'c=%2B', 'should call the write converter');
+});
+
+QUnit.test('should be able to use read and write decoder', function (assert) {
+	assert.expect(1);
+	document.cookie = 'c=%2B';
+	var cookies = Cookies.withConverter({
+		read: function (value) {
+			return value.replace('%2B', '+');
+		}
+	});
+	assert.strictEqual(cookies.get('c'), '+', 'should call the read converter');
 });
 
 QUnit.module('JSON handling', lifecycle);

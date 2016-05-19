@@ -5,7 +5,10 @@ function getUI (elements) {
 
     let ui = Cookies.get('ui');
 
-    if (!ui) {
+    if (ui) {
+        ui = JSON.parse(ui);
+    }
+    else {
         ui = new UI(location.host);
         for (let element in ui) {
             ui[element] = getRandom(ui[element]);

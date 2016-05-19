@@ -1,15 +1,19 @@
-import constants from 'constants';
+
+
+import * as constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
-import buttonConstructor from './button/round';
+import * as button from './button';
 import {REQUESTS} from 'modules/devTools';
+import getUI from './ui';
 
 const {INFO_URL, IFRAME_ID} = constants;
+
+let ui = getUI({button});
 
 let doTrackVisible = true;
 
 REQUESTS.active = true;
-
 
 function draw (tgImg) {
     _initialDrawButton(tgImg);
@@ -86,7 +90,7 @@ function __createButtonDiv (tgImg) {
     tgImg.buttonDiv.classList.add('fazz', 'fzz_overlay');
     tgImg.buttonDiv.button.addEventListener('click', __buttonCallback.bind(tgImg));
     tgImg.buttonDiv.info.addEventListener('click', __infoCallback);
-    buttonConstructor(tgImg);
+    ui.button(tgImg);
     return tgImg.buttonDiv;
 }
 
@@ -98,7 +102,7 @@ function __buttonCallback (e) {
         'pageUrl': window.location.href
     });
     var msg_data = {};
-    msg_data.imageURL = imageURL;       
+    msg_data.imageURL = imageURL;
     iframe.contentWindow.postMessage(msg_data, '*');
     iframe.style.display = 'block';
     document.body.style.overflow = 'hidden';

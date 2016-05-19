@@ -1,7 +1,7 @@
 /* global ga */
 
 import runGASnippet from 'ext/ga-snippet';
-import constants from 'constants';
+import * as constants from 'constants';
 const {GA_CODE, LIBNAME}  = constants;
 
 export default {

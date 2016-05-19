@@ -1,6 +1,7 @@
-import constants from 'constants';
+import * as constants from 'constants';
 
 const {HOST_DOMAIN} = constants;
+
 const URL = `${HOST_DOMAIN}/b_plugin.js`;
 //const URL = `${HOST_DOMAIN}/fzz.min.js`;
 

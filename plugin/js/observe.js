@@ -2,8 +2,6 @@ import {selectorMatches} from 'modules/utils';
 import constants from 'constants';
 import {MUT} from 'modules/devTools';
 const {USER_CONFIG} = constants;
-
-
 const forbiddenHTMLTags = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
 const defaultConfig = {
     childList: true,
@@ -11,6 +9,18 @@ const defaultConfig = {
     attributes: true,
     attributeFilter: ['src', 'style']
 };
+
+let sendToProccess = (elem)=>{
+    var event = new CustomEvent(
+        "newElemToProccess", 
+        {   detail: elem,
+            bubbles: true,
+            cancelable: true
+        }
+    );
+    window.dispatchEvent(event);
+};
+
 
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
 let oTgElems = [];
@@ -69,6 +79,7 @@ For a given node, scan for relevant elements and then
 watch them for changes.
 */
 let scanForever = (node, executeFunc) => {
+    sendToProccess("send");
     node = node || document.body;
     
     let parentElems = [];

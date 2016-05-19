@@ -12,6 +12,11 @@ import {getElementsToProcess} from 'modules/utils';
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ = window.FZZ || {};
 
+window.addEventListener("newElemToProccess", (ev)=>{
+    alert(ev.detail);
+    console.log("do let");
+}, false);
+
 let tgElems = oTgElems;
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};

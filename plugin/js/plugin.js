@@ -8,6 +8,7 @@ import {scanForever, observe} from './observe';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
+import {STACKS} from 'modules/devTools';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ || {};
@@ -19,6 +20,14 @@ let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace('www.', '');
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
+
+STACKS.active = true;
+STACKS.newStack("ensureNew");
+STACKS.newStack("isLoaded");
+STACKS.newStack("ensureSuspicious");
+STACKS.newStack("relevantImg");
+STACKS.newStack("newElemToProcess");
+STACKS.newStack("suitableMutation");
 
 //Track Scroll on Publisher
 let initScrollTop = window.scrollY;
@@ -38,6 +47,7 @@ domready(function () {
     observe(document.body, {childList: true,subtree: true});
 
     window.addEventListener("newElemToProcess", (ev)=>{
+        STACKS.set("newElemToProcess", ev.detail);
         processElement(ev.detail);
     }, false);
 
@@ -46,6 +56,7 @@ domready(function () {
             let buttonDiv = elem.buttonDiv;
             redraw(elem, buttonDiv);
         }
+        STACKS.set("suitableMutation", tgElems);
     }, false);
 });
 
@@ -63,6 +74,7 @@ function processElement(el) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
+            STACKS.set("relevantImg",relevantImg);
             tgElems.push(relevantImg);
             initialDrawButton(relevantImg);
             
@@ -92,7 +104,6 @@ function TGImage(elem, url) {
         }
     }
     this.element = elem;
-    this.mutFlag = true;
 }
 
 function logIrrelevant(error) {
@@ -111,6 +122,7 @@ function ensureNew(tgImg) {
             element: tgImg
         };
     }
+    STACKS.set("ensureNew");
     return tgImg;
 }
 
@@ -120,6 +132,7 @@ function isLoaded(tgImg) {
             background: tgImg.background
         });
         iml.on('done', function (instance) {
+            STACKS.set("isLoaded", tgImg);
             resolve(tgImg);
         });
         iml.on('fail', function (instance) {
@@ -134,6 +147,7 @@ function isLoaded(tgImg) {
 function ensureSuspicious(tgImg) {
     let rect = tgImg.element.getBoundingClientRect();
     if (rect.height >= MIN_IMG_HEIGHT && rect.width >= MIN_IMG_WIDTH) {
+        STACKS.set("ensureSuspicious", tgImg);
         return tgImg;
     } else {
         throw {

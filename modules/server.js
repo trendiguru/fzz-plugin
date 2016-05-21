@@ -1,10 +1,13 @@
 /* eslint-disable console */
 
 import 'whatwg-fetch';
+import {STACKS} from 'modules/devTools';
 import {console} from 'modules/smartConsole';
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];
+STACKS.active = true;
+STACKS.newStack("smartCheckRelevancy");
 
 function checkRelevancy(imageUrls) {
     console.log('Will check relevancy of ${imageUrls.length} image urls.');
@@ -51,6 +54,7 @@ function smartCheckRelevancy(tgImg) {
         serverUploader = accumulate(500).then(function () {
             let p = checkRelevancy(serverBuffer.map((im) => im.url));
             serverBuffer = [];
+            STACKS.set("smartCheckRelevancy", p);
             return p;
         });
 

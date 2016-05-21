@@ -20,21 +20,21 @@ function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
-let observe = (target, executeFunc, config = defaultConfig) => {
+let observe = (target, config = defaultConfig) => {
     let handleMutations = function (mutations) {
         let mutTypes = [];
         for (let mutation of mutations) {
             let mutTarget = mutation.target;
             //If object was added To DOM:
             if(mutation.type === 'childList'){
-                console.log("childL: "+mutation.attributeName);
+                //console.log("childL: "+mutation.attributeName);
                 for(let addedNode of mutation.addedNodes){
-                    scanForever(addedNode, executeFunc);
+                    scanForever(addedNode);
                 }
             }
             //If in already existed object attribute was changed:
             if (mutation.type === 'attributes'){
-                console.log("attr: "+mutation.attributeName);
+                //console.log("attr: "+mutation.attributeName);
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
                     MUT.set(mutTarget, "src");
@@ -67,7 +67,7 @@ let observe = (target, executeFunc, config = defaultConfig) => {
 For a given node, scan for relevant elements and then 
 watch them for changes.
 */
-let scanForever = (node, executeFunc) => {
+let scanForever = (node) => {
     node = node || document.body;
     
     let parentElems = [];
@@ -85,7 +85,7 @@ let scanForever = (node, executeFunc) => {
         for (let el of parentElems) {
             //add attribute observer
             // If notParentWhiteObject => Then 
-            let mObserver = observe(el,executeFunc, 
+            let mObserver = observe(el, 
                 {subtree: true,
                  attributes: true,
                  attributeFilter: ['src', 'style']});
@@ -98,7 +98,7 @@ let scanForever = (node, executeFunc) => {
     // if whiteList is empty => listen to all document.body
     else{
         if (node === document.body){
-            let mObserver = observe(node,executeFunc, 
+            let mObserver = observe(node, 
                 {subtree: true,
                 attributes: true,
                 attributeFilter: ['src', 'style']});
@@ -110,7 +110,7 @@ let scanForever = (node, executeFunc) => {
     for (let el of allElems){
         // check el before executing.
         if (_objIsInteresting(el)){
-            executeFunc(el);
+            sendToProccess(el);
             MUT.set(el, "node");
         }
     }
@@ -142,7 +142,7 @@ let publishMutation = (mutKinds)=>{
 
 let sendToProccess = (elem)=>{
     let ev = new CustomEvent(
-        "newElemToProccess", 
+        "newElemToProcess", 
         {   detail: elem,
             bubbles: true,
             cancelable: true

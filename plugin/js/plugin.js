@@ -12,16 +12,6 @@ import {getElementsToProcess} from 'modules/utils';
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ = window.FZZ || {};
 
-window.addEventListener("newElemToProccess", (ev)=>{
-    processElement(ev.detail);
-}, false);
-
-window.addEventListener("suitableMutation", (ev)=>{
-        for (let elem of tgElems){
-            redraw(elem);
-    }
-}, false);
-
 let tgElems = [];
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
@@ -44,8 +34,19 @@ domready(function () {
     loadStyle();
     console.log('FZZ: domready');
     document.body.appendChild(createIframe());
-    scanForever(document.body, processElement);
-    observe(document.body, processElement, {childList: true,subtree: true});
+    scanForever(document.body);
+    observe(document.body, {childList: true,subtree: true});
+
+    window.addEventListener("newElemToProcess", (ev)=>{
+        processElement(ev.detail);
+    }, false);
+
+    window.addEventListener("suitableMutation", (ev)=>{
+        for (let elem of tgElems){
+            let buttonDiv = elem.buttonDiv;
+            redraw(elem, buttonDiv);
+        }
+    }, false);
 });
 
 function processElement(el) {
@@ -62,7 +63,8 @@ function processElement(el) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
-            redraw(relevantImg);
+            initialDrawButton(relevantImg);
+            tgElems.push(relevantImg);
         },
         function (irrelevantImg) {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
@@ -90,7 +92,6 @@ function TGImage(elem, url) {
     }
     this.element = elem;
     this.mutFlag = true;
-    tgElems.push(this);
 }
 
 function logIrrelevant(error) {

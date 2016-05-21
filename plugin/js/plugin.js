@@ -14,7 +14,10 @@ const FZZ = window.FZZ = window.FZZ || {};
 
 window.addEventListener("newElemToProccess", (ev)=>{
     alert(ev.detail);
-    console.log("do let");
+}, false);
+
+window.addEventListener("suitableMutation", (ev)=>{
+    alert("suit");
 }, false);
 
 let tgElems = oTgElems;

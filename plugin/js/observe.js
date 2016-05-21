@@ -10,18 +10,6 @@ const defaultConfig = {
     attributeFilter: ['src', 'style']
 };
 
-let sendToProccess = (elem)=>{
-    var event = new CustomEvent(
-        "newElemToProccess", 
-        {   detail: elem,
-            bubbles: true,
-            cancelable: true
-        }
-    );
-    window.dispatchEvent(event);
-};
-
-
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
 let oTgElems = [];
  //list of mutation types which may influence on tgElements.
@@ -145,6 +133,25 @@ let publishMutation = (mutKinds)=>{
             elem.mutFlag = true;
         }
     }
+    let ev = new CustomEvent(
+        "suitableMutation", 
+        {
+            bubbles: true,
+            cancelable: true
+        }
+    );
+    window.dispatchEvent(ev);
+};
+
+let sendToProccess = (elem)=>{
+    let ev = new CustomEvent(
+        "newElemToProccess", 
+        {   detail: elem,
+            bubbles: true,
+            cancelable: true
+        }
+    );
+    window.dispatchEvent(ev);
 };
 
 export  {scanForever, observe, oTgElems};

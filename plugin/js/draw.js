@@ -11,22 +11,22 @@ let doTrackVisible = true;
 REQUESTS.active = true;
 
 
-function draw (tgImg) {
-    _initialDrawButton(tgImg);
-    _drawForever(tgImg, tgImg.buttonDiv);
-}
+// function draw (tgImg) {
+//     _initialDrawButton(tgImg);
+//     _drawForever(tgImg, tgImg.buttonDiv);
+// }
 
-function _initialDrawButton(tgImg){
+function initialDrawButton(tgImg){
     let buttonDiv = tgImg.buttonDiv || __createButtonDiv(tgImg);
-    __redraw(tgImg, buttonDiv);
+    redraw(tgImg, buttonDiv);
 }
 
-function _drawForever(tgImg, buttonDiv){
-    __redraw(tgImg, buttonDiv);
-    window.requestAnimationFrame(function(){
-        _drawForever(tgImg, buttonDiv);
-    });
-}
+// function _drawForever(tgImg, buttonDiv){
+//     __redraw(tgImg, buttonDiv);
+//     window.requestAnimationFrame(function(){
+//         _drawForever(tgImg, buttonDiv);
+//     });
+// }
 
 
 /**
@@ -35,7 +35,7 @@ function _drawForever(tgImg, buttonDiv){
  * @param {[[Type]]} el        [[Description]]
  * @param {object}   buttonDiv [[Description]]
  */
-function __redraw(tgImg, buttonDiv){
+function redraw(tgImg, buttonDiv){
     //draw only the first time or after a "suitable" mutation.
     if (tgImg.mutFlag){
         tgImg.mutFlag = false;

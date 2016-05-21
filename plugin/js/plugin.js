@@ -10,7 +10,7 @@ import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
 
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
-const FZZ = window.FZZ = window.FZZ || {};
+const FZZ = window.FZZ || {};
 
 let tgElems = [];
 let relevantImgs = FZZ.relevantImgs = {};
@@ -63,8 +63,9 @@ function processElement(el) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
-            initialDrawButton(relevantImg);
             tgElems.push(relevantImg);
+            initialDrawButton(relevantImg);
+            
         },
         function (irrelevantImg) {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,

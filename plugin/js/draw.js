@@ -37,28 +37,28 @@ function initialDrawButton(tgImg){
  */
 function redraw(tgImg, buttonDiv){
     //draw only the first time or after a "suitable" mutation.
-    if (tgImg.mutFlag){
-        tgImg.mutFlag = false;
-        let el = tgImg.element;
-        let imgRect = el.getBoundingClientRect();
-        if(isVisible(el, imgRect)){
-            if(doTrackVisible){
-                __trackButtonSeen(el, imgRect);
-            }
-            buttonDiv.setAttribute(
-                'style',
-                `width: ${imgRect.width}px;
-                height: ${imgRect.height}px;
-                top: ${imgRect.top + window.scrollY}px;
-                left: ${imgRect.left}px;
-                visibility: visible;
-                z-index: 10000000000;`
-            );
+    // if (tgImg.mutFlag){
+    //     tgImg.mutFlag = false;
+    let el = tgImg.element;
+    let imgRect = el.getBoundingClientRect();
+    if(isVisible(el, imgRect)){
+        if(doTrackVisible){
+            __trackButtonSeen(el, imgRect);
         }
-        else{
-            buttonDiv.style.visibility = 'hidden';
-        }
+        buttonDiv.setAttribute(
+            'style',
+            `width: ${imgRect.width}px;
+            height: ${imgRect.height}px;
+            top: ${imgRect.top + window.scrollY}px;
+            left: ${imgRect.left}px;
+            visibility: visible;
+            z-index: 10000000000;`
+        );
     }
+    else{
+        buttonDiv.style.visibility = 'hidden';
+    }
+    //}
 }
 
 function __trackButtonSeen(el, rect){
@@ -127,4 +127,5 @@ function __infoCallback(e){
     }
 }
 
-export default draw;
+//export default draw;
+export {initialDrawButton, redraw};

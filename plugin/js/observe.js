@@ -11,7 +11,6 @@ const defaultConfig = {
 };
 
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
-let oTgElems = [];
  //list of mutation types which may influence on tgElements.
 let visibleMutTypes =["childList",'attributes'];
 MUT.active = true;
@@ -39,7 +38,8 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
                     MUT.set(mutTarget, "src");
-                    executeFunc(mutTarget); 
+                    //executeFunc(mutTarget); 
+                    sendToProccess(mutTarget);
                 }
                 else {
                     //if backgroundImage was changed:
@@ -47,7 +47,8 @@ let observe = (target, executeFunc, config = defaultConfig) => {
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
                         if (_objIsInteresting(mutTarget)){
                             MUT.set(mutTarget, "attribute");
-                            executeFunc(mutTarget);
+                            //executeFunc(mutTarget);
+                            sendToProccess(mutTarget);
                         }
                     }
                 }
@@ -67,7 +68,6 @@ For a given node, scan for relevant elements and then
 watch them for changes.
 */
 let scanForever = (node, executeFunc) => {
-    sendToProccess("send");
     node = node || document.body;
     
     let parentElems = [];
@@ -129,18 +129,15 @@ let publishMutation = (mutKinds)=>{
         }
     }
     if (mutIsSuitable){
-        for (let elem of oTgElems){
-            elem.mutFlag = true;
-        }
+        let ev = new CustomEvent(
+            "suitableMutation", 
+            {
+                bubbles: true,
+                cancelable: true
+            }
+        );
+        window.dispatchEvent(ev);
     }
-    let ev = new CustomEvent(
-        "suitableMutation", 
-        {
-            bubbles: true,
-            cancelable: true
-        }
-    );
-    window.dispatchEvent(ev);
 };
 
 let sendToProccess = (elem)=>{
@@ -154,4 +151,4 @@ let sendToProccess = (elem)=>{
     window.dispatchEvent(ev);
 };
 
-export  {scanForever, observe, oTgElems};
+export  {scanForever, observe};

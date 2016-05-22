@@ -13,6 +13,11 @@ import {STACKS} from 'modules/devTools';
 const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
 const FZZ = window.FZZ || {};
 
+window.addEventListener("newElemToProcess", (ev)=>{
+    STACKS.set("newElemToProcess", ev.detail);
+    processElement(ev.detail);
+}, false);
+
 let tgElems = [];
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
@@ -46,11 +51,6 @@ domready(function () {
     scanForever(document.body);
     observe(document.body, {childList: true,subtree: true});
 
-    window.addEventListener("newElemToProcess", (ev)=>{
-        STACKS.set("newElemToProcess", ev.detail);
-        processElement(ev.detail);
-    }, false);
-
     window.addEventListener("suitableMutation", (ev)=>{
         for (let elem of tgElems){
             let buttonDiv = elem.buttonDiv;
@@ -71,6 +71,7 @@ function processElement(el) {
         .then(smartCheckRelevancy)
         .then(
         function (relevantImg) {
+            //STACKS.set("relevantImg",relevantImg);
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;

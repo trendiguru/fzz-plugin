@@ -13,6 +13,7 @@ const CHECK_INTERVAL = 1000;
 
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
 let shouldCheck = true;
+let followingMut = false;
  //list of mutation types which may influence on tgElements.
 let visibleMutTypes =["childList",'attributes'];
 MUT.active = true;
@@ -136,19 +137,35 @@ let publishMutation = (mutKinds)=>{
         //"polling"
         STACKS.set("countAttrMuts", 1);
         if (shouldCheck){
-            STACKS.set("countCheckedMuts", 1);
+            followingMut = false;
             shouldCheck = false;
-            setTimeout(()=>{shouldCheck = true;}, CHECK_INTERVAL);
-            let ev = new CustomEvent(
-                "suitableMutation", 
-                {
-                    bubbles: true,
-                    cancelable: true
+            STACKS.set("countCheckedMuts", 1);
+            setTimeout(()=>{
+                // if at CHECK_INTERVAL pause any mutation was occurred => send an event one more time.
+                // (prevents losing of important mutations (especially in carousels));
+                if (followingMut){
+                    suitableMutation();
+                    STACKS.set("countCheckedMuts", 1);
                 }
-            );
-            window.dispatchEvent(ev);
+                shouldCheck = true;
+            }, CHECK_INTERVAL);
+            suitableMutation();
+        }
+        else{
+            followingMut = true;
         }
     }
+};
+
+let suitableMutation = ()=>{
+    let ev = new CustomEvent(
+        "suitableMutation", 
+        {
+            bubbles: true,
+            cancelable: true
+        }
+    );
+    window.dispatchEvent(ev);
 };
 
 let sendToProccess = (elem)=>{

@@ -3,7 +3,7 @@
 import runMixpanelSnippet from 'ext/mixpanel-snippet';
 //import mixpanel from 'ext/mixpanel/loader-module';
 
-import constants from 'constants';
+import * as constants from 'constants';
 const {LIBNAME, MIXPANEL_ID} = constants;
 
 

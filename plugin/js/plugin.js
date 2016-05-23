@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 
 import domready from 'ext/domready';
-import constants from 'constants';
+import * as constants from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';

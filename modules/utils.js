@@ -46,7 +46,7 @@ function getParameterByName(name) {
 
 function selectorMatches(el, selector) {
     if(!(el instanceof Element)) return ()=> false;
-    
+
     var p = Element.prototype;
     var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function (s) {
         return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
@@ -73,12 +73,12 @@ function getDomainName(urlStr){
     return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
 }
 
-export {entries, 
-        values, 
-        delay, 
+export {entries,
+        values,
+        delay,
         promiseWithTimeout,
         getLocation,
-        getParameterByName, 
-        selectorMatches, 
-        dictMerge, 
+        getParameterByName,
+        selectorMatches,
+        dictMerge,
         getDomainName};

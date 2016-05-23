@@ -1,6 +1,6 @@
 import {selectorMatches} from 'modules/utils';
 import constants from 'constants';
-import {MUT} from 'modules/devTools';
+import {MUT, STACKS} from 'modules/devTools';
 const {USER_CONFIG} = constants;
 const forbiddenHTMLTags = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
 const defaultConfig = {
@@ -9,11 +9,15 @@ const defaultConfig = {
     attributes: true,
     attributeFilter: ['src', 'style']
 };
+const CHECK_INTERVAL = 1000;
 
 let MutationObserver  = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserve;
+let shouldCheck = true;
  //list of mutation types which may influence on tgElements.
 let visibleMutTypes =["childList",'attributes'];
 MUT.active = true;
+STACKS.newStack("countAttrMuts");
+STACKS.newStack("countCheckedMuts");
 
 // Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
 function _objIsInteresting(node){
@@ -129,14 +133,21 @@ let publishMutation = (mutKinds)=>{
         }
     }
     if (mutIsSuitable){
-        let ev = new CustomEvent(
-            "suitableMutation", 
-            {
-                bubbles: true,
-                cancelable: true
-            }
-        );
-        window.dispatchEvent(ev);
+        //"polling"
+        STACKS.set("countAttrMuts", 1);
+        if (shouldCheck){
+            STACKS.set("countCheckedMuts", 1);
+            shouldCheck = false;
+            setTimeout(()=>{shouldCheck = true;}, CHECK_INTERVAL);
+            let ev = new CustomEvent(
+                "suitableMutation", 
+                {
+                    bubbles: true,
+                    cancelable: true
+                }
+            );
+            window.dispatchEvent(ev);
+        }
     }
 };
 

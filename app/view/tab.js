@@ -16,12 +16,12 @@ export class TabView extends Component {
             TitleNodes.push(<li key={i} onClick={this.setState.bind(this, {tab: i}, null)} className={this.state.tab == i ? 'select' : ''}>{tab.props.title}</li>);
             TabNodes.push(React.cloneElement(tab, {index: i, select: this.state.tab}));
         });
-        let liWidth = 100 / children.length + '%' || 0;
+        let liWidth = 100 / children.length || 0;
         return <div>
             <nav>
                 <ul>
                     {TitleNodes}
-                    <label className="indicator" style={{left: this.state.tab * liWidth, width: liWidth}}></label>
+                    <label className="indicator" style={{left: this.state.tab * liWidth + '%', width: liWidth + '%'}}></label>
                 </ul>
             </nav>
             <main style={{position: 'relative'}}>{TabNodes}</main>

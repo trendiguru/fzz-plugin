@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* global React,ReactDOM */
 
+// import getMainColor from 'modules/getMainColor';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
@@ -24,7 +25,7 @@ class App extends Component {
                 <Assemblage
                     col="5"
                     margin="8"
-                    template={img => <a href=""><img src={img.src} style={{width: '100%'}} /><div className="tag"><span className="price">{img.price.price}</span><span className="brand">{img.brand}</span></div></a>}
+                    template={img => <a href={img.clickUrl} target="_blank"><img src={img.src} style={{width: '100%'}} /><div className="tag"><span className="price">{img.price.price}</span><span className="brand">{img.brand}</span></div></a>}
                     src={item.similar_results.map(result => {
                         result.src = result.images.XLarge;
                         return result;

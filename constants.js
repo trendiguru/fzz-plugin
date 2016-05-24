@@ -2,7 +2,10 @@
 //const HOST_DOMAIN =  'http://localhost:8000';
 //const HOST_DOMAIN =  'https://fzz.storage.googleapis.com';
 
+let scriptTagData = loadScriptTagData();
+
 export const HOST_DOMAIN = 'https://localhost:4443',
+//export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -13,10 +16,17 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     IFRAME_ID = 'fazzi',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
-    USER_CONFIG = loadUserConfig();
+    USER_CONFIG = scriptTagData.userConfig,
+    PID = scriptTagData.pid;
 
 export function UI (host) {
     this.settings = {
+        'mb1': {
+            button: {
+                round: 0.05,
+                roundDress: 0.95
+            }
+        },
         'gala.de': {
             button: {
                 round: 0.1,
@@ -25,8 +35,8 @@ export function UI (host) {
         },
         '__default': {
             button: {
-                round: 0.9,
-                roundDress: 0.1
+                round: 0.3,
+                roundDress: 0.7
             }
         }
     };
@@ -37,18 +47,20 @@ export function UI (host) {
     return this.settings.__default;
 }
 
-function loadUserConfig(){
-    let userConfig = {};
+function loadScriptTagData(){
+    let data = {userConfig:{}, pid:''};
     let fzzScript = document.getElementById('fzz-script');
 
     if(fzzScript){
         let userConfigJSON = fzzScript.getAttribute('data-fzz');
         if(userConfigJSON){
-            userConfig = JSON.parse(userConfigJSON);
+            data.userConfig = JSON.parse(userConfigJSON);
         }
+
+        data.pid = fzzScript.getAttribute('data-pid');
     }
 
-    userConfig.whitelist = userConfig.whitelist || '*';
+    data.userConfig.whitelist = data.userConfig.whitelist || '*';
 
-    return userConfig;
+    return data;
 }

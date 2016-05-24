@@ -1,4 +1,4 @@
-import {UI} from 'constants';
+import {UI, PID} from 'constants';
 import Cookies from 'js-cookie';
 
 function getUI (elements) {
@@ -9,7 +9,7 @@ function getUI (elements) {
         ui = JSON.parse(ui);
     }
     else {
-        ui = new UI(location.host);
+        ui = new UI(PID);
         for (let element in ui) {
             ui[element] = getRandom(ui[element]);
         }

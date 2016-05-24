@@ -9,7 +9,7 @@
     "bundle": "jspm bundle-sfx --inline-source-maps app/desktop.js app/b_desktop.js & jspm bundle-sfx --inline-source-maps plugin/js/plugin.js b_plugin.js & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
     "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
     "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
-    "publish": "./upload_to_gs.sh"
+    "publish": "./upload_to_gs.sh"  /* includes deploy */
   },
   "author": "",
   "license": "ISC",

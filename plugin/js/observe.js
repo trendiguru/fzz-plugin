@@ -16,7 +16,6 @@ let shouldCheck = true;
 let followingMut = false;
  //list of mutation types which may influence on tgElements.
 let visibleMutTypes =["childList",'attributes'];
-MUT.active = true;
 STACKS.newStack("countAttrMuts");
 STACKS.newStack("countCheckedMuts");
 
@@ -32,7 +31,6 @@ let observe = (target, config = defaultConfig) => {
             let mutTarget = mutation.target;
             //If object was added To DOM:
             if(mutation.type === 'childList'){
-                //console.log("childL: "+mutation.attributeName);
                 for(let addedNode of mutation.addedNodes){
                     scanForever(addedNode);
                 }
@@ -43,7 +41,6 @@ let observe = (target, config = defaultConfig) => {
                 //If src was changed (in image only):
                 if (mutation.attributeName!='style' && mutTarget.tagName==='IMG'){
                     MUT.set(mutTarget, "src");
-                    //executeFunc(mutTarget); 
                     sendToProccess(mutTarget);
                 }
                 else {
@@ -52,7 +49,6 @@ let observe = (target, config = defaultConfig) => {
                     if (bckgndImg && bckgndImg !== mutation.oldValue ){
                         if (_objIsInteresting(mutTarget)){
                             MUT.set(mutTarget, "attribute");
-                            //executeFunc(mutTarget);
                             sendToProccess(mutTarget);
                         }
                     }
@@ -69,12 +65,12 @@ let observe = (target, config = defaultConfig) => {
 
 
 /*
-For a given node, scan for relevant elements and then 
+For a given node, scan for relevant elements and then
 watch them for changes.
 */
 let scanForever = (node) => {
     node = node || document.body;
-    
+
     let parentElems = [];
     if(node.querySelectorAll){
         parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
@@ -89,12 +85,12 @@ let scanForever = (node) => {
     if (USER_CONFIG.whitelist !== '*') {
         for (let el of parentElems) {
             //add attribute observer
-            // If notParentWhiteObject => Then 
-            let mObserver = observe(el, 
+            // If notParentWhiteObject => Then
+            let mObserver = observe(el,
                 {subtree: true,
                  attributes: true,
                  attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "observer"); 
+            MUT.set(mObserver, "observer");
             if(el.querySelectorAll){
                 allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
             }
@@ -103,14 +99,14 @@ let scanForever = (node) => {
     // if whiteList is empty => listen to all document.body
     else{
         if (node === document.body){
-            let mObserver = observe(node, 
+            let mObserver = observe(node,
                 {subtree: true,
                 attributes: true,
                 attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, "mainObserver"); 
+            MUT.set(mObserver, "mainObserver");
         }
     }
-    
+
     //Initial scan
     for (let el of allElems){
         // check el before executing.
@@ -149,7 +145,7 @@ let publishMutation = (mutKinds)=>{
                 }
                 shouldCheck = true;
             }, CHECK_INTERVAL);
-            suitableMutation();
+            setTimeout(suitableMutation(), CHECK_INTERVAL/2);
         }
         else{
             followingMut = true;
@@ -159,7 +155,7 @@ let publishMutation = (mutKinds)=>{
 
 let suitableMutation = ()=>{
     let ev = new CustomEvent(
-        "suitableMutation", 
+        "suitableMutation",
         {
             bubbles: true,
             cancelable: true
@@ -170,7 +166,7 @@ let suitableMutation = ()=>{
 
 let sendToProccess = (elem)=>{
     let ev = new CustomEvent(
-        "newElemToProcess", 
+        "newElemToProcess",
         {   detail: elem,
             bubbles: true,
             cancelable: true

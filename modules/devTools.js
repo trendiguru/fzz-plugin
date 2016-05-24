@@ -1,9 +1,10 @@
 import {getDomainName, entries} from 'modules/utils';
 const devTools = window.devTools = window.devTools || {};
 
+let active = true; // CHANGE IT TO FALSE IF YOU'LL SEND TO A CUSTOMER
 
 let MUT = devTools.MUT = {
-	active: false,
+	active: active,
 	srcMut: [],
 	nodeMut: [],
 	attrMut: [],
@@ -32,7 +33,7 @@ let MUT = devTools.MUT = {
 };
 
 let REQUESTS = devTools.REQUESTS = {
-	active: false,
+	active: active,
 	queue: [],
 	set: (reuestProperties, mType) => {
 		if (REQUESTS.active){
@@ -44,7 +45,7 @@ let REQUESTS = devTools.REQUESTS = {
 };
 
 let STACKS = devTools.STACKS={
-	active: false,
+	active: active,
 	storage: {},
 	sColor:"RED",
 	newStack: (name)=>{

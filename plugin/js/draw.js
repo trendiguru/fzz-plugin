@@ -8,26 +8,10 @@ const {INFO_URL, IFRAME_ID} = constants;
 
 let doTrackVisible = true;
 
-REQUESTS.active = true;
-
-
-// function draw (tgImg) {
-//     _initialDrawButton(tgImg);
-//     _drawForever(tgImg, tgImg.buttonDiv);
-// }
-
 function initialDrawButton(tgImg){
     let buttonDiv = tgImg.buttonDiv || __createButtonDiv(tgImg);
     redraw(tgImg, buttonDiv);
 }
-
-// function _drawForever(tgImg, buttonDiv){
-//     __redraw(tgImg, buttonDiv);
-//     window.requestAnimationFrame(function(){
-//         _drawForever(tgImg, buttonDiv);
-//     });
-// }
-
 
 /**
  * This updates the button div position to overlay the element.
@@ -104,7 +88,7 @@ function __buttonCallback (e) {
         'pageUrl': window.location.href
     });
     var msg_data = {};
-    msg_data.imageURL = imageURL;       
+    msg_data.imageURL = imageURL;
     iframe.contentWindow.postMessage(msg_data, '*');
     iframe.style.display = 'block';
     document.body.style.overflow = 'hidden';

@@ -26,7 +26,6 @@ let refererDomain = window.location.hostname.replace('www.', '');
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
 analytics.track('Page Hit');
 
-STACKS.active = true;
 STACKS.newStack("ensureNew");
 STACKS.newStack("isLoaded");
 STACKS.newStack("ensureSuspicious");
@@ -78,7 +77,7 @@ function processElement(el) {
             STACKS.set("relevantImg",relevantImg);
             tgElems.push(relevantImg);
             initialDrawButton(relevantImg);
-            
+
         },
         function (irrelevantImg) {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,

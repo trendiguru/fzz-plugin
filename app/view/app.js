@@ -23,7 +23,7 @@ class App extends Component {
             (item, i) => <Tab key={i} title={item.category}>
                 <Assemblage
                     col="5"
-                    margin="16"
+                    margin="8"
                     template={img => <a href=""><img src={img.src} style={{width: '100%'}} /><div className="tag"><span className="price">{img.price.price}</span><span className="brand">{img.brand}</span></div></a>}
                     src={item.similar_results.map(result => {
                         result.src = result.images.XLarge;

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 function getUI (elements) {
 
-    let ui = JSON.parse(Cookies.get('ui'));
+    let ui = Cookies.get('ui');
 
     if (ui) {
         ui = JSON.parse(ui);

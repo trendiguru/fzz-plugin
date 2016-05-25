@@ -12,7 +12,7 @@ function getScript(url, callback) {
     script.type = 'text/javascript';
     script.id = 'fzz-script';
     script.setAttribute('data-fzz', '{"whitelist":"*"}');
-    script.setAttribute('data-pid', 'chrome_ext_dev');
+    script.setAttribute('data-pid', 'mb1');
     script.src = url;
     script.onload = callback;
     script.onreadystatechange = function() {

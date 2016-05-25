@@ -18,7 +18,7 @@ body {
 #lightbox {
     width: calc(100% - 10em);
     height: calc(100% - 10em);
-    background: #fff;
+    background: #FAFAFA;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     position: fixed;
     top: 5em;
@@ -51,6 +51,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    z-index: 100;
 }
 
 main {
@@ -59,7 +61,6 @@ main {
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    position: absolute;
     top: 3em;
     left: 34%;
 }
@@ -77,6 +78,7 @@ section div > div {
     cursor: pointer;
     -webkit-transition: box-shadow .25s;
     transition: box-shadow .25s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 section div > div:hover {
@@ -102,11 +104,7 @@ section a {
 
 .price {
     font-size: 1.4em;
-    font-weight: 400;
     font-family: 'Rozha One', serif;
-    text-align: right;
-    color: #000;
-    opacity: 0.7;
     display: block;
 }
 
@@ -122,21 +120,26 @@ section a {
     background: #ff4d8b;
     position: absolute;
     bottom: 0;
+    transition: left .25s;
 }
 
 .tag {
-    width: calc(100% - 1em);
+    width: 100%;
     padding: .5em;
-    background: #fff;
-    color: #ff4d8b;
+    background-color: rgba(0,0,0,0.2);
+    color: #fff;
     position: absolute;
     bottom: 0;
     left: 0;
+    text-align: center;
+    box-sizing: border-box;
+    text-shadow: 0px 1px 3px rgba(0,0,0,0.4);
 }
 
 nav {
     width: 66%;
     overflow: hidden;
+    background: #fff;
     position: absolute;
     top: 0;
     left: 34%;
@@ -145,6 +148,8 @@ nav {
     display: -ms-flexbox;
     display: flex;
     text-transform: uppercase;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    z-index: 99;
 }
 
 nav aside {
@@ -189,25 +194,18 @@ nav ul li {
     -ms-flex: 1;
     flex: 1;
     overflow: hidden;
-    padding: .65em 0;
-    font-size: 1.2em;
+    padding: 1em 0;
+    font-weight: 600;
+    opacity: 0.5;
     cursor: pointer;
     text-align: center;
-    text-transform: capitalize;
+    text-transform: uppercase;;
 }
 
 nav ul li.select {
     font-weight: bold;
     color: #ff4d8b;
-}
-
-#indicator {
-    height: 2px;
-    background: #6857B2;
-    position: absolute;
-    bottom: 0;
-    -webkit-transition: left .4s;
-    transition: left .4s;
+    opacity: 1;
 }
 
 @media (max-width: 640px) {
@@ -218,16 +216,16 @@ nav ul li.select {
         top: 0;
         left: 0;
     }
-    
+
     aside {
         display: none;
     }
-    
+
     main {
         width: 100%;
         left: 0;
     }
-    
+
     nav {
         width: 100%;
         left: 0;

@@ -10,14 +10,14 @@ import {smartCheckRelevancy} from 'modules/server';
 import {getElementsToProcess} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 
-const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC} = constants;
+const {USER_CONFIG, MIN_IMG_WIDTH, MIN_IMG_HEIGHT, IFRAME_ID, CSS_URL, IFRAME_SRC, PID} = constants;
 
 const FZZ = window.FZZ = window.FZZ || {};
 let relevantImgs = FZZ.relevantImgs = {};
 let irrelevantImgs = FZZ.irrelevantImgs = {};
 let irrelevantElements = FZZ.irrelevantElements = {};
 let refererDomain = window.location.hostname.replace('www.', '');
-analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain });
+analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain, PID:PID });
 analytics.track('Page Hit');
 
 //Track Scroll on Publisher

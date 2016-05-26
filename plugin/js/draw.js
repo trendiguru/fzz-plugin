@@ -83,7 +83,9 @@ function __trackButtonSeen(el, rect){
 function __createButtonDiv (tgImg) {
     tgImg.buttonDiv           = document.createElement('div');
     tgImg.buttonDiv.button    = document.createElement('button');
+    tgImg.buttonDiv.button.classList.add('fzzButton');
     tgImg.buttonDiv.info      = document.createElement('button');
+    tgImg.buttonDiv.info.classList.add('round', 'fzzInfo');
     tgImg.buttonDiv.appendChild(tgImg.buttonDiv.button);
     tgImg.buttonDiv.appendChild(tgImg.buttonDiv.info);
     document.body.appendChild(tgImg.buttonDiv);

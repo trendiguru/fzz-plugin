@@ -21,6 +21,11 @@ export const HOST_DOMAIN = 'https://localhost:4443',
 
 export function UI (host) {
     this.settings = {
+        'asos': {
+            button: {
+                roundAsos: 1.0
+            }
+        },
         'mb1': {
             button: {
                 round: 0.05,

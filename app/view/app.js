@@ -34,10 +34,23 @@ class App extends Component {
                     )}
                 />
             </Tab>
-        );
+        ),
+            NavButtonNodes = [
+                {
+                    icon: 'close',
+                    action: this.close
+                },
+                {
+                    icon: 'feedback',
+                    action: location.href = 'mailto:feedback@trendiguru.com'
+                }
+            ].map(button => <button onClick={button.action}><i class="md-icon">{button.icon}</i></button>);
+
         return <Lightbox ref="app">
             <aside style={{backgroundImage: `url('${this.props.imageURL}')`}}></aside>
-            <TabView>{TabNodes}</TabView>
+            <TabView
+                aside={NavButtonNodes}
+            >{TabNodes}</TabView>
         </Lightbox>;
     }
 }

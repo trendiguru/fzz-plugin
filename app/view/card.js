@@ -14,12 +14,12 @@ class Card extends Component {
         this.refs.card.dispatchEvent(event);
     }
     render () {
-        return <article ref="card" onClick={this.click}>
-            <a href={this.props.link}>
-                <img src={this.props.cover} />
-                {this.props.body.map(field => <span>{field}</span>)}
-            </a>
-        </article>;
+        let {labels} = this.props;
+        let LabelNodes = Object.keys(labels).map(label => <span className="label">{labels[label]}</span>);
+        return <a ref="card" href={this.props.link} onClick={this.click} targe="_blank">
+            <img src={this.props.image} />
+            <div className="tag">{LabelNodes}</div>
+        </a>;
     }
 }
 

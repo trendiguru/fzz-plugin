@@ -4,6 +4,7 @@ b_*
 fzz.min.js
 *.map
 */*.map
+*.zip
 
 npm-debug.log
 

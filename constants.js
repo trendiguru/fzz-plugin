@@ -4,8 +4,8 @@
 
 let scriptTagData = loadScriptTagData();
 
-export const HOST_DOMAIN = 'https://localhost:4443',
-//export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
+//export const HOST_DOMAIN = 'https://localhost:4443',
+export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -19,8 +19,8 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     USER_CONFIG = scriptTagData.userConfig,
     PID = scriptTagData.pid;
 
-export function UI (host) {
-    this.settings = {
+export function UISettings (host) {
+    let settings = {
         'asos': {
             button: {
                 roundAsos: 1.0
@@ -45,11 +45,11 @@ export function UI (host) {
             }
         }
     };
-    for (let domain in this.settings) {
-        if (host.includes(domain))
-            return this.settings[domain];
+    for (let domain in settings) {
+        if (host && host.includes(domain))
+            return settings[domain];
     }
-    return this.settings.__default;
+    return settings.__default;
 }
 
 function loadScriptTagData(){

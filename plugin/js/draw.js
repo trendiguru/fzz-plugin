@@ -8,6 +8,7 @@ import {REQUESTS} from 'modules/devTools';
 import getUI from './ui';
 
 const {INFO_URL, IFRAME_ID} = constants;
+const REDRAW_INTERVALL = 100;
 
 let ui = getUI({button});
 

@@ -1,28 +1,24 @@
-
-
-import * as constants from 'constants';
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
-import * as button from './button';
+import * as overlay from './overlay';
 import {REQUESTS} from 'modules/devTools';
 import getUI from './ui';
 
-const {INFO_URL, IFRAME_ID} = constants;
-
-let ui = getUI({button});
+let ui = getUI({overlay});
 
 let doTrackVisible = true;
 
 REQUESTS.active = true;
 
-function draw (tgImg) {
+export default function draw (tgImg) {
     _initialDrawButton(tgImg);
     _drawForever(tgImg.element, tgImg.buttonDiv);
 }
 
 function _initialDrawButton(tgImg){
     let el = tgImg.element;
-    let buttonDiv = tgImg.buttonDiv || __createButtonDiv(tgImg);
+    let buttonDiv = tgImg.buttonDiv || ui.overlay(tgImg);
+    document.body.appendChild(buttonDiv);
     __redraw(el, buttonDiv);
 }
 
@@ -33,13 +29,13 @@ function _drawForever(el, buttonDiv){
     });
 }
 
-
 /**
  * This updates the button div position to overlay the element.
- * ASSUMES tgImg has an buttonDiv (__createButtonDiv has been called)
+ * ASSUMES tgImg has an buttonDiv (ui.button has been called)
  * @param {[[Type]]} el        [[Description]]
  * @param {object}   buttonDiv [[Description]]
  */
+
 function __redraw(el, buttonDiv){
     let imgRect = el.getBoundingClientRect();
     if(isVisible(el, imgRect)){
@@ -73,60 +69,3 @@ function __trackButtonSeen(el, rect){
         }, 1000);
     }
 }
-
-/**
- * Create the overlay div and the buttons within
- * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
- * @returns {object} buttonDiv that was created and attached.
- */
-
-function __createButtonDiv (tgImg) {
-    tgImg.buttonDiv           = document.createElement('div');
-    tgImg.buttonDiv.button    = document.createElement('button');
-    tgImg.buttonDiv.button.classList.add('fzzButton');
-    tgImg.buttonDiv.info      = document.createElement('button');
-    tgImg.buttonDiv.info.classList.add('round', 'fzzInfo');
-    tgImg.buttonDiv.appendChild(tgImg.buttonDiv.button);
-    tgImg.buttonDiv.appendChild(tgImg.buttonDiv.info);
-    document.body.appendChild(tgImg.buttonDiv);
-    tgImg.buttonDiv.classList.add('fazz', 'fzz_overlay');
-    tgImg.buttonDiv.button.addEventListener('click', __buttonCallback.bind(tgImg));
-    tgImg.buttonDiv.info.addEventListener('click', __infoCallback);
-    ui.button(tgImg);
-    return tgImg.buttonDiv;
-}
-
-function __buttonCallback (e) {
-    let iframe = document.getElementById(IFRAME_ID),
-        imageURL = this.url;
-    analytics.track('Trendi Button Clicked', {
-        'imageURL': imageURL,
-        'pageUrl': window.location.href
-    });
-    var msg_data = {};
-    msg_data.imageURL = imageURL;
-    iframe.contentWindow.postMessage(msg_data, '*');
-    iframe.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    e.preventDefault();
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    } else {
-        e.cancelBubble = true;
-    }
-}
-
-function __infoCallback(e){
-    analytics.track('Info Button Clicked');
-
-    window.open(INFO_URL, '_blank');
-
-    e.preventDefault();
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    } else {
-        e.cancelBubble = true;
-    }
-}
-
-export default draw;

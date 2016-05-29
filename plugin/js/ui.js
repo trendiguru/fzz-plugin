@@ -1,27 +1,26 @@
-import {UI, PID} from 'constants';
+import {UISettings, PID} from 'constants';
 import Cookies from 'js-cookie';
 
-function getUI (elements) {
+export default function UIgetter (elements) {
+    let uiCookie = Cookies.get('ui'),
+        uiElements = {};
 
-    let ui = Cookies.get('ui');
-
-    if (ui) {
-        ui = JSON.parse(ui);
+    if (uiCookie) {
+        uiCookie = JSON.parse(uiCookie);
     }
     else {
-        ui = new UI(PID);
-        for (let element in ui) {
-            ui[element] = getRandom(ui[element]);
+        let uiSettings = UISettings(PID);
+        for (let element in uiCookie) {
+            uiCookie[element] = getRandom(uiSettings[element]);
         }
-        Cookies.set('ui', ui);
+        Cookies.set('ui', uiCookie);
     }
 
-    for (let element in ui) {
-        ui[element] = elements[element][ui[element]];
+    for (let element in uiCookie) {
+        uiElements[element] = elements[element][uiCookie[element]];
     }
 
-    return ui;
-
+    return uiElements;
 }
 
 function getRandom (dictionary) {
@@ -34,5 +33,3 @@ function getRandom (dictionary) {
         }
     }
 }
-
-export default getUI;

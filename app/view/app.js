@@ -25,11 +25,13 @@ class App extends Component {
                 <Assemblage
                     col="5"
                     margin="8"
-                    template={img => <a href={img.clickUrl} target="_blank"><img src={img.src} style={{width: '100%'}} /><div className="tag"><span className="price">{img.price.price}</span><span className="brand">{img.brand}</span></div></a>}
-                    src={item.similar_results.map(result => {
-                        result.src = result.images.XLarge;
-                        return result;
-                    })}
+                    template={img => <Card link={img.clickUrl} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
+                    src={
+                        item.similar_results.map(result => {
+                            result.src = result.images.XLarge;
+                            return result;
+                        }
+                    )}
                 />
             </Tab>
         );

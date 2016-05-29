@@ -172,9 +172,16 @@ nav aside button {
     cursor: pointer;
 }
 
-#close:hover {
-    background: red;
+#close:hover, #feedback:hover {
     color: #fff;
+}
+
+#close:hover {
+    background: #E53935;
+}
+
+#feedback:hover {
+    background: #FDD835;
 }
 
 nav ul {

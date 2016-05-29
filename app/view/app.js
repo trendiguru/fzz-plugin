@@ -17,6 +17,7 @@ class App extends Component {
         ReactDOM.findDOMNode(this.refs.app).dispatchEvent(new Event('app opened', {bubbles: true}));
     }
     close (e) {
+        this.props.close();
         e.target.dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
@@ -37,14 +38,14 @@ class App extends Component {
         ),
             NavButtonNodes = [
                 {
-                    icon: 'close',
-                    action: this.close
+                    icon: 'feedback',
+                    action: () => location.href = 'mailto:feedback@trendiguru.com'
                 },
                 {
-                    icon: 'feedback',
-                    action: location.href = 'mailto:feedback@trendiguru.com'
+                    icon: 'close',
+                    action: this.close.bind(this)
                 }
-            ].map(button => <button onClick={button.action}><i class="md-icon">{button.icon}</i></button>);
+            ].map(button => <button id={button.icon} onClick={button.action}><i className="md-icon">{button.icon}</i></button>);
 
         return <Lightbox ref="app">
             <aside style={{backgroundImage: `url('${this.props.imageURL}')`}}></aside>

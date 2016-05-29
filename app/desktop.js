@@ -37,7 +37,7 @@ addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
         getImageData(msg.data.imageURL).then(data => {
-            render({imageURL: msg.data.imageURL, items: data.items});
+            render({imageURL: msg.data.imageURL, items: data.items, close});
         });
     }
 });
@@ -46,7 +46,7 @@ addEventListener('message', msg => {
 
 publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
-analytics.initializeInApp({publisherDomain: publisherDomain}); 
+analytics.initializeInApp({publisherDomain: publisherDomain});
 
 analytics.track('App Loaded');
 

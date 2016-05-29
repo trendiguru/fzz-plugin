@@ -23,6 +23,7 @@ export class TabView extends Component {
                     {TitleNodes}
                     <label className="indicator" style={{left: this.state.tab * liWidth + '%', width: liWidth + '%'}}></label>
                 </ul>
+                <aside>{this.props.aside}</aside>
             </nav>
             <main style={{position: 'relative'}}>{TabNodes}</main>
         </div>;

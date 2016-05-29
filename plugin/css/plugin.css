@@ -4,7 +4,7 @@
     pointer-events: none;
 }
 
-.fazz.round button {
+.fazz button.round {
     width: 3em;
     height: 3em;
     padding: 0;
@@ -29,8 +29,15 @@
     pointer-events: all;
 }
 
-.fazz.round.dress button {
+.fazz button.round.dress {
     background-image: url('../img/dress.svg');
+}
+
+.fazz button.round.asos {
+    background-image: url('../img/asos-com.svg');
+    background-color: white;
+    width: 4.5em;
+    height: 2.5em;
 }
 
 @keyframes float {
@@ -39,27 +46,29 @@
 
 }
 
-.fazz.round button:first-of-type {
+.fazz button.fzzButton {
     z-index: 100;
 }
 
-.fazz.round button + button {
+.fazz button.fzzInfo {
     width: 1em;
     height: 1em;
+    top: 2em;
+    right: 1em;
+    border-radius: 50%;
     background-image: url('https://storage.googleapis.com/fzz/img/ic_info_grey_24px.svg');
     background-size: 100%;
-    top: 2em;
     -webkit-transition-delay: 0s;
     transition-delay: 0s;
     box-shadow:         none;
     z-index: 0;
 }
 
-.fazz.round button:hover {
+.fazz button.round:hover {
     box-shadow:         0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.fazz.round button:hover + button, .fazz button + button:hover {
+.fazz button.round:hover + button, .fazz button + button:hover {
     -webkit-transition-delay: .5s;
     transition-delay: .5s;
     -webkit-transform-origin:   center;
@@ -69,7 +78,7 @@
     z-index: 1;
 }
 
-.fazz.round button + button:hover {
+.fazz button.fzzInfo:hover {
     box-shadow:         0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 

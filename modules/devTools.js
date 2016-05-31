@@ -89,10 +89,20 @@ let STACKS = devTools.STACKS={
 
 };
 
-//______ective_functions______//
+if (active){
+//______STACKS_definition_____//
+	let s = STACKS;
+	s.newStack("ensureNew");
+	s.newStack("isLoaded");
+	s.newStack("ensureSuspicious");
+	s.newStack("TGImage");
+	s.newStack("smartCheckRelevancy");
+	s.newStack("process");
 
-devTools.modules = {};
-let utils = devTools.modules.utils = {};
-utils.getDomainName = getDomainName;
+	//______ective_functions______//
+	devTools.modules = {};
+	let utils = devTools.modules.utils = {};
+	utils.getDomainName = getDomainName;
+}
 
 export {MUT, REQUESTS, STACKS, devTools};

@@ -18,6 +18,7 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
     PID = scriptTagData.pid;
+    ENV = ["PRODUCTION", "DEV"][1];
 
 export function UISettings (host) {
     let settings = {

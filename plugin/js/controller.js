@@ -60,6 +60,7 @@ class Controller {
                 element: tgImg
             };
         }
+        s.set("ensureNew");
         return tgImg;
     }
 

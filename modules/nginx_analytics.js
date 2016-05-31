@@ -1,4 +1,5 @@
 import {entries} from 'modules/utils';
+import {ENV} from 'constants';
 
 let nginx = {
     // more fields are added in init()

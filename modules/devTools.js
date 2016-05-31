@@ -98,6 +98,9 @@ if (active){
 	s.newStack("TGImage");
 	s.newStack("smartCheckRelevancy");
 	s.newStack("process");
+	s.newStack("relevantImg");
+	s.newStack("irrelevantImg");
+	s.newStack("logIrrelevant");
 
 	//______ective_functions______//
 	devTools.modules = {};

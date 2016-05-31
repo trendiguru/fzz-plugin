@@ -4,6 +4,8 @@ import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import TGImage from './tgimage';
+import {STACKS} from 'modules/devTools';
+let s = STACKS;
 
 class Controller {
     constructor (callback) {
@@ -15,6 +17,7 @@ class Controller {
         });
     }
     process (el) {
+        s.set("process", el);
         return Promise.resolve(el)
             .then(el => new TGImage (el))
             .then(this.ensureNew.bind(this))
@@ -26,6 +29,7 @@ class Controller {
                 let date = new Date();
                 console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
                 this.relevantImgs[relevantImg.url] = relevantImg;
+                s.set("relevantImg", relevantImg);
                 this.callback(relevantImg);
             },
             irrelevantImg => {
@@ -33,6 +37,7 @@ class Controller {
                 // the others will arrive as {name: nnn, element:eee} error objects.
                 if (irrelevantImg.url) {
                     this.irrelevantImgs[irrelevantImg.url] = irrelevantImg;
+                    s.set("irrelevantImg", irrelevantImg);
                 } else {
                     this.logIrrelevant(irrelevantImg);
                 }
@@ -45,6 +50,7 @@ class Controller {
         let errorCounts = this.irrelevantElements[errName] = this.irrelevantElements[errName] || {};
         let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
         errorCountforElem += 1;
+        s.set("logIrrelevant", error);
     }
 
     ensureNew(tgImg) {

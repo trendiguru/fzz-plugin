@@ -8,7 +8,7 @@ let serverBuffer = [];
 
 function checkRelevancy(imageUrls) {
     console.log('Will check relevancy of ${imageUrls.length} image urls.');
-    return fetch(API_URL, { 
+    return fetch(API_URL, {
         method: 'post',
         // headers: {
         //     'Accept': 'application/json',
@@ -57,7 +57,7 @@ function smartCheckRelevancy(tgImg) {
     }
 
     return new Promise(function (resolve, reject) {
-        serverUploader.then(function (response) { 
+        serverUploader.then(function (response) {
             if (response.relevancy_dict[tgImg.url]) {
                 tgImg.relevant = true;
                 resolve(tgImg);
@@ -69,7 +69,7 @@ function smartCheckRelevancy(tgImg) {
 }
 
 function getImageData(imageUrl) {
-    return fetch(API_URL+'?imageUrl=' + window.encodeURIComponent(imageUrl), { 
+    return fetch(API_URL+'?imageUrl=' + window.encodeURIComponent(imageUrl), {
         method: 'get'
     })
     .then(function (response) {

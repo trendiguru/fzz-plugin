@@ -6,6 +6,9 @@ import getUI from './ui';
 
 let ui = getUI({overlay});
 
+console.log('UI: ');
+console.log(ui);
+
 let doTrackVisible = true;
 
 REQUESTS.active = true;
@@ -17,7 +20,12 @@ export default function draw (tgImg) {
 
 function _initialDrawButton(tgImg){
     let el = tgImg.element;
-    let buttonDiv = tgImg.buttonDiv || ui.overlay(tgImg);
+    console.log('TGIMG: ');
+    console.log(tgImg);
+    let buttonDiv = tgImg.buttonDiv;
+    buttonDiv = buttonDiv || ui.overlay([document, tgImg]);
+    console.log('BUTTONDIV: ');
+    console.log(buttonDiv);
     document.body.appendChild(buttonDiv);
     __redraw(el, buttonDiv);
 }

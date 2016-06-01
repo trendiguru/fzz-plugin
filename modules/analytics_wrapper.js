@@ -53,13 +53,19 @@ analytics.initializeInApp = function (initProperties) {
     });
 
     timeme();
-    console.log("ineted: "+TimeMe.getTimeOnCurrentPageInSeconds());
+    console.log('ineted: '+ TimeMe.getTimeOnCurrentPageInSeconds());
     console.log(window);
-     window.onbeforeunload = function (event) {
-        let xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("GET",'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' + TimeMe.getTimeOnCurrentPageInSeconds()+'&publisherDomain='+analytics.initProperties.publisherDomain,false);
-        xmlhttp.send();
-     };
+    window.onbeforeunload = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open(
+            'GET',
+            'https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=' +
+            TimeMe.getTimeOnCurrentPageInSeconds() +
+            '&publisherDomain=' +
+            analytics.initProperties.publisherDomain
+        );
+        xhr.send();
+    };
 };
 
 
@@ -97,6 +103,22 @@ analytics.track = function (eventName, properties, libs) {
             }
         }
     });
+};
+
+analytics.listen = event => {
+    switch (event) {
+    case 'scroll': {
+        //Track Scroll on Publisher
+        let initScrollTop = window.scrollY;
+        window.addEventListener('scroll', function () {
+            if (window.scrollY - initScrollTop > 20) {
+                analytics.track('Publisher Scroll', undefined, ['ga']);
+                initScrollTop = 100000000;
+            }
+        });
+        break;
+    }
+    }
 };
 
 export {analytics};

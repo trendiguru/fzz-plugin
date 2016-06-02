@@ -5,9 +5,15 @@ let nginx = {
     // more fields are added in init()
     trackingFields: {
         ver: '0.1'
-    },
-    serverUrl: '//track.trendi.guru/tr/web?'
-};
+      },
+    serverUrl:()=>{
+        if (ENV === "PRODUCTION"){
+          return '//track.trendi.guru/tr/web?';
+        }else{
+          return '//track.trendi.guru/tr/test?';
+        }
+      }
+    };
 
 nginx.load = function () {
     return Promise.resolve();

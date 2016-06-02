@@ -20,28 +20,35 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     PID = scriptTagData.pid;
 
 export function UISettings (host) {
+    // let settings = {
+    //     'asos': {
+    //         overlay: {
+    //             roundAsos: 1.0
+    //         }
+    //     },
+    //     'mb1': {
+    //         overlay: {
+    //             round: 0.05,
+    //             roundDress: 0.95
+    //         }
+    //     },
+    //     'gala.de': {
+    //         overlay: {
+    //             round: 0.1,
+    //             roundDress: 0.9
+    //         }
+    //     },
+    //     '__default': {
+    //         overlay: {
+    //             round: 0.3,
+    //             roundDress: 0.7
+    //         }
+    //     }
+    // };
     let settings = {
-        'asos': {
-            overlay: {
-                roundAsos: 1.0
-            }
-        },
-        'mb1': {
-            overlay: {
-                round: 0.05,
-                roundDress: 0.95
-            }
-        },
-        'gala.de': {
-            overlay: {
-                round: 0.1,
-                roundDress: 0.9
-            }
-        },
         '__default': {
             overlay: {
-                round: 0.3,
-                roundDress: 0.7
+                preview: 1
             }
         }
     };

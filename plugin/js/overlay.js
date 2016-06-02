@@ -19,6 +19,28 @@ export function roundAsos (tgImg) {
     return overlay;
 }
 
+export function preview (tgImg) {
+    let overlay = Overlay(tgImg);
+    let results = [];
+    while (results.length < 2) {
+        for (let item of tgImg.data.items) {
+            if (results.length < 2) {
+                results.push(item.similar_results[0]);
+            }
+        }
+    }
+    results.forEach(result => {
+        let a = document.createElement('a'),
+            img = new Image();
+        a.href = result.clickUrl;
+        a.classList.add('preview');
+        img.src = result.images.XLarge;
+        a.appendChild(img);
+        overlay.appendChild(a);
+    });
+    return overlay;
+}
+
 /**
  * Create the overlay div and the buttons within
  * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
@@ -26,7 +48,6 @@ export function roundAsos (tgImg) {
  */
 
 function Overlay (tgImg) {
-
     let buttonDiv = tgImg.buttonDiv = document.createElement('div');
     let button = buttonDiv.button   = document.createElement('button');
     let info = buttonDiv.info       = document.createElement('button');
@@ -37,7 +58,6 @@ function Overlay (tgImg) {
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));
     info.addEventListener('click', click.info);
-
     return buttonDiv;
 }
 

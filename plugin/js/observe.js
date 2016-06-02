@@ -3,7 +3,6 @@ import * as constants from 'constants';
 import {MUT} from 'modules/devTools';
 const {USER_CONFIG} = constants;
 
-
 const forbiddenHTMLTags = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
 const defaultConfig = {
     childList: true,

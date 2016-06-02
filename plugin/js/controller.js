@@ -4,8 +4,8 @@ import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 import TGImage from './tgimage';
-import {STACKS} from 'modules/devTools';
-let s = STACKS;
+import {devTools} from 'modules/devTools';
+let s = devTools.STACKS;
 
 class Controller {
     constructor (callback) {

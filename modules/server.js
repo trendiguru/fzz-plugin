@@ -2,8 +2,8 @@
 
 import 'whatwg-fetch';
 import {console} from 'modules/smartConsole';
-import {STACKS} from 'modules/devTools';
-let s = STACKS;
+import {devTools} from 'modules/devTools';
+let s = devTools.STACKS;
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];

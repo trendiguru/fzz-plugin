@@ -1,9 +1,9 @@
 import {getDomainName, entries} from 'modules/utils';
-const devTools = window.devTools = window.devTools || {};
+const devTools = window.devTools || {};
 
 let active = true; // CHANGE IT TO FALSE IF YOU'LL SEND TO A CUSTOMER
-
-let MUT = devTools.MUT = {
+console.log("devTools run")
+let MUT = devTools.MUT = window.devTools.MUT || {
 	active: active,
 	srcMut: [],
 	nodeMut: [],
@@ -32,7 +32,7 @@ let MUT = devTools.MUT = {
 	}
 };
 
-let REQUESTS = devTools.REQUESTS = {
+let REQUESTS = devTools.REQUESTS = window.devTools.REQUESTS || {
 	active: active,
 	queue: [],
 	set: (reuestProperties, mType) => {
@@ -44,7 +44,7 @@ let REQUESTS = devTools.REQUESTS = {
 	}
 };
 
-let STACKS = devTools.STACKS={
+let STACKS = devTools.STACKS = window.devTools.STACKS || {
 	active: active,
 	storage: {},
 	sColor:"RED",
@@ -86,12 +86,11 @@ let STACKS = devTools.STACKS={
 			}
 		}
 	}
-
 };
 
 if (active){
 //______STACKS_definition_____//
-	let s = STACKS;
+	let s = window.devTools.STACKS;
 	s.newStack("ensureNew");
 	s.newStack("isLoaded");
 	s.newStack("ensureSuspicious");

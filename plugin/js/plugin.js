@@ -6,10 +6,13 @@ import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
 import Controller from './controller';
+import {devTools} from 'modules/devTools';
 //import {getElementsToProcess} from 'modules/utils';
 //import {console} from 'modules/smartConsole';
 
 const {IFRAME_ID, CSS_URL, IFRAME_SRC, PID} = constants;
+let s = devTools.STACKS;
+console.log(s);
 
 let refererDomain = window.location.hostname.replace('www.', '');
 analytics.initializeInPublisher( {refererDomain: refererDomain, publisherDomain: refererDomain, PID:PID });

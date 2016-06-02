@@ -44,13 +44,14 @@ function Overlay (tgImg) {
 let click = {
     button (e) {
         let iframe = document.getElementById(IFRAME_ID),
-            {url: imageURL, data} = this;
+            {url: imageURL} = this,
+            data = Object.assign({imageURL}, this.data);
         analytics.track('Trendi Button Clicked', {
             imageURL,
             'pageUrl': window.location.href
         });
         iframe.show();
-        iframe.contentWindow.postMessage({imageURL, data}, '*');
+        iframe.contentWindow.postMessage(data, '*');
         block(e);
     },
     info (e) {

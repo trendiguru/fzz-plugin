@@ -44,30 +44,27 @@ function Overlay (tgImg) {
 let click = {
     button (e) {
         let iframe = document.getElementById(IFRAME_ID),
-            imageURL = this.url;
-        iframe.show();
+            {url: imageURL, data} = this;
         analytics.track('Trendi Button Clicked', {
             imageURL,
             'pageUrl': window.location.href
         });
-        iframe.contentWindow.postMessage({imageURL}, '*');
-        e.preventDefault();
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        } else {
-            e.cancelBubble = true;
-        }
+        iframe.show();
+        iframe.contentWindow.postMessage({imageURL, data}, '*');
+        block(e);
     },
-    info (e){
+    info (e) {
         analytics.track('Info Button Clicked');
-
         window.open(INFO_URL, '_blank');
-
-        e.preventDefault();
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        } else {
-            e.cancelBubble = true;
-        }
+        block(e);
     }
 };
+
+function block (e) {
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
+}

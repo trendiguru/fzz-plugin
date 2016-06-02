@@ -1,9 +1,9 @@
 import {getDomainName, entries} from 'modules/utils';
 const devTools = window.devTools || {};
 
-let active = true; // CHANGE IT TO FALSE IF YOU'LL SEND TO A CUSTOMER
-console.log("devTools run")
-let MUT = devTools.MUT = window.devTools.MUT || {
+let active = true; //TODO: get "ective" variable from the current environment variable.
+window.devTools = devTools;
+let MUT = devTools.MUT = devTools.MUT || {
 	active: active,
 	srcMut: [],
 	nodeMut: [],
@@ -32,7 +32,7 @@ let MUT = devTools.MUT = window.devTools.MUT || {
 	}
 };
 
-let REQUESTS = devTools.REQUESTS = window.devTools.REQUESTS || {
+let REQUESTS = devTools.REQUESTS = devTools.REQUESTS || {
 	active: active,
 	queue: [],
 	set: (reuestProperties, mType) => {
@@ -44,7 +44,7 @@ let REQUESTS = devTools.REQUESTS = window.devTools.REQUESTS || {
 	}
 };
 
-let STACKS = devTools.STACKS = window.devTools.STACKS || {
+let STACKS = devTools.STACKS = devTools.STACKS || {
 	active: active,
 	storage: {},
 	sColor:"RED",
@@ -90,10 +90,10 @@ let STACKS = devTools.STACKS = window.devTools.STACKS || {
 
 if (active){
 //______STACKS_definition_____//
-	let s = window.devTools.STACKS;
-	s.newStack("ensureNew");
+	let s = STACKS;
+	s.newStack("isNew");
 	s.newStack("isLoaded");
-	s.newStack("ensureSuspicious");
+	s.newStack("isSuspicious");
 	s.newStack("TGImage");
 	s.newStack("smartCheckRelevancy");
 	s.newStack("process");

@@ -5,7 +5,6 @@ import {PID} from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
-import {devTools} from 'modules/devTools';
 import {process} from './process';
 import {iframe, style} from './elements';
 

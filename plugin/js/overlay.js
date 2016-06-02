@@ -20,8 +20,14 @@ export function roundAsos (tgImg) {
 }
 
 export function preview (tgImg) {
-    let overlay = Overlay(tgImg);
-    let results = [];
+    let overlay = Overlay(tgImg),
+        results = [],
+        footer = document.createElement('div');
+    overlay.classList.add('preview');
+    footer.classList.add('footer');
+    let plus = document.createElement('i');
+    plus.appendChild(document.createTextNode('+'));
+    overlay.button.appendChild(plus);
     while (results.length < 2) {
         for (let item of tgImg.data.items) {
             if (results.length < 2) {
@@ -30,14 +36,14 @@ export function preview (tgImg) {
         }
     }
     results.forEach(result => {
-        let a = document.createElement('a'),
-            img = new Image();
+        let a = document.createElement('a');
         a.href = result.clickUrl;
-        a.classList.add('preview');
-        img.src = result.images.XLarge;
-        a.appendChild(img);
-        overlay.appendChild(a);
+        a.style.backgroundImage = `url('${result.images.XLarge}')`;
+        footer.appendChild(a);
     });
+    footer.appendChild(overlay.button);
+    footer.appendChild(overlay.info);
+    overlay.appendChild(footer);
     return overlay;
 }
 

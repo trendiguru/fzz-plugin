@@ -5,23 +5,10 @@ import {PID} from 'constants';
 import {analytics} from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
-<<<<<<< HEAD
-import Controller from './controller';
 import {devTools} from 'modules/devTools';
-//import {getElementsToProcess} from 'modules/utils';
-//import {console} from 'modules/smartConsole';
-
-const {IFRAME_ID, CSS_URL, IFRAME_SRC, PID} = constants;
-let s = devTools.STACKS;
-console.log(s);
-
-=======
 import {process} from './process';
 import {iframe, style} from './elements';
-//import {getElementsToProcess} from 'modules/utils';
-//import {console} from 'modules/smartConsole';
 
->>>>>>> master
 let refererDomain = window.location.hostname.replace('www.', '');
 
 analytics.initializeInPublisher({

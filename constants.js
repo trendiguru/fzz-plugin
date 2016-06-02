@@ -4,8 +4,8 @@
 
 let scriptTagData = loadScriptTagData();
 
-//export const HOST_DOMAIN = 'https://localhost:4443',
-export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
+export const HOST_DOMAIN = 'https://localhost:4443',
+//export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -22,24 +22,24 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
 export function UISettings (host) {
     let settings = {
         'asos': {
-            button: {
+            overlay: {
                 roundAsos: 1.0
             }
         },
         'mb1': {
-            button: {
+            overlay: {
                 round: 0.05,
                 roundDress: 0.95
             }
         },
         'gala.de': {
-            button: {
+            overlay: {
                 round: 0.1,
                 roundDress: 0.9
             }
         },
         '__default': {
-            button: {
+            overlay: {
                 round: 0.3,
                 roundDress: 0.7
             }

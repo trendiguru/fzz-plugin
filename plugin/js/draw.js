@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
 import * as overlay from './overlay';
@@ -11,22 +13,22 @@ let doTrackVisible = true;
 REQUESTS.active = true;
 
 export default function draw (tgImg) {
-    _initialDrawButton(tgImg);
-    _drawForever(tgImg.element, tgImg.buttonDiv);
+    initialDrawButton(tgImg);
+    drawForever(tgImg.element, tgImg.buttonDiv);
 }
 
-function _initialDrawButton(tgImg){
-    let el = tgImg.element;
-    let buttonDiv = tgImg.buttonDiv || ui.overlay(tgImg);
+function initialDrawButton(tgImg){
+    console.log(ui.overlay(tgImg));
+    let {element, buttonDiv} = tgImg;
+    buttonDiv = buttonDiv || ui.overlay(tgImg);
+    console.log(buttonDiv);
     document.body.appendChild(buttonDiv);
-    __redraw(el, buttonDiv);
+    redraw(element, buttonDiv);
 }
 
-function _drawForever(el, buttonDiv){
-    __redraw(el, buttonDiv);
-    window.requestAnimationFrame(function(){
-        _drawForever(el, buttonDiv);
-    });
+function drawForever(el, buttonDiv){
+    redraw(el, buttonDiv);
+    window.requestAnimationFrame(() => drawForever(el, buttonDiv));
 }
 
 /**
@@ -36,11 +38,11 @@ function _drawForever(el, buttonDiv){
  * @param {object}   buttonDiv [[Description]]
  */
 
-function __redraw(el, buttonDiv){
+function redraw (el, buttonDiv) {
     let imgRect = el.getBoundingClientRect();
-    if(isVisible(el, imgRect)){
+    if (isVisible(el, imgRect)) {
         if(doTrackVisible){
-            __trackButtonSeen(el, imgRect);
+            trackButtonSeen(el, imgRect);
         }
         buttonDiv.setAttribute(
             'style',
@@ -48,19 +50,19 @@ function __redraw(el, buttonDiv){
             height: ${imgRect.height}px;
             top: ${imgRect.top + window.scrollY}px;
             left: ${imgRect.left}px;
-            visibility: visible;
+            display: 'block';
             z-index: 10000000000;`
         );
     }
-    else{
-        buttonDiv.style.visibility = 'hidden';
+    else {
+        buttonDiv.style.display = 'none';
     }
 }
 
-function __trackButtonSeen(el, rect){
+function trackButtonSeen(el, rect){
     if(isVisible(el, rect)){
         // Make sure the user sees the button for more than an instant.
-        window.setTimeout(function(){
+        setTimeout(() => {
             if(doTrackVisible && isVisible(el, rect)){
                 doTrackVisible = false;
                 analytics.track('Button Seen');

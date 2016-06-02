@@ -18,7 +18,7 @@ function _objIsInteresting(node){
     return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
 }
 
-let observe = (target, executeFunc, config = defaultConfig) => {
+export function observe (target, executeFunc, config = defaultConfig) {
     let handleMutations = function (mutations) {
         for (let mutation of mutations) {
             //If object was added To DOM:
@@ -50,14 +50,14 @@ let observe = (target, executeFunc, config = defaultConfig) => {
     let observer = new MutationObserver(handleMutations);
     observer.observe(target, config);
     return observer;
-};
+}
 
 
 /*
 For a given node, scan for relevant elements and then
 watch them for changes.
 */
-let scanForever = (node, executeFunc) => {
+export function scanForever (node, executeFunc) {
     node = node || document.body;
 
     let parentElems = [];
@@ -104,6 +104,4 @@ let scanForever = (node, executeFunc) => {
             MUT.set(el, 'node');
         }
     }
-};
-
-export  {scanForever, observe};
+}

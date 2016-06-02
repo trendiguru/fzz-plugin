@@ -22,24 +22,24 @@ export const HOST_DOMAIN = 'https://localhost:4443',
 export function UISettings (host) {
     let settings = {
         'asos': {
-            button: {
+            overlay: {
                 roundAsos: 1.0
             }
         },
         'mb1': {
-            button: {
+            overlay: {
                 round: 0.05,
                 roundDress: 0.95
             }
         },
         'gala.de': {
-            button: {
+            overlay: {
                 round: 0.1,
                 roundDress: 0.9
             }
         },
         '__default': {
-            button: {
+            overlay: {
                 round: 0.3,
                 roundDress: 0.7
             }

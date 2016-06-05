@@ -19,6 +19,8 @@ export function roundAsos (tgImg) {
     return overlay;
 }
 
+const TILES = 3;
+
 export function preview (tgImg) {
     let overlay = Overlay(tgImg),
         results = [],
@@ -28,10 +30,11 @@ export function preview (tgImg) {
     let plus = document.createElement('i');
     plus.appendChild(document.createTextNode('+'));
     overlay.button.appendChild(plus);
-    while (results.length < 2) {
+    // while there are lesss tiles than defined increase i and loop agian.
+    for (let i = 0; results.length < TILES; i++) {
         for (let item of tgImg.data.items) {
-            if (results.length < 2) {
-                results.push(item.similar_results[0]);
+            if (results.length < TILES) {
+                results.push(item.similar_results[i]);
             }
         }
     }

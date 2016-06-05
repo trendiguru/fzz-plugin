@@ -19,6 +19,34 @@ export function roundAsos (tgImg) {
     return overlay;
 }
 
+export function preview (tgImg) {
+    let overlay = Overlay(tgImg),
+        results = [],
+        footer = document.createElement('div');
+    overlay.classList.add('preview');
+    footer.classList.add('footer');
+    let plus = document.createElement('i');
+    plus.appendChild(document.createTextNode('+'));
+    overlay.button.appendChild(plus);
+    while (results.length < 2) {
+        for (let item of tgImg.data.items) {
+            if (results.length < 2) {
+                results.push(item.similar_results[0]);
+            }
+        }
+    }
+    results.forEach(result => {
+        let a = document.createElement('a');
+        a.href = result.clickUrl;
+        a.style.backgroundImage = `url('${result.images.XLarge}')`;
+        footer.appendChild(a);
+    });
+    footer.appendChild(overlay.button);
+    footer.appendChild(overlay.info);
+    overlay.appendChild(footer);
+    return overlay;
+}
+
 /**
  * Create the overlay div and the buttons within
  * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
@@ -26,7 +54,6 @@ export function roundAsos (tgImg) {
  */
 
 function Overlay (tgImg) {
-
     let buttonDiv = tgImg.buttonDiv = document.createElement('div');
     let button = buttonDiv.button   = document.createElement('button');
     let info = buttonDiv.info       = document.createElement('button');
@@ -37,37 +64,34 @@ function Overlay (tgImg) {
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));
     info.addEventListener('click', click.info);
-
     return buttonDiv;
 }
 
 let click = {
     button (e) {
         let iframe = document.getElementById(IFRAME_ID),
-            imageURL = this.url;
-        iframe.show();
+            {url: imageURL} = this,
+            data = Object.assign({imageURL}, this.data);
         analytics.track('Trendi Button Clicked', {
             imageURL,
             'pageUrl': window.location.href
         });
-        iframe.contentWindow.postMessage({imageURL}, '*');
-        e.preventDefault();
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        } else {
-            e.cancelBubble = true;
-        }
+        iframe.show();
+        iframe.contentWindow.postMessage(data, '*');
+        block(e);
     },
-    info (e){
+    info (e) {
         analytics.track('Info Button Clicked');
-
         window.open(INFO_URL, '_blank');
-
-        e.preventDefault();
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        } else {
-            e.cancelBubble = true;
-        }
+        block(e);
     }
 };
+
+function block (e) {
+    e.preventDefault();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else {
+        e.cancelBubble = true;
+    }
+}

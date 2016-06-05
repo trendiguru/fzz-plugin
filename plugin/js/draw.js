@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import {isVisible} from 'ext/visibility';
 import {analytics} from 'modules/analytics_wrapper';
 import * as overlay from './overlay';
@@ -18,10 +16,8 @@ export default function draw (tgImg) {
 }
 
 function initialDrawButton(tgImg){
-    console.log(ui.overlay(tgImg));
     let {element, buttonDiv} = tgImg;
     buttonDiv = buttonDiv || ui.overlay(tgImg);
-    console.log(buttonDiv);
     document.body.appendChild(buttonDiv);
     redraw(element, buttonDiv);
 }

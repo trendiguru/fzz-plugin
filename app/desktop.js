@@ -1,7 +1,5 @@
 /* globals React,ReactDOM */
 
-import {getImageData} from '../modules/server';
-
 import App from './view/app';
 
 import {analytics} from '../modules/analytics_wrapper';
@@ -36,9 +34,7 @@ addEventListener('app close', close);
 addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
-        getImageData(msg.data.imageURL).then(data => {
-            render({imageURL: msg.data.imageURL, items: data.items, close});
-        });
+        render({imageURL: msg.data.imageURL, items: msg.data.items, close});
     }
 });
 

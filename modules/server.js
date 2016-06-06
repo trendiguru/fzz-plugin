@@ -2,11 +2,49 @@
 
 import 'whatwg-fetch';
 import {console} from 'modules/smartConsole';
-import {STACKS} from 'modules/devTools';
-let s = STACKS;
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];
+
+let serverUploader;
+export function smartCheckRelevancy(tgImg) {
+    serverBuffer.push(tgImg);
+    console.log('SB length: ' + serverBuffer.length);
+
+    if (!isAccumulating) {
+        console.log('WILL ACCUMULATE');
+        serverUploader = accumulate(500).then(function () {
+            let p = checkRelevancy(serverBuffer.map((im) => im.url));
+            serverBuffer = [];
+            return p;
+        });
+
+    }
+
+    return new Promise(function (resolve, reject) {
+        serverUploader.then(function (response) {
+            if (response.relevancy_dict[tgImg.url]) {
+                tgImg.relevant = true;
+                resolve(tgImg);
+            } else {
+                reject(tgImg);
+            }
+        });
+    });
+}
+
+export function getImageData(imageUrl) {
+    return fetch(API_URL+'?imageUrl=' + window.encodeURIComponent(imageUrl), {
+        method: 'get'
+    })
+    .then(function (response) {
+        return response.json();
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+}
+
 
 function checkRelevancy(imageUrls) {
     console.log('Will check relevancy of ${imageUrls.length} image urls.');
@@ -41,47 +79,3 @@ function accumulate(time, initialValue) {
         }, time);
     });
 }
-
-
-let serverUploader;
-function smartCheckRelevancy(tgImg) {
-    serverBuffer.push(tgImg);
-    console.log('SB length: ' + serverBuffer.length);
-
-    if (!isAccumulating) {
-        console.log('WILL ACCUMULATE');
-        serverUploader = accumulate(500).then(function () {
-            let p = checkRelevancy(serverBuffer.map((im) => im.url));
-            serverBuffer = [];
-            s.set("smartCheckRelevancy",p);
-            return p;
-        });
-
-    }
-
-    return new Promise(function (resolve, reject) {
-        serverUploader.then(function (response) {
-            if (response.relevancy_dict[tgImg.url]) {
-                tgImg.relevant = true;
-                resolve(tgImg);
-            } else {
-                reject(tgImg);
-            }
-        });
-    });
-}
-
-function getImageData(imageUrl) {
-    return fetch(API_URL+'?imageUrl=' + window.encodeURIComponent(imageUrl), {
-        method: 'get'
-    })
-    .then(function (response) {
-        return response.json();
-    })
-    .catch(function (err) {
-        console.log(err);
-    });
-}
-
-
-export {smartCheckRelevancy, getImageData};

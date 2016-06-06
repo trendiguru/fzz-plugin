@@ -6,18 +6,11 @@ export default function UIFactory (uiComponentOptions) {
     let uiCookie = Cookies.get('fzz_ui');
     uiCookie = uiCookie && JSON.parse(uiCookie);
 
-    console.log('UICOOKIE1: ');
-    console.log(uiCookie, !uiCookie);
-
     if(!uiCookie) {
-        console.log('NOT UICOOKIE');
         uiCookie = generateCookie();
         Cookies.set('fzz_ui', uiCookie);
     }
 
-    console.log('UICOOKIE2: ');
-    console.log(uiCookie);
-    //
     for (let component in uiCookie) {
         let componentOptions = uiComponentOptions[component];
         if(componentOptions){
@@ -31,18 +24,12 @@ export default function UIFactory (uiComponentOptions) {
         }
     }
 
-    console.log('UI: ');
-    console.log(UI);
-
     return UI;
 }
 
 function generateCookie(){
     let uiCookie = {};
     let uiSettings = UISettings(PID);
-
-    console.log('UISETTINGS: ');
-    console.log(uiSettings);
 
     for (let component in uiSettings) {
         uiCookie[component] = getRandom(uiSettings[component]);

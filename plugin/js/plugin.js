@@ -7,8 +7,6 @@ import draw from './draw';
 import {scanForever, observe} from './observe';
 import {process} from './process';
 import {iframe, style} from './elements';
-//import {getElementsToProcess} from 'modules/utils';
-//import {console} from 'modules/smartConsole';
 
 let refererDomain = window.location.hostname.replace('www.', '');
 

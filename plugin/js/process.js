@@ -4,12 +4,16 @@ import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy, getImageData} from 'modules/server';
 import TGImage from './tgimage';
+import {STACKS} from 'modules/devTools';
+
+let s = STACKS;
 
 export let relevantImgs = {},
     irrelevantImgs = {},
     irrelevantElements = {};
 
 export function process (el, callback) {
+    s.set("process", el);
     return Promise.resolve(el)
         .then(el => new TGImage (el))
         .then(isNew)
@@ -22,6 +26,7 @@ export function process (el, callback) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
+            s.set("relevantImg", relevantImg);
             callback(relevantImg);
         },
         irrelevantImg => {
@@ -29,6 +34,7 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
+                s.set("irrelevantImg", irrelevantImg);
             } else {
                 logIrrelevant(irrelevantImg);
             }
@@ -41,6 +47,8 @@ function isNew (tgImg) {
             name: 'Not a New Image',
             element: tgImg
         };
+    }else{
+        s.set("isNew", tgImg);
     }
     return tgImg;
 }
@@ -50,7 +58,9 @@ function isLoaded (tgImg) {
         let iml = imagesLoaded(tgImg.element, {
             background: tgImg.background
         });
-        iml.on('done', () => resolve(tgImg));
+        iml.on('done', () =>{
+            s.set("isLoaded", tgImg);
+            resolve(tgImg);});
         iml.on('fail', () => reject({
             name: 'Image Load Failed',
             element: tgImg
@@ -61,6 +71,7 @@ function isLoaded (tgImg) {
 function isSuspicious (tgImg) {
     let rect = tgImg.element.getBoundingClientRect();
     if (rect.height >= MIN_IMG_HEIGHT && rect.width >= MIN_IMG_WIDTH) {
+        s.set("isSuspicious", tgImg);
         return tgImg;
     } else {
         throw {
@@ -84,4 +95,5 @@ function logIrrelevant(error) {
     let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
     let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
     errorCountforElem += 1;
+    s.set("logIrrelevant", error);
 }

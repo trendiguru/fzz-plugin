@@ -1,9 +1,10 @@
-import {getDomainName} from 'modules/utils';
-const devTools = window.devTools = window.devTools || {};
+import {getDomainName, entries} from 'modules/utils';
+const devTools = window.devTools || {};
 
-
-let MUT = devTools.MUT = {
-	active: false,
+let active = true; //TODO: get "ective" variable from the current environment variable.
+window.devTools = devTools;
+let MUT = devTools.MUT = devTools.MUT || {
+	active: active,
 	srcMut: [],
 	nodeMut: [],
 	attrMut: [],
@@ -31,50 +32,8 @@ let MUT = devTools.MUT = {
 	}
 };
 
-
-let FZZ = devTools.FZZ = {
-	active: false,
-	relevantImgs: {},
-	irrelevantImgs: {},
-	irrelevantElements: {},
-	relevantImgsColor: "Red",
-	irrelevantImgsColor: "green",
-	irrelevantElementsColor: "black",
-	set: (obj, key, mType, colorFlag)=>{
-		let owner = devTools.FZZ; 
-		if (owner.active === true){
-			if (mType === "relevantImgs"){
-				owner.relevantImgs[key] = obj;
-				if (colorFlag === true){
-					obj.style.opacity = "0.2";
-					obj.style.backgroundColor = owner.relevantImgsColor;
-				}
-			}
-			if (mType === "irrelevantImgs"){
-				owner.irrelevantImgs[key] = obj;
-				if (colorFlag === true){
-					obj.style.opacity = "0.2";
-					obj.style.backgroundColor = owner.irrelevantImgsColor;
-				}
-			}
-			if (mType === "irrelevantElements"){
-				let error = obj;
-				let errName = error.name;
-    			let errElement = error.element;
-    			let errorCounts =  devTools.FZZ.irrelevantElements[errName] || {};
-    			let errorCountforElem = errorCounts[errElement] || 0;
-    			errorCountforElem += 1;
-				// if (colorFlag === true){
-				// 	obj.style.opacity = "0.2";
-				// 	obj.style.backgroundColor = owner.irrelevantImgsColor;
-				// }
-			}
-		}
-	}
-};
-
-let REQUESTS = devTools.REQUESTS = {
-	active: false,
+let REQUESTS = devTools.REQUESTS = devTools.REQUESTS || {
+	active: active,
 	queue: [],
 	set: (reuestProperties, mType) => {
 		if (REQUESTS.active){
@@ -83,35 +42,69 @@ let REQUESTS = devTools.REQUESTS = {
 			}
 		}
 	}
+};
+
+let STACKS = devTools.STACKS = devTools.STACKS || {
+	active: active,
+	storage: {},
+	sColor:"RED",
+	newStack: (name)=>{
+		if (STACKS.active){
+			STACKS.storage[name] = [];
+		}
+	},
+	set: (sName, elem)=>{
+		if (STACKS.active){
+			STACKS.storage[sName].push(elem);
+		}
+	},
+	show: (sName, col)=>{
+		if (STACKS.active){
+			for (let [key, stack] of entries(STACKS.storage)) {
+				if (sName === key){
+					for (let elem of stack){
+						if (elem!==undefined && elem.style !== undefined){
+							elem.style.opacity = "0.2";
+							elem.style.backgroundColor =col || STACKS.sColor;
+						}
+					}
+				}
+			}
+		}
+	},
+	hide:(sName)=>{
+		if (STACKS.active){
+			for (let [key, stack] of entries(STACKS.storage)) {
+				if (sName === key){
+					for (let elem of stack){
+						if (elem!==undefined && elem.style !== undefined){
+							elem.style.opacity = "1";
+							elem.style.backgroundColor = undefined;
+						}
+					}
+				}
+			}
+		}
+	}
+};
+
+if (active){
+//______STACKS_definition_____//
+	let s = STACKS;
+	s.newStack("isNew");
+	s.newStack("isLoaded");
+	s.newStack("isSuspicious");
+	s.newStack("TGImage");
+	s.newStack("smartCheckRelevancy");
+	s.newStack("process");
+	s.newStack("relevantImg");
+	s.newStack("irrelevantImg");
+	s.newStack("logIrrelevant");
+
+	//______ective_functions______//
+	devTools.modules = {};
+	let utils = devTools.modules.utils = {};
+	utils.getDomainName = getDomainName;
 }
 
-//______ective_functions______//
-
-devTools.modules = {};
-let utils = devTools.modules.utils = {};
-utils.getDomainName = getDomainName;
-
-
-// let MARK = devTools.markImages = {
-// 	active: false,
-// 	relevantImgsColor: "Red",
-// 	irrelevantImgsColor: "green",
-// 	irrelevantElementsColor: "black",
-// 	set: (img, mType) => {
-// 		let owner = devTools.markImages;
-// 		if (owner.active === true){
-// 			img.style.opacity = "0.2";
-// 			if (mType === "relevantImgs"){
-// 				img.style.backgroundColor = owner.relevantImgsColor;
-// 			}
-// 			if (mType === "irrelevantImgs"){
-// 				img.style.backgroundColor = owner.irrelevantImgsColor;
-// 			}
-// 			if (mType === "irrelevantElements"){
-// 				img.style.backgroundColor = owner.irrelevantImgsColor;
-// 			}
-// 		}
-// 	}
-// };
-
-export {MUT, FZZ, REQUESTS, devTools};
+export {MUT, REQUESTS, STACKS, devTools};

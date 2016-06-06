@@ -26,7 +26,7 @@ nginx.init = function (userId) {
 nginx.track = function (event, properties) {
     let fieldsString = '';
     let rv = Math.floor(Math.random() * 1000000000);
-    
+
     if(properties){
         for(let key of Object.keys(properties)){
             nginx.trackingFields[key] = properties[key];
@@ -36,7 +36,7 @@ nginx.track = function (event, properties) {
     for (let [attrName, attrValue] of entries(nginx.trackingFields)) {
         fieldsString += '&' + attrName + '=' + encodeURIComponent(attrValue);
     }
-    
+
     // send pixel
     (new Image()).src = nginx.serverUrl + 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
 };
@@ -45,7 +45,7 @@ function viewport() {
     let viewport = {};
     viewport.width = 0;
     viewport.height = 0;
-    // the more standards compliant browsers (mozilla/netscape/opera/IE7) 
+    // the more standards compliant browsers (mozilla/netscape/opera/IE7)
     //use window.innerWidth and window.innerHeight
     if (typeof window.innerWidth !== 'undefined') {
         viewport.width = window.innerWidth;

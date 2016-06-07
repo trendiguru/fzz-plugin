@@ -36,8 +36,10 @@ class App extends Component {
             TabNodes = this.props.items.map(
                 (item, i) => <Tab key={i} title={item.category}>
                     <Assemblage
-                        col="5"
-                        margin="8"
+                        col={5}
+                        minWidth={180}
+                        margin={8}
+                        marginBottom={70}
                         template={img => <Card link={img.clickUrl} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
                         src={
                             item.similar_results.map(result => {

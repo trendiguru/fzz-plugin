@@ -1,7 +1,9 @@
 import {IFRAME_ID, IFRAME_SRC, CSS_URL} from 'constants';
 
-export let iframe = new iFrame,
-    style = new Style;
+let iframe = new iFrame(),
+    style = new Style();
+
+export {iframe, style};
 
 function iFrame (src) {
     let iframe = document.createElement('iframe');

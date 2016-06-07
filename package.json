@@ -1,70 +1,74 @@
 {
-  "name": "test_jspm",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"&",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "jspm bundle-sfx --inline-source-maps app/desktop.js app/b_desktop.js & jspm bundle-sfx --inline-source-maps plugin/js/plugin.js b_plugin.js & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
-    "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
-    "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
-    "publish": "./upload_to_gs.sh"
-  },
-  "author": "",
-  "license": "ISC",
-  "jspm": {
+    "name": "fzz-plugin",
+    "version": "1.0.0",
+    "description": "Fazz™ plugin for websites, Chrome, and internal usage",
+    "main": "plugin/js/plugin.js",
+    "scripts": {
+        "init": "npm i -g webpack",
+        "start": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"&",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "bundle": "webpack & wait && cp bin/b_plugin.js extensions/chrome_native/b_plugin.js",
+        "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
+        "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
+        "publish": "./upload_to_gs.sh"
+    },
+    "author": "Trendi Guru Ltd.",
+    "license": "UNLICENSED",
     "dependencies": {
-      "css": "github:systemjs/plugin-css@^0.1.20",
-      "es6-promise": "npm:es6-promise@^3.0.2",
-      "imagesloaded": "npm:imagesloaded@^3.2.0",
-      "js-cookie": "npm:js-cookie@^2.1.1",
-      "mixpanel-browser": "npm:mixpanel-browser@^2.7.2",
-      "whatwg-fetch": "npm:whatwg-fetch@^0.10.1"
+        "es6-promise": "",
+        "imagesloaded": "",
+        "js-cookie": "",
+        "mixpanel-browser": "",
+        "whatwg-fetch": ""
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
+        "webpack": "",
+        "babel-loader": "",
+        "babel-core": "",
+        "babel-preset-es2015": "",
+        "babel-preset-react": "",
+        "babel-plugin-transform-runtime": "",
+        "css-loader": "",
+        "extract-text-webpack-plugin": ""
+    },
+    "babel": {
+        "presets": ["es2015", "react"],
+        "plugins": ["transform-runtime"]
+    },
+    "eslintConfig": {
+        "rules": {
+            "indent": [
+                2,
+                4
+            ],
+            "quotes": [
+                2,
+                "single"
+            ],
+            "linebreak-style": [
+                2,
+                "unix"
+            ],
+            "semi": [
+                2,
+                "always"
+            ]
+        },
+        "env": {
+            "es6": true,
+            "node": true,
+            "browser": true
+        },
+        "extends": "eslint:recommended",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        },
+        "plugins": [
+            "react"
+        ],
+        "parserOptions": {
+            "sourceType": "module"
+        }
     }
-  },
-  "devDependencies": {
-    "jspm": "^0.16.14"
-  },
-  "eslintConfig": {
-    "rules": {
-      "indent": [
-        2,
-        4
-      ],
-      "quotes": [
-        2,
-        "single"
-      ],
-      "linebreak-style": [
-        2,
-        "unix"
-      ],
-      "semi": [
-        2,
-        "always"
-      ]
-    },
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
-    },
-    "extends": "eslint:recommended",
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
-    },
-    "plugins": [
-      "react"
-    ],
-    "parserOptions": {
-      "sourceType": "module"
-    }
-  }
 }

@@ -21,21 +21,7 @@ class App extends Component {
         e.target.dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
-        let TabNodes = this.props.items.map(
-            (item, i) => <Tab key={i} title={item.category}>
-                <Assemblage
-                    col="5"
-                    margin="8"
-                    template={img => <Card link={img.clickUrl} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
-                    src={
-                        item.similar_results.map(result => {
-                            result.src = result.images.XLarge;
-                            return result;
-                        }
-                    )}
-                />
-            </Tab>
-        ),
+        let TabNodes = [],
             NavButtonNodes = [
                 {
                     icon: 'feedback',
@@ -46,7 +32,23 @@ class App extends Component {
                     action: this.close.bind(this)
                 }
             ].map(button => <button id={button.icon} onClick={button.action}><i className="md-icon">{button.icon}</i></button>);
-
+        if (this.props.items) {
+            TabNodes = this.props.items.map(
+                (item, i) => <Tab key={i} title={item.category}>
+                    <Assemblage
+                        col="5"
+                        margin="8"
+                        template={img => <Card link={img.clickUrl} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
+                        src={
+                            item.similar_results.map(result => {
+                                result.src = result.images.XLarge;
+                                return result;
+                            }
+                        )}
+                    />
+                </Tab>
+            );
+        }
         return <Lightbox ref="app">
             <aside style={{backgroundImage: `url('${this.props.imageURL}')`}}></aside>
             <TabView

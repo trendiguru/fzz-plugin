@@ -1,12 +1,21 @@
 import {entries} from 'modules/utils';
+import {ENV} from 'constants';
 
+let getServerUrl = ()=>{
+    if (ENV === "PRODUCTION"){
+        return '//track.trendi.guru/tr/web?';
+    }else{
+        return '//track.trendi.guru/tr/test?';
+    }
+};
+let serverUrl = getServerUrl();
 let nginx = {
     // more fields are added in init()
     trackingFields: {
         ver: '0.1'
-    },
-    serverUrl: '//track.trendi.guru/tr/web?'
-};
+      },
+    serverUrl:serverUrl
+    };
 
 nginx.load = function () {
     return Promise.resolve();

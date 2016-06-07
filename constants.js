@@ -17,7 +17,8 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
-    PID = scriptTagData.pid;
+    PID = scriptTagData.pid,
+    ENV = ["PRODUCTION", "DEV"][1];
 
 export function UISettings (host) {
     // let settings = {

@@ -26,7 +26,7 @@ export function process (el, callback) {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
-            s.set("relevantImg", relevantImg);
+            s.set("relevantImg", relevantImg.element);
             callback(relevantImg);
         },
         irrelevantImg => {
@@ -34,7 +34,7 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
-                s.set("irrelevantImg", irrelevantImg);
+                s.set("irrelevantImg", irrelevantImg.element);
             } else {
                 logIrrelevant(irrelevantImg);
             }

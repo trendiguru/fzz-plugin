@@ -1,5 +1,5 @@
 #lightbox > aside {
-    width: 34%;
+    max-width: 34%;
     height: 100%;
     background-position: center;
     background-size: cover;

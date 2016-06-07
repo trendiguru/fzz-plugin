@@ -1,0 +1,43 @@
+#shadow {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+}
+
+#lightbox {
+    width: calc(100% - 10em);
+    height: calc(100% - 10em);
+    background: #FAFAFA;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    position: fixed;
+    top: 5em;
+    left: 5em;
+    z-index: 100;
+}
+
+#credit {
+    width: 6em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    text-decoration: none;
+    font-size: .8em;
+    z-index: 100;
+    text-align: center;
+}
+
+#credit img {
+    height: 3em;
+    display: block;
+    margin: .5em auto;
+}
+
+@media (max-width: 640px) {
+    #lightbox {
+        width: 100%;
+        height: 100%;
+        box-shadow: none;
+        top: 0;
+        left: 0;
+    }
+}

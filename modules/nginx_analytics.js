@@ -1,11 +1,12 @@
 import {entries} from 'modules/utils';
+import {SEVER_URL} from 'constants';
 
 let nginx = {
     // more fields are added in init()
     trackingFields: {
         ver: '0.1'
     },
-    serverUrl: '//track.trendi.guru/tr/web?'
+    serverUrl: SEVER_URL
 };
 
 nginx.load = function () {

@@ -26,18 +26,18 @@ ifvisible();
 export default function() {
     (function() {
         (function(root, factory) {
-            if (typeof module !== 'undefined' && module.exports) {
-				// CommonJS
-                return module.exports = factory(require('ifvisible.js'));
-            } else if (typeof define === 'function' && define.amd) {
-				// AMD
-                define(['ifvisible'], function (ifvisible) {
-                    return (root.TimeMe = factory(ifvisible));
-                });
-            } else {
-				// Global Variables
-                return root.TimeMe = factory(root.ifvisible);
-            }
+            // if (typeof module !== 'undefined' && module.exports) {
+			// 	// CommonJS
+            //     //return module.exports = factory(require('ifvisible.js'));
+            // } else if (typeof define === 'function' && define.amd) {
+			// 	// AMD
+            //     // define(['ifvisible'], function (ifvisible) {
+            //     //     return (root.TimeMe = factory(ifvisible));
+            //     // });
+            // } else {
+			// 	// Global Variables
+            return root.TimeMe = factory(root.ifvisible);
+            // }
         })(this, function(ifvisible) {
             var TimeMe = {
                 startStopTimes: {},

@@ -88,6 +88,23 @@ let STACKS = devTools.STACKS = devTools.STACKS || {
 	}
 };
 
+devTools.coloredReport = ()=>{
+	let defaultColor  = s.sColor;
+	s.sColor = "yellow";
+	s.show("smartCheckRelevancy_input");
+	s.sColor = "gring";
+	s.show("relevantImg");
+	s.sColor = "red"
+	s.show("irrelevantImg");
+	s.sColor = defaultColor;
+};
+devTools.clrscrn = ()=>{
+	for (key in s.storage){
+		s.hide(key);
+	}
+};
+
+
 if (active){
 //______STACKS_definition_____//
 	let s = STACKS;
@@ -100,6 +117,7 @@ if (active){
 	s.newStack("relevantImg");
 	s.newStack("irrelevantImg");
 	s.newStack("logIrrelevant");
+	s.newStack("smartCheckRelevancy_input");
 
 	//______ective_functions______//
 	devTools.modules = {};

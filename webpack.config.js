@@ -1,4 +1,5 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     module: {
@@ -10,7 +11,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'css'
+                loader: ExtractTextPlugin.extract('css')
             }
         ]
     },
@@ -23,11 +24,14 @@ module.exports = {
         'b_plugin.js': './plugin/js/plugin.js',
         'app/b_desktop.js': './app/desktop.js',
         'demo/b_demo.js': './demo/main.js',
-        'demo/b_main.css': './demo/main.css'
+        'demo/b_demo.css': './demo/main.css'
     },
     output: {
         path: '.',
         filename: '[name]'
     },
+    plugins: [
+        new ExtractTextPlugin('[name]')
+    ],
     devtool: 'source-map'
 };

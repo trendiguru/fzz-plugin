@@ -1,0 +1,91 @@
+@import '../app/css/app.css';
+
+body {
+    overflow: visible;
+    background: #F5F5F5;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: 0;
+}
+
+#logo {
+    height: 4.7em;
+    margin: auto;
+    display: block;
+    margin: 3em auto;
+}
+
+#searchbox {
+    width: 40em;
+    max-width: calc(100% - 2em);
+    margin: 3em auto;
+    display: block;
+}
+
+#searchbox input {
+    width: calc(100% - 8em);
+    padding: .5em;
+    font: inherit;
+    margin-right: 1em;
+    border: none;
+}
+
+#searchbox button {
+    width: 6em;
+    padding: .5em;
+    font: inherit;
+    background: #FF5792;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 3em;
+    font-style: italic;
+    margin: .5em 0;
+}
+
+#discover {
+    width: calc(100% - 2em);
+    height: 60em;
+    overflow: hidden;
+    columns: 4;
+    margin: 1em;
+    flex-wrap: wrap;
+    -webkit-column-gap: 1em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 1em; /* Firefox */
+    column-gap: 1em;
+    transition: transform .25s, opacity .25s;
+}
+
+.hide #discover {
+    opacity: 0;
+    transform: translateY(1em);
+}
+
+#discover article, #discover img {
+    margin: 0 0 1em;
+    overflow: hidden;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+#discover article {
+    padding: 1em;
+    background: #FF5792;
+    color: #fff;
+}
+
+#discover img {
+    width: 100%;
+}
+
+#lightbox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0
+}

@@ -16,7 +16,7 @@ class Card extends Component {
     render () {
         let {labels} = this.props;
         let LabelNodes = Object.keys(labels).map(label => <span className={label}>{labels[label]}</span>);
-        return <a ref="card" href={this.props.link} onClick={this.click} targe="_blank">
+        return <a ref="card" href={this.props.link} onClick={this.click.bind(this)} target="_blank">
             <img src={this.props.image} />
             <div className="tag">{LabelNodes}</div>
         </a>;

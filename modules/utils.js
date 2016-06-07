@@ -1,6 +1,10 @@
 //import constants from 'constants';
 //const {USER_CONFIG} = constants;
 
+let getStyle = window.getComputedStyle || function(elem){
+    return elem.currentStyle;
+};
+
 function* entries(obj) {
     for (let key of Object.keys(obj)) {
         yield [key, obj[key]];
@@ -81,4 +85,6 @@ export {entries,
         getParameterByName,
         selectorMatches,
         dictMerge,
-        getDomainName};
+        getDomainName,
+        getStyle
+    };

@@ -65,10 +65,10 @@ let STACKS = devTools.STACKS = devTools.STACKS || {
 			for (let [key, stack] of entries(STACKS.storage)) {
 				if (sName === key){
 					for (let elem of stack){
-						if (elem!==undefined && elem.style !== undefined){
-							elem.style.opacity = OPACITY;
-							elem.style.backgroundColor =col || STACKS.sColor;
-						}
+						//if (elem!==undefined && elem.style !== undefined){
+							console.log("fffffff");
+							elem.style.border = "6px solid"+STACKS.sColor;
+						//}
 					}
 				}
 			}
@@ -80,8 +80,7 @@ let STACKS = devTools.STACKS = devTools.STACKS || {
 				if (sName === key){
 					for (let elem of stack){
 						if (elem!==undefined && elem.style !== undefined){
-							elem.style.opacity = OPACITY;
-							elem.style.backgroundColor = undefined;
+							elem.style.border = "0px solid";
 						}
 					}
 				}

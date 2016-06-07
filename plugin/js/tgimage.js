@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import {STACKS} from 'modules/devTools';
+import {getStyle} from 'modules/utils';
 let s = STACKS;
 
 class TGImage {
@@ -22,10 +23,6 @@ class TGImage {
     // from imagesLoaded
     getBackgroundImage() {
         var urls = [];
-        // IE8
-        var getStyle = window.getComputedStyle || function (elem) {
-            return elem.currentStyle;
-        };
         var style = getStyle(this.element);
         // get url inside url('...')
         var reURL = /url\(([''""])?(.*?)\1\)/gi;

@@ -1,12 +1,12 @@
 import {entries} from 'modules/utils';
-import {SEVER_URL} from 'constants';
+import {SERVER_URL} from 'constants';
 
 let nginx = {
     // more fields are added in init()
     trackingFields: {
         ver: '0.1'
     },
-    serverUrl: SEVER_URL
+    serverUrl: SERVER_URL
 };
 
 nginx.load = function () {

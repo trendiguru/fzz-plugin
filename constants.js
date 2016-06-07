@@ -18,8 +18,8 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
     PID = scriptTagData.pid,
-    ENV = ["PRODUCTION", "DEV"][1],
-    SEVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
+    ENV = ["PRODUCTION", "DEV"][0],
+    SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
                  DEV: '//track.trendi.guru/tr/test?'}[ENV];
 
 export function UISettings (host) {

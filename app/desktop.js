@@ -53,4 +53,4 @@ addEventListener('app opened', () => {
 
 addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
 
-addEventListener('tab clicked', e => analytics.track('Tab Clicked', {index: e.info.index}));
+addEventListener('tab clicked', e => analytics.track('Category Clicked', {title: e.info.title}));

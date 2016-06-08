@@ -6,6 +6,7 @@ import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
 import Card from './card';
+import Aside from './aside';
 
 const {Component} = React;
 
@@ -52,7 +53,7 @@ class App extends Component {
             );
         }
         return <Lightbox ref="app">
-            <aside style={{backgroundImage: `url('${this.props.imageURL}')`}}></aside>
+            <Aside imageURL={this.props.imageURL} />
             <TabView
                 aside={NavButtonNodes}
             >{TabNodes}</TabView>

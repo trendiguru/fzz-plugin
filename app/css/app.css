@@ -44,25 +44,20 @@ body {
 }
 
 #lightbox > aside {
-    width: 34%;
+    max-width: 40%;
     height: 100%;
     background-position: center;
     background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
+    float: left;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     z-index: 100;
 }
 
 main {
-    width: 66%;
     height: calc(100% - 3em);
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    top: 3em;
-    left: 34%;
 }
 
 section {
@@ -83,7 +78,7 @@ section div > div {
 
 section div > div:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    z-index: 100;
+    /* z-index: 100; */
 }
 
 section div > div img {
@@ -134,18 +129,15 @@ section a {
 }
 
 nav {
-    width: 66%;
     overflow: hidden;
     background: #fff;
-    position: absolute;
-    top: 0;
-    left: 34%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     text-transform: uppercase;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    position: relative;
     z-index: 99;
 }
 
@@ -210,6 +202,7 @@ nav ul li.select {
     font-weight: bold;
     color: #ff4d8b;
     opacity: 1;
+    /* max-width: 12em; */
 }
 
 @media (max-width: 640px) {

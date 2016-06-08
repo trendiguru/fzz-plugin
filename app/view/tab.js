@@ -42,6 +42,6 @@ export class Tab extends Component {
         this.refs.tab.dispatchEvent(click);
     }
     render () {
-        return <section ref="tab" onClick={this.click} style={{width: '100%', left: (this.props.index - this.props.select) * 100 + '%', top: 0, position: 'absolute'}}>{this.props.children}</section>;
+        return <section ref="tab" onClick={this.click.bind(this)} style={{width: '100%', left: (this.props.index - this.props.select) * 100 + '%', top: 0, position: 'absolute'}}>{this.props.children}</section>;
     }
 }

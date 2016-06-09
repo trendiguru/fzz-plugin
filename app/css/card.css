@@ -7,7 +7,6 @@ section div > div {
 
 section div > div:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    z-index: 100;
 }
 
 section div > div img {
@@ -17,19 +16,15 @@ section div > div img {
 .tag {
     width: 100%;
     padding: .5em;
-    background-color: rgba(0,0,0,0.2);
-    color: #fff;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    background-color: #fff;
     text-align: center;
     box-sizing: border-box;
-    text-shadow: 0px 1px 3px rgba(0,0,0,0.4);
 }
 
 .price {
     font-size: 1.4em;
     font-family: 'Rozha One', serif;
+    color: #ff4d8b;
     display: block;
 }
 

@@ -1,25 +1,11 @@
 /* globals React */
 
-import App from '../app/view/app.js';
-import {getImageData} from 'modules/server';
+import App from 'app/view/app.js';
+import Discover from './discover';
 const {Component, createElement} = React;
 
-class Discover extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {};
-    }
-    render () {
-        let ImageNodes = this.props.images.map((src, i) => <img key={i} onClick={() => this.props.search(src)} src={src} />);
-        return <div id="discover">
-                <article>
-                    <h1>
-                        Shop the Look from Any Picture
-                    </h1>
-                </article>
-                {ImageNodes}
-            </div>;
-    }
+function getImageData (url) {
+    return fetch('http://api.fazz.co/images?imageUrl=' + url).then(res => res.json());
 }
 
 export default class Demo extends Component {
@@ -66,18 +52,13 @@ export default class Demo extends Component {
             return state;
         });
         getImageData(url).then(data => {
-            if (data) {
-                data.imageURL = url;
-                data.close = this.close.bind(this);
-                this.setState(state => {
-                    state.component = App;
-                    state.components.App.props = data;
-                    return state;
-                });
-            }
-            else {
-                alert('Image was not found!');
-            }
+            data.imageURL = url;
+            data.close = this.close.bind(this);
+            this.setState(state => {
+                state.component = App;
+                state.components.App.props = data;
+                return state;
+            });
         });
     }
     render () {

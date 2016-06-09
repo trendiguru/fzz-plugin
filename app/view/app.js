@@ -7,6 +7,7 @@ import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
 import Card from './card';
 import Aside from './aside';
+import Labels from './labels';
 
 const {Component} = React;
 
@@ -51,6 +52,9 @@ class App extends Component {
                     />
                 </Tab>
             );
+        }
+        else if (this.props.labels) {
+            TabNodes = [<Labels labels={this.props.labels}/>];
         }
         return <Lightbox ref="app">
             <Aside imageURL={this.props.imageURL} />

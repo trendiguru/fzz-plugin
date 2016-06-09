@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* global React,ReactDOM */
 
-// import getMainColor from 'modules/getMainColor';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
@@ -50,10 +49,8 @@ class App extends Component {
             );
         }
         return <Lightbox ref="app">
-            <aside style={{backgroundImage: `url('${this.props.imageURL}')`}}></aside>
-            <TabView
-                aside={NavButtonNodes}
-            >{TabNodes}</TabView>
+            <aside imageURL={this.props.imageURL} />
+            <TabView aside={NavButtonNodes}>{TabNodes}</TabView>
         </Lightbox>;
     }
 }

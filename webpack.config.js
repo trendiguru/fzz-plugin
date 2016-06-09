@@ -24,7 +24,8 @@ module.exports = {
         'b_plugin.js': './plugin/js/plugin.js',
         'app/b_desktop.js': './app/desktop.js',
         'demo/b_demo.js': './demo/main.js',
-        'demo/b_demo.css': './demo/main.css'
+        'demo/b_demo.css': './demo/main.css',
+        'app/css/b_app.css': './app/css/app.css'
     },
     output: {
         path: '.',

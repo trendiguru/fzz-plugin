@@ -1,0 +1,19 @@
+#lightbox > aside {
+    max-width: 34%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    z-index: 100;
+}
+
+@media (max-width: 640px) {
+
+    #lightbox > aside {
+        display: none;
+    }
+
+}

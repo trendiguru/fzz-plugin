@@ -1,4 +1,4 @@
-/* global React */
+/* globals React */
 
 const {Component} = React;
 
@@ -6,22 +6,31 @@ class Aside extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            width: 0,
-            height: 0
+            img: {
+                width: 0,
+                height: 0
+            }
         };
+        this.load(props);
     }
-    componentDidMount () {
+    get height () {
+        if (this.refs.root) {
+            return this.refs.root.clientHeight;
+        }
+    }
+    componentWillReceiveProps (props) {
+        this.load(props);
+    }
+    load (props) {
         let img = new Image();
-        img.src = this.props.imageURL;
-        img.onload = () => {
-            let {width, height} = img;
-            this.setState({width, height});
-            this.forceUpdate();
-        };
+        img.src = props.imageURL;
+        img.onload = () => this.setState({img});
     }
     render () {
-        let {height, width} = this.state;
-        return <aside style={{width, height, backgroundImage: `url('${this.props.imageURL}')`}}></aside>;
+        return <aside ref="root" style={{
+            width: this.state.img.width / this.state.img.height * this.height,
+            backgroundImage: `url('${this.props.imageURL}')`
+        }}></aside>;
     }
 }
 

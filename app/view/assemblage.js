@@ -5,29 +5,23 @@ const {Component} = React;
 class Assemblage extends Component {
     constructor (props) {
         super(props);
-        let {col, src} = this.props,
-            index = Array(Math.ceil(src.length / col)).fill(0).map(() => []);
-        this.state = {src: [], index: index, done: Array(this.props.src.length).fill(false)};
+        this.state = {
+            src: [],
+            done: Array(this.props.src.length).fill(false)
+        };
     }
-    loadImage (dictionary, i) {
+    loadImage (origin, i) {
         return new Promise ((resolve, reject) => {
-            let img = new Image();
-            for (let key in dictionary)
-                img[key] = dictionary[key];
+            let img = Object.assign(new Image(), origin);
             img.onload = () => {
-                let {col} = this.props;
-                img.proportion = img.height / img.width;
-                img.row = (i - i % col) / col;
-                img.index = i % col;
                 this.setState(state => {
                     state.src.push(img);
-                    state.index[img.row].push(img);
                     state.done[i] = true;
                     return state;
                 });
                 resolve(img);
             };
-            img.onerror = () => reject(img);
+            img.onerror = reject;
         });
     }
     loadImages (src) {
@@ -45,21 +39,42 @@ class Assemblage extends Component {
         addEventListener('resize', this.forceUpdate.bind(this, null));
     }
     render () {
-        let ImageNodes = this.state.src.map(
-            img => {
-                img.top = 0;
-                if (img.row) {
-                    img.top += this.state.index[img.row - 1][img.index].proportion;
-                    if (img.row - 1) img.top += this.state.index[img.row - 1][img.index].top;
+        let ImageNodes = [];
+        try {
+            let {clientWidth} = this.refs.root,
+                col = Math.floor(clientWidth / this.props.minWidth),
+                width = clientWidth / col,
+                {src} = this.state,
+                {margin} = this.props,
+                marginBottom = this.props.marginBottom || margin,
+                indexed = Array(Math.ceil(src.length / col)).fill(0).map(() => []);
+            for (let i = 0; i < src.length; i++) {
+                let img = this.state.src[i],
+                    row = (i - i % col) / col,
+                    index = i % col;
+                Object.assign(img, {
+                    proportion: img.height / img.width,
+                    top: 0
+                });
+                if (row) {
+                    img.top += indexed[row - 1][index].proportion;
+                    if (row - 1) {
+                        img.top += indexed[row - 1][index].top;
+                    }
                 }
-                return img;
+                indexed[row][index] = img;
+                ImageNodes[i] = <div
+                        key={i}
+                        style={{
+                            width: width - margin,
+                            top: width * img.top + marginBottom * row,
+                            left: width * index + margin /  2,
+                            position: 'absolute'
+                        }}
+                    >{this.props.template(img)}</div>;
             }
-        ),
-            width = this.refs.root ? this.refs.root.clientWidth / this.props.col : 0;
-        return <div ref="root" className="assemblage" style={{position: 'relative'}}>{
-                ImageNodes.map((img, i) => <div key={i} style={{width: width - this.props.margin, height: width * img.proportion, top: width * img.top + this.props.margin * (img.row + 1), left: width * img.index + this.props.margin /  2, position: 'absolute'}}>{this.props.template(img)}</div>
-                )}
-        </div>;
+        } catch (e) {() => e;} // swallow the error as a check
+        return <div ref="root" className="assemblage" style={{position: 'relative'}}>{ImageNodes}</div>;
     }
 }
 

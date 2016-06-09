@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* global React,ReactDOM */
 
+// import getMainColor from 'modules/getMainColor';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
 import Card from './card';
+import Aside from './aside';
 
 const {Component} = React;
 
@@ -35,8 +37,10 @@ class App extends Component {
             TabNodes = this.props.items.map(
                 (item, i) => <Tab key={i} title={item.category}>
                     <Assemblage
-                        col="5"
-                        margin="8"
+                        col={5}
+                        minWidth={180}
+                        margin={8}
+                        marginBottom={70}
                         template={img => <Card link={img.clickUrl} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
                         src={
                             item.similar_results.map(result => {
@@ -49,8 +53,10 @@ class App extends Component {
             );
         }
         return <Lightbox ref="app">
-            <aside imageURL={this.props.imageURL} />
-            <TabView aside={NavButtonNodes}>{TabNodes}</TabView>
+            <Aside imageURL={this.props.imageURL} />
+            <TabView
+                aside={NavButtonNodes}
+            >{TabNodes}</TabView>
         </Lightbox>;
     }
 }

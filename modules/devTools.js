@@ -102,6 +102,8 @@ if (active){
 	s.newStack("irrelevantImg");
 	s.newStack("logIrrelevant");
 	s.newStack("smartCheckRelevancy_input");
+	s.newStack("svg");
+	s.newStack("content");
 
 	//______ective_functions______//
 	devTools.modules = {};
@@ -120,7 +122,7 @@ devTools.coloredReport = ()=>{
 	s.sColor = defaultColor;
 };
 devTools.clrscrn = ()=>{
-	for (key in s.storage){
+	for (let key in s.storage){
 		s.hide(key);
 	}
 };

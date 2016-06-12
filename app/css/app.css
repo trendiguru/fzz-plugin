@@ -4,6 +4,7 @@
 @import './aside.css';
 @import './tab.css';
 @import './card.css';
+@import './labels.css';
 
 body {
     overflow: hidden;

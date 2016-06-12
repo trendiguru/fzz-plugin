@@ -21,13 +21,15 @@ export default class Labels extends Component {
         }));
     }
     render () {
-        let LabelNodes = this.state.labels.map(label => {return <div>
-            <img height={92} src={label.giphy.data[0].images.original.url} style={{
-                float: 'left'
-            }} />
-            {label.query}
-            <div style={{width: label.percentage * 100, height: 4, background: 'pink'}}></div>
-        </div>;});
+        let LabelNodes = this.state.labels.map((label, i) => <div className="label" key={i}>
+            <div className="img" style={{backgroundImage: `url(${label.giphy.data[0].images.original.url})`}}></div>
+            <div className="tag">
+                <h4>{label.query}</h4>
+                <div className="graph">
+                    <div className="bar" style={{width: label.percentage * 100 + '%'}}></div>
+                </div>
+            </div>
+        </div>);
         return <div>{LabelNodes}</div>;
     }
 }

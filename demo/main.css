@@ -9,9 +9,14 @@ body {
 
 #logo {
     height: 4.7em;
-    margin: auto;
     display: block;
     margin: 3em auto;
+    transition: height .25s, margin .25s;
+}
+
+#logo.min {
+    height: 0;
+    margin: 0 auto;
 }
 
 #searchbox {
@@ -19,6 +24,11 @@ body {
     max-width: calc(100% - 2em);
     margin: 3em auto;
     display: block;
+    transition: margin .25s;
+}
+
+#searchbox.min {
+    margin: 1em auto;
 }
 
 #searchbox input {
@@ -84,7 +94,7 @@ h1 {
 
 #lightbox {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 4.25em);
     position: relative;
     top: 0;
     left: 0

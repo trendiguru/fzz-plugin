@@ -6,7 +6,7 @@ fzz.min.js
 */*.map
 *.zip
 
-npm-debug.log
+npm-debug.log*
 
 # OS generated files #
 ######################

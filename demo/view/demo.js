@@ -1,12 +1,10 @@
 /* globals React */
 
+import 'whatwg-fetch';
 import App from 'app/view/app.js';
 import Discover from './discover';
-const {Component, createElement} = React;
-
-function getImageData (url) {
-    return fetch('http://api.fazz.co/images?imageUrl=' + url).then(res => res.json());
-}
+import Searchbox from './search';
+const {Component} = React;
 
 export default class Demo extends Component {
     constructor (props) {
@@ -30,11 +28,7 @@ export default class Demo extends Component {
                         search: this.search.bind(this)
                     }
                 },
-                'App': {
-                    props: {
-
-                    }
-                }
+                'App': {props: {}}
             }
         };
     }
@@ -65,27 +59,27 @@ export default class Demo extends Component {
         let {components, component} = this.state,
             ComponentNode;
         if (component) {
-            ComponentNode = createElement(component, components[component.name].props);
+            ComponentNode = React.createElement(component, components[component.name].props);
         }
-        return createElement('div', {
-            children: [
-                createElement('img', {id: 'logo', src: 'logo.svg'}),
-                createElement('div', {
-                    id: 'searchbox',
-                    children: [
-                        createElement('input', {
-                            ref: 'searchbox',
-                            type: 'text',
-                            placeholder: 'Image URL'
-                        }),
-                        createElement('button', {
-                            children: 'search',
-                            onClick: () => this.search(this.refs.searchbox.value)
-                        })
-                    ]
-                }),
-                ComponentNode
-            ]
-        });
+        return <div>
+            <img id="logo" className={Object.keys(this.state.components.App.props).length ? 'min' : ''} src="logo.svg" />
+            <Searchbox className={Object.keys(this.state.components.App.props).length ? 'min' : ''} search={this.search.bind(this)} />
+            {ComponentNode}
+        </div>;
     }
+}
+
+function getImageData (url) {
+    return fetch('http://api.fazz.co/images?imageUrl=' + url)
+    .then(res => res.json())
+    .then(data => {
+        if (data.people.length) {
+            let items = [];
+            for (let people of data.people) {
+                items = [items, ...people.items];
+            }
+            data.items = items;
+        }
+        return data;
+    });
 }

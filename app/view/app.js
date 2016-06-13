@@ -7,6 +7,7 @@ import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
 import Card from './card';
 import Aside from './aside';
+import Loading from './loading';
 import Labels from './labels';
 
 const {Component} = React;
@@ -33,7 +34,9 @@ class App extends Component {
                     icon: 'close',
                     action: this.close.bind(this)
                 }
-            ].map(button => <button id={button.icon} onClick={button.action}><i className="md-icon">{button.icon}</i></button>);
+            ].map((button, i) => <button key={i} id={button.icon} onClick={button.action}>
+                <i className="md-icon">{button.icon}</i>
+            </button>);
         if (this.props.items) {
             TabNodes = this.props.items.map(
                 (item, i) => <Tab key={i} title={item.category}>
@@ -55,6 +58,9 @@ class App extends Component {
         }
         else if (this.props.labels) {
             TabNodes = [<Labels labels={this.props.labels}/>];
+        }
+        else {
+            TabNodes = [<Loading />];
         }
         return <Lightbox ref="app">
             <Aside imageURL={this.props.imageURL} />

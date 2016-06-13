@@ -13,7 +13,7 @@ section div > div img {
     width: 100%;
 }
 
-.tag {
+section div > div .tag {
     width: 100%;
     padding: .5em;
     background-color: #fff;
@@ -21,14 +21,14 @@ section div > div img {
     box-sizing: border-box;
 }
 
-.price {
+section div > div .tag .price {
     font-size: 1.4em;
     font-family: 'Rozha One', serif;
     color: #ff4d8b;
     display: block;
 }
 
-.price:before {
+section div > div .tag .price:before {
     content: '$';
     font-family: 'Source Sans Pro', sans-serif;
     font-size: .75em;

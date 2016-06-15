@@ -25,6 +25,11 @@ nginx.init = function (userId) {
 };
 
 nginx.track = function (event, properties) {
+    // send pixel
+    (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
+};
+
+export function buildQueryString(event, properties){
     let fieldsString = '';
     let rv = Math.floor(Math.random() * 1000000000);
 
@@ -39,8 +44,8 @@ nginx.track = function (event, properties) {
     }
 
     // send pixel
-    (new Image()).src = nginx.serverUrl + 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
-};
+    return 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
+}
 
 function viewport() {
     let viewport = {};

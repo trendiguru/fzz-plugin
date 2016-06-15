@@ -53,8 +53,8 @@ analytics.initializeInApp = function (initProperties) {
     });
 
     timeme();
-    console.log('ineted: '+ TimeMe.getTimeOnCurrentPageInSeconds());
-    console.log(window);
+    // console.log('ineted: '+ TimeMe.getTimeOnCurrentPageInSeconds());
+    // console.log(window);
     window.onbeforeunload = () => {
         let xhr = new XMLHttpRequest();
         xhr.open(

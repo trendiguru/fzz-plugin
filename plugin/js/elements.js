@@ -1,4 +1,5 @@
-import {IFRAME_ID, IFRAME_SRC, CSS_URL} from 'constants';
+import {IFRAME_ID, IFRAME_SRC, CSS_URL, PID} from 'constants';
+import {Query} from 'modules/utils';
 
 let iframe = new iFrame(),
     style = new Style();
@@ -9,7 +10,7 @@ function iFrame (src) {
     let iframe = document.createElement('iframe');
     Object.assign(iframe, {
         id: IFRAME_ID,
-        src: src || IFRAME_SRC,
+        src: (src || IFRAME_SRC) + Query.stringify({PID}),
         show () {
             iframe.style.display = 'block';
             document.body.style.overflow = 'hidden';

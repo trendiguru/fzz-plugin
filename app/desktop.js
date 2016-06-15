@@ -2,15 +2,15 @@
 
 import App from './view/app';
 
-import {analytics} from '../modules/analytics_wrapper';
+import {analytics} from 'modules/analytics_wrapper';
+
+import {REQUESTS} from 'modules/devTools';
 
 import {buildQueryString} from '../modules/nginx_analytics';
 
-import {REQUESTS} from '../modules/devTools';
+import {Query} from 'modules/utils';
 
-import {getLocation} from '../modules/utils';
-
-let publisherDomain;
+//let publisherDomain;
 
 REQUESTS.desktop = 0;
 
@@ -51,9 +51,9 @@ addEventListener('message', msg => {
 
 /*------ ANALYTICS ------*/
 
-publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
+//publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
-analytics.initializeInApp({publisherDomain});
+analytics.initializeInApp(Query.parse(location.search));
 
 analytics.track('App Loaded');
 

@@ -2,11 +2,11 @@
 
 import App from './view/app';
 
-import {analytics} from '../modules/analytics_wrapper';
+import {analytics} from 'modules/analytics_wrapper';
 
-import {REQUESTS} from '../modules/devTools';
+import {REQUESTS} from 'modules/devTools';
 
-import {getLocation} from '../modules/utils';
+import {getLocation, Query} from 'modules/utils';
 
 let publisherDomain;
 
@@ -42,7 +42,7 @@ addEventListener('message', msg => {
 
 publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
-analytics.initializeInApp({publisherDomain: publisherDomain});
+analytics.initializeInApp(Query.parse(location.search));
 
 analytics.track('App Loaded');
 

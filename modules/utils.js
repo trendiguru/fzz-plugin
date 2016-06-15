@@ -77,6 +77,24 @@ function getDomainName(urlStr){
     return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
 }
 
+class Query {
+    static stringify (query) {
+        let result = '?';
+        for (let name in query) {
+            result += `${name}=${query[name]}&`;
+        }
+        return result.substr(0, result.length - 1);
+    }
+    static parse (result) {
+        let query = {};
+        result.substr(1).split('&').forEach(entry => {
+            let [name, value] = entry.split('=');
+            query[name] = value;
+        });
+        return query;
+    }
+}
+
 export {entries,
         values,
         delay,
@@ -86,5 +104,6 @@ export {entries,
         selectorMatches,
         dictMerge,
         getDomainName,
-        getStyle
+        getStyle,
+        Query
     };

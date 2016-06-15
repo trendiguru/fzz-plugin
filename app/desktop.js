@@ -6,9 +6,11 @@ import {analytics} from 'modules/analytics_wrapper';
 
 import {REQUESTS} from 'modules/devTools';
 
-import {getLocation, Query} from 'modules/utils';
+import {buildQueryString} from '../modules/nginx_analytics';
 
-let publisherDomain;
+import {Query} from 'modules/utils';
+
+//let publisherDomain;
 
 REQUESTS.desktop = 0;
 
@@ -33,14 +35,23 @@ addEventListener('app close', close);
 
 addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
+        let items = msg.data.items.map(
+            item => {
+                item.similar_results = item.similar_results.map(
+                    result => {
+                        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked')}`;
+                        return result;
+                    });
+                return item;
+            });
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
-        render({imageURL: msg.data.imageURL, items: msg.data.items, close});
+        render({imageURL: msg.data.imageURL, items, close});
     }
 });
 
 /*------ ANALYTICS ------*/
 
-publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
+//publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
 analytics.initializeInApp(Query.parse(location.search));
 
@@ -51,6 +62,6 @@ addEventListener('app opened', () => {
     REQUESTS.desktop +=1;
 });
 
-addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
+// addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
 
 addEventListener('tab clicked', e => analytics.track('Category Clicked', {title: e.info.title}));

@@ -40,7 +40,10 @@ export function preview (tgImg) {
     }
     results.forEach(result => {
         let a = document.createElement('a');
-        a.href = result.clickUrl;
+        a.addEventListener('click', e => {
+            window.open(result.clickUrl, '_blank');
+            block(e);
+        });
         a.style.backgroundImage = `url('${result.images.XLarge}')`;
         footer.appendChild(a);
     });

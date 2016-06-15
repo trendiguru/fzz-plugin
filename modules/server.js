@@ -9,7 +9,7 @@ let serverBuffer = [];
 
 let serverUploader;
 export function smartCheckRelevancy(tgImg) {
-    STACKS.set("smartCheckRelevancy_input", tgImg.element);
+    STACKS.set('smartCheckRelevancy_input', tgImg.element);
     serverBuffer.push(tgImg);
     console.log('SB length: ' + serverBuffer.length);
 
@@ -18,7 +18,7 @@ export function smartCheckRelevancy(tgImg) {
         serverUploader = accumulate(500).then(function () {
             let p = checkRelevancy(serverBuffer.map((im) => im.url));
             serverBuffer = [];
-            STACKS.set("smartCheckRelevancy", p);
+            STACKS.set('smartCheckRelevancy', p);
             return p;
         });
 

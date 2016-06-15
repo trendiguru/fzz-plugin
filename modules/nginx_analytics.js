@@ -1,33 +1,29 @@
-import {entries} from 'modules/utils';
 import {SERVER_URL} from 'constants';
 
-let nginx = {
-    // more fields are added in init()
-    trackingFields: {
+ // more fields are added in init()
+
+export let trackingFields = {
         ver: '0.1'
     },
-    serverUrl: SERVER_URL
-};
+    serverUrl = SERVER_URL;
 
-nginx.load = function () {
-    return Promise.resolve();
-};
+export let load = Promise.resolve;
 
-nginx.init = function (userId) {
+export function init (userId) {
     return new Promise(function (resolve) {
-        nginx.trackingFields.userId = userId;
+        trackingFields.userId = userId;
         let vp = viewport();
-        nginx.trackingFields.winWidth = vp.width;
-        nginx.trackingFields.winHeight = vp.height;
+        trackingFields.winWidth = vp.width;
+        trackingFields.winHeight = vp.height;
         //nginx.trackingFields.refererDomain = window.location.hostname.replace("www.", ""); // replaced with publisherDomain in the analytics wrapper
         resolve();
     });
-};
+}
 
-nginx.track = function (event, properties) {
+export function track (event, properties) {
     // send pixel
-    (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
-};
+    (new Image()).src = serverUrl + buildQueryString(event, properties);
+}
 
 export function buildQueryString(event, properties){
     let fieldsString = '';
@@ -35,11 +31,12 @@ export function buildQueryString(event, properties){
 
     if(properties){
         for(let key of Object.keys(properties)){
-            nginx.trackingFields[key] = properties[key];
+            trackingFields[key] = properties[key];
         }
     }
 
-    for (let [attrName, attrValue] of entries(nginx.trackingFields)) {
+    for (let attrName in trackingFields) {
+        let attrValue = trackingFields[attrName];
         fieldsString += '&' + attrName + '=' + encodeURIComponent(attrValue);
     }
 
@@ -47,7 +44,7 @@ export function buildQueryString(event, properties){
     return 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
 }
 
-function viewport() {
+function viewport () {
     let viewport = {};
     viewport.width = 0;
     viewport.height = 0;
@@ -68,5 +65,3 @@ function viewport() {
     }
     return viewport;
 }
-
-export default nginx;

@@ -1,7 +1,7 @@
 {
     "name": "fzz-plugin",
     "version": "1.0.0",
-    "description": "Fazz™ plugin for websites, Chrome, and internal usage",
+    "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
     "main": "plugin/js/plugin.js",
     "scripts": {
         "init": "npm i -g webpack",

@@ -1,8 +1,6 @@
-/* globals React */
 import giphy from 'modules/giphy';
-const {Component} = React;
 
-export default class Labels extends Component {
+export default class Labels extends React.Component {
     constructor (props) {
         super(props);
         this.state = {

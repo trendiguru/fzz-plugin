@@ -1,8 +1,4 @@
-/* globals React */
-
-const {Component} = React;
-
-export default class Loading extends Component {
+export default class Loading extends React.Component {
 
     constructor (props) {
         super(props);

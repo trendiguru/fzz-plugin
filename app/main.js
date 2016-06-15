@@ -2,7 +2,7 @@
 
 import App from './view/app';
 
-import {analytics} from 'modules/analytics_wrapper';
+import * as analytics from 'modules/analytics_wrapper';
 
 import {REQUESTS} from 'modules/devTools';
 

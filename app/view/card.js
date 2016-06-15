@@ -1,8 +1,4 @@
-/* globals React */
-
-let {Component} = React;
-
-class Card extends Component {
+export default class Card extends React.Component {
     constructor (props) {
         super(props);
     }
@@ -22,5 +18,3 @@ class Card extends Component {
         </a>;
     }
 }
-
-export default Card;

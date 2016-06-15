@@ -1,5 +1,5 @@
 import {INFO_URL, IFRAME_ID} from 'constants';
-import {analytics} from 'modules/analytics_wrapper';
+import * as analytics from 'modules/analytics_wrapper';
 
 export function round (tgImg) {
     let overlay = Overlay(tgImg);

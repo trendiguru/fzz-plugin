@@ -2,7 +2,7 @@
 
 import domready from 'ext/domready';
 import {PID} from 'constants';
-import {analytics} from 'modules/analytics_wrapper';
+import * as analytics from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
 import {process} from './process';

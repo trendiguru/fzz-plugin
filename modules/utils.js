@@ -77,7 +77,7 @@ function getDomainName(urlStr){
     return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
 }
 
-class Query {
+export class Query {
     static stringify (query) {
         let result = '?';
         for (let name in query) {
@@ -104,6 +104,5 @@ export {entries,
         selectorMatches,
         dictMerge,
         getDomainName,
-        getStyle,
-        Query
+        getStyle
     };

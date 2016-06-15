@@ -1,0 +1,56 @@
+.fazz.round button.fzzButton {
+    width: 3em;
+    height: 3em;
+    padding: 0;
+    border-radius: 50%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: box-shadow .25s, transform .3s;
+}
+
+.fazz.round button.fzzInfo {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    transition: transform .25s;
+}
+
+.fazz.round button:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.fazz.round button:hover + button {
+    transition-delay: .5s;
+    transform-origin: center;
+    transform: translate(2em, -2em);
+    z-index: 1;
+}
+
+/*------ ICONS -------*/
+
+/*---- DEFAULT ----*/
+
+.fazz.round button.fzzButton {
+    background-image: url('/plugin/img/icon.svg');
+}
+
+/*---- DRESS ----*/
+
+.fazz.round.dress button.fzzButton {
+    background-image: url('/plugin/img/dress.svg');
+}
+
+/*---- ASOS ----*/
+
+.fazz.round.asos button.fzzButton {
+    background-image: url('/plugin/img/asos-com.svg');
+    background-color: white;
+    width: 4.5em;
+    height: 2.5em;
+}

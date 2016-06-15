@@ -1,0 +1,5 @@
+.fazz {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+}

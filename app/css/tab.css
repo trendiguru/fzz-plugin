@@ -1,10 +1,6 @@
 nav {
-    width: 66%;
     overflow: hidden;
     background: #fff;
-    position: absolute;
-    top: 0;
-    left: 34%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -12,6 +8,7 @@ nav {
     text-transform: uppercase;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     z-index: 99;
+    position: relative;
 }
 
 nav .indicator {
@@ -74,13 +71,10 @@ nav ul li.select {
 }
 
 main {
-    width: 66%;
     height: calc(100% - 3em);
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    top: 3em;
-    left: 34%;
 }
 
 section {

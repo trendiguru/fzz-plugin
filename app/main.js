@@ -6,9 +6,9 @@ import {analytics} from 'modules/analytics_wrapper';
 
 import {REQUESTS} from 'modules/devTools';
 
-import {buildQueryString} from '../modules/nginx_analytics';
-
 import {Query} from 'modules/utils';
+
+let {buildQueryString} = analytics;
 
 //let publisherDomain;
 

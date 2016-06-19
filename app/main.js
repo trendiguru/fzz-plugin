@@ -1,14 +1,10 @@
 /* globals React,ReactDOM */
 
 import App from './view/app';
-
-import {analytics} from 'modules/analytics_wrapper';
-
+import * as analytics from 'modules/analytics_wrapper';
 import {REQUESTS} from 'modules/devTools';
-
 import {Query} from 'modules/utils';
-
-let {buildQueryString} = analytics;
+import {appendResultLink} from 'modules/server';
 
 //let publisherDomain;
 
@@ -37,11 +33,7 @@ addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         let items = msg.data.items.map(
             item => {
-                item.similar_results = item.similar_results.map(
-                    result => {
-                        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked')}`;
-                        return result;
-                    });
+                item.similar_results = item.similar_results.map(result => appendResultLink(result));
                 return item;
             });
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');

@@ -3,7 +3,7 @@
 import 'whatwg-fetch';
 import {console} from 'modules/smartConsole';
 import {STACKS} from 'modules/devTools';
-import {buildQueryString} from 'modules/ngnix_analytics';
+import {buildQueryString} from 'modules/nginx_analytics';
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];

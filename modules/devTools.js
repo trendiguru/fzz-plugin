@@ -55,8 +55,7 @@ export let STACKS = {
     },
     modify (sName, borderWidth = 0) {
         if (STACKS.active) {
-            for (let key in STACKS.storage) {
-                let stack = STACKS.storage[key];
+            for (let [key, stack] in Object.entries(STACKS.storage)) {
                 if (sName === key) {
                     for (let elem of stack) {
                         if (elem !== undefined && elem.style !== undefined) {

@@ -34,7 +34,7 @@ export function getClientId () {
 }
 
 
-export function _init (clientId) {
+function _init (clientId) {
     for (let a of Object.values(analyticsLibs)) {
         if(!a.hasOwnProperty('inited')){
             a.inited = a.loaded.then(() => a.init(clientId));
@@ -74,13 +74,10 @@ export function track (eventName, properties = {}, libs) {
     inited.then(() => {
         // Use all libs if not specified
         libs = libs || Object.keys(analyticsLibs);
-        for (let lib in analyticsLibs) {
-            let analyticsObj = analyticsLibs[lib];
+        for (let [lib, analyticsObj] of Object.entries(analyticsLibs)) {
             if (libs.indexOf(lib) > -1) {
                 REQUESTS.set(properties, 'property');
-                analyticsObj.inited.then(function () {
-                    analyticsObj.track(eventName, properties);
-                });
+                analyticsObj.inited.then(() => analyticsObj.track(eventName, properties));
             }
         }
     });

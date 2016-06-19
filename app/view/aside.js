@@ -1,8 +1,4 @@
-/* globals React */
-
-const {Component} = React;
-
-class Aside extends Component {
+export default class Aside extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -33,5 +29,3 @@ class Aside extends Component {
         }}></aside>;
     }
 }
-
-export default Aside;

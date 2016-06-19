@@ -1,5 +1,5 @@
-import {entries} from 'modules/utils';
 import {SERVER_URL} from 'constants';
+import {Query} from './utils';
 
 let nginx = {
     // more fields are added in init()
@@ -26,25 +26,26 @@ nginx.init = function (userId) {
 
 nginx.track = function (event, properties) {
     // send pixel
-    (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
+    (new Image()).src = nginx.serverUrl + buildQueryString(nginx.trackingFields, event, properties);
 };
 
-export function buildQueryString(event, properties){
-    let fieldsString = '';
-    let rv = Math.floor(Math.random() * 1000000000);
+export function buildQueryString (event, properties = {}) {
+    let {trackingFields} = nginx;
 
-    if(properties){
-        for(let key of Object.keys(properties)){
-            nginx.trackingFields[key] = properties[key];
-        }
+    for (let key in trackingFields) {
+        trackingFields[key] = encodeURIComponent(trackingFields[key]);
     }
 
-    for (let [attrName, attrValue] of entries(nginx.trackingFields)) {
-        fieldsString += '&' + attrName + '=' + encodeURIComponent(attrValue);
-    }
-
+    Object.assign(
+        trackingFields,
+        {
+            rv: Math.floor(Math.random() * 1000000000),
+            event: encodeURIComponent(event)
+        },
+        properties
+    );
     // send pixel
-    return 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
+    return Query.stringify(trackingFields);
 }
 
 function viewport() {

@@ -1,5 +1,6 @@
 import {INFO_URL, IFRAME_ID} from 'constants';
-import {analytics} from 'modules/analytics_wrapper';
+import * as analytics from 'modules/analytics_wrapper';
+import {appendResultLink} from 'modules/server';
 
 export function round (tgImg) {
     let overlay = Overlay(tgImg);
@@ -40,7 +41,10 @@ export function preview (tgImg) {
     }
     results.forEach(result => {
         let a = document.createElement('a');
-        a.href = result.clickUrl;
+        a.addEventListener('click', e => {
+            window.open(appendResultLink(result).link, '_blank');
+            block(e);
+        });
         a.style.backgroundImage = `url('${result.images.XLarge}')`;
         footer.appendChild(a);
     });

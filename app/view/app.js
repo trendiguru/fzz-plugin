@@ -1,7 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* global React,ReactDOM */
-
-// import getMainColor from 'modules/getMainColor';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';

@@ -1,8 +1,4 @@
-/* globals React */
-
-const {Component} = React;
-
-class Assemblage extends Component {
+export default class Assemblage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -77,5 +73,3 @@ class Assemblage extends Component {
         return <div ref="root" className="assemblage" style={{position: 'relative'}}>{ImageNodes}</div>;
     }
 }
-
-export default Assemblage;

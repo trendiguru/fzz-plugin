@@ -1,8 +1,4 @@
-/* globals React */
-
-const {Component} = React;
-
-class Lightbox extends Component {
+export default class Lightbox extends React.Component {
     constructor (props) {
         super(props);
     }
@@ -12,5 +8,3 @@ class Lightbox extends Component {
         </div>;
     }
 }
-
-export default Lightbox;

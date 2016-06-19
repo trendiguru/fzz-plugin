@@ -1,7 +1,7 @@
 {
     "name": "fzz-plugin",
     "version": "1.0.0",
-    "description": "Fazz™ plugin for websites, Chrome, and internal usage",
+    "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
     "main": "plugin/js/plugin.js",
     "scripts": {
         "init": "npm i -g webpack",
@@ -36,39 +36,29 @@
         "plugins": ["transform-runtime"]
     },
     "eslintConfig": {
-        "rules": {
-            "indent": [
-                2,
-                4
-            ],
-            "quotes": [
-                2,
-                "single"
-            ],
-            "linebreak-style": [
-                2,
-                "unix"
-            ],
-            "semi": [
-                2,
-                "always"
-            ]
+        "extends": "eslint:recommended",
+        "globals": {
+            "React": false,
+            "ReactDOM": false
         },
         "env": {
             "es6": true,
             "node": true,
             "browser": true
         },
-        "extends": "eslint:recommended",
         "ecmaFeatures": {
             "jsx": true,
             "experimentalObjectRestSpread": true
         },
-        "plugins": [
-            "react"
-        ],
+        "plugins": ["react"],
         "parserOptions": {
             "sourceType": "module"
+        },
+        "rules": {
+            "indent": [2, 4],
+            "quotes": [2, "single"],
+            "linebreak-style": [2, "unix"],
+            "semi": [2, "always"]
         }
     }
 }

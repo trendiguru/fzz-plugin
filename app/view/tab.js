@@ -1,8 +1,4 @@
-/* globals React */
-
-const {Component} = React;
-
-export class TabView extends Component {
+export class TabView extends React.Component {
     constructor (props) {
         super(props);
         this.state = {tab: 0};
@@ -38,7 +34,7 @@ export class TabView extends Component {
     }
 }
 
-export class Tab extends Component {
+export class Tab extends React.Component {
     constructor (props) {
         super(props);
     }

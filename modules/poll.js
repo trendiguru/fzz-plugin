@@ -1,26 +1,24 @@
 function delay(ms) {
-    //console.log("Will wait...");
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
+    //console.log('Will wait...');
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default function poll(action, interval, max_intervals) {
 
-    let retry = (tryNum, _resolve) => {
+    function _retry (tryNum, _resolve) {
         return new Promise (resolve => {
             resolve = _resolve || resolve;
             if (tryNum < max_intervals) {
                 action()
                 .then(
                     result => resolve(result),
-                    () => delay(interval).then(() => retry (++tryNum, resolve))
+                    () => delay(interval).then(() => _retry (++tryNum, resolve))
                 );
             }
         });
-    };
+    }
 
-    return retry(0);
+    return _retry(0);
 
 }
 

@@ -1,7 +1,3 @@
-import {INFO_URL, IFRAME_ID} from 'constants';
-import * as analytics from 'modules/analytics_wrapper';
-import {appendResultLink} from 'modules/server';
-
 export function round (tgImg) {
     let overlay = Overlay(tgImg);
     overlay.classList.add('round');
@@ -42,8 +38,8 @@ export function preview (tgImg) {
     results.forEach(result => {
         let a = document.createElement('a');
         a.addEventListener('click', e => {
-            window.open(appendResultLink(result).link, '_blank');
             block(e);
+            window.open(result.link, '_blank');
         });
         a.style.backgroundImage = `url('${result.images.XLarge}')`;
         footer.appendChild(a);
@@ -76,21 +72,14 @@ function Overlay (tgImg) {
 
 let click = {
     button (e) {
-        let iframe = document.getElementById(IFRAME_ID),
-            {url: imageURL} = this,
-            data = Object.assign({imageURL}, this.data);
-        analytics.track('Trendi Button Clicked', {
-            imageURL,
-            'pageUrl': window.location.href
-        });
-        iframe.show();
-        iframe.contentWindow.postMessage(data, '*');
         block(e);
+        let event = Object.assign(new Event ('button clicked', {bubbles: true}), this);
+        e.target.dispatchEvent(event);
     },
     info (e) {
-        analytics.track('Info Button Clicked');
-        window.open(INFO_URL, '_blank');
         block(e);
+        let event = new Event ('info button clicked', {bubbles: true});
+        e.target.dispatchEvent(event);
     }
 };
 

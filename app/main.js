@@ -1,10 +1,9 @@
 /* globals React,ReactDOM */
 
 import App from './view/app';
-import * as analytics from 'modules/analytics_wrapper';
+import Analytics from 'modules/analytics_wrapper';
 import {REQUESTS} from 'modules/devTools';
 import {Query} from 'modules/utils';
-import {appendResultLink} from 'modules/server';
 
 //let publisherDomain;
 
@@ -30,14 +29,10 @@ document.getElementById('shadow').addEventListener('click', close);
 addEventListener('app close', close);
 
 addEventListener('message', msg => {
+    console.log(msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
-        let items = msg.data.items.map(
-            item => {
-                item.similar_results = item.similar_results.map(result => appendResultLink(result));
-                return item;
-            });
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
-        render({imageURL: msg.data.imageURL, items, close});
+        render({imageURL: msg.data.imageURL, items: msg.data.items, close});
     }
 });
 
@@ -45,7 +40,7 @@ addEventListener('message', msg => {
 
 //publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
-analytics.initializeInApp(Query.parse(location.search));
+let analytics = new Analytics('app', Query.parse(location.search));
 
 analytics.track('App Loaded');
 

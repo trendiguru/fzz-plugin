@@ -13,6 +13,9 @@ export default class Aside extends React.Component {
         if (this.refs.root) {
             return this.refs.root.clientHeight;
         }
+        else {
+            return 0;
+        }
     }
     componentWillReceiveProps (props) {
         this.load(props);

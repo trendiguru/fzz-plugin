@@ -47,7 +47,8 @@ function isNew (tgImg) {
             name: 'Not a New Image',
             element: tgImg
         };
-    }else{
+    }
+    else {
         s.set('isNew', tgImg);
     }
     return tgImg;

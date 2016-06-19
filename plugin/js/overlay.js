@@ -9,13 +9,13 @@ export function round (tgImg) {
 
 export function roundDress (tgImg) {
     let overlay = Overlay(tgImg);
-    overlay.button.classList.add('round','dress');
+    overlay.classList.add('round','dress');
     return overlay;
 }
 
 export function roundAsos (tgImg) {
     let overlay = Overlay(tgImg);
-    overlay.button.classList.add('round','asos');
+    overlay.classList.add('round','asos');
     return overlay;
 }
 

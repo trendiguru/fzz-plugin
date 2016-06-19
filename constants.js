@@ -11,14 +11,14 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     DEBUG = false,
     MIXPANEL_ID = '7b61e0db566195263d0fc9d203495e62',
     GA_CODE = 'UA-51323231-3',
-    IFRAME_SRC = `${HOST_DOMAIN}/app/desktop.html`,
-    CSS_URL = `${HOST_DOMAIN}/plugin/css/plugin.css`,
+    IFRAME_SRC = `${HOST_DOMAIN}/app/index.html`,
+    CSS_URL = `${HOST_DOMAIN}/plugin/css/b_plugin.css`,
     IFRAME_ID = 'fazzi',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
     PID = scriptTagData.pid,
-    ENV = ["PRODUCTION", "DEV"][0],
+    ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
                  DEV: '//track.trendi.guru/tr/test?'}[ENV];
 
@@ -51,7 +51,7 @@ export function UISettings (host) {
     let settings = {
         '__default': {
             overlay: {
-                preview: 1
+                roundDress: 1
             }
         }
     };

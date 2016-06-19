@@ -1,100 +1,124 @@
 /* globals TimeMe */
 
+import 'whatwg-fetch';
 import ga_wrap from './ga_wrap';
 import mp_wrap from './mp_wrap';
-import nginx from './nginx_analytics';
+import nginx, {buildQueryString} from './nginx_analytics';
 import {HOST_DOMAIN} from 'constants';
 import {REQUESTS} from './devTools';
 import timeme from 'ext/timeme';
 
-export const analyticsLibs = {
-    nginx: nginx,
-    ga: ga_wrap,
-    mp: mp_wrap
-};
-
-export let initProperties = {},
-    inited;
-
-let fzz_id;
-
 REQUESTS.active = true;
 
-// First start loading all the necessary snippets and libs
-for (let a of Object.values(analyticsLibs)) {
-    a.loaded = a.load();
-}
+export default class Analytics {
 
-export function getClientId () {
-    let a = analyticsLibs.ga;
-    return a.loaded
-    .then(a.init)
-    .then(a.getClientId)
-    .then(clientId=>{fzz_id = clientId; return clientId;});
-}
+    constructor (client, props) {
 
-
-function _init (clientId) {
-    for (let a of Object.values(analyticsLibs)) {
-        if(!a.hasOwnProperty('inited')){
-            a.inited = a.loaded.then(() => a.init(clientId));
-        }
-    }
-}
-
-export function initializeInApp () {
-    inited = getClientId().then(clientId => {
-        _init(clientId);
-        window.parent.postMessage({
-            fzz_id: fzz_id
-        }, '*');
-    });
-
-    timeme();
-
-    window.addEventListener('beforeunload', () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${initProperties.publisherDomain}`));
-}
-
-
-export function initializeInPublisher () {
-    let publisherReceivedAppMsg = new Promise(resolve => {
-        window.addEventListener('message', msg => {
-            if (msg.origin === HOST_DOMAIN && msg.data !== undefined && msg.data.fzz_id) {
-                fzz_id = msg.data.fzz_id;
-                resolve(fzz_id);
+        Object.assign(this, props, {
+            inited: undefined,
+            libs: {
+                ga: ga_wrap,
+                mp: mp_wrap,
+                nginx
             }
         });
-    });
-    inited = publisherReceivedAppMsg.then(_init);
-}
 
-// libs is a list of library names to use to track this event
-export function track (eventName, properties = {}, libs) {
-    Object.assign(properties, initProperties);
-    inited.then(() => {
-        // Use all libs if not specified
-        libs = libs || Object.keys(analyticsLibs);
-        for (let [lib, analyticsObj] of Object.entries(analyticsLibs)) {
-            if (libs.indexOf(lib) > -1) {
-                REQUESTS.set(properties, 'property');
-                analyticsObj.inited.then(() => analyticsObj.track(eventName, properties));
-            }
+        this.loadAll();
+
+        this[`${client}Init`]();
+
+    }
+
+    loadAll () {
+        for (let a of Object.values(this.libs)) {
+            a.loaded = a.load();
         }
-    });
-}
+    }
 
-export function listen (event) {
-    switch (event) {
-    case 'scroll': {
-        //Track Scroll on Publisher
-        let initScrollTop = window.scrollY;
-        window.addEventListener('scroll', function () {
-            if (window.scrollY - initScrollTop > 20) {
-                track('Publisher Scroll', undefined, ['ga']);
-                initScrollTop = 100000000;
+    initAll (clientID) {
+        Object.values(this.libs)
+        .filter(a => !a.hasOwnProperty('inited'))
+        .forEach(a => a.init(clientID));
+    }
+
+    appInit (clientID) {
+
+        this.inited = this.getClientId()
+        .then(this.initAll.bind(this))
+        .then(() => window.parent.postMessage({
+            fzz_id: clientID
+        }, '*'));
+
+        timeme();
+        window.onbeforeunload = () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${this.props.publisherDomain}`);
+
+    }
+
+    publisherInit () {
+
+        this.inited = this.getClientId()
+
+        .then(() => new Promise(resolve => addEventListener('message', function (msg) {
+            if (msg.origin === HOST_DOMAIN) {
+                //console.log(`Right origin!`);
+                if (msg.data !== undefined && msg.data.fzz_id) {
+                    this.fzz_id = msg.data.fzz_id;
+                    resolve(this.fzz_id);
+                }
             }
+        }, false)))
+        .then(this.initAll.bind(this));
+
+    }
+
+    appendResultLink (result) {
+        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked', this.props)}`;
+        return result;
+    }
+
+    track (eventName, props = {}, libs) {
+console.info('tracked', eventName, props, libs);
+        Object.assign(this, props);
+
+        this.inited.then(() => {
+            // Use all libs if not specified
+            libs = libs || Object.keys(this.libs);
+            Object.entries(this.libs)
+            .forEach(([lib, analyticsObj]) => {
+                if (libs.indexOf(lib) > -1) {
+                    REQUESTS.set(props, 'property');
+                    analyticsObj.inited.then(() => analyticsObj.track(eventName, props));
+                }
+            });
         });
-        break;
+
     }
+
+    listen (event) {
+        switch (event) {
+        case 'scroll': {
+            //Track Scroll on Publisher
+            let initScrollTop = window.scrollY;
+            window.addEventListener('scroll', () => {
+                if (window.scrollY - initScrollTop > 20) {
+                    this.track('Publisher Scroll', undefined, ['ga']);
+                    initScrollTop = 100000000;
+                }
+            });
+            break;
+        }
+        }
     }
+
+    getClientId () {
+        let a = this.libs.ga;
+        return a.loaded
+        .then(a.init)
+        .then(a.getClientId)
+        .then(clientId => {
+            this.fzz_id = clientId;
+            return clientId;
+        });
+    }
+
 }

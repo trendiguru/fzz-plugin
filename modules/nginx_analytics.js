@@ -1,50 +1,54 @@
 import {SERVER_URL} from 'constants';
+import {Query} from './utils';
 
- // more fields are added in init()
-
-export let trackingFields = {
+let nginx = {
+    // more fields are added in init()
+    trackingFields: {
         ver: '0.1'
     },
-    serverUrl = SERVER_URL;
+    serverUrl: SERVER_URL
+};
 
-export let load = Promise.resolve;
+nginx.load = function () {
+    return Promise.resolve();
+};
 
-export function init (userId) {
+nginx.init = function (userId) {
     return new Promise(function (resolve) {
-        trackingFields.userId = userId;
+        nginx.trackingFields.userId = userId;
         let vp = viewport();
-        trackingFields.winWidth = vp.width;
-        trackingFields.winHeight = vp.height;
+        nginx.trackingFields.winWidth = vp.width;
+        nginx.trackingFields.winHeight = vp.height;
         //nginx.trackingFields.refererDomain = window.location.hostname.replace("www.", ""); // replaced with publisherDomain in the analytics wrapper
         resolve();
     });
-}
+};
 
-export function track (event, properties) {
+nginx.track = function (event, properties) {
     // send pixel
-    (new Image()).src = serverUrl + buildQueryString(event, properties);
-}
+    (new Image()).src = nginx.serverUrl + buildQueryString(nginx.trackingFields, event, properties);
+};
 
-export function buildQueryString(event, properties){
-    let fieldsString = '';
-    let rv = Math.floor(Math.random() * 1000000000);
+export function buildQueryString (event, properties = {}) {
+    let {trackingFields} = nginx;
 
-    if(properties){
-        for(let key of Object.keys(properties)){
-            trackingFields[key] = properties[key];
-        }
+    for (let key in trackingFields) {
+        trackingFields[key] = encodeURIComponent(trackingFields[key]);
     }
 
-    for (let attrName in trackingFields) {
-        let attrValue = trackingFields[attrName];
-        fieldsString += '&' + attrName + '=' + encodeURIComponent(attrValue);
-    }
-
+    Object.assign(
+        trackingFields,
+        {
+            rv: Math.floor(Math.random() * 1000000000),
+            event: encodeURIComponent(event)
+        },
+        properties
+    );
     // send pixel
-    return 'rv=' + rv + '&event=' + encodeURIComponent(event) + fieldsString;
+    return Query.stringify(trackingFields);
 }
 
-function viewport () {
+function viewport() {
     let viewport = {};
     viewport.width = 0;
     viewport.height = 0;
@@ -65,3 +69,5 @@ function viewport () {
     }
     return viewport;
 }
+
+export default nginx;

@@ -6,7 +6,7 @@ import * as analytics from 'modules/analytics_wrapper';
 
 import {REQUESTS} from 'modules/devTools';
 
-import {buildQueryString} from '../modules/nginx_analytics';
+import {appendResultLink} from 'modules/server';
 
 import {Query} from 'modules/utils';
 
@@ -37,11 +37,7 @@ addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         let items = msg.data.items.map(
             item => {
-                item.similar_results = item.similar_results.map(
-                    result => {
-                        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked')}`;
-                        return result;
-                    });
+                item.similar_results = item.similar_results.map(result => appendResultLink(result));
                 return item;
             });
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');

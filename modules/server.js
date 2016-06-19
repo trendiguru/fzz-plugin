@@ -3,6 +3,7 @@
 import 'whatwg-fetch';
 import {console} from 'modules/smartConsole';
 import {STACKS} from 'modules/devTools';
+import {buildQueryString} from 'modules/ngnix_analytics';
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];
@@ -48,6 +49,10 @@ export function getImageData(imageUrl) {
     });
 }
 
+export function appendResultLink (result) {
+    result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked')}`;
+    return result;
+}
 
 function checkRelevancy(imageUrls) {
     console.log('Will check relevancy of ${imageUrls.length} image urls.');

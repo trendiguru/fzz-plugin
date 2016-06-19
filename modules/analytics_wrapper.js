@@ -1,10 +1,10 @@
 /* globals TimeMe */
 
-import ga_wrap from 'modules/ga_wrap';
-import mp_wrap from 'modules/mp_wrap';
-import nginx from 'modules/nginx_analytics';
+import ga_wrap from './ga_wrap';
+import mp_wrap from './mp_wrap';
+import nginx from './nginx_analytics';
 import {HOST_DOMAIN} from 'constants';
-import {REQUESTS} from 'modules/devTools';
+import {REQUESTS} from './devTools';
 import timeme from 'ext/timeme';
 
 export const analyticsLibs = {

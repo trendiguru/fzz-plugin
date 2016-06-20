@@ -21,11 +21,11 @@ module.exports = {
         ]
     },
     entry: {
-        'b_plugin.js': './plugin/js/plugin.js',
+        'b_plugin.js': ['whatwg-fetch', 'babel-polyfill', './plugin/js/plugin.js'],
         'plugin/css/b_plugin.css': './plugin/css/plugin.css',
-        'app/b_app.js': './app/main.js',
+        'app/b_app.js': ['whatwg-fetch', 'babel-polyfill', './app/main.js'],
         'app/css/b_app.css': './app/css/app.css',
-        'demo/b_demo.js': './demo/main.js',
+        'demo/b_demo.js': ['whatwg-fetch', 'babel-polyfill', './demo/main.js'],
         'demo/b_demo.css': './demo/main.css'
     },
     output: {

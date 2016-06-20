@@ -18,8 +18,7 @@
         "es6-promise": "",
         "imagesloaded": "",
         "js-cookie": "",
-        "mixpanel-browser": "",
-        "whatwg-fetch": ""
+        "mixpanel-browser": ""
     },
     "devDependencies": {
         "webpack": "",
@@ -27,13 +26,13 @@
         "babel-core": "",
         "babel-preset-es2015": "",
         "babel-preset-react": "",
-        "babel-plugin-transform-runtime": "",
+        "babel-polyfill": "",
+        "whatwg-fetch": "",
         "css-loader": "",
         "extract-text-webpack-plugin": ""
     },
     "babel": {
-        "presets": ["es2015", "react"],
-        "plugins": ["transform-runtime"]
+        "presets": ["es2015", "react"]
     },
     "eslintConfig": {
         "extends": "eslint:recommended",

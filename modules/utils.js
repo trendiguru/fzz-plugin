@@ -77,9 +77,9 @@ export function getDomainName(urlStr){
 
 export class Query {
     static stringify (query) {
-        let result = '?';
-        for (let name in query) {
-            result += `${name}=${query[name]}&`;
+        let result = '';
+        for (let [name, value] of entries(query)) {
+            result += `${name}=${encodeURIComponent(value)}&`;
         }
         return result.substr(0, result.length - 1);
     }
@@ -87,7 +87,7 @@ export class Query {
         let query = {};
         result.substr(1).split('&').forEach(entry => {
             let [name, value] = entry.split('=');
-            query[name] = value;
+            query[name] = decodeURIComponent(value);
         });
         return query;
     }

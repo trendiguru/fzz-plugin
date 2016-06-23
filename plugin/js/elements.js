@@ -10,7 +10,7 @@ function iFrame (src) {
     let iframe = document.createElement('iframe');
     Object.assign(iframe, {
         id: IFRAME_ID,
-        src: (src || IFRAME_SRC) + Query.stringify({PID}),
+        src: `${(src || IFRAME_SRC)}?${Query.stringify({PID})}`,
         show () {
             iframe.style.display = 'block';
             document.body.style.overflow = 'hidden';

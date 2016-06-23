@@ -19,6 +19,7 @@ let analytics = new Analytics('publisher', {
 analytics.track('Page Hit');
 analytics.listen('scroll');
 
+
 domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);

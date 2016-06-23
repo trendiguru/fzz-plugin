@@ -1,22 +1,25 @@
 #!/bin/bash
+PROD_BUCKET='fzz'
+TEST_BUCKET='fzz-test'
+BUCKET_NAME=$PROD_BUCKET
+EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
-npm run deploy
+gsutil -m rsync -x $EXCLUDE_REGEX . gs://$BUCKET_NAME
+for FOLDER in app plugin
+do
+    gsutil -m rsync -r -x $EXCLUDE_REGEX ./$FOLDER gs://$BUCKET_NAME/$FOLDER
+done
 
-gsutil -m cp -a public-read fzz.min.js gs://fzz
-gsutil -m cp -a public-read b_plugin.js gs://fzz
+gsutil -m cp -p gs://$BUCKET_NAME/b_plugin.js gs://$BUCKET_NAME/fzz.min.js
+gsutil -m cp -p gs://$BUCKET_NAME/fzz.min.js gs://$BUCKET_NAME/trendi.min.js
 
-gsutil -m cp -a public-read app/b_desktop.js gs://fzz/app/b_desktop.js
-gsutil -m cp -a public-read app/b_mobile.js gs://fzz/app/b_mobile.js
-
-gsutil -m cp -a public-read app/desktop.html  gs://fzz/app/desktop.html
-gsutil -m cp -r -a public-read plugin/css gs://fzz/plugin/
-gsutil -m cp -r -a public-read app/css   gs://fzz/app/
-gsutil -m cp -r -a public-read plugin/img   gs://fzz/plugin/
-gsutil -m cp -r -a public-read app/img   gs://fzz/app/
-
-gsutil -m cp -p gs://fzz/fzz.min.js gs://fzz/trendi.min.js
-
-gsutil -m setmeta -r -h "Cache-Control:public, max-age=5" gs://fzz
+gsutil -m acl set -r -a public-read gs://$BUCKET_NAME
+gsutil -m setmeta -r -h 'Cache-Control:public, max-age=5' gs://$BUCKET_NAME
 
 #For Backwards compatibility (fashioncelebstyle.com, etc..)
-gcloud compute ssh extremeli-evolution-1 'sudo gsutil -m rsync -r gs://fzz /var/www/latest/'
+if [ '$BUCKET_NAME' = '$PROD_BUCKET' ]
+then
+    gcloud compute ssh extremeli-evolution-1 'sudo gsutil -m rsync -r gs://$BUCKET_NAME /var/www/latest/'
+fi
+
+echo Done!

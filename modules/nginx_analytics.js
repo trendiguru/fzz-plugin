@@ -26,26 +26,20 @@ nginx.init = function (userId) {
 
 nginx.track = function (event, properties) {
     // send pixel
-    (new Image()).src = nginx.serverUrl + buildQueryString(nginx.trackingFields, event, properties);
+    (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
 };
 
 export function buildQueryString (event, properties = {}) {
-    let {trackingFields} = nginx;
-
-    for (let key in trackingFields) {
-        trackingFields[key] = encodeURIComponent(trackingFields[key]);
-    }
-
-    Object.assign(
-        trackingFields,
+    let queryObj = Object.assign({},
+        nginx.trackingFields,
         {
             rv: Math.floor(Math.random() * 1000000000),
-            event: encodeURIComponent(event)
+            event
         },
         properties
     );
-    // send pixel
-    return Query.stringify(trackingFields);
+
+    return Query.stringify(queryObj);
 }
 
 function viewport() {

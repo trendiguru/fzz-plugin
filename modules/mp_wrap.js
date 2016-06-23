@@ -16,12 +16,14 @@ export default {
         });
     },
     init (clientId) {
-        if (clientId !== undefined) {
-            mixpanel[LIBNAME].identify(clientId);
-        } else {
-            mixpanel.track('No client ID');
-        }
-        return 0;
+        return new Promise(resolve =>{
+            if (clientId !== undefined) {
+                mixpanel[LIBNAME].identify(clientId);
+            } else {
+                mixpanel.track('No client ID');
+            }
+            resolve();
+        });
     },
     track (eventName, properties) {
         mixpanel[LIBNAME].track(eventName, properties);

@@ -40,6 +40,8 @@ addEventListener('message', msg => {
 
 //publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
+console.debug(`main.js queryObj: `);
+console.debug(Query.parse(location.search));
 let analytics = new Analytics('app', Query.parse(location.search));
 
 analytics.track('App Loaded');

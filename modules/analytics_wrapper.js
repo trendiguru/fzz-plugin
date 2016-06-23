@@ -12,9 +12,9 @@ REQUESTS.active = true;
 
 export default class Analytics {
 
-    constructor (client, props) {
+    constructor (client, sessionProps) {
 
-        Object.assign(this, props, {
+        Object.assign(this, sessionProps, {
             inited: undefined,
             libs: {
                 ga: ga_wrap,
@@ -38,46 +38,46 @@ export default class Analytics {
     initAll (clientID) {
         Object.values(this.libs)
         .filter(a => !a.hasOwnProperty('inited'))
-        .forEach(a => a.init(clientID));
+        .forEach(a => {
+            a.inited = a.init(clientID);
+        });
     }
 
-    appInit (clientID) {
-
+    appInit () {
         this.inited = this.getClientId()
         .then(this.initAll.bind(this))
-        .then(() => window.parent.postMessage({
-            fzz_id: clientID
-        }, '*'));
+        .then(() => {
+            console.debug(`Posted clientID: ${this.fzz_id}`);
+            window.parent.postMessage({
+                fzz_id: this.fzz_id
+            }, '*');
+        });
 
-        timeme();
-        window.onbeforeunload = () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${this.props.publisherDomain}`);
-
+        // timeme();
+        // window.onbeforeunload = () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${this.props.publisherDomain}`);
     }
 
     publisherInit () {
-
         this.inited = this.getClientId()
-
         .then(() => new Promise(resolve => addEventListener('message', function (msg) {
             if (msg.origin === HOST_DOMAIN) {
-                //console.log(`Right origin!`);
                 if (msg.data !== undefined && msg.data.fzz_id) {
                     this.fzz_id = msg.data.fzz_id;
+                    console.debug(`Got fzz_id: ${this.fzz_id}`);
                     resolve(this.fzz_id);
                 }
             }
         }, false)))
         .then(this.initAll.bind(this));
-
     }
 
     appendResultLink (result) {
-        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked', this.props)}`;
+        result.link = `http://links.trendi.guru/tr/web${result.redirection_path}?${buildQueryString('Result Clicked', this.sessionProps)}`;
         return result;
     }
 
     track (eventName, props = {}, libs) {
-console.info('tracked', eventName, props, libs);
+        console.debug('tracked', eventName, props, libs);
         Object.assign(this, props);
 
         this.inited.then(() => {

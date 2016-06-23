@@ -13,8 +13,9 @@ REQUESTS.active = true;
 export default class Analytics {
 
     constructor (client, sessionProps) {
+        console.debug({client, sessionProps});
 
-        Object.assign(this, sessionProps, {
+        Object.assign(this, {sessionProps}, {
             inited: undefined,
             libs: {
                 ga: ga_wrap,

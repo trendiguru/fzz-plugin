@@ -78,8 +78,8 @@ export default class Analytics {
     }
 
     track (eventName, props = {}, libs) {
-        console.debug('tracked', eventName, props, libs);
-        Object.assign(this, props);
+        console.debug({description: 'tracked', eventName, props, libs});
+        let combinedProps = Object.assign({}, this.sessionProps, props);
 
         this.inited.then(() => {
             // Use all libs if not specified
@@ -88,7 +88,7 @@ export default class Analytics {
             .forEach(([lib, analyticsObj]) => {
                 if (libs.indexOf(lib) > -1) {
                     REQUESTS.set(props, 'property');
-                    analyticsObj.inited.then(() => analyticsObj.track(eventName, props));
+                    analyticsObj.inited.then(() => analyticsObj.track(eventName, combinedProps));
                 }
             });
         });

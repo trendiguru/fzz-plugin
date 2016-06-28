@@ -32,12 +32,18 @@ function wrap ({element, buttonDiv}) {
     element.parentElement.insertBefore(div, element);
     div.appendChild(element);
     div.appendChild(buttonDiv);
+    if (!element.originalInlineStyle) {
+        element.originalInlineStyle = element.getAttribute('style');
+    }
+    element.setAttribute('style', element.originalInlineStyle);
+    let {width, margin, padding, display} = getComputedStyle(element);
     Object.assign(div.style, {
-        width: element.width + 'px',
-        height: element.height + 'px',
         position: 'relative',
         isolation: 'isolate',
-        display: 'inline-block'
+        display: display !== 'inline' ? display : 'inline-block',
+        width,
+        margin,
+        padding
     });
     Object.assign(buttonDiv.style, {
         width: '100%',
@@ -45,6 +51,11 @@ function wrap ({element, buttonDiv}) {
         position: 'absolute',
         top: 0,
         left: 0
+    });
+    Object.assign(element.style, {
+        padding: '0px',
+        margin: '0px',
+        display: 'block'
     });
     //STACKS.set('svg', svg);
     STACKS.set('content', buttonDiv);

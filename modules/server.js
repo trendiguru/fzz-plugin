@@ -1,21 +1,17 @@
 /* eslint-disable console */
 
 import 'whatwg-fetch';
-import {console} from 'modules/smartConsole';
 import {STACKS} from 'modules/devTools';
 
 const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];
-
 let serverUploader;
+
 export function smartCheckRelevancy(tgImg) {
     STACKS.set('smartCheckRelevancy_input', tgImg.element);
     serverBuffer.push(tgImg);
-    console.log('SB length: ' + serverBuffer.length);
-
     if (!isAccumulating) {
-        console.log('WILL ACCUMULATE');
-        serverUploader = accumulate(500).then(function () {
+        serverUploader = accumulate(500).then(() => {
             let p = checkRelevancy(serverBuffer.map((im) => im.url));
             serverBuffer = [];
             STACKS.set('smartCheckRelevancy', p);
@@ -23,10 +19,9 @@ export function smartCheckRelevancy(tgImg) {
         });
 
     }
-
-    return new Promise(function (resolve, reject) {
-        serverUploader.then(function (response) {
-            if (response.relevancy_dict[tgImg.url]) {
+    return new Promise((resolve, reject) => {
+        serverUploader.then(res => {
+            if (res.relevancy_dict[tgImg.url]) {
                 tgImg.relevant = true;
                 resolve(tgImg);
             } else {
@@ -37,21 +32,13 @@ export function smartCheckRelevancy(tgImg) {
 }
 
 export function getImageData(imageUrl) {
-    return fetch(API_URL+'?imageUrl=' + window.encodeURIComponent(imageUrl), {
-        method: 'get'
-    })
-    .then(function (response) {
-        return response.json();
-    })
-    .catch(function (err) {
-        console.log(err);
-    });
+    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}`)
+    .then(res => res.json());
 }
 
 function checkRelevancy(imageUrls) {
-    console.log('Will check relevancy of ${imageUrls.length} image urls.');
     return fetch(API_URL, {
-        method: 'post',
+        method: 'POST',
         // headers: {
         //     'Accept': 'application/json',
         //     'Content-Type': 'application/json'
@@ -61,22 +48,15 @@ function checkRelevancy(imageUrls) {
             imageList: imageUrls
         })
     })
-    .then(function (response) {
-        return response.json();
-    })
-    .catch(function (err) {
-        console.log(err);
-    });
+    .then(res => res.json());
 }
 
 let isAccumulating = false; //???
 function accumulate(time, initialValue) {
     isAccumulating = true;
-    console.log('FZZ: Set isAccumulating true');
     return new Promise(function (fulfill) {
         setTimeout(function () {
             isAccumulating = false;
-            console.log('FZZ: Set isAccumulating false');
             fulfill(initialValue);
         }, time);
     });

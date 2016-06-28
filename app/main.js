@@ -29,7 +29,6 @@ document.getElementById('shadow').addEventListener('click', close);
 addEventListener('app close', close);
 
 addEventListener('message', msg => {
-    console.log(msg);
     if (window.app.props.imageURL !== msg.data.imageURL) {
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
         render({imageURL: msg.data.imageURL, items: msg.data.items, close});
@@ -40,8 +39,6 @@ addEventListener('message', msg => {
 
 //publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
 
-console.debug(`main.js queryObj: `);
-console.debug(Query.parse(location.search));
 let analytics = new Analytics('app', Query.parse(location.search));
 
 analytics.track('App Loaded');
@@ -53,4 +50,4 @@ addEventListener('app opened', () => {
 
 // addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
 
-addEventListener('tab clicked', e => analytics.track('Category Clicked', {title: e.info.title}));
+addEventListener('tab set', e => analytics.track('Category Clicked', {title: e.info.title}));

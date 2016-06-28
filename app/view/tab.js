@@ -3,13 +3,17 @@ export class TabView extends React.Component {
         super(props);
         this.state = {tab: 0};
     }
-    setCategory (i) {
+    setTab (i) {
         this.setState({tab: i});
-        let e = new Event('tab clicked', {bubbles: true});
-        e.info = {
-            title: this.props.children[i].props.title
-        };
+        let e = Object.assign(new Event('tab set', {bubbles: true}), {
+            info: {
+                title: this.props.children[i].props.title
+            }
+        });
         this.refs.root.dispatchEvent(e);
+    }
+    componentWillReceiveProps () {
+        this.setState({tab: 0});
     }
     render () {
         let {children} = this.props,
@@ -17,7 +21,7 @@ export class TabView extends React.Component {
             TabNodes = [];
         children = Array.isArray(children) ? children : [children];
         children.forEach((tab, i) => {
-            TitleNodes.push(<li key={i} onClick={this.setCategory.bind(this, i)} className={this.state.tab == i ? 'select' : ''}>{tab.props.title}</li>);
+            TitleNodes.push(<li key={i} onClick={this.setTab.bind(this, i)} className={this.state.tab == i ? 'select' : ''}>{tab.props.title}</li>);
             TabNodes.push(React.cloneElement(tab, {index: i, select: this.state.tab}));
         });
         let liWidth = 100 / children.length || 0;

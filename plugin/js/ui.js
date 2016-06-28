@@ -3,12 +3,12 @@ import Cookies from 'js-cookie';
 
 export default function UIFactory (uiComponentOptions) {
     let UI = {};
-    let uiCookie = Cookies.get('fzz_ui');
+    let uiCookie = Cookies.get('fzz_ui_1');
     uiCookie = uiCookie && JSON.parse(uiCookie);
 
     if(!uiCookie) {
         uiCookie = generateCookie();
-        Cookies.set('fzz_ui', uiCookie);
+        Cookies.set('fzz_ui_1', uiCookie);
     }
 
     for (let component in uiCookie) {

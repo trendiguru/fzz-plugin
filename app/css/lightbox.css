@@ -15,6 +15,10 @@
     z-index: 100;
 }
 
+#lightbox > div {
+    height: 100%;
+}
+
 #credit {
     width: 6em;
     position: absolute;

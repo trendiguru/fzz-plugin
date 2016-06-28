@@ -19,20 +19,12 @@ let analytics = new Analytics('publisher', {
 analytics.track('Page Hit');
 analytics.listen('scroll');
 
-
 domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
     document.head.appendChild(style);
-    let set = [document.body, el => process(el, el => {
-        el.data.items = el.data.items.map(item => {
-            item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
-            return item;
-        });
-        draw(el);
-    })];
-    scanForever(...set);
-    observe(...set, {childList: true, subtree: true});
+    scanForever(document.body, processElement);
+    observe(document.body, processElement, {childList: true, subtree: true});
     addEventListener('message', msg => {
         let {data} = msg;
         if (data === 'show') {
@@ -62,3 +54,13 @@ domready(() => {
         window.open(INFO_URL, '_blank');
     });
 });
+
+function processElement (el) {
+    return process(el, el => {
+        el.data.items = el.data.items.map(item => {
+            item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
+            return item;
+        });
+        draw(el);
+    });
+}

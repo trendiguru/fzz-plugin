@@ -1,4 +1,5 @@
 @import './reset.css';
+@import './md-icon.css';
 @import './loading.css';
 @import './lightbox.css';
 @import './aside.css';
@@ -9,11 +10,6 @@
 body {
     overflow: hidden;
     font-family: 'Source Sans Pro', sans-serif;
-}
-
-.md-icon {
-    font-family: 'Material Icons';
-    font-style: normal;
 }
 
 [data-color="pink"] {

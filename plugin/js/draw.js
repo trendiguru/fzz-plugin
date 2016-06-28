@@ -40,8 +40,8 @@ function wrap ({element, buttonDiv}) {
     Object.assign(div.style, {
         position: 'relative',
         isolation: 'isolate',
+        display: display !== 'inline' ? display : 'inline-block',
         width,
-        display,
         margin,
         padding
     });

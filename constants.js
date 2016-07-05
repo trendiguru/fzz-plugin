@@ -4,8 +4,8 @@
 
 let scriptTagData = loadScriptTagData();
 
-export const HOST_DOMAIN = 'https://localhost:4443',
-//export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
+//export const HOST_DOMAIN = 'https://localhost:4443',
+export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -20,41 +20,29 @@ export const HOST_DOMAIN = 'https://localhost:4443',
     PID = scriptTagData.pid,
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
-                 DEV: '//track.trendi.guru/tr/test?'}[ENV];
+                 DEV: '//track.trendi.guru/tr/test?'}[ENV],
+    COOKIE_NAME = 'fzz_ui_2';
 
 export function UISettings (host) {
-    // let settings = {
-    //     'asos': {
-    //         overlay: {
-    //             roundAsos: 1.0
-    //         }
-    //     },
-    //     'mb1': {
-    //         overlay: {
-    //             round: 0.05,
-    //             roundDress: 0.95
-    //         }
-    //     },
-    //     'gala.de': {
-    //         overlay: {
-    //             round: 0.1,
-    //             roundDress: 0.9
-    //         }
-    //     },
-    //     '__default': {
-    //         overlay: {
-    //             round: 0.3,
-    //             roundDress: 0.7
-    //         }
-    //     }
-    // };
     let settings = {
+        'dev-roundDress': {
+            overlay: {
+                roundDress: 1.0
+            }
+        },
+        'dev-preview': {
+            overlay: {
+                preview: 1.0
+            }
+        },
         '__default': {
             overlay: {
-                roundDress: 1
+                preview: 0.1,
+                roundDress: 0.9
             }
         }
     };
+
     for (let domain in settings) {
         if (host && host.includes(domain))
             return settings[domain];

@@ -2,15 +2,18 @@
     // Required
     "manifest_version": 2,
     "name": "Find that Dress!",
-    "version": "0.8",
+    "version": "0.9.1",
 
     // Recommended
-    "description": "Click on the orange shopping button to see fashion items inspired by the image :)",
+    "description": "Click on the pink button to see fashion items inspired by the image :)",
 
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "exclude_matches": ["*://www.facebook.com/*"],
+            "exclude_matches": ["*://*.facebook.com/*",
+                "*://*.google.com/*",
+                "*://*.whatsapp.com/*",
+                "*://*.messenger.com/*"],
             "run_at": "document_start",
             "js": ["run_ext.js"]
         }

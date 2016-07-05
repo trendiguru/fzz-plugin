@@ -5,7 +5,7 @@
     "version": "0.9.1",
 
     // Recommended
-    "description": "Click on the orange shopping button to see fashion items inspired by the image :)",
+    "description": "Click on the pink button to see fashion items inspired by the image :)",
 
     "content_scripts": [
         {

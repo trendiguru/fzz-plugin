@@ -1,14 +1,14 @@
-import {UISettings, PID} from 'constants';
+import {UISettings, PID, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 
 export default function UIFactory (uiComponentOptions) {
     let UI = {};
-    let uiCookie = Cookies.get('fzz_ui_1');
+    let uiCookie = Cookies.get(COOKIE_NAME);
     uiCookie = uiCookie && JSON.parse(uiCookie);
 
     if(!uiCookie) {
         uiCookie = generateCookie();
-        Cookies.set('fzz_ui_1', uiCookie);
+        Cookies.set(COOKIE_NAME, uiCookie);
     }
 
     for (let component in uiCookie) {

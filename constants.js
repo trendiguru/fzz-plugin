@@ -20,28 +20,29 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     PID = scriptTagData.pid,
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
-                 DEV: '//track.trendi.guru/tr/test?'}[ENV];
+                 DEV: '//track.trendi.guru/tr/test?'}[ENV],
+    COOKIE_NAME = 'fzz_ui_2';
 
 export function UISettings (host) {
     let settings = {
-        'dev-1': {
+        'dev-roundDress': {
             overlay: {
                 roundDress: 1.0
             }
         },
-        'dev-2': {
+        'dev-preview': {
             overlay: {
                 preview: 1.0
             }
         },
         '__default': {
             overlay: {
-                round: 0.3,
-                roundDress: 0.7
+                preview: 0.1,
+                roundDress: 0.9
             }
         }
     };
-    
+
     for (let domain in settings) {
         if (host && host.includes(domain))
             return settings[domain];

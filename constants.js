@@ -5,7 +5,7 @@
 let scriptTagData = loadScriptTagData();
 
 //export const HOST_DOMAIN = 'https://localhost:4443',
-export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
+export const HOST_DOMAIN =  'https://localhost:4443',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,

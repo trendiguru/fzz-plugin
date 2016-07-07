@@ -53,6 +53,7 @@ domready(() => {
         analytics.track('Info Button Clicked');
         window.open(INFO_URL, '_blank');
     });
+    addEventListener('button seen', () => analytics.track('Button Seen'));
 });
 
 function processElement (el) {

@@ -1,11 +1,11 @@
-// import {isVisible} from 'ext/visibility';
+import {isVisible} from 'ext/visibility';
 // import {analytics} from 'modules/analytics_wrapper';
 import * as overlay from './overlay';
 import {REQUESTS, STACKS} from 'modules/devTools';
 import getUI from './ui';
 
 let ui = getUI({overlay});
-// let doTrackVisible = true;
+let doTrackVisible = true;
 REQUESTS.active = true;
 
 export default function draw (tgImg) {
@@ -14,18 +14,19 @@ export default function draw (tgImg) {
     wrap (tgImg);
 }
 
-// function trackButtonSeen(el, rect){
-//     if(isVisible(el, rect)){
-//         // Make sure the user sees the button for more than an instant.
-//         setTimeout(() => {
-//             if(doTrackVisible && isVisible(el, rect)){
-//                 doTrackVisible = false;
-//                 analytics.track('Button Seen');
-//                 REQUESTS.set('Button Seen','property');
-//             }
-//         }, 1000);
-//     }
-// }
+function trackButtonSeen (el) {
+    let rect = el.getBoundingClientRect();
+    if(isVisible(el, rect)){
+        // Make sure the user sees the button for more than an instant.
+        setTimeout(() => {
+            if(doTrackVisible && isVisible(el, rect)){
+                doTrackVisible = false;
+                dispatchEvent(new Event('button seen'));
+                REQUESTS.set('Button Seen','property');
+            }
+        }, 1000);
+    }
+}
 
 function wrap ({element, buttonDiv}) {
     let div = document.createElement('div');
@@ -57,6 +58,7 @@ function wrap ({element, buttonDiv}) {
         margin: '0px',
         display: 'block'
     });
+    trackButtonSeen(element);
     //STACKS.set('svg', svg);
     STACKS.set('content', buttonDiv);
 }

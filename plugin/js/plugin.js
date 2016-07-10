@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {PID, INFO_URL} from 'constants';
+import {PID, INFO_URL, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -15,7 +15,7 @@ let refererDomain = window.location.hostname.replace('www.', '');
 
 let ui = getUI({overlay});
 
-let initAnaltics = Object.assign(JSON.parse(Cookies.get('fzz_ui')), {
+let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
     PID,
     publisherDomain: refererDomain

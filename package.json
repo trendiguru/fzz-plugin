@@ -31,6 +31,9 @@
     "babel-polyfill": "",
     "whatwg-fetch": "",
     "css-loader": "",
+    "postcss-loader": "",
+    "precss": "",
+    "autoprefixer": "",
     "extract-text-webpack-plugin": ""
   },
   "babel": {

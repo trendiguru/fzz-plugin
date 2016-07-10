@@ -2,7 +2,8 @@
 
 import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT} from 'constants';
 import imagesLoaded from 'imagesloaded';
-import {smartCheckRelevancy, getImageData} from 'modules/server';
+import {smartCheckRelevancy} from 'modules/server';
+// import {smartCheckRelevancy, getImageData} from 'modules/server';
 import TGImage from './tgimage';
 import {STACKS} from 'modules/devTools';
 
@@ -20,7 +21,7 @@ export function process (el, callback) {
         .then(isLoaded)
         .then(isSuspicious)
         .then(smartCheckRelevancy)
-        .then(getData)
+        // .then(getData)
         .then(
         relevantImg => {
             let date = new Date();
@@ -82,12 +83,12 @@ function isSuspicious (tgImg) {
     }
 }
 
-function getData (tgImg) {
-    return getImageData(tgImg.url).then(data => {
-        tgImg.data = data;
-        return tgImg;
-    });
-}
+// function getData (tgImg) {
+//     return getImageData(tgImg.url).then(data => {
+//         tgImg.data = data;
+//         return tgImg;
+//     });
+// }
 
 function logIrrelevant(error) {
     //console.log('reached logIrrelevant');

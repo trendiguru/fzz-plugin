@@ -4,6 +4,8 @@ TEST_BUCKET='fzz-test'
 BUCKET_NAME=$PROD_BUCKET
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
+webpack --progress --colors --config webpack.production.js
+
 gsutil -m rsync -x $EXCLUDE_REGEX . gs://$BUCKET_NAME
 for FOLDER in app plugin
 do

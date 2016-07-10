@@ -2,6 +2,8 @@
 
 import domready from 'ext/domready';
 import {PID, INFO_URL} from 'constants';
+import getUI from './ui';
+import * as overlay from './overlay';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
@@ -9,6 +11,8 @@ import {process} from './process';
 import {iframe, style} from './elements';
 
 let refererDomain = window.location.hostname.replace('www.', '');
+
+let ui = getUI({overlay});
 
 let analytics = new Analytics('publisher', {
     refererDomain,
@@ -62,6 +66,6 @@ function processElement (el) {
             item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
             return item;
         });
-        draw(el);
+        draw(ui, el);
     });
 }

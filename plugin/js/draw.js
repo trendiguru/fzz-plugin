@@ -1,14 +1,10 @@
 import {isVisible} from 'ext/visibility';
 // import {analytics} from 'modules/analytics_wrapper';
-import * as overlay from './overlay';
 import {REQUESTS, STACKS} from 'modules/devTools';
-import getUI from './ui';
-
-let ui = getUI({overlay});
 let doTrackVisible = true;
 REQUESTS.active = true;
 
-export default function draw (tgImg) {
+export default function draw (ui, tgImg) {
     let {buttonDiv} = tgImg;
     buttonDiv = buttonDiv || ui.overlay(tgImg);
     wrap (tgImg);

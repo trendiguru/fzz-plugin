@@ -1,20 +1,30 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {PID, INFO_URL} from 'constants';
+import {PID, INFO_URL, COOKIE_NAME} from 'constants';
+import Cookies from 'js-cookie';
+import getUI from './ui';
+import * as overlay from './overlay';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
 import {process} from './process';
-import {iframe, style} from './elements';
+import {iFrame, Style} from './elements';
 
 let refererDomain = window.location.hostname.replace('www.', '');
 
-let analytics = new Analytics('publisher', {
+let ui = getUI({overlay});
+
+let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
     PID,
     publisherDomain: refererDomain
 });
+
+let analytics = new Analytics('publisher', initAnaltics);
+
+let style = new Style ();
+let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
@@ -62,6 +72,6 @@ function processElement (el) {
             item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
             return item;
         });
-        draw(el);
+        draw(ui, el);
     });
 }

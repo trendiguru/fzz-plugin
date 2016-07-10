@@ -1,16 +1,11 @@
-import {IFRAME_ID, IFRAME_SRC, CSS_URL, PID} from 'constants';
+import {IFRAME_ID, IFRAME_SRC, CSS_URL} from 'constants';
 import {Query} from 'modules/utils';
 
-let iframe = new iFrame(),
-    style = new Style();
-
-export {iframe, style};
-
-function iFrame (src) {
+export function iFrame (props) {
     let iframe = document.createElement('iframe');
     Object.assign(iframe, {
         id: IFRAME_ID,
-        src: `${(src || IFRAME_SRC)}?${Query.stringify({PID})}`,
+        src: `${(IFRAME_SRC)}?${Query.stringify(props)}`,
         show () {
             iframe.style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -24,7 +19,7 @@ function iFrame (src) {
     return iframe;
 }
 
-function Style () {
+export function Style () {
     let link = document.createElement('link');
     Object.assign(link, {
         rel: 'stylesheet',

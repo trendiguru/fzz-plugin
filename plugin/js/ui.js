@@ -19,7 +19,7 @@ export default function UIFactory (uiComponentOptions) {
         else {
             //This means it's an old cookie referencing old UI components.
             uiCookie = generateCookie();
-            Cookies.set('fzz_ui', uiCookie);
+            Cookies.set(COOKIE_NAME, uiCookie);
             UI[component] = uiComponentOptions[uiCookie[component]];
         }
     }

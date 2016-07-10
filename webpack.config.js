@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const precss = require('precss');
 
 module.exports = {
     module: {
@@ -11,7 +12,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css')
+                loader: ExtractTextPlugin.extract('css!postcss')
             }
         ]
     },
@@ -36,5 +37,6 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin('[name]')
     ],
+    postcss: () => [precss],
     devtool: 'source-map'
 };

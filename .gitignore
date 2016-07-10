@@ -1,4 +1,5 @@
 # Bundles #
+###########
 b_*
 */run_ext.js
 fzz.min.js
@@ -6,7 +7,10 @@ fzz.min.js
 */*.map
 *.zip
 
+# NPM #
+#######
 npm-debug.log*
+node_modules/
 
 # OS generated files #
 ######################

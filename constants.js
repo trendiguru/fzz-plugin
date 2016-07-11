@@ -19,9 +19,15 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     USER_CONFIG = scriptTagData.userConfig,
     PID = scriptTagData.pid,
     ENV = ['PRODUCTION', 'DEV'][0],
-    SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
-                 DEV: '//track.trendi.guru/tr/test?'}[ENV],
-    COOKIE_NAME = 'fzz_ui_2';
+    SERVER_URL = {
+        PRODUCTION:'//track.trendi.guru/tr/web?',
+        DEV: '//track.trendi.guru/tr/test?'
+    }[ENV],
+    COOKIE_NAME = 'fzz_ui_2',
+    API_URL = {
+        '_ND': 'https://api.trendi.guru/images',
+        '_PD': 'http://extremeli.trendi.guru/images'
+    }[PID.substr(-3)] || 'http://extremeli.trendi.guru/images';
 
 export function UISettings (host) {
     let settings = {

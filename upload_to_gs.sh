@@ -1,7 +1,7 @@
 #!/bin/bash
 PROD_BUCKET='fzz'
 TEST_BUCKET='fzz-test'
-BUCKET_NAME=$PROD_BUCKET
+BUCKET_NAME=$1
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
 webpack --progress --colors --config webpack.production.js

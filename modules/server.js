@@ -1,9 +1,8 @@
 /* eslint-disable console */
 
-import 'whatwg-fetch';
+import {API_URL} from 'constants';
 import {STACKS} from 'modules/devTools';
 
-const API_URL = 'https://extremeli.trendi.guru/api/images';
 let serverBuffer = [];
 let serverUploader;
 

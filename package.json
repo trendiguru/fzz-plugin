@@ -1,85 +1,90 @@
 {
-  "name": "fzz-plugin",
-  "version": "1.0.0",
-  "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
-  "main": "plugin/js/plugin.js",
-  "scripts": {
-    "init": "npm i -g webpack",
-    "start": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\" & webpack --watch --progress",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "webpack & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
-    "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
-    "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
-    "publish": "./upload_to_gs.sh"
-  },
-  "author": "Trendi Guru Ltd.",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "es6-promise": "",
-    "imagesloaded": "",
-    "js-cookie": "",
-    "mixpanel-browser": "",
-    "only": "0.0.2",
-    "postcss-loader": "^0.9.1"
-  },
-  "devDependencies": {
-    "webpack": "",
-    "babel-loader": "",
-    "babel-core": "",
-    "babel-preset-es2015": "",
-    "babel-preset-react": "",
-    "babel-polyfill": "",
-    "whatwg-fetch": "",
-    "css-loader": "",
-    "postcss-loader": "",
-    "precss": "",
-    "autoprefixer": "",
-    "extract-text-webpack-plugin": ""
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "globals": {
-      "React": false,
-      "ReactDOM": false
+    "name": "fzz-plugin",
+    "version": "1.0.0",
+    "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
+    "main": "plugin/js/plugin.js",
+    "scripts": {
+        "init": "npm i -g webpack",
+        "start": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\" & webpack --watch --progress",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "bundle": "webpack & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
+        "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
+        "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
+        "publish": "./upload_to_gs.sh"
     },
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
+    "author": "Trendi Guru Ltd.",
+    "license": "UNLICENSED",
+    "repository": {
+        "type": "git",
+        "url" : "git@github.com:trendiguru/fzz-plugin.git"
     },
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+    "dependencies": {
+        "es6-promise": "",
+        "imagesloaded": "",
+        "js-cookie": "",
+        "mixpanel-browser": "",
+        "whatwg-fetch": ""
     },
-    "plugins": [
-      "react"
-    ],
-    "parserOptions": {
-      "sourceType": "module"
+    "devDependencies": {
+        "webpack": "",
+        "babel-loader": "",
+        "babel-core": "",
+        "babel-preset-es2015": "",
+        "babel-preset-react": "",
+        "babel-polyfill": "",
+        "babel-generator": "",
+        "browserslist": "",
+        "caniuse-db": "",
+        "css-loader": "",
+        "postcss-loader": "",
+        "precss": "",
+        "autoprefixer": "",
+        "extract-text-webpack-plugin": ""
     },
-    "rules": {
-      "indent": [
-        2,
-        4
-      ],
-      "quotes": [
-        2,
-        "single"
-      ],
-      "linebreak-style": [
-        2,
-        "unix"
-      ],
-      "semi": [
-        2,
-        "always"
-      ]
+    "babel": {
+        "presets": [
+            "es2015",
+            "react"
+        ]
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "globals": {
+            "React": false,
+            "ReactDOM": false
+        },
+        "env": {
+            "es6": true,
+            "node": true,
+            "browser": true
+        },
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        },
+        "plugins": [
+            "react"
+        ],
+        "parserOptions": {
+            "sourceType": "module"
+        },
+        "rules": {
+            "indent": [
+                2,
+                4
+            ],
+            "quotes": [
+                2,
+                "single"
+            ],
+            "linebreak-style": [
+                2,
+                "unix"
+            ],
+            "semi": [
+                2,
+                "always"
+            ]
+        }
     }
-  }
 }

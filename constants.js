@@ -21,7 +21,7 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {PRODUCTION:'//track.trendi.guru/tr/web?',
                  DEV: '//track.trendi.guru/tr/test?'}[ENV],
-    COOKIE_NAME = 'fzz_ui_2';
+    COOKIE_NAME = 'fzz_ui_3';
 
 export function UISettings (host) {
     let settings = {

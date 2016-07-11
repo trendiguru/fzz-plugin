@@ -23,7 +23,7 @@ export const HOST_DOMAIN =  'https://localhost:4443',
         PRODUCTION:'//track.trendi.guru/tr/web?',
         DEV: '//track.trendi.guru/tr/test?'
     }[ENV],
-    COOKIE_NAME = 'fzz_ui_2',
+    COOKIE_NAME = 'fzz_ui_3',
     API_URL = {
         '_ND': 'https://api.trendi.guru/images',
         '_PD': 'https://extremeli.trendi.guru/api/images'

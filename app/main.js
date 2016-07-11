@@ -4,8 +4,10 @@ import App from './view/app';
 import Analytics from 'modules/analytics_wrapper';
 import {REQUESTS} from 'modules/devTools';
 import {Query} from 'modules/utils';
+import {getImageData} from 'modules/server';
 
 //let publisherDomain;
+let analytics = new Analytics('app', Query.parse(location.search));
 
 REQUESTS.desktop = 0;
 
@@ -30,16 +32,21 @@ addEventListener('app close', close);
 
 addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
+        getImageData(msg.data.imageURL).then(data => {
+            data.items = data.items.map(item => {
+                item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
+                return item;
+            });
+            return data;
+        })
+        .then(data => render({imageURL: msg.data.imageURL, items: data.items, close}));
         //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
-        render({imageURL: msg.data.imageURL, items: msg.data.items, close});
     }
 });
 
 /*------ ANALYTICS ------*/
 
 //publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
-
-let analytics = new Analytics('app', Query.parse(location.search));
 
 analytics.track('App Loaded');
 

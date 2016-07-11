@@ -1,6 +1,5 @@
 /* globals TimeMe */
 
-import 'whatwg-fetch';
 import ga_wrap from './ga_wrap';
 import mp_wrap from './mp_wrap';
 import nginx, {buildQueryString} from './nginx_analytics';
@@ -13,9 +12,10 @@ REQUESTS.active = true;
 export default class Analytics {
 
     constructor (client, sessionProps) {
-        console.debug({client, sessionProps});
+        // console.debug({client, sessionProps});
 
-        Object.assign(this, {sessionProps}, {
+        Object.assign(this, {
+            sessionProps,
             inited: undefined,
             libs: {
                 ga: ga_wrap,
@@ -31,8 +31,8 @@ export default class Analytics {
     }
 
     loadAll () {
-        for (let a of Object.values(this.libs)) {
-            a.loaded = a.load();
+        for (let lib of Object.values(this.libs)) {
+            lib.loaded = lib.load();
         }
     }
 
@@ -48,7 +48,7 @@ export default class Analytics {
         this.inited = this.getClientId()
         .then(this.initAll.bind(this))
         .then(() => {
-            console.debug(`Posted clientID: ${this.fzz_id}`);
+            // console.debug(`Posted clientID: ${this.fzz_id}`);
             window.parent.postMessage({
                 fzz_id: this.fzz_id
             }, '*');
@@ -60,15 +60,15 @@ export default class Analytics {
 
     publisherInit () {
         this.inited = this.getClientId()
-        .then(() => new Promise(resolve => addEventListener('message', function (msg) {
-            if (msg.origin === HOST_DOMAIN) {
-                if (msg.data !== undefined && msg.data.fzz_id) {
+        .then(() => {
+            return new Promise(resolve => addEventListener('message', (msg) => {
+                if (msg.origin === HOST_DOMAIN && msg.data !== undefined && msg.data.fzz_id) {
                     this.fzz_id = msg.data.fzz_id;
-                    console.debug(`Got fzz_id: ${this.fzz_id}`);
+                    // console.debug(`Got fzz_id: ${this.fzz_id}`);
                     resolve(this.fzz_id);
                 }
-            }
-        }, false)))
+            }));
+        })
         .then(this.initAll.bind(this));
     }
 
@@ -78,19 +78,17 @@ export default class Analytics {
     }
 
     track (eventName, props = {}, libs) {
-        console.debug({description: 'tracked', eventName, props, libs});
+        // console.debug({description: 'tracked', eventName, props, libs});
         let combinedProps = Object.assign({}, this.sessionProps, props);
-
         this.inited.then(() => {
             // Use all libs if not specified
             libs = libs || Object.keys(this.libs);
-            Object.entries(this.libs)
-            .forEach(([lib, analyticsObj]) => {
-                if (libs.indexOf(lib) > -1) {
+            for (let [lib_name, lib] of Object.entries(this.libs)) {
+                if (libs.includes(lib_name)) {
                     REQUESTS.set(props, 'property');
-                    analyticsObj.inited.then(() => analyticsObj.track(eventName, combinedProps));
+                    lib.inited.then(() => lib.track(eventName, combinedProps));
                 }
-            });
+            }
         });
 
     }

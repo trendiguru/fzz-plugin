@@ -25,9 +25,12 @@ nginx.init = function (userId) {
 };
 
 nginx.track = function (event, properties) {
-    console.debug({description: 'nginx.track', event, properties});
+    console.debug({Description: 'nginx.track', event, properties});
     // send pixel
-    (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
+    let img = new Image();
+    img.src = nginx.serverUrl + buildQueryString(event, properties);
+    img.onload = () => console.debug('fetched');
+    // (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
 };
 
 export function buildQueryString (event, properties = {}) {

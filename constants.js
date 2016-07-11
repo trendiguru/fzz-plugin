@@ -20,8 +20,8 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     PID = scriptTagData.pid,
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {
-        PRODUCTION:'//track.trendi.guru/tr/web?',
-        DEV: '//track.trendi.guru/tr/test?'
+        PRODUCTION:'https://track.trendi.guru/tr/web?',
+        DEV: 'https://track.trendi.guru/tr/test?'
     }[ENV],
     COOKIE_NAME = 'fzz_ui_3',
     API_URL = {

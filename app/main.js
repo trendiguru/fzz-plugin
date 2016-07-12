@@ -14,7 +14,7 @@ REQUESTS.desktop = 0;
 /*------ RENDER ------*/
 
 function render (props) {
-    props = props || {imageURL: '', items: []};
+    props = props || {imageURL: ''};
     return window.app = ReactDOM.render(React.createElement(App, props), document.getElementById('app'));
 }
 
@@ -32,6 +32,7 @@ addEventListener('app close', close);
 
 addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
+        render({imageURL: msg.data.imageURL});
         getImageData(msg.data.imageURL).then(data => {
             data.items = data.items.map(item => {
                 item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
@@ -40,7 +41,7 @@ addEventListener('message', msg => {
             return data;
         })
         .then(data => render({imageURL: msg.data.imageURL, items: data.items, close}));
-        //publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
+        // publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
     }
 });
 

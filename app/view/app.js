@@ -34,6 +34,7 @@ class App extends Component {
             ].map((button, i) => <button key={i} id={button.icon} onClick={button.action}>
                 <i className="md-icon">{button.icon}</i>
             </button>);
+        console.log(this.props);
         if (this.props.items) {
             TabNodes = this.props.items.map(
                 (item, i) => <Tab key={i} title={item.category}>
@@ -54,10 +55,10 @@ class App extends Component {
             );
         }
         else if (this.props.labels) {
-            TabNodes = [<Labels labels={this.props.labels}/>];
+            TabNodes = <Labels labels={this.props.labels}/>;
         }
         else {
-            TabNodes = [<Loading />];
+            TabNodes = <Loading />;
         }
         return <Lightbox ref="app">
             <Aside imageURL={this.props.imageURL} />

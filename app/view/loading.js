@@ -4,6 +4,9 @@ export default class Loading extends React.Component {
 
     constructor (props) {
         super(props);
+        this.state = {
+            giphy: undefined
+        };
     }
 
     componentDidMount () {
@@ -15,11 +18,11 @@ export default class Loading extends React.Component {
     }
 
     render () {
-        return <div>
-            <div className="giphy-loading" onClick={this.setGiphy.bind(this)} style={{
+        return <div className="loading">
+            <div className="giphy" onClick={this.setGiphy.bind(this)} style={{
                 backgroundImage: `url('http://i.giphy.com/${this.state.giphy}.gif')`
             }}></div>
-            LOADING
+            <h3>LOADING</h3>
         </div>;
     }
 

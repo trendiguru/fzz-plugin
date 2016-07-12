@@ -1,4 +1,8 @@
-.giphy-loading  {
+.loading {
+    text-align: center;
+}
+
+.loading .giphy  {
   width: 18.75em;
   height: 18.75em;
   border-radius: 50%;
@@ -7,4 +11,9 @@
   background-color: #FF5792;
   background-blend-mode: hard-light;
   margin: 3em auto;
+}
+
+.loading h3 {
+    font-size: 2em;
+    font-weight: bold;
 }

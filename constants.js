@@ -27,7 +27,16 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     API_URL = {
         '_ND': 'https://api.trendi.guru/images',
         '_PD': 'https://extremeli.trendi.guru/api/images'
-    }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images';
+    }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images',
+    LOADING_GIPHIES = [
+        'UPAJRWATdepFK',
+        'PLw7s7Ezb50OY',
+        '13SHVEhqEPfSXC',
+        'hLBNOS9GOBCH6',
+        '7DNcclBIsgUzC',
+        '5AtHzs3lLbbWg',
+        'VLHmZU5YQidm8'
+    ];
 
 export function UISettings (host) {
     let settings = {

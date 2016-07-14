@@ -5,6 +5,7 @@ import {isVisible} from 'ext/visibility';
 export function bar () {
     let tutorial = new Tutorial ();
     tutorial.content.appendChild(document.createTextNode('click the pink button'));
+    tutorial.classList.add('bar');
     return tutorial;
 }
 

@@ -1,9 +1,11 @@
-
+import {Query} from 'modules/utils';
+//const HOST_DOMAIN =  'http://localhost:8000';
+//const HOST_DOMAIN =  'https://fzz.storage.googleapis.com';
 
 let scriptTagData = loadScriptTagData();
 
 //export const HOST_DOMAIN = 'https://localhost:4443',
-export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
+export const HOST_DOMAIN =  'https://localhost:4443',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -15,7 +17,7 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
-    PID = scriptTagData.pid || '_PD',
+    PID = Query.parse(location.search).PID || scriptTagData.pid || '_PD',
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
@@ -44,7 +46,7 @@ export function UISettings (host) {
                 roundDress: 1.0
             },
             // tutorial: {
-            //     highlight: 1.0
+            //     bar: 1.0
             // }
         },
         'dev-preview': {
@@ -56,7 +58,7 @@ export function UISettings (host) {
             overlay: {
                 preview: 0.1,
                 roundDress: 0.9
-            },
+            // },
             // tutorial: {
             //     bar: 0.3,
             //     sample: 0.3,
@@ -75,7 +77,6 @@ export function UISettings (host) {
 function loadScriptTagData(){
     let data = {userConfig:{}, pid:''};
     let fzzScript = document.getElementById('fzz-script');
-
     if(fzzScript){
         let userConfigJSON = fzzScript.getAttribute('data-fzz');
         if(userConfigJSON){

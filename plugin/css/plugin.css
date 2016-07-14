@@ -1,3 +1,8 @@
 @import 'frame.css';
 @import 'wrap.css';
 @import 'overlay/overlay.css';
+@import 'tutorial/tutorial.css';
+
+body.fzz_lock {
+    overflow: hidden;
+}

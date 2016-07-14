@@ -15,6 +15,31 @@ export function sample () {
 
 export function highlight () {
     let tutorial = new Tutorial ();
+    tutorial.classList.add('highlight');
+    tutorial.onClose = () => {
+        document.body.classList.remove('fzz_lock');
+    };
+    let onScroll = () => {
+        let fzzButton = document.querySelector('.fzzButton');
+        if (!fzzButton) {
+            return false;
+        }
+        else {
+            let parent = fzzButton.parentElement,
+                fzzButtonBoundingClientRect = fzzButton.getBoundingClientRect();
+            tutorial.classList.add('show');
+            document.body.classList.add('fzz_lock');
+            document.body.appendChild(fzzButton);
+            Object.assign(fzzButton.style, {
+                top: fzzButtonBoundingClientRect.top + 'px',
+                left: fzzButtonBoundingClientRect.left + 'px',
+                position: 'fixed',
+                zIndex: 1001
+            });
+            removeEventListener('scroll', onScroll);
+        }
+    };
+    addEventListener('scroll', onScroll);
     return tutorial;
 }
 
@@ -31,6 +56,9 @@ function Tutorial () {
             e.closed_after = Date.now() - this.opened;
             dispatchEvent(e);
             this.remove();
+            if (this.onClose) {
+                this.onClose();
+            }
         },
         shadow: Object.assign(document.createElement('div'), {
             className: 'shadow',

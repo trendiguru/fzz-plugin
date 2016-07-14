@@ -28,7 +28,7 @@ module.exports = {
         'app/css/b_app.css': './app/css/app.css',
         'demo/b_demo.js': ['whatwg-fetch', 'babel-polyfill', './demo/main.js'],
         'demo/b_demo.css': './demo/main.css',
-        'extensions/chrome/run_ext.js': 'extensions/chrome/es6_run_ext.js'
+        'extensions/chrome/run_ext.js': ['babel-polyfill', 'extensions/chrome/es6_run_ext.js']
     },
     output: {
         path: '.',

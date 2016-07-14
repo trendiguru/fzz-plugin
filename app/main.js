@@ -15,7 +15,10 @@ REQUESTS.desktop = 0;
 
 function render (props) {
     props = props || {imageURL: ''};
-    return window.app = ReactDOM.render(React.createElement(App, props), document.getElementById('app'));
+    return window.app = ReactDOM.render(
+        React.createElement(App, Object.assign({close}, props)),
+        document.getElementById('app')
+    );
 }
 
 render();
@@ -34,13 +37,15 @@ addEventListener('message', msg => {
     if (window.app.props.imageURL !== msg.data.imageURL) {
         render({imageURL: msg.data.imageURL});
         getImageData(msg.data.imageURL).then(data => {
-            data.items = data.items.map(item => {
-                item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
-                return item;
-            });
+            if (data && data.items) {
+                data.items = data.items.map(item => {
+                    item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
+                    return item;
+                });
+            }
             return data;
         })
-        .then(data => render({imageURL: msg.data.imageURL, items: data.items, close}));
+        .then(data => render({imageURL: msg.data.imageURL, data}));
         // publisherDomain = getLocation(msg.origin).hostname.replace('www.', '');
     }
 });
@@ -58,4 +63,4 @@ addEventListener('app opened', () => {
 
 // addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
 
-addEventListener('tab clicked', e => analytics.track('Category Clicked', {title: e.info.title}));
+addEventListener('tab set', e => analytics.track('Category Clicked', {title: e.info.title}));

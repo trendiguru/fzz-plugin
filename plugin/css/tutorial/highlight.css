@@ -1,0 +1,24 @@
+.tutorial.highlight {
+    display: none;
+}
+
+.tutorial.highlight.show {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: 1000;
+
+    .shadow {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+}

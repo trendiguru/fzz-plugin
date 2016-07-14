@@ -10,7 +10,7 @@ export class TabView extends React.Component {
                 title: this.props.children[i].props.title
             }
         });
-        this.refs.root.dispatchEvent(e);
+        dispatchEvent(e);
     }
     componentWillReceiveProps () {
         this.setState({tab: 0});

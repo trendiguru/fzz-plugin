@@ -30,7 +30,7 @@ export default class Assemblage extends React.Component {
         this.loadImages(this.props.src).then(() => {
             let done = new Event('done', {bubbles: true});
             done.info = {loaded: this.state.done};
-            this.refs.root.dispatchEvent(done);
+            dispatchEvent(done);
         });
         addEventListener('resize', this.forceUpdate.bind(this, null));
     }

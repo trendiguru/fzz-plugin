@@ -14,11 +14,11 @@ class App extends Component {
         super(props);
     }
     componentDidMount () {
-        ReactDOM.findDOMNode(this.refs.app).dispatchEvent(new Event('app opened', {bubbles: true}));
+        dispatchEvent(new Event('app opened', {bubbles: true}));
     }
     close (e) {
         this.props.close();
-        e.target.dispatchEvent(new Event('app closed', {bubbles: true}));
+        dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
         let TabNodes = [],

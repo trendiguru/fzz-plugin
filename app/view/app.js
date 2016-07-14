@@ -35,7 +35,6 @@ class App extends Component {
             ].map((button, i) => <button key={i} id={button.icon} onClick={button.action}>
                 <i className="md-icon">{button.icon}</i>
             </button>);
-        console.debug({data});
         if (data === undefined) {
             TabNodes = <Loading />;
         }

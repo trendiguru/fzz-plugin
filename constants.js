@@ -17,7 +17,7 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
-    PID = scriptTagData.pid || '_ND',
+    PID = scriptTagData.pid || '_PD',
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',

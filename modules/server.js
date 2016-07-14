@@ -31,12 +31,12 @@ export function smartCheckRelevancy(tgImg) {
 }
 
 export function getImageData(imageUrl) {
-    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}&PID=${PID}`)
+    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}&PID=${PID.split('_')[0]}`)
     .then(res => res.json());
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(`${API_URL}?PID=${PID}`, {
+    return fetch(`${API_URL}?PID=${PID.split('_')[0]}`, {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

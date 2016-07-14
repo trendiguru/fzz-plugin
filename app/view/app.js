@@ -21,6 +21,7 @@ class App extends Component {
         dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
+        let {data} = this.props;
         let TabNodes = [],
             NavButtonNodes = [
                 {
@@ -34,9 +35,18 @@ class App extends Component {
             ].map((button, i) => <button key={i} id={button.icon} onClick={button.action}>
                 <i className="md-icon">{button.icon}</i>
             </button>);
-        console.log(this.props);
-        if (this.props.items) {
-            TabNodes = this.props.items.map(
+        console.debug({data});
+        if (data === undefined) {
+            TabNodes = <Loading />;
+        }
+        else if (data === null) {
+            TabNodes = <div>No data found for this image</div>;
+        }
+        else if (data.lables) {
+            TabNodes = <Labels labels={this.props.labels}/>;
+        }
+        else if (data.items) {
+            TabNodes = this.props.data.items.map(
                 (item, i) => <Tab key={i} title={item.category}>
                     <Assemblage
                         col={5}
@@ -53,12 +63,6 @@ class App extends Component {
                     />
                 </Tab>
             );
-        }
-        else if (this.props.labels) {
-            TabNodes = <Labels labels={this.props.labels}/>;
-        }
-        else {
-            TabNodes = <Loading />;
         }
         return <Lightbox ref="app">
             <Aside imageURL={this.props.imageURL} />

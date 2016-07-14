@@ -36,7 +36,7 @@ export function getImageData(imageUrl) {
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(`${API_URL}&${PID}`, {
+    return fetch(`${API_URL}&PID=${PID}`, {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

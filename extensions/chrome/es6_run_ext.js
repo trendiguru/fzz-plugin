@@ -5,6 +5,7 @@ const {HOST_DOMAIN} = constants;
 const URL = `${HOST_DOMAIN}/b_plugin.js`;
 //const URL = `${HOST_DOMAIN}/fzz.min.js`;
 
+// should output <script src="fzz.min.js" data-fzz='{"whitelist": "*"}' data-pid="_PD"></script>
 
 function getScript(url, callback) {
     var headTag = document.getElementsByTagName('head')[0];

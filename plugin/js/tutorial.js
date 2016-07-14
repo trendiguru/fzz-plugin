@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import {TUTORIAL_VERSION} from 'constants';
+import {isVisible} from 'ext/visibility';
 
 export function bar () {
     let tutorial = new Tutorial ();
@@ -20,23 +21,34 @@ export function highlight () {
         document.body.classList.remove('fzz_lock');
     };
     let onScroll = () => {
-        let fzzButton = document.querySelector('.fzzButton');
-        if (!fzzButton) {
-            return false;
-        }
-        else {
-            let parent = fzzButton.parentElement,
-                fzzButtonBoundingClientRect = fzzButton.getBoundingClientRect();
-            tutorial.classList.add('show');
-            document.body.classList.add('fzz_lock');
-            document.body.appendChild(fzzButton);
-            Object.assign(fzzButton.style, {
-                top: fzzButtonBoundingClientRect.top + 'px',
-                left: fzzButtonBoundingClientRect.left + 'px',
-                position: 'fixed',
-                zIndex: 1001
-            });
-            removeEventListener('scroll', onScroll);
+        let fzzOverlays = document.querySelectorAll('.fzz_overlay');
+        if (fzzOverlays.length) {
+            let fzzOverlay,
+                fzzOverlayBoundingClientRect;
+            for (let overlay of fzzOverlays) {
+                let rect = overlay.getBoundingClientRect();
+                if (isVisible(overlay, rect)) {
+                    fzzOverlay = overlay;
+                    fzzOverlayBoundingClientRect = rect;
+                    break;
+                }
+            }
+            if (!fzzOverlay) {
+                return false;
+            }
+            else {
+                let fzzOverlay2 = fzzOverlay.cloneNode(true);
+                tutorial.classList.add('show');
+                document.body.classList.add('fzz_lock');
+                tutorial.appendChild(fzzOverlay2);
+                Object.assign(fzzOverlay2.style, {
+                    top: fzzOverlayBoundingClientRect.top + 'px',
+                    left: fzzOverlayBoundingClientRect.left + 'px',
+                    position: 'fixed',
+                    zIndex: 1001
+                });
+                removeEventListener('scroll', onScroll);
+            }
         }
     };
     addEventListener('scroll', onScroll);

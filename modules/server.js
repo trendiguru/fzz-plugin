@@ -2,6 +2,7 @@
 
 import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
+import {Query} from './utils';
 
 let serverBuffer = [];
 let serverUploader;
@@ -31,12 +32,15 @@ export function smartCheckRelevancy(tgImg) {
 }
 
 export function getImageData(imageUrl) {
-    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}&PID=${PID.split('_')[0]}`)
+    return fetch(API_URL + '?' + Query.stringify({
+        imageUrl,
+        PID: PID.split('_')[0]
+    }))
     .then(res => res.json());
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(`${API_URL}?PID=${PID.split('_')[0]}`, {
+    return fetch(API_URL + '?' + Query.stringify({PID: PID.split('_')[0]}), {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

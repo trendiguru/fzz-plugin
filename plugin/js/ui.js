@@ -1,7 +1,7 @@
 import {UISettings, PID, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 
-export default function UIFactory (uiComponentOptions) {
+export default function getUI (uiComponentOptions) {
     let UI = {};
     let uiCookie = Cookies.get(COOKIE_NAME);
     uiCookie = uiCookie && JSON.parse(uiCookie);
@@ -41,7 +41,8 @@ function generateCookie(){
 function getRandom (probabilityDict) {
     let cumulative = 0;
     let cumulativeProbs = Object.keys(probabilityDict).map(
-        key => [key, cumulative += probabilityDict[key]]);
+        key => [key, cumulative += probabilityDict[key]]
+    );
     let rand = Math.random();
     for (let [key, cumProb] of cumulativeProbs) {
         if (rand < cumProb) {

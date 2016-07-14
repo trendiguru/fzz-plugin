@@ -7,7 +7,7 @@ export default class Card extends React.Component {
         event.data = {
             result: this.props.link
         };
-        this.refs.card.dispatchEvent(event);
+        dispatchEvent(event);
     }
     render () {
         let {labels} = this.props;

@@ -74,12 +74,12 @@ let click = {
     button (e) {
         block(e);
         let event = Object.assign(new Event ('button clicked', {bubbles: true}), this);
-        e.target.dispatchEvent(event);
+        dispatchEvent(event);
     },
     info (e) {
         block(e);
         let event = new Event ('info button clicked', {bubbles: true});
-        e.target.dispatchEvent(event);
+        dispatchEvent(event);
     }
 };
 

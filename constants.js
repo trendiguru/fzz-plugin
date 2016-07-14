@@ -15,7 +15,7 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
-    PID = scriptTagData.pid,
+    PID = scriptTagData.pid || '_PD',
     ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
@@ -25,14 +25,27 @@ export const HOST_DOMAIN =  'https://fzz.storage.googleapis.com',
     API_URL = {
         '_ND': 'https://api.trendi.guru/images',
         '_PD': 'https://extremeli.trendi.guru/api/images'
-    }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images';
+    }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images',
+    LOADING_GIPHIES = [
+        'UPAJRWATdepFK',
+        'PLw7s7Ezb50OY',
+        '13SHVEhqEPfSXC',
+        'hLBNOS9GOBCH6',
+        '7DNcclBIsgUzC',
+        '5AtHzs3lLbbWg',
+        'VLHmZU5YQidm8'
+    ],
+    TUTOIRAL_VERSION = '1.0.0';
 
 export function UISettings (host) {
     let settings = {
         'dev-roundDress': {
             overlay: {
                 roundDress: 1.0
-            }
+            },
+            // tutorial: {
+            //     highlight: 1.0
+            // }
         },
         'dev-preview': {
             overlay: {
@@ -43,7 +56,12 @@ export function UISettings (host) {
             overlay: {
                 preview: 0.1,
                 roundDress: 0.9
-            }
+            },
+            // tutorial: {
+            //     bar: 0.3,
+            //     sample: 0.3,
+            //     highlight: 0.3
+            // }
         }
     };
 

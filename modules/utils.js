@@ -92,3 +92,9 @@ export class Query {
         return query;
     }
 }
+
+export class Version {
+    static toArray (string) {
+        return string.split('.').map(i => parseInt(i));
+    }
+}

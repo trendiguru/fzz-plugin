@@ -1,6 +1,6 @@
 /* eslint-disable console */
 
-import {API_URL} from 'constants';
+import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
 
 let serverBuffer = [];
@@ -31,12 +31,12 @@ export function smartCheckRelevancy(tgImg) {
 }
 
 export function getImageData(imageUrl) {
-    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}`)
+    return fetch(`${API_URL}?imageUrl=${encodeURIComponent(imageUrl)}&PID=${PID}`)
     .then(res => res.json());
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(API_URL, {
+    return fetch(`${API_URL}&${PID}`, {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

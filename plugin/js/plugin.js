@@ -1,19 +1,21 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {PID, INFO_URL, COOKIE_NAME} from 'constants';
+import {PID, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
+import * as tutorial from './tutorial';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
 import {scanForever, observe} from './observe';
 import {process} from './process';
 import {iFrame, Style} from './elements';
+import {Version} from 'modules/utils';
 
 let refererDomain = window.location.hostname.replace('www.', '');
 
-let ui = getUI({overlay});
+let ui = getUI({overlay, tutorial});
 
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
@@ -35,6 +37,7 @@ domready(() => {
     document.head.appendChild(style);
     scanForever(document.body, processElement);
     observe(document.body, processElement, {childList: true, subtree: true});
+    // MESSAGE
     addEventListener('message', msg => {
         let {data} = msg;
         if (data === 'show') {
@@ -47,6 +50,7 @@ domready(() => {
             console.log('Received fzz_id: ' + msg.data.fzz_id);
         }
     });
+    // BUTTON
     addEventListener('button clicked', ({url: imageURL}) => {
         analytics.track('Trendi Button Clicked', {
             imageURL,
@@ -55,11 +59,23 @@ domready(() => {
         iframe.show();
         iframe.contentWindow.postMessage({imageURL}, '*');
     });
+    addEventListener('button seen', () => analytics.track('Button Seen'));
+    // INFO BUTTON
     addEventListener('info button clicked', () => {
         analytics.track('Info Button Clicked');
         window.open(INFO_URL, '_blank');
     });
-    addEventListener('button seen', () => analytics.track('Button Seen'));
+    // TUTORIAL
+    let fzz_tutorial_version = Cookies.get('fzz_tutorial_version');
+    console.debug({fzz_tutorial_version});
+    if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {
+        console.debug('creating tutorial');
+        console.debug(ui);
+        document.body.appendChild(ui.tutorial());
+        addEventListener('tutorial closed', ({closed_after}) => {
+            analytics.track('Tutorial Closed', {closed_after});
+        });
+    }
 });
 
 function processElement (el) {

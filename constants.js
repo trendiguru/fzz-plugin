@@ -58,7 +58,7 @@ export function UISettings (host) {
             overlay: {
                 preview: 0.1,
                 roundDress: 0.9
-            // },
+            },
             // tutorial: {
             //     bar: 0.3,
             //     sample: 0.3,

@@ -13,7 +13,7 @@ function getScript(url, callback) {
     script.type = 'text/javascript';
     script.id = 'fzz-script';
     script.setAttribute('data-fzz', '{"whitelist":"*"}');
-    script.setAttribute('data-pid', 'RecruitPilot');
+    script.setAttribute('data-pid', 'dev-roundDress');
     script.src = url;
     script.onload = callback;
     script.onreadystatechange = function() {
@@ -22,6 +22,7 @@ function getScript(url, callback) {
         }
     };
     headTag.appendChild(script);
+    console.info({description: 'Script Tag: ', script: script.outerHTML});
 }
 
 window.addEventListener('DOMContentLoaded', function() {

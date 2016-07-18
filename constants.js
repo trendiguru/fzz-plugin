@@ -1,10 +1,8 @@
 import {Query} from 'modules/utils';
-//const HOST_DOMAIN =  'http://localhost:8000';
-//const HOST_DOMAIN =  'https://fzz.storage.googleapis.com';
 
 let scriptTagData = loadScriptTagData();
 
-//export const HOST_DOMAIN = 'https://localhost:4443',
+//export const HOST_DOMAIN = 'https://fzz.storage.googleapis.com',
 export const HOST_DOMAIN =  'https://localhost:4443',
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
@@ -56,8 +54,7 @@ export function UISettings (host) {
         },
         '__default': {
             overlay: {
-                preview: 0.1,
-                roundDress: 0.9
+                roundDress: 1.0
             },
             // tutorial: {
             //     bar: 0.3,

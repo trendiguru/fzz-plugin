@@ -1,0 +1,37 @@
+.tutorial.bar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    .content {
+        padding: 1em;
+        background: $pink;
+        font-size: 1.2em;
+        color: white;
+        transform: translateY(0);
+        transition: transform .25s;
+    }
+    &.closed .content {
+        transform: translateY(-100%);
+    }
+    button.fzz_close {
+        width: 6em;
+        padding: .25em;
+        border: none;
+        border-radius: 4px;
+        background: none;
+        color: white;
+        position: absolute;
+        top: .75em;
+        right: 1em;
+        box-shadow: 0 0 0 2px white inset;
+        opacity: 1;
+        cursor: pointer;
+        transition: .25s;
+        &:hover {
+            background: white;
+            color: $pink;
+        }
+    }
+}

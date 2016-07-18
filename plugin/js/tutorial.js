@@ -1,64 +1,61 @@
 import Cookies from 'js-cookie';
 import {TUTORIAL_VERSION} from 'constants';
-import {isVisible} from 'ext/visibility';
+
+/*
+------------------------------------------
+| Click the pink button!     | GOT IT |  |
+------------------------------------------
+*/
 
 export function bar () {
-    let tutorial = new Tutorial ();
-    tutorial.content.appendChild(document.createTextNode('click the pink button'));
-    tutorial.classList.add('bar');
-    return tutorial;
-}
-
-export function sample () {
-    let tutorial = new Tutorial ();
-    tutorial.content.appendChild(document.createTextNode('YOU HAVE TO CLICK THE BUTTON'));
-    return tutorial;
-}
-
-export function highlight () {
-    let tutorial = new Tutorial ();
-    tutorial.classList.add('highlight');
-    tutorial.onClose = () => {
-        document.body.classList.remove('fzz_lock');
-    };
     let onScroll = () => {
-        let fzzOverlays = document.querySelectorAll('.fzz_overlay');
-        if (fzzOverlays.length) {
-            let fzzOverlay,
-                fzzOverlayBoundingClientRect;
-            for (let overlay of fzzOverlays) {
-                let rect = overlay.getBoundingClientRect();
-                if (isVisible(overlay, rect)) {
-                    fzzOverlay = overlay;
-                    fzzOverlayBoundingClientRect = rect;
-                    break;
-                }
-            }
-            if (!fzzOverlay) {
-                return false;
-            }
-            else {
-                let fzzOverlay2 = fzzOverlay.cloneNode(true);
-                tutorial.classList.add('show');
-                document.body.classList.add('fzz_lock');
-                tutorial.appendChild(fzzOverlay2);
-                Object.assign(fzzOverlay2.style, {
-                    top: fzzOverlayBoundingClientRect.top + 'px',
-                    left: fzzOverlayBoundingClientRect.left + 'px',
-                    position: 'fixed',
-                    zIndex: 1001
-                });
-                removeEventListener('scroll', onScroll);
-            }
+        if (getVisibleOverlay()) {
+            removeEventListener('scroll', onScroll);
+            tutorial.classList.remove('closed');
         }
     };
     addEventListener('scroll', onScroll);
+    let tutorial = new Tutorial ();
+    tutorial.content.appendChild(document.createTextNode('click the pink button'));
+    tutorial.closeButton.appendChild(document.createTextNode('GOT IT'));
+    tutorial.classList.add('bar', 'closed');
     return tutorial;
 }
 
-////////////////////////////////    //
-//Click the pink button!            //
-//////////////////////////////////////
+/*
+------------------------------------------
+| Try clicking the button!               |
+|                                        |x
+|              ╭  ╮                      |
+|              ╰  ╯                      |
+|                                        |
+------------------------------------------
+*/
+
+// export function sample () {
+//     let tutorial = new Tutorial ();
+//     tutorial.content.appendChild(document.createTextNode('YOU HAVE TO CLICK THE BUTTON'));
+//     return tutorial;
+// }
+
+/*
+------------------------------
+| Here is a button, click it  |   ╭  ╮
+|_______________________________> ╰  ╯
+*/
+
+// let {body} = document;
+//
+// export function highlight () {
+//     let tutorial = new Tutorial ();
+//     tutorial.classList.add('highlight');
+//     body.classList.add('fzz_lock');
+//     tutorial.onClose = () => {
+//         body.classList.remove('fzz_lock');
+//     };
+//     addEventListener('scroll', onScroll);
+//     return tutorial;
+// }
 
 function Tutorial () {
     let tutorial = Object.assign(document.createElement('div'), {
@@ -83,9 +80,10 @@ function Tutorial () {
             className: 'content'
         }),
         closeButton: Object.assign(document.createElement('button'), {
-            className: 'close',
+            className: 'fzz_close',
             onclick () {
-                tutorial.close();
+                tutorial.classList.add('closed');
+                setTimeout(tutorial.close.bind(tutorial), 1000);
             }
         })
     });
@@ -94,4 +92,29 @@ function Tutorial () {
     tutorial.content.appendChild(tutorial.closeButton);
     Cookies.set('fzz_tutorial_version', TUTORIAL_VERSION);
     return tutorial;
+}
+
+function getVisibleOverlay () {
+    let buttons = Array.from(document.querySelectorAll('.fzzButton'));
+    if (buttons.length) {
+        for (let button of buttons) {
+            if (weakVisible(button)) {
+                return button.parentElement.parentElement;
+            }
+        }
+    }
+    return null;
+}
+
+function weakVisible (el) {
+    let {width, height, top, left} = el.getBoundingClientRect();
+    let points = [
+        [left + width / 2, top + height / 2], // center
+        [left + 1, top + 1], // left top corenr
+        [left + width - 1, top + 1], // left bottom corenr
+        [left + width - 1, top + 1], // right top corner
+        [left + width - 1, top + height - 1] // right bottom corner
+    ];
+    let elements = points.map(point => document.elementFromPoint(...point));
+    return elements.includes(el);
 }

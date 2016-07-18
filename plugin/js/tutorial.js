@@ -32,11 +32,11 @@ export function bar () {
 ------------------------------------------
 */
 
-export function sample () {
-    let tutorial = new Tutorial ();
-    tutorial.content.appendChild(document.createTextNode('YOU HAVE TO CLICK THE BUTTON'));
-    return tutorial;
-}
+// export function sample () {
+//     let tutorial = new Tutorial ();
+//     tutorial.content.appendChild(document.createTextNode('YOU HAVE TO CLICK THE BUTTON'));
+//     return tutorial;
+// }
 
 /*
 ------------------------------
@@ -44,15 +44,18 @@ export function sample () {
 |_______________________________> ╰  ╯
 */
 
-export function highlight () {
-    let tutorial = new Tutorial ();
-    tutorial.classList.add('highlight');
-    tutorial.onClose = () => {
-        document.body.classList.remove('fzz_lock');
-    };
-    addEventListener('scroll', onScroll);
-    return tutorial;
-}
+// let {body} = document;
+//
+// export function highlight () {
+//     let tutorial = new Tutorial ();
+//     tutorial.classList.add('highlight');
+//     body.classList.add('fzz_lock');
+//     tutorial.onClose = () => {
+//         body.classList.remove('fzz_lock');
+//     };
+//     addEventListener('scroll', onScroll);
+//     return tutorial;
+// }
 
 function Tutorial () {
     let tutorial = Object.assign(document.createElement('div'), {
@@ -95,7 +98,7 @@ function getVisibleOverlay () {
     let buttons = Array.from(document.querySelectorAll('.fzzButton'));
     if (buttons.length) {
         for (let button of buttons) {
-            if (isVisible2(button)) {
+            if (weakVisible(button)) {
                 return button.parentElement.parentElement;
             }
         }
@@ -103,7 +106,15 @@ function getVisibleOverlay () {
     return null;
 }
 
-function isVisible2 (el) {
+function weakVisible (el) {
     let {width, height, top, left} = el.getBoundingClientRect();
-    return el === document.elementFromPoint(left + width / 2, top + height / 2);
+    let points = [
+        [left + width / 2, top + height / 2], // center
+        [left + 1, top + 1], // left top corenr
+        [left + width - 1, top + 1], // left bottom corenr
+        [left + width - 1, top + 1], // right top corner
+        [left + width - 1, top + height - 1] // right bottom corner
+    ];
+    let elements = points.map(point => document.elementFromPoint(...point));
+    return elements.includes(el);
 }

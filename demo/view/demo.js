@@ -34,9 +34,7 @@ export default class Demo extends Component {
                     ],
                     search: this.search.bind(this)
                 },
-                App: {
-                    close: this.close.bind(this)
-                }
+                App: {}
             }
         };
     }

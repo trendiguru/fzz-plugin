@@ -1,0 +1,35 @@
+#discover {
+    width: calc(100% - 2em);
+    height: 60em;
+    overflow: hidden;
+    columns: 4;
+    margin: 1em;
+    flex-wrap: wrap;
+    -webkit-column-gap: 1em; /* Chrome, Safari, Opera */
+    -moz-column-gap: 1em; /* Firefox */
+    column-gap: 1em;
+    transition: transform .25s, opacity .25s;
+}
+
+.hide #discover {
+    opacity: 0;
+    transform: translateY(1em);
+}
+
+#discover article, #discover img {
+    margin: 0 0 1em;
+    overflow: hidden;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+#discover article {
+    padding: 1em;
+    background: #FF5792;
+    color: #fff;
+}
+
+#discover img {
+    width: 100%;
+}

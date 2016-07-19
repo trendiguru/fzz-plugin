@@ -22,6 +22,7 @@ function getScript(url, callback) {
         }
     };
     headTag.appendChild(script);
+    console.info({description: 'Script Tag: ', script: script.outerHTML});
 }
 
 window.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,30 @@
+#searchbox {
+    width: 40em;
+    max-width: calc(100% - 2em);
+    margin: 3em auto 2em;
+    display: block;
+    transition: margin .25s;
+}
+
+#searchbox.min {
+    margin: 1em auto;
+}
+
+#searchbox input {
+    width: calc(100% - 8em);
+    padding: .5em;
+    font: inherit;
+    margin-right: 1em;
+    border: none;
+}
+
+#searchbox button {
+    width: 6em;
+    padding: .5em;
+    font: inherit;
+    background: #FF5792;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}

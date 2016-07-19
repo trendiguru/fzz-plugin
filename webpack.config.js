@@ -26,7 +26,7 @@ module.exports = {
         'app/b_app.js': ['whatwg-fetch', 'babel-polyfill', './app/main.js'],
         'app/css/b_app.css': './app/css/app.scss',
         'demo/b_demo.js': ['whatwg-fetch', 'babel-polyfill', './demo/main.js'],
-        'demo/b_demo.css': './demo/main.scss',
+        'demo/css/b_demo.css': './demo/css/demo.scss',
         'extensions/chrome/run_ext.js': ['babel-polyfill', 'extensions/chrome/es6_run_ext.js'],
         'plugin/js/b_test_tutorial.js': ['whatwg-fetch', 'babel-polyfill', './plugin/js/test_tutorial.js']
     },

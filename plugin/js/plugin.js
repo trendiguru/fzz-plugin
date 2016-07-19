@@ -67,8 +67,8 @@ domready(() => {
     });
     // TUTORIAL
     let fzz_tutorial_version = Cookies.get('fzz_tutorial_version');
-    // if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {
-    if (true) {
+    if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {
+    // if (true) {
         document.body.appendChild(ui.tutorial());
         addEventListener('tutorial closed', ({closed_after}) => {
             analytics.track('Tutorial Closed', {closed_after});

@@ -1,6 +1,6 @@
 /* globals React */
 
-import 'whatwg-fetch';
+import classNames from 'classnames';
 import API from '../api.js';
 import App from 'app/view/app.js';
 import Discover from './discover';
@@ -101,12 +101,27 @@ export default class Demo extends Component {
         return <div>
             <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="logo.svg" />
             <Searchbox className={Object.keys(components.App).length ? 'min' : ''} search={this.search.bind(this)} />
-            <div>
-                <label onClick={() => this.setState({
-                    api_index: !this.state.api_index,
-                    api: API_URLS[!this.state.api_index]
-                })} className={this.state.api_index ? 'checked': ''}></label>
-            </div>
+            <section style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '1em 0 2em'
+            }}>
+                Fast and inaccurate
+                <label
+                    className={classNames('switch', {
+                        checked: this.state.api_index
+                    })}
+                    onClick={() => this.setState({
+                        api_index: !this.state.api_index,
+                        api: API_URLS[!this.state.api_index]
+                    })}
+                    style={{
+                        margin: '0 1em'
+                    }}
+                />
+                Slow and accurate
+            </section>
             {ComponentNode}
         </div>;
     }

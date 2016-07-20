@@ -1,14 +1,12 @@
 nav {
     overflow: hidden;
     background: #fff;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     text-transform: uppercase;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     z-index: 99;
     position: relative;
+
     .indicator {
         height: 3px;
         background: #ff4d8b;
@@ -16,11 +14,35 @@ nav {
         bottom: 0;
         transition: left .25s;
     }
-    aside {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
+
+    ul {
+        width: 100%;
         display: flex;
+        position: relative;
+
+        li {
+            flex: 1;
+            overflow: hidden;
+            padding: 1em 0;
+            font-weight: 600;
+            opacity: 0.5;
+            cursor: pointer;
+            text-align: center;
+            text-transform: uppercase;
+
+            &.select {
+                font-weight: bold;
+                color: #ff4d8b;
+                opacity: 1;
+            }
+
+        }
+
+    }
+
+    aside {
+        display: flex;
+
         button {
             width: 2em;
             height: 2em;
@@ -29,42 +51,21 @@ nav {
             -webkit-transition: background .25s, color .25s;
             transition: background .25s, color .25s;
         }
+
+        #close:hover, #feedback:hover {
+            color: #fff;
+        }
+
+        #close:hover {
+            background: #E53935;
+        }
+
+        #feedback:hover {
+            background: #FDD835;
+        }
+
     }
-}
 
-#close:hover, #feedback:hover {
-    color: #fff;
-}
-
-#close:hover {
-    background: #E53935;
-}
-
-#feedback:hover {
-    background: #FDD835;
-}
-
-nav ul {
-    width: 100%;
-    display: flex;
-    position: relative;
-}
-
-nav ul li {
-    flex: 1;
-    overflow: hidden;
-    padding: 1em 0;
-    font-weight: 600;
-    opacity: 0.5;
-    cursor: pointer;
-    text-align: center;
-    text-transform: uppercase;;
-}
-
-nav ul li.select {
-    font-weight: bold;
-    color: #ff4d8b;
-    opacity: 1;
 }
 
 main {
@@ -72,6 +73,7 @@ main {
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+
     section {
         width: 100%;
         height: 100%;
@@ -80,6 +82,7 @@ main {
         -webkit-transition: left .4s;
         transition: left .4s;
     }
+    
 }
 
 @media (max-width: 640px) {

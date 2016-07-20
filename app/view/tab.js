@@ -22,7 +22,7 @@ export class TabView extends React.Component {
         children = Array.isArray(children) ? children : [children];
         children.forEach((tab, i) => {
             TitleNodes.push(<li key={i} onClick={this.setTab.bind(this, i)} className={this.state.tab == i ? 'select' : ''}>{tab.props.title}</li>);
-            TabNodes.push(React.cloneElement(tab, {index: i, select: this.state.tab}));
+            TabNodes.push(React.cloneElement(tab, {key: i, index: i, select: this.state.tab}));
         });
         let liWidth = 100 / children.length || 0;
         return <div ref="root">

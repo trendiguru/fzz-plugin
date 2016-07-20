@@ -19,7 +19,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "git@github.com:trendiguru/fzz-plugin.git"
+    "url": "git+ssh://git@github.com/trendiguru/fzz-plugin.git"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -37,12 +37,10 @@
     "babel-preset-react": "",
     "babel-polyfill": "",
     "babel-generator": "",
-    "browserslist": "",
-    "caniuse-db": "",
     "css-loader": "",
     "postcss-loader": "",
-    "precss": "",
-    "autoprefixer": "",
+    "sass-loader": "",
+    "node-sass": "",
     "extract-text-webpack-plugin": ""
   },
   "babel": {
@@ -90,5 +88,10 @@
         "always"
       ]
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/trendiguru/fzz-plugin/issues"
+  },
+  "homepage": "https://github.com/trendiguru/fzz-plugin#readme",
+  "keywords": []
 }

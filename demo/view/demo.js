@@ -9,7 +9,7 @@ const {Component} = React;
 
 const API_URLS = [
     'https://extremeli.trendi.guru/api/images',
-    'http://api.fazz.co/images?imageUrl='
+    'https://api.fazz.co/images'
 ];
 
 export default class Demo extends Component {
@@ -107,20 +107,20 @@ export default class Demo extends Component {
                 justifyContent: 'center',
                 margin: '1em 0 2em'
             }}>
-                Fast and inaccurate
+                Slow and accurate
                 <label
                     className={classNames('switch', {
                         checked: this.state.api_index
                     })}
                     onClick={() => this.setState({
                         api_index: !this.state.api_index,
-                        api: API_URLS[!this.state.api_index]
+                        api: new API(API_URLS[Number(!this.state.api_index)])
                     })}
                     style={{
                         margin: '0 1em'
                     }}
                 />
-                Slow and accurate
+                Fast and inaccurate
             </section>
             {ComponentNode}
         </div>;

@@ -1,5 +1,8 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const ES_POLYFILLS = ['whatwg-fetch', 'babel-polyfill'];
 
 module.exports = {
     module: {
@@ -10,8 +13,12 @@ module.exports = {
                 loader: 'babel'
             },
             {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass', 'postcss'])
+                test: /\.s?css$/,
+                loader: ExtractTextPlugin.extract([
+                    'css?sourceMap',
+                    'postcss',
+                    'sass?sourceMap'
+                ])
             }
         ]
     },
@@ -20,23 +27,24 @@ module.exports = {
             path.resolve('./')
         ]
     },
+    plugins: [
+        new ExtractTextPlugin('[name]')
+    ],
+    postcss () {
+        return [autoprefixer];
+    },
     entry: {
-        'b_plugin.js': ['whatwg-fetch', 'babel-polyfill', './plugin/js/plugin.js'],
-        'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
-        'app/b_app.js': ['whatwg-fetch', 'babel-polyfill', './app/main.js'],
-        'app/css/b_app.css': './app/css/app.scss',
-        'demo/b_demo.js': ['whatwg-fetch', 'babel-polyfill', './demo/main.js'],
-        'demo/css/b_demo.css': './demo/css/demo.scss',
         'extensions/chrome/run_ext.js': ['babel-polyfill', 'extensions/chrome/es6_run_ext.js'],
-        'plugin/js/b_test_tutorial.js': ['whatwg-fetch', 'babel-polyfill', './plugin/js/test_tutorial.js']
+        'b_plugin.js':  ES_POLYFILLS.concat('./plugin/js/plugin.js'),
+        'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
+        'app/b_app.js': ES_POLYFILLS.concat('./app/main.js'),
+        'app/css/b_app.css': './app/css/app.scss',
+        'demo/b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
+        'demo/css/b_demo.css': './demo/css/demo.scss'
     },
     output: {
         path: '.',
         filename: '[name]'
     },
-    plugins: [
-        new ExtractTextPlugin('[name]')
-    ],
-    postcss: () => [],
     devtool: 'source-map'
 };

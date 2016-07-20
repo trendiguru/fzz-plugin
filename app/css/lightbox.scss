@@ -13,27 +13,24 @@
     top: 5em;
     left: 5em;
     z-index: 100;
-}
-
-#lightbox > div {
-    height: 100%;
-}
-
-#credit {
-    width: 6em;
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
-    text-decoration: none;
-    font-size: .8em;
-    z-index: 100;
-    text-align: center;
-}
-
-#credit img {
-    height: 3em;
-    display: block;
-    margin: .5em auto;
+    & > div {
+        height: 100%;
+    }
+    #credit {
+        width: 6em;
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        text-decoration: none;
+        font-size: .8em;
+        z-index: 100;
+        text-align: center;
+        img {
+            height: 3em;
+            display: block;
+            margin: .5em auto;
+        }
+    }
 }
 
 @media (max-width: 640px) {

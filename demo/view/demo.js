@@ -79,18 +79,6 @@ export default class Demo extends Component {
                             this.state.api.get(url).then(resolve);
                         }
                         else {
-                            let interval = setInterval(() => {
-                                this.state.api.get(url).then(res => {
-                                    if (res) {
-                                        clearInterval(interval);
-                                        resolve(res);
-                                    }
-                                });
-                            }, 1000);
-                            setTimeout(() => {
-                                clearInterval(interval);
-                                reject();
-                            }, 120000);
                             reject();
                         }
                     });
@@ -102,7 +90,18 @@ export default class Demo extends Component {
             this.setState(state => Object.assign(state.components.App, {data}));
         })
         .catch(() => this.setState(state => {
-            state.components.App.data = null;
+            let interval = setInterval(() => {
+                this.state.api.get(url).then(res => {
+                    if (res) {
+                        this.setState(state => Object.assign(state.components.App, {data: res}));
+                    }
+                });
+            }, 1000);
+            setTimeout(() => {
+                clearInterval(interval);
+                this.setState(state => Object.assign(state.components.App, {data: null}));
+            }, 120000);
+
         }));
     }
     render () {

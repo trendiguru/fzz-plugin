@@ -60,6 +60,7 @@ export default class Demo extends Component {
         };
         Promise.race([sources.get, sources.post])
         .then(res => new Promise ((resolve, reject) => {
+            console.log(res);
             if (res.relevancy_dict) { // Is it a POST result?
                 if (res.relevancy_dict[url]) { // Is it relevant?
                     resolve(sources.get);
@@ -78,6 +79,18 @@ export default class Demo extends Component {
                             this.state.api.get(url).then(resolve);
                         }
                         else {
+                            let interval = setInterval(() => {
+                                this.state.api.get(url).then(res => {
+                                    if (res) {
+                                        clearInterval(interval);
+                                        resolve(res);
+                                    }
+                                });
+                            }, 1000);
+                            setTimeout(() => {
+                                clearInterval(interval);
+                                reject();
+                            }, 120000);
                             reject();
                         }
                     });
@@ -99,7 +112,7 @@ export default class Demo extends Component {
             ComponentNode = React.createElement(component, components[component.name]);
         }
         return <div>
-            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="logo.svg" />
+            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="img/logo.svg" />
             <Searchbox className={Object.keys(components.App).length ? 'min' : ''} search={this.search.bind(this)} />
             <section style={{
                 display: 'flex',

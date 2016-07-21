@@ -60,6 +60,7 @@ export default class Demo extends Component {
         };
         Promise.race([sources.get, sources.post])
         .then(res => new Promise ((resolve, reject) => {
+            console.log(res);
             if (res.relevancy_dict) { // Is it a POST result?
                 if (res.relevancy_dict[url]) { // Is it relevant?
                     resolve(sources.get);
@@ -89,7 +90,18 @@ export default class Demo extends Component {
             this.setState(state => Object.assign(state.components.App, {data}));
         })
         .catch(() => this.setState(state => {
-            state.components.App.data = null;
+            let interval = setInterval(() => {
+                this.state.api.get(url).then(res => {
+                    if (res) {
+                        this.setState(state => Object.assign(state.components.App, {data: res}));
+                    }
+                });
+            }, 1000);
+            setTimeout(() => {
+                clearInterval(interval);
+                this.setState(state => Object.assign(state.components.App, {data: null}));
+            }, 120000);
+
         }));
     }
     render () {
@@ -99,7 +111,7 @@ export default class Demo extends Component {
             ComponentNode = React.createElement(component, components[component.name]);
         }
         return <div>
-            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="logo.svg" />
+            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="img/logo.svg" />
             <Searchbox className={Object.keys(components.App).length ? 'min' : ''} search={this.search.bind(this)} />
             <section style={{
                 display: 'flex',

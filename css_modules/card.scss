@@ -10,9 +10,10 @@
     overflow: hidden;
     background: $background;
     border-radius: .125em;
-    box-shadow: nth($material-shadows, $elevation);
-    
+    box-shadow: nth($shadows, $elevation);
+    transition: box-shadow .25s;
+
     &:hover {
-        box-shadow: nth($material-shadows, $elevation + 1);
+        box-shadow: nth($shadows, $elevation + 2);
     }
 }

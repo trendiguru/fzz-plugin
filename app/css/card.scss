@@ -1,27 +1,26 @@
 section {
+
     div > div {
-        cursor: pointer;
-        -webkit-transition: box-shadow .25s;
-        transition: box-shadow .25s;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        &:hover {
-            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-        }
+        @include card(2);
+
         img {
             width: 100%;
         }
+
         .tag {
             width: 100%;
             padding: .5em;
-            background-color: #fff;
+            background-color: $white;
             text-align: center;
             box-sizing: border-box;
+
             .price {
                 font-size: 1.4em;
                 font-family: 'Rozha One', serif;
-                color: #ff4d8b;
+                color: $pink500;
                 display: block;
-                &:before {
+
+                &::before {
                     content: '$';
                     font-family: 'Source Sans Pro', sans-serif;
                     font-size: .75em;

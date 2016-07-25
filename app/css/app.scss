@@ -1,6 +1,7 @@
 @import 'css_modules/reset';
 @import 'css_modules/md-icon';
 @import 'css_modules/colors';
+@import 'css_modules/card';
 @import 'loading';
 @import 'lightbox';
 @import 'aside';
@@ -11,8 +12,4 @@
 body {
     overflow: hidden;
     font-family: 'Source Sans Pro', sans-serif;
-}
-
-[data-color="pink"] {
-    color: #ff4d8b;
 }

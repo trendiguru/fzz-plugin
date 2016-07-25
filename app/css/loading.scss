@@ -2,14 +2,14 @@
     text-align: center;
 
     .giphy  {
-      width: 18.75em;
-      height: 18.75em;
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-      background-color: #FF5792;
-      background-blend-mode: hard-light;
-      margin: 3em auto;
+        width: 18.75em;
+        height: 18.75em;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-color: $pink400;
+        background-blend-mode: hard-light;
+        margin: 3em auto;
     }
 
     h3 {

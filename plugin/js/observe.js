@@ -24,6 +24,7 @@ export default class Observer {
     }
     observeBranch (branch) {
         this.observed.push(branch);
+        this.callback({type: 'init', target: branch});
         let observer = new MutationObserver(mutations => {
             for (let mutation of mutations) {
                 for (let selector of this.blacklist) {

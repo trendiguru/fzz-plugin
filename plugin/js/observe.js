@@ -6,15 +6,18 @@ export default class Observer {
         this.observeBranches(root);
     }
     observeBranches (root) {
+        console.log('observing branches');
         for (let selector of this.whitelist) {
             for (let node of Array.from(root.querySelectorAll(selector))) {
-                if (!this.observed.includes(selector)) {
+                if (!this.observed.includes(node)) {
                     this.observeBranch(node);
+                    this.observed.push(node);
                 }
             }
         }
     }
     observeBranch (branch) {
+        console.log('observing branch');
         this.observed.push(branch);
         let observer = new MutationObserver(mutation => {
             for (let selector of this.blacklist) {

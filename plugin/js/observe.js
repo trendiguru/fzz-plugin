@@ -1,4 +1,4 @@
-import {devTools} from 'modules/devTools';
+/* global devTools */
 
 export default class Observer {
     constructor (callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body) {

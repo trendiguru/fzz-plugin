@@ -55,6 +55,5 @@ function wrap ({element, buttonDiv}) {
         display: 'block'
     });
     trackButtonSeen(element);
-    //STACKS.set('svg', svg);
     STACKS.set('content', buttonDiv);
 }

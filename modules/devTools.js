@@ -70,7 +70,7 @@ export let STACKS = {
 
 if (active) {
     //______STACKS_definition_____//
-    ['isNew', 'isLoaded', 'isSuspicious', 'TGImage', 'smartCheckRelevancy', 'process', 'relevantImg', 'irrelevantImg', 'logIrrelevant', 'smartCheckRelevancy_input', 'svg', 'content'].forEach(stack => STACKS.newStack(stack));
+    ['isNew', 'isLoaded', 'isSuspicious', 'TGImage', 'smartCheckRelevancy', 'process', 'relevantImg', 'irrelevantImg', 'logIrrelevant', 'smartCheckRelevancy_input', 'observed', 'content'].forEach(stack => STACKS.newStack(stack));
 
     //______ective_functions______//
     modules = {};

@@ -1,12 +1,15 @@
 /* global devTools */
 
+devTools.STACKS.active = true;
+
 export default class Observer {
     constructor (callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body) {
         Object.assign(this, {callback, config, whitelist, blacklist, root, observed: []});
         let observer = new MutationObserver(() => this.observeBranches(root));
         observer.observe(root, config);
-        this.observeBranches(root);
         devTools.STACKS.newStack('observed');
+        this.observeBranches(root);
+
     }
     observeBranches (root) {
         for (let selector of this.whitelist) {

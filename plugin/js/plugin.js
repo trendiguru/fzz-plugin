@@ -8,7 +8,7 @@ import * as overlay from './overlay';
 import * as tutorial from './tutorial';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
-import observe from './observe';
+import Observer from './observe';
 import {process} from './process';
 import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
@@ -35,7 +35,7 @@ domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
     document.head.appendChild(style);
-    observe(processElement);
+    new Observer(processElement);
     // MESSAGE
     addEventListener('message', msg => {
         let {data} = msg;

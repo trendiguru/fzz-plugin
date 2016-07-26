@@ -6,7 +6,6 @@ export default class Observer {
         this.observeBranches(root);
     }
     observeBranches (root) {
-        console.log('observing branches');
         for (let selector of this.whitelist) {
             for (let node of Array.from(root.querySelectorAll(selector))) {
                 if (!this.observed.includes(node)) {
@@ -17,22 +16,23 @@ export default class Observer {
         }
     }
     observeBranch (branch) {
-        console.log('observing branch');
         this.observed.push(branch);
-        let observer = new MutationObserver(mutation => {
-            for (let selector of this.blacklist) {
-                if (mutation.target.matches(selector)) {
-                    return false;
-                }
-                else if (mutation.type == 'childList') {
-                    for (let child of mutation.childList) {
-                        if (child.matches(selector)) {
-                            return false;
+        let observer = new MutationObserver(mutations => {
+            for (let mutation of mutations) {
+                for (let selector of this.blacklist) {
+                    if (mutation.target.matches(selector)) {
+                        return false;
+                    }
+                    else if (mutation.type == 'childList') {
+                        for (let child of mutation.childList) {
+                            if (child.matches(selector)) {
+                                return false;
+                            }
                         }
                     }
                 }
+                this.callback(mutation);
             }
-            this.callback(mutation);
         });
         return observer.observe(branch, this.config);
     }

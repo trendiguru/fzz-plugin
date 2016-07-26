@@ -35,7 +35,7 @@ domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
     document.head.appendChild(style);
-    new Observer(processElement);
+    new Observer(mutation => processElement(mutation.target));
     // MESSAGE
     addEventListener('message', msg => {
         let {data} = msg;

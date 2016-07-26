@@ -1,9 +1,12 @@
+import {devTools} from 'modules/devTools';
+
 export default class Observer {
     constructor (callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body) {
         Object.assign(this, {callback, config, whitelist, blacklist, root, observed: []});
         let observer = new MutationObserver(() => this.observeBranches(root));
         observer.observe(root, config);
         this.observeBranches(root);
+        devTools.STACKS.newStack('observed');
     }
     observeBranches (root) {
         for (let selector of this.whitelist) {
@@ -11,6 +14,7 @@ export default class Observer {
                 if (!this.observed.includes(node)) {
                     this.observeBranch(node);
                     this.observed.push(node);
+                    devTools.STACKS.set('observed', node);
                 }
             }
         }

@@ -2,6 +2,8 @@
 
 devTools.STACKS.active = true;
 
+const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
+
 export default class Observer {
     constructor (callback, config = DEFAULT_CONFIG, whitelist = ['body'], blacklist = [], root = document) {
         Object.assign(this, {callback, config, whitelist, blacklist, root, observed: []});
@@ -26,6 +28,9 @@ export default class Observer {
         this.callback({type: 'init', target: branch});
         let observer = new MutationObserver(mutations => {
             for (let mutation of mutations) {
+                if (FORBIDDEN_HTML_TAGS.includes(mutation.target.tagName)) {
+                    return false;
+                }
                 for (let selector of this.blacklist) {
                     if (mutation.target.matches(selector)) {
                         return false;
@@ -52,4 +57,4 @@ const DEFAULT_CONFIG = {
     attributeFilter: ['src', 'style']
 };
 
-// example: new Observer(console.log.bind(console), DEFAULT_CONFIG, ['*'], [], document.body);
+// example: new Observer(console.log.bind(console), DEFAULT_CONFIG, ['body'], [], document);

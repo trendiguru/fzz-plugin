@@ -3,7 +3,7 @@
 devTools.STACKS.active = true;
 
 export default class Observer {
-    constructor (callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body) {
+    constructor (callback, config = DEFAULT_CONFIG, whitelist = ['body'], blacklist = [], root = document) {
         Object.assign(this, {callback, config, whitelist, blacklist, root, observed: []});
         let observer = new MutationObserver(() => this.observeBranches(root));
         observer.observe(root, config);
@@ -23,7 +23,6 @@ export default class Observer {
         }
     }
     observeBranch (branch) {
-        this.observed.push(branch);
         this.callback({type: 'init', target: branch});
         let observer = new MutationObserver(mutations => {
             for (let mutation of mutations) {

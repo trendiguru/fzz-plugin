@@ -1,9 +1,23 @@
 //import constants from 'constants';
 //const {USER_CONFIG} = constants;
 
+const URL_REGEXP = /url\([''""]?([^'")]*)[''""]?\)/g;
+
 export let getStyle = window.getComputedStyle || function(elem){
     return elem.currentStyle;
 };
+
+export function getBackgroundImage (element) {
+    let urls = [];
+    let style = getStyle(element); // get url inside url('...')
+    style.backgroundImage.replace(URL_REGEXP, function () {
+        urls = Array.from(arguments).slice(1, -2);
+    });
+    if (urls.length > 1) {
+        console.error('Too many background images');
+    }
+    return urls[0];
+}
 
 export function* entries(obj) {
     for (let key of Object.keys(obj)) {

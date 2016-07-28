@@ -1,8 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ES_POLYFILLS = ['whatwg-fetch', 'babel-polyfill'];
+const ES_POLYFILLS = ['whatwg-fetch', 'babel-polyfill', 'modules/elementsfrompoint.js'];
 
 module.exports = {
     module: {
@@ -28,6 +29,12 @@ module.exports = {
         ]
     },
     plugins: [
+        // This needs to be in index 0 to remain accessible
+        // in webpack.production & webpack.test
+        new webpack.DefinePlugin({
+            'ENVIRONMENT': '"DEV"'
+        }),
+        //-------------------------------------------------
         new ExtractTextPlugin('[name]')
     ],
     postcss () {
@@ -35,7 +42,7 @@ module.exports = {
     },
     entry: {
         'extensions/chrome/run_ext.js': ['babel-polyfill', 'extensions/chrome/es6_run_ext.js'],
-        'b_plugin.js':  ES_POLYFILLS.concat(['modules/elementsfrompoint.js', './plugin/js/plugin.js']),
+        'b_plugin.js':  ES_POLYFILLS.concat(['./plugin/js/plugin.js']),
         'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
         'app/b_app.js': ES_POLYFILLS.concat('./app/main.js'),
         'app/css/b_app.css': './app/css/app.scss',

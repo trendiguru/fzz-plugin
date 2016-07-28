@@ -2,8 +2,11 @@ import {Query} from 'modules/utils';
 
 let scriptTagData = loadScriptTagData();
 
-//export const HOST_DOMAIN = 'https://fzz.storage.googleapis.com',
-export const HOST_DOMAIN =  'https://localhost:4443',
+export const HOST_DOMAIN = {
+    DEV: 'https://localhost:4443',
+    PRODUCTION: 'https://fzz.storage.googleapis.com',
+    TEST: 'https://fzz-test.storage.googleapis.com'
+    }[ENVIRONMENT],
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
     DEBUG = false,
@@ -16,11 +19,10 @@ export const HOST_DOMAIN =  'https://localhost:4443',
     LIBNAME = 'fzz',
     USER_CONFIG = scriptTagData.userConfig,
     PID = Query.parse(location.search).PID || scriptTagData.pid || '_PD',
-    ENV = ['PRODUCTION', 'DEV'][0],
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
-    }[ENV],
+    }[ENVIRONMENT],
     COOKIE_NAME = 'fzz_ui_3',
     API_URL = {
         '_ND': 'https://api.trendi.guru/images',

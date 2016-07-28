@@ -11,7 +11,7 @@ class TGImage {
             s.set("TGImage", this);
         } else {
             //TODO: Get the size if possible
-            this.url = url || this.backgroundImage;
+            this.url = url || this.getBackgroundImage();
             if (!this.url) {
                 throw {
                     name: 'No Image found',

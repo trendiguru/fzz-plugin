@@ -93,7 +93,7 @@ export default class Demo extends Component {
             ComponentNode = React.createElement(component, components[component.name]);
         }
         return <div>
-            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="logo.svg" />
+            <img id="logo" className={Object.keys(components.App).length ? 'min' : ''} src="/src/img/fazz.svg" />
             <Searchbox className={Object.keys(components.App).length ? 'min' : ''} search={this.search.bind(this)} />
             <section style={{
                 display: 'flex',

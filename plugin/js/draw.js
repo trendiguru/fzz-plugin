@@ -24,7 +24,7 @@ function trackButtonSeen (el) {
     }
 }
 
-function wrap ({element, buttonDiv}) {
+function wrap ({element, buttonDiv, url}) {
     let div = document.createElement('div');
     element.parentElement.insertBefore(div, element);
     div.appendChild(element);
@@ -55,6 +55,11 @@ function wrap ({element, buttonDiv}) {
         display: 'block'
     });
     trackButtonSeen(element);
+    dispatchEvent(Object.assign(new Event('button drawn'), {
+        info: {
+            image: url
+        }
+    }));
     //STACKS.set('svg', svg);
     STACKS.set('content', buttonDiv);
 }

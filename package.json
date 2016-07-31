@@ -41,7 +41,8 @@
     "postcss-loader": "",
     "sass-loader": "",
     "node-sass": "",
-    "extract-text-webpack-plugin": ""
+    "extract-text-webpack-plugin": "",
+    "autoprefixer": ""
   },
   "babel": {
     "presets": [

@@ -17,6 +17,7 @@ export default class Observer {
             observed: [],
             selector: Selector(whitelist, blacklist)
         });
+        console.log(this.selector);
         let observer = new MutationObserver(() => this.observeBranches(root));
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');

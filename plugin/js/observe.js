@@ -25,14 +25,16 @@ export default class Observer {
     observeBranches (root) {
         for (let node of Array.from(root.querySelectorAll(this.selector))) {
             if (!this.observed.includes(node)) {
-                this.observeBranch(node);
+                if (!this.observed.includes(node.parentElement)) {
+                    this.observeBranch(node);
+                }
                 this.observed.push(node);
                 devTools.STACKS.set('observed', node);
+                this.callback({type: 'init', target: node});
             }
         }
     }
     observeBranch (branch) {
-        this.callback({type: 'init', target: branch});
         let observer = new MutationObserver(mutations => {
             for (let mutation of mutations) {
                 if (FORBIDDEN_HTML_TAGS.includes(mutation.target.tagName)) {

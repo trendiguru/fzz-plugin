@@ -28,3 +28,23 @@ if (!Element.prototype.matches) {
 if (!window.getComputedStyle) {
     window.getComputedStyle = (elem) => elem.currentStyle;
 }
+
+if (!document.elementsFromPoint) {
+    document.elementsFromPoint = (x, y) => {
+        let parents = [];
+        let parent;
+        do {
+            if (parent !== document.elementFromPoint(x, y)) {
+                parent = document.elementFromPoint(x, y);
+                parents.push(parent);
+                parent.style.pointerEvents = 'none';
+            } else {
+                parent = false;
+            }
+        } while (parent);
+        for (let parent of parents) {
+            parent.style.pointerEvents = 'all';
+        }
+        return parents;
+    };
+}

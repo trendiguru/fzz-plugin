@@ -1,7 +1,5 @@
 /* global devTools */
 
-import Selector from 'modules/selector';
-
 devTools.STACKS.active = true;
 
 const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
@@ -15,16 +13,15 @@ export default class Observer {
             blacklist,
             root,
             observed: [],
-            selector: Selector(whitelist, blacklist)
+            not_selector: blacklist.map(black => `${black} *`).join(', ')
         });
-        console.log(this.selector);
         let observer = new MutationObserver(() => this.observeBranches(root));
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
         this.observeBranches(root);
     }
     observeBranches (root) {
-        for (let node of Array.from(root.querySelectorAll(this.selector))) {
+        for (let node of Array.from(root.querySelectorAll(this.whitelist.join(', ')))) {
             if (!this.observed.includes(node)) {
                 if (!this.observed.includes(node.parentElement)) {
                     this.observeBranch(node);
@@ -39,6 +36,9 @@ export default class Observer {
         let observer = new MutationObserver(mutations => {
             for (let mutation of mutations) {
                 if (FORBIDDEN_HTML_TAGS.includes(mutation.target.tagName)) {
+                    return false;
+                }
+                if (!mutation.target.matches(this.not_selector)) {
                     return false;
                 }
                 this.callback(mutation);

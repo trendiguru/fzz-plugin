@@ -5,7 +5,7 @@ import mp_wrap from './mp_wrap';
 import nginx, {buildQueryString} from './nginx_analytics';
 import {HOST_DOMAIN} from 'constants';
 import {REQUESTS} from './devTools';
-import timeme from 'ext/timeme';
+import 'ext/timeme';
 
 REQUESTS.active = true;
 

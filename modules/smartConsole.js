@@ -1,9 +1,9 @@
 const winConsole = window.console;
 const FZZ = window.FZZ = window.FZZ || {};
-FZZ.logList = []; 
-const console = FZZ.console = {
-    log: function(msg){
-        FZZ.logList.push({timestamp:new Date(), message:msg});
+const logList = FZZ.logList = [];
+export const console = FZZ.console = {
+    log (msg) {
+        logList.push({timestamp:new Date(), message:msg});
     }
 //    print: function(lastN){
 //        let logList = FZZ.logList;
@@ -15,5 +15,3 @@ const console = FZZ.console = {
 //        }
 //    }
 };
-
-export {console};

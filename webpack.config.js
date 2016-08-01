@@ -2,7 +2,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ES_POLYFILLS = ['whatwg-fetch', 'babel-polyfill'];
+const ES_POLYFILLS = ['babel-polyfill', 'whatwg-fetch', './modules/polyfills'];
 
 module.exports = {
     module: {

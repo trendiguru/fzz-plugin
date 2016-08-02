@@ -12,40 +12,42 @@ export default class Observer {
             whitelist,
             blacklist,
             root,
-            observed: [],
+            observed: new Map(),
             not_selector: blacklist.map(black => `${black} *`).join(', ')
         });
-        let observer = new MutationObserver(() => this.observeBranches(root));
+        for (let element of evaluateElement(root, DalmatianPath(this.whitelist, this.blacklist))) {
+            this.observed.set(element, 1);
+            this.callback({type: 'init', target: element});
+            devTools.STACKS.set('observed', element);
+        }
+        let observer = new MutationObserver(mutations => {
+            for (let {target, type} of mutations) {
+                if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
+                    return 0;
+                }
+                for (let selector of whitelist) {
+                    if (target.matches(selector)) {
+                        // kkk
+                        return 0;
+                    }
+                }
+                for (let selector of blacklist) {
+                    if (target.matches(selector)) {
+                        // harlem
+                        return 0;
+                    }
+                }
+                if (type == 'nodeList' && this.observerd.get(target)) {
+                    // kkk
+                    return 0;
+                }
+            }
+        });
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
         this.observeBranches(root);
     }
-    observeBranches (root) {
-        for (let node of Array.from(root.querySelectorAll(this.whitelist.join(', ')))) {
-            if (!this.observed.includes(node)) {
-                if (!this.observed.includes(node.parentElement)) {
-                    this.observeBranch(node);
-                }
-                this.observed.push(node);
-                devTools.STACKS.set('observed', node);
-                this.callback({type: 'init', target: node});
-            }
-        }
-    }
-    observeBranch (branch) {
-        let observer = new MutationObserver(mutations => {
-            for (let mutation of mutations) {
-                if (FORBIDDEN_HTML_TAGS.includes(mutation.target.tagName)) {
-                    return false;
-                }
-                if (!mutation.target.matches(this.not_selector)) {
-                    return false;
-                }
-                this.callback(mutation);
-            }
-        });
-        return observer.observe(branch, this.config);
-    }
+
 }
 
 const DEFAULT_CONFIG = {
@@ -54,5 +56,25 @@ const DEFAULT_CONFIG = {
     attributes: true,
     attributeFilter: ['src', 'style']
 };
+
+function* evaluateElement (el, xpath) {
+    let evaluation = document.evaluate(xpath, el);
+
+    let iterated;
+
+    while (iterated = evaluation.iterateNext()) {
+        yield iterated;
+    }
+}
+
+function css2xpath (css) {
+    return css.replace(/\.(.+)/, '@class="$1"').replace(/\#(.+)/, '@id="$1"');
+}
+
+function DalmatianPath (whitelist, blacklist) {
+    let white = `*[${whitelist.map(css2xpath).join(' or ')}]`;
+    let black = `*[${blacklist.map(css2xpath).join(' or ')}]`;
+    return `//${white}//*[not(ancestor-or-self::${black})]`;
+}
 
 // example: new Observer(console.log.bind(console), DEFAULT_CONFIG, ['body'], [], document);

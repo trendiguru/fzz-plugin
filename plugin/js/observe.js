@@ -18,7 +18,7 @@ export default class Observer {
         for (let element of evaluateElement(root, DalmatianPath(this.whitelist, this.blacklist))) {
             this.observed.set(element, 1);
             if (callbackExisting) {
-                que.push([{type: 'init', target: element}]);
+                que.push({type: 'init', target: element});
             }
             devTools.STACKS.set('observed', element);
         }

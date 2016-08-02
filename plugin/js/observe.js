@@ -18,7 +18,6 @@ export default class Observer {
         for (let element of evaluateElement(root, DalmatianPath(this.whitelist, this.blacklist))) {
             this.observed.set(element, 1);
             if (callbackExisting) {
-                console.log('exis');
                 que.push([{type: 'init', target: element}]);
             }
             devTools.STACKS.set('observed', element);
@@ -27,10 +26,8 @@ export default class Observer {
         let observer = new MutationObserver(mutations => this.callback(mutations.filter(this.filter.bind(this))));
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
-        this.observeBranches(root);
     }
     filter (mutation) {
-        console.log(mutation);
         let {target, type} = mutation;
         if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
             return false;

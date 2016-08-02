@@ -73,13 +73,11 @@ function Overlay (tgImg) {
 let click = {
     button (e) {
         block(e);
-        let event = Object.assign(new Event ('button clicked', {bubbles: true}), this);
-        dispatchEvent(event);
+        dispatchEvent(Object.assign(new Event ('button clicked'), this));
     },
     info (e) {
         block(e);
-        let event = new Event ('info button clicked', {bubbles: true});
-        dispatchEvent(event);
+        dispatchEvent(new Event ('info button clicked'));
     }
 };
 

@@ -35,8 +35,13 @@ domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
     document.head.appendChild(style);
-    new Observer(mutation => {
-        processElement(mutation.target);
+    new Observer({
+        callback (mutations) {
+            for (let mutation of mutations) {
+                processElement(mutation.target);
+            }
+        },
+        callbackExisting: true
     });
     // MESSAGE
     addEventListener('message', msg => {

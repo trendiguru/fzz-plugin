@@ -5,47 +5,49 @@ devTools.STACKS.active = true;
 const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
 
 export default class Observer {
-    constructor (callback, config = DEFAULT_CONFIG, whitelist = ['body'], blacklist = [], root = document) {
+    constructor ({callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = ['.fzz_black'], root = document, callbackExisting = false}) {
         Object.assign(this, {
             callback,
             config,
             whitelist,
             blacklist,
             root,
-            observed: new Map(),
-            not_selector: blacklist.map(black => `${black} *`).join(', ')
+            observed: new Map()
         });
+        let que = [];
         for (let element of evaluateElement(root, DalmatianPath(this.whitelist, this.blacklist))) {
             this.observed.set(element, 1);
-            this.callback({type: 'init', target: element});
+            if (callbackExisting) {
+                console.log('exis');
+                que.push([{type: 'init', target: element}]);
+            }
             devTools.STACKS.set('observed', element);
         }
-        let observer = new MutationObserver(mutations => {
-            for (let {target, type} of mutations) {
-                if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
-                    return 0;
-                }
-                for (let selector of whitelist) {
-                    if (target.matches(selector)) {
-                        // kkk
-                        return 0;
-                    }
-                }
-                for (let selector of blacklist) {
-                    if (target.matches(selector)) {
-                        // harlem
-                        return 0;
-                    }
-                }
-                if (type == 'nodeList' && this.observerd.get(target)) {
-                    // kkk
-                    return 0;
-                }
-            }
-        });
+        this.callback(que); // que might be empty
+        let observer = new MutationObserver(mutations => this.callback(mutations.filter(this.filter.bind(this))));
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
         this.observeBranches(root);
+    }
+    filter (mutation) {
+        console.log(mutation);
+        let {target, type} = mutation;
+        if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
+            return false;
+        }
+        for (let selector of this.whitelist) {
+            if (target.matches(selector)) {
+                return true;
+            }
+        }
+        for (let selector of this.blacklist) {
+            if (target.matches(selector)) {
+                return false;
+            }
+        }
+        if (type == 'nodeList' && this.observed.has(target)) {
+            return false;
+        }
     }
 
 }
@@ -59,9 +61,7 @@ const DEFAULT_CONFIG = {
 
 function* evaluateElement (el, xpath) {
     let evaluation = document.evaluate(xpath, el);
-
     let iterated;
-
     while (iterated = evaluation.iterateNext()) {
         yield iterated;
     }

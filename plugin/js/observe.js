@@ -77,10 +77,8 @@ function DalmatianPath (whitelist, blacklist) {
     let white = whitelist.length ? `*[${whitelist.map(css2xpath).join(' or ')}]` : '*';
     let black = blacklist.length ? `*[${blacklist.map(css2xpath).join(' or ')}]` : 'text()';
     return `//${white}//*[not(ancestor-or-self::${black})]`;
-    // return `//${white}/descendant-or-self::*[not(ancestor-or-self::${black})]`;
 }
 
-// //*[contains(@class, "image-gallery")]/*[not(ancestor-or-self::text())]
 function validateSelector (selector) {
     try {
         document.body.matches(selector);

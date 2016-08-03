@@ -38,7 +38,14 @@ domready(() => {
     new Observer({
         callback (mutations) {
             for (let mutation of mutations) {
-                processElement(mutation.target);
+                if (mutation.type == 'nodeList') {
+                    for (let node of mutation.nodeList) {
+                        processElement(node);
+                    }
+                }
+                else {
+                    processElement(mutation.target);
+                }
             }
         },
         callbackExisting: true

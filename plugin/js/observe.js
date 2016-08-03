@@ -46,7 +46,6 @@ export default class Observer {
         if (this.cssSelectors.blacklist.length && target.matches(this.cssSelectors.blacklist.join(', '))) {
             return false;
         }
-        console.debug(this.observed.has(target));
         if (this.observed.has(target)) {
             return true;
         }

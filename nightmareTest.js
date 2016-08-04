@@ -45,19 +45,10 @@ function checkStacks(pageName, stacks) {
     return result;
 }
 
-// async.map(fzzPages, function(page){
-//     console.log(checkPage(page, checkStacks));
-// });
 var promises = [];
-// fzzPages.forEach(function(){promises.push(Promise.resolve(checkPage(page, checkStacks)))});
-
-// fzzPages.map(function(page){return Promise.resolve(checkPage(page, checkStacks))});
-// console.log(fzzPages);
-
 fzzPages.map(function(page) {
     promises.push(Promise.resolve(checkPage(page, checkStacks)));
 });
-// console.log(fzzPages);
 Promise.all(promises).then(function(results) {
     var flag = true;
     results.forEach(function(result) {

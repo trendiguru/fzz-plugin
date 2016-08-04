@@ -1,24 +1,43 @@
 /* eslint-disable no-console */
 import {STACKS} from 'modules/devTools';
-import {getBackgroundImage} from 'modules/utils';
+import {getStyle} from 'modules/utils';
 let s = STACKS;
 
 class TGImage {
-    constructor (element, url) {
-        Object.assign(this, {element});
-        if (element.nodeName == 'IMG') {
-            this.url = url || element.src || (location.origin + element.srcset);
+    constructor (elem, url) {
+        this.element = elem;
+        if (elem.nodeName == 'IMG') {
+            this.url = url || elem.src || (location.origin + elem.srcset);
+            s.set("TGImage", this);
         } else {
             //TODO: Get the size if possible
-            this.url = url || getBackgroundImage(element);
+            this.url = url || this.getBackgroundImage();
             if (!this.url) {
                 throw {
                     name: 'No Image found',
-                    element
+                    element: elem
                 };
             }
         }
-        s.set('TGImage', this);
+    }
+    // from imagesLoaded
+    getBackgroundImage() {
+        var urls = [];
+        var style = getStyle(this.element);
+        // get url inside url('...')
+        var reURL = /url\(([''""])?(.*?)\1\)/gi;
+        var matches = reURL.exec(style.backgroundImage);
+        while (matches !== null) {
+            var url = matches && matches[2];
+            if (url) {
+                urls.push(url);
+            }
+            matches = reURL.exec(style.backgroundImage);
+        }
+        if (urls.length > 1) {
+            console.log('Too many background images');
+        }
+        return urls[0];
     }
 }
 

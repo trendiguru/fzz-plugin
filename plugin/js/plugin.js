@@ -64,6 +64,12 @@ domready(() => {
         }
     });
     // BUTTON
+    addEventListener('button drawn', ({url: imageURL}) => {
+        analytics.track('Trendi Button Drawn', {
+            imageURL,
+            pageUrl: window.location.href
+        });
+    });
     addEventListener('button clicked', ({url: imageURL}) => {
         analytics.track('Trendi Button Clicked', {
             imageURL,

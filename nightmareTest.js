@@ -22,7 +22,10 @@ var checkPage = (url, callback) => {
     return nightmare.goto(url)
         .viewport(2000, 1000)
         .inject('js', 'b_plugin.js')
-        .wait(10000)
+        .wait('.fzzButton')
+        .click('.fzzButton')
+        .wait(3000)
+        .click('#fazzi')
         .evaluate(() => {
             return window.devTools.STACKS.storage;
         }).end()
@@ -46,9 +49,11 @@ function checkStacks(pageName, stacks) {
 }
 
 var promises = [];
+
 fzzPages.map(function(page) {
     promises.push(Promise.resolve(checkPage(page, checkStacks)));
 });
+
 Promise.all(promises).then(function(results) {
     var flag = true;
     results.forEach(function(result) {

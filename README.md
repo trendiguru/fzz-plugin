@@ -12,16 +12,26 @@ The goal of this project is to create a framework that allows different UI’s a
 
 ### Workflow ###
 
-Once:
-- Load /extension/chrome as unpacked extension into Chrome.
-- npm run start
+```bash
+$ npm start
+```
 
-After Every change:
-* npm run bundle
+* Make changes
 * (If you made changes to HOST_DOMAIN or es6_run_exy.js):
-  * npm run bundle_chrome
-  * Reload extension at chrome://extensions
-* Reload web page 
+    * Reload extension at chrome://extensions
+* Reload web page
+* repeat to perfection
+
+```bash
+$ npm test
+```
+
+* fix bugs
+* repeat until bug free
+
+```bash
+$ npm publish
+```
 
 
 ### Contribution guidelines ###

@@ -41,7 +41,7 @@ module.exports = {
         return [autoprefixer];
     },
     entry: {
-        'extensions/chrome/run_ext.js': ['babel-polyfill', 'extensions/chrome/es6_run_ext.js'],
+        'extensions/chrome/run_ext.js': 'extensions/chrome/es6_run_ext.js',
         'b_plugin.js':  ES_POLYFILLS.concat(['./plugin/js/plugin.js']),
         'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
         'app/b_app.js': ES_POLYFILLS.concat('./app/main.js'),

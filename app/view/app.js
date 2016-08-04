@@ -52,7 +52,10 @@ class App extends Component {
                         minWidth={180}
                         margin={8}
                         marginBottom={70}
-                        template={img => <Card link={img.link} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
+                        template={img => <Card link={img.link} image={img.src}>
+                            <span data-currency={img.price.currency} className="price">{img.price.price}</span>
+                            <span className="brand">{img.brand}</span>
+                        </Card>}
                         src={
                             item.similar_results.map(result => {
                                 result.src = result.images.XLarge;

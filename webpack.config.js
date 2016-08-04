@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -28,6 +29,12 @@ module.exports = {
         ]
     },
     plugins: [
+        // This needs to be in index 0 to remain accessible
+        // in webpack.production & webpack.test
+        new webpack.DefinePlugin({
+            'ENVIRONMENT': '"DEV"'
+        }),
+        //-------------------------------------------------
         new ExtractTextPlugin('[name]')
     ],
     postcss () {

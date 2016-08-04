@@ -30,7 +30,7 @@ $ npm test
 * repeat until bug free
 
 ```bash
-$ npm publish
+$ npm run publish
 ```
 
 

@@ -9,7 +9,7 @@ export default class Labels extends React.Component {
     }
     componentDidMount () {
         let {labels} = this.props;
-        Promise.all(Object.keys(labels).map(label => giphy(label)))
+        Promise.all(Object.keys(labels).map(label => giphy.search(label)))
         .then(responses => this.setState({
             labels: responses.map(response => ({
                 query: response.query,

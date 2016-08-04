@@ -8,7 +8,7 @@ import * as overlay from './overlay';
 import * as tutorial from './tutorial';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
-import {scanForever, observe} from './observe';
+import Observer from './observe';
 import {process} from './process';
 import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
@@ -35,8 +35,21 @@ domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
     document.head.appendChild(style);
-    scanForever(document.body, processElement);
-    observe(document.body, processElement, {childList: true, subtree: true});
+    new Observer({
+        callback (mutations) {
+            for (let mutation of mutations) {
+                if (mutation.type == 'nodeList') {
+                    for (let node of mutation.nodeList) {
+                        processElement(node);
+                    }
+                }
+                else {
+                    processElement(mutation.target);
+                }
+            }
+        },
+        callbackExisting: true
+    });
     // MESSAGE
     addEventListener('message', msg => {
         let {data} = msg;

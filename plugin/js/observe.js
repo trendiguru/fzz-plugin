@@ -1,107 +1,92 @@
-import {selectorMatches} from 'modules/utils';
-import * as constants from 'constants';
-import {MUT} from 'modules/devTools';
-const {USER_CONFIG} = constants;
+/* global devTools */
 
-const forbiddenHTMLTags = ['TEXT', 'TIME', 'SCRIPT', 'SPAN', 'A', 'UL', 'LI','INPUT'];
-const defaultConfig = {
+devTools.STACKS.active = true;
+
+const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT'];
+
+export default class Observer {
+    constructor ({callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body, callbackExisting = false}) {
+        Object.assign(this, {
+            callback,
+            config,
+            whitelist,
+            blacklist,
+            cssSelectors: {
+                whitelist: whitelist.filter(validateSelector),
+                blacklist: blacklist.filter(validateSelector)
+            },
+            root,
+            observed: new Map()
+        });
+        devTools.STACKS.observed = this.observed;
+        let que = [];
+        for (let element of evaluateElement(root, DalmatianPath(whitelist, blacklist))) {
+            this.observed.set(element, 1);
+            if (callbackExisting) {
+                que.push({type: 'init', target: element});
+            }
+        }
+        this.callback(que); // que might be empty
+        let observer = new MutationObserver(mutations => this.callback(mutations.filter(this.filter.bind(this))));
+        observer.observe(root, config);
+        devTools.STACKS.newStack('observed');
+    }
+    /*
+    * This filters mutations: 1. Cheaply get rid of or let through
+    * obvious nodes (which match HTML tags or white or black selectors),
+    * 2. Check if the node is part of the white tree index (this.observed)
+    */
+    filter ({target}) {
+        if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
+            return false;
+        }
+        if (this.cssSelectors.whitelist.length && target.matches(this.cssSelectors.whitelist.join(', '))) {
+            return true;
+        }
+        if (this.cssSelectors.blacklist.length && target.matches(this.cssSelectors.blacklist.join(', '))) {
+            return false;
+        }
+        if (this.observed.has(target)) {
+            return true;
+        }
+        return false;
+    }
+
+}
+
+const DEFAULT_CONFIG = {
     childList: true,
     subtree: true,
     attributes: true,
     attributeFilter: ['src', 'style']
 };
 
-MUT.active = true;
-
-// Object is 'interesting' only if it is not 'forbidden' and not created by trendiGuru.
-function _objIsInteresting(node){
-    return (forbiddenHTMLTags.indexOf(node.tagName) === -1) && !(node.classList && node.classList.contains('fazz'));
-}
-
-export function observe (target, executeFunc, config = defaultConfig) {
-    let handleMutations = function (mutations) {
-        for (let mutation of mutations) {
-            //If object was added To DOM:
-            if(mutation.type === 'childList'){
-                for(let addedNode of mutation.addedNodes){
-                    scanForever(addedNode, executeFunc);
-                }
-            }
-            //If in already exested object attribute was changed:
-            if (mutation.type === 'attributes'){
-                //If src was changed (in image only):
-                if (mutation.attributeName!='style' && mutation.target.tagName==='IMG'){
-                    MUT.set(mutation.target, 'src');
-                    executeFunc(mutation.target);
-                }
-                else {
-                    //if backgroundImage was changed:
-                    let bckgndImg = mutation.target.style.backgroundImage;
-                    if (bckgndImg && bckgndImg !== mutation.oldValue ){
-                        if (_objIsInteresting(mutation.target)){
-                            MUT.set(mutation.target, 'attribute');
-                            executeFunc(mutation.target);
-                        }
-                    }
-                }
-            }
-        }
-    };
-    let observer = new MutationObserver(handleMutations);
-    observer.observe(target, config);
-    return observer;
-}
-
-
-/*
-For a given node, scan for relevant elements and then
-watch them for changes.
-*/
-export function scanForever (node, executeFunc) {
-    node = node || document.body;
-
-    let parentElems = [];
-    if(node.querySelectorAll){
-        parentElems = node.querySelectorAll(USER_CONFIG.whitelist) || [];
-    }
-
-    let allElems = Array.from(parentElems);
-
-    if (selectorMatches(node, USER_CONFIG.whitelist) && node !== document && node !== document.body) {
-        allElems.push(node);
-    }
-
-    if (USER_CONFIG.whitelist !== '*') {
-        for (let el of parentElems) {
-            //add attribute observer
-            // If notParentWhiteObject => Then
-            let mObserver = observe(el,executeFunc,
-                {subtree: true,
-                 attributes: true,
-                 attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, 'observer');
-            if(el.querySelectorAll){
-                allElems = allElems.concat(Array.from(el.querySelectorAll('*')));
-            }
-        }
-    }
-    // if whiteList is empty => listen to all document.body
-    else{
-        if (node === document.body){
-            let mObserver = observe(node,executeFunc,
-                {subtree: true,
-                attributes: true,
-                attributeFilter: ['src', 'style']});
-            MUT.set(mObserver, 'mainObserver');
-        }
-    }
-
-    //Initial scan
-    for (let el of allElems){
-        // check el before executing.
-        if (_objIsInteresting(el)){
-            executeFunc(el);
-            MUT.set(el, 'node');
-        }
+function* evaluateElement (el, xpath) {
+    let evaluation = document.evaluate(xpath, el);
+    let iterated;
+    while (iterated = evaluation.iterateNext()) {
+        yield iterated;
     }
 }
+
+function css2xpath (css) {
+    return css.replace(/\.(.+)/, 'contains(@class, "$1")').replace(/\#(.+)/, '@id="$1"');
+}
+
+function DalmatianPath (whitelist, blacklist) {
+    let white = whitelist.length ? `*[${whitelist.map(css2xpath).join(' or ')}]` : '*';
+    let black = blacklist.length ? `*[${blacklist.map(css2xpath).join(' or ')}]` : 'text()';
+    return `//${white}//*[not(ancestor-or-self::${black})]`;
+}
+
+function validateSelector (selector) {
+    try {
+        document.body.matches(selector);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+// example: new Observer(console.log.bind(console), DEFAULT_CONFIG, ['body'], [], document);

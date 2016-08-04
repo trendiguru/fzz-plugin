@@ -28,15 +28,18 @@ export const HOST_DOMAIN = {
         '_ND': 'https://api.trendi.guru/images',
         '_PD': 'https://extremeli.trendi.guru/api/images'
     }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images',
-    LOADING_GIPHIES = [
-        'UPAJRWATdepFK',
-        'PLw7s7Ezb50OY',
-        '13SHVEhqEPfSXC',
-        'hLBNOS9GOBCH6',
-        '7DNcclBIsgUzC',
-        '5AtHzs3lLbbWg',
-        'VLHmZU5YQidm8'
-    ],
+    GIPHY = {
+        API_KEY: 'dc6zaTOxFJmzC',
+        LOADING_IMAGES: [
+            'UPAJRWATdepFK',
+            'PLw7s7Ezb50OY',
+            '13SHVEhqEPfSXC',
+            'hLBNOS9GOBCH6',
+            '7DNcclBIsgUzC',
+            '5AtHzs3lLbbWg',
+            'VLHmZU5YQidm8'
+        ]
+    },
     TUTOIRAL_VERSION = '1.0.0';
 
 export function UISettings (host) {

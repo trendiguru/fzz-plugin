@@ -7,11 +7,10 @@ let fzzPages = ['http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-
     'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html'
 ];
 
-var async = require('async');
 var Nightmare = require('nightmare');
-var checkPage = (url, callback) => {
+var checkPage = (url) => {
     var nightmare = new Nightmare({
-        show: true,
+        //show: true,
         openDevTools: true,
         switches: {
             'ignore-certificate-errors': true,
@@ -28,10 +27,9 @@ var checkPage = (url, callback) => {
         .click('#fazzi')
         .evaluate(() => {
             return window.devTools.STACKS.storage;
-        }).end()
-        .then((stacks) => {
-            return checkStacks(url, stacks);
         })
+        .end()
+        .then((stacks) => checkStacks(url, stacks))
         .catch((error) => {
             console.error('nightmare test failed:', error);
             return false;
@@ -42,7 +40,7 @@ function checkStacks(pageName, stacks) {
     var result = true;
     RELEVANT_STACKS.forEach((name) => {
         console.log(name + " stack contains: " + stacks[name].length + " elements");
-        result = ((stacks[name].length !== 0) && result);
+        result = stacks[name].length !== 0 && result;
     });
     console.log("____" + pageName + " check succeeded: " + result + "____");
     return result;

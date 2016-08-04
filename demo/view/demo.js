@@ -22,9 +22,9 @@ export default class Demo extends Component {
             components: {
                 Discover: {
                     images: [
-                        '/src/img/demo/gettyimages-492504614.jpg',
-                        '/src/img/demo/gettyimages-494515956.jpg',
-                        '/src/img/demo/gettyimages-490421970.jpg'
+                        'http://fazz.co/src/img/demo/gettyimages-490421970.jpg',
+                        'http://fazz.co/src/img/demo/gettyimages-492504614.jpg',
+                        'http://fazz.co/src/img/demo/gettyimages-494515956.jpg'
                     ],
                     search: this.search.bind(this)
                 },
@@ -69,7 +69,7 @@ export default class Demo extends Component {
                 else { // try posting it and check agian
                     sources.post.then(res => {
                         if (res.relevancy_dict[url]) {
-                            this.state.api.get(url).then(resolve);
+                            resolve(null);
                         }
                         else {
                             reject();
@@ -79,12 +79,24 @@ export default class Demo extends Component {
 
             }
         }))
+        .then(data => new Promise((resolve, reject) => {
+            if (data) {
+                resolve(data);
+            }
+            else {
+                setInterval(() => {
+                    this.state.api.get(url)
+                    .then(resolve);
+                }, 1000);
+                setTimeout(reject, 120000);
+            }
+        })
         .then(data => {
             this.setState(state => Object.assign(state.components.App, {data}));
         })
         .catch(() => this.setState(state => {
             state.components.App.data = null;
-        }));
+        })));
     }
     render () {
         let {components, component} = this.state,

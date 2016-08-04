@@ -26,10 +26,12 @@ var checkPage = (url, callback) => {
         .evaluate(() => {
             return window.devTools.STACKS.storage;
         }).end()
+        .then((stacks) => {
+            return checkStacks(url, stacks);
+        })
         .catch((error) => {
             console.error('nightmare test failed:', error);
-        }).then((stacks) => {
-            return checkStacks(url, stacks);
+            return false;
         });
 }
 

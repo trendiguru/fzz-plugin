@@ -6,6 +6,7 @@ import Card from './card';
 import Aside from './aside';
 import Loading from './loading';
 import Labels from './labels';
+import Price from './price';
 
 const {Component} = React;
 
@@ -52,7 +53,10 @@ class App extends Component {
                         minWidth={180}
                         margin={8}
                         marginBottom={70}
-                        template={img => <Card link={img.link} image={img.src} labels={{price: img.price.price, brand: img.brand}} />}
+                        template={img => <Card link={img.link} image={img.src}>
+                            <Price data={img.price} />
+                            <span className="brand">{img.brand}</span>
+                        </Card>}
                         src={
                             item.similar_results.map(result => {
                                 result.src = result.images.XLarge;

@@ -42,7 +42,8 @@
     "sass-loader": "",
     "node-sass": "",
     "extract-text-webpack-plugin": "",
-    "autoprefixer": ""
+    "autoprefixer": "",
+    "nightmare": ""
   },
   "babel": {
     "presets": [

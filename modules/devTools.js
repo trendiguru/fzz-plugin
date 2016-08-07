@@ -48,14 +48,14 @@ export let STACKS = {
         }
     },
     show (sName) { // +col
-        return this.modify(sName, 12);
+        return STACKS.modify(sName, 12);
     },
     hide (sName) {
-        return this.modify(sName, 0);
+        return STACKS.modify(sName, 0);
     },
     modify (sName, borderWidth = 0) {
         if (STACKS.active) {
-            for (let [key, stack] in Object.entries(STACKS.storage)) {
+            for (let [key, stack] of Object.entries(STACKS.storage)) {
                 if (sName === key) {
                     for (let elem of stack) {
                         if (elem !== undefined && elem.style !== undefined) {
@@ -79,12 +79,12 @@ if (active) {
 
 export function coloredReport () {
     let {sColor, show} = STACKS,
-        defaultColor = sColor;
-    sColor = 'yellow';
+        defaultColor = STACKS.sColor;
+    STACKS.sColor = 'yellow';
     show('smartCheckRelevancy_input');
-    sColor = 'green';
+    STACKS.sColor = 'green';
     show('relevantImg');
-    sColor = 'red';
+    STACKS.sColor = 'red';
     show('irrelevantImg');
     STACKS.sColor = defaultColor;
 }

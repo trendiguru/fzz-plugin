@@ -21,7 +21,7 @@ section {
                 display: block;
 
                 &::before {
-                    content: '$';
+                    content: attr(data-currency);
                     font-family: 'Source Sans Pro', sans-serif;
                     font-size: .75em;
                     font-weight: bold;

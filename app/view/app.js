@@ -6,6 +6,7 @@ import Card from './card';
 import Aside from './aside';
 import Loading from './loading';
 import Labels from './labels';
+import Price from './price';
 
 const {Component} = React;
 
@@ -53,7 +54,7 @@ class App extends Component {
                         margin={8}
                         marginBottom={70}
                         template={img => <Card link={img.link} image={img.src}>
-                            <span data-currency={img.price.currency} className="price">{img.price.price}</span>
+                            <Price data={img.price} />
                             <span className="brand">{img.brand}</span>
                         </Card>}
                         src={

@@ -1,6 +1,6 @@
 const Nightmare = require('nightmare');
 
-const WAIT_TIME = 10000;
+const WAIT_TIME = 3000;
 const RELEVANT_STACKS = ['smartCheckRelevancy', 'content'];
 
 let fzzPages = [
@@ -25,11 +25,9 @@ function checkPage (url) {
         .inject('js', 'b_plugin.js')
         .wait('.fzzButton')
         .click('.fzzButton')
-        .wait(3000)
+        .wait(WAIT_TIME)
         .click('#fazzi')
-        .evaluate(() => {
-            return window.devTools.STACKS.storage;
-        })
+        .evaluate(() => window.devTools.STACKS.storage)
         .end()
         .then((stacks) => checkStacks(url, stacks))
         .catch((error) => {
@@ -48,7 +46,7 @@ function checkStacks(pageName, stacks) {
     return result;
 }
 
-let promises = fzzPages.map((page) => Promise.resolve(checkPage(page, checkStacks)));
+let promises = fzzPages.map((page) => checkPage(page, checkStacks));
 
 Promise.all(promises)
 .then((results) => {

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ES_POLYFILLS = ['babel-polyfill', 'whatwg-fetch', 'modules/polyfills'];
+const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills'];
 
 module.exports = {
     module: {
@@ -41,7 +41,7 @@ module.exports = {
         return [autoprefixer];
     },
     entry: {
-        'extensions/chrome/run_ext.js': 'extensions/chrome/es6_run_ext.js',
+        'extensions/chrome/run_ext.js': ['regenerator-runtime/runtime', 'extensions/chrome/es6_run_ext.js'],
         'b_plugin.js':  ES_POLYFILLS.concat(['./plugin/js/plugin.js']),
         'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
         'app/b_app.js': ES_POLYFILLS.concat('./app/main.js'),

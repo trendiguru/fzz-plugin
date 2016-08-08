@@ -12,6 +12,9 @@ import Observer from './observe';
 import {process} from './process';
 import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
+import {STACKS} from 'modules/devTools';
+
+let s = STACKS;
 
 let refererDomain = window.location.hostname.replace('www.', '');
 
@@ -88,12 +91,14 @@ domready(() => {
     });
     // BUTTON
     addEventListener('button drawn', ({url: imageURL}) => {
+        s.set('requests', 'Trendi Button Drawn');
         analytics.track('Trendi Button Drawn', {
             imageURL,
             pageUrl: window.location.href
         });
     });
     addEventListener('button clicked', ({url: imageURL}) => {
+        s.set('requests', 'Trendi Button Clicked');
         analytics.track('Trendi Button Clicked', {
             imageURL,
             pageUrl: window.location.href
@@ -101,9 +106,12 @@ domready(() => {
         iframe.show();
         iframe.contentWindow.postMessage({imageURL}, '*');
     });
-    addEventListener('button seen', () => analytics.track('Button Seen'));
+    addEventListener('button seen', () => {
+        s.set('requests', 'button seen');
+        analytics.track('Button Seen')});
     // INFO BUTTON
     addEventListener('info button clicked', () => {
+        s.set('requests', 'Info Button Clicked');
         analytics.track('Info Button Clicked');
         window.open(INFO_URL, '_blank');
     });

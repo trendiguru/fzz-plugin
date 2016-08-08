@@ -84,3 +84,33 @@ export class Version {
         return string.split('.').map(i => parseInt(i));
     }
 }
+
+export function cssSplit (cssSelector) {
+    let array = cssSelector.split(', ');
+    if (array.length == 1 && array[0] == '') {
+        array = [];
+    }
+    return array;
+}
+
+export function css2xpath (cssSelector) {
+    return cssSelector.replace(/\.(.+)/, 'contains(@class, "$1")').replace(/\#(.+)/, '@id="$1"');
+}
+
+export function* evaluateElement (el, xpath) {
+    let evaluation = document.evaluate(xpath, el);
+    let iterated;
+    while (iterated = evaluation.iterateNext()) {
+        yield iterated;
+    }
+}
+
+export function validateSelector (selector) {
+    try {
+        document.body.matches(selector);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}

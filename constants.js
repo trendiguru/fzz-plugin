@@ -1,11 +1,13 @@
+/* globals ENVIRONMENT */
+
 import {Query} from 'modules/utils';
 
-let scriptTagData = loadScriptTagData();
+let {blacklist, whitelist, pid, api} = ScriptElementDataAttributes();
 
 export const HOST_DOMAIN = {
-    DEV: 'https://localhost:4443',
-    PRODUCTION: 'https://fzz.storage.googleapis.com',
-    TEST: 'https://fzz-test.storage.googleapis.com'
+        DEV: 'https://localhost:4443',
+        PRODUCTION: 'https://fzz.storage.googleapis.com',
+        TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],
     MIN_IMG_WIDTH = 151,
     MIN_IMG_HEIGHT = 181,
@@ -17,17 +19,18 @@ export const HOST_DOMAIN = {
     IFRAME_ID = 'fazzi',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
-    USER_CONFIG = scriptTagData.userConfig,
-    PID = Query.parse(location.search).PID || scriptTagData.pid || '_PD',
+    BLACK_LIST = blacklist,
+    WHITE_LIST = whitelist,
+    PID = pid || Query.parse(location.search).PID || '',
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
     COOKIE_NAME = 'fzz_ui_3',
     API_URL = {
-        '_ND': 'https://api.trendi.guru/images',
-        '_PD': 'https://extremeli.trendi.guru/api/images'
-    }[PID.substr(-3)] || 'https://extremeli.trendi.guru/api/images',
+        ND: 'https://api.trendi.guru/images',
+        PD: 'https://extremeli.trendi.guru/api/images'
+    }[api] || 'https://extremeli.trendi.guru/api/images',
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
         LOADING_IMAGES: [
@@ -76,19 +79,19 @@ export function UISettings (host) {
     return settings.__default;
 }
 
-function loadScriptTagData(){
-    let data = {userConfig:{}, pid:''};
+function ScriptElementDataAttributes () {
+    let data = {
+        userConfig: {},
+        pid: '',
+        whitelist: '*'
+    };
     let fzzScript = document.getElementById('fzz-script');
-    if(fzzScript){
-        let userConfigJSON = fzzScript.getAttribute('data-fzz');
-        if(userConfigJSON){
-            data.userConfig = JSON.parse(userConfigJSON);
+    if (fzzScript) {
+        for (let attribute of fzzScript.attributes) {
+            if (attribute.name.search('data-') == 0) {
+                data[attribute.name.substr(5)] = attribute.value;
+            }
         }
-
-        data.pid = fzzScript.getAttribute('data-pid');
     }
-
-    data.userConfig.whitelist = data.userConfig.whitelist || '*';
-
     return data;
 }

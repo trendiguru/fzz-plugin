@@ -1,11 +1,15 @@
 /* global devTools */
 
+import {cssSplit, css2xpath, evaluateElement, validateSelector} from 'modules/utils';
+
 devTools.STACKS.active = true;
 
 const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT'];
 
 export default class Observer {
-    constructor ({callback, config = DEFAULT_CONFIG, whitelist = ['*'], blacklist = [], root = document.body, callbackExisting = false}) {
+    constructor ({ callback, config = DEFAULT_CONFIG, whitelist = '*', blacklist = '', root = document.body, callbackExisting = false }) {
+        whitelist = cssSplit(whitelist);
+        blacklist = cssSplit(blacklist);
         Object.assign(this, {
             callback,
             config,
@@ -61,32 +65,10 @@ const DEFAULT_CONFIG = {
     attributeFilter: ['src', 'style']
 };
 
-function* evaluateElement (el, xpath) {
-    let evaluation = document.evaluate(xpath, el);
-    let iterated;
-    while (iterated = evaluation.iterateNext()) {
-        yield iterated;
-    }
-}
-
-function css2xpath (css) {
-    return css.replace(/\.(.+)/, 'contains(@class, "$1")').replace(/\#(.+)/, '@id="$1"');
-}
-
 function DalmatianPath (whitelist, blacklist) {
     let white = whitelist.length ? `*[${whitelist.map(css2xpath).join(' or ')}]` : '*';
     let black = blacklist.length ? `*[${blacklist.map(css2xpath).join(' or ')}]` : 'text()';
     return `//${white}//*[not(ancestor-or-self::${black})]`;
-}
-
-function validateSelector (selector) {
-    try {
-        document.body.matches(selector);
-        return true;
-    }
-    catch (e) {
-        return false;
-    }
 }
 
 // example: new Observer(console.log.bind(console), DEFAULT_CONFIG, ['body'], [], document);

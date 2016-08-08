@@ -107,7 +107,7 @@ domready(() => {
         iframe.contentWindow.postMessage({imageURL}, '*');
     });
     addEventListener('button seen', () => {
-        s.set('requests', 'button seen');
+        s.set('requests', 'Button Seen');
         analytics.track('Button Seen')});
     // INFO BUTTON
     addEventListener('info button clicked', () => {

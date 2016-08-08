@@ -50,6 +50,29 @@ domready(() => {
         },
         callbackExisting: true
     });
+    addEventListener('click', (e) => {
+        let isTgButton = (el) => {
+            if (el === undefined || el.classList === undefined) return false;
+            if (Array.from(el.classList).includes("fzzButton") && el.tagName === "BUTTON") {
+                return true;
+            }
+            return false;
+        };
+        let elemsFromPoint = document.elementsFromPoint(e.clientX, e.clientY);
+        let i = 0;
+        let lastIndex = elemsFromPoint.length - 1;
+        console.log(elemsFromPoint);
+        while (!isTgButton(elemsFromPoint[i]) && i <= lastIndex) {
+            //TODO:if it elemsFromPoint is not transparelnt return false;
+            i++;
+        }
+        if (i <= lastIndex) {
+            console.log(elemsFromPoint[i]);
+            elemsFromPoint[i].click();
+            return true;
+        }
+        return false;
+    });
     // MESSAGE
     addEventListener('message', msg => {
         let {data} = msg;

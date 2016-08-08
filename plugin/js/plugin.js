@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {PID, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -36,6 +36,9 @@ domready(() => {
     document.body.appendChild(iframe);
     document.head.appendChild(style);
     new Observer({
+        whitelist: WHITE_LIST,
+        blacklist: BLACK_LIST,
+        callbackExisting: true,
         callback (mutations) {
             for (let mutation of mutations) {
                 if (mutation.type == 'nodeList') {
@@ -48,12 +51,11 @@ domready(() => {
                 }
             }
         },
-        callbackExisting: true
     });
     addEventListener('click', (e) => {
         let isTgButton = (el) => {
             if (el === undefined || el.classList === undefined) return false;
-            if (Array.from(el.classList).includes("fzzButton") && el.tagName === "BUTTON") {
+            if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
                 return true;
             }
             return false;

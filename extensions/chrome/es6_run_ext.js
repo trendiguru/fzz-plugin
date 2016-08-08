@@ -5,14 +5,14 @@ const {HOST_DOMAIN} = constants;
 const URL = `${HOST_DOMAIN}/b_plugin.js`;
 //const URL = `${HOST_DOMAIN}/fzz.min.js`;
 
-// should output <script src="fzz.min.js" data-fzz='{"whitelist": "*"}' data-pid="_PD"></script>
+// should output <script src="fzz.min.js" data-whitelist="*" data-pid="dev-roundDress"></script>
 
 function getScript(url, callback) {
     var headTag = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.id = 'fzz-script';
-    script.setAttribute('data-fzz', '{"whitelist":"*"}');
+    script.setAttribute('data-whitelist', '*');
     script.setAttribute('data-pid', 'dev-roundDress');
     script.src = url;
     script.onload = callback;

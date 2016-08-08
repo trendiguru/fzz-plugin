@@ -13,17 +13,21 @@ export default function draw (ui, tgImg) {
 }
 
 function trackButtonSeen (el) {
-    let rect = el.getBoundingClientRect();
-    if(isVisible(el, rect)){
-        // Make sure the user sees the button for more than an instant.
-        let intervalID = setInterval(() => {
-            if(doTrackVisible && isVisible(el, rect)){
+    // Make sure the user sees the button for more than an instant.
+    let intervalID = setInterval(() => {
+        if (doTrackVisible){
+            console.log(".");
+            let rect = el.getBoundingClientRect();
+            if(isVisible(el, rect)){
+                console.log("saw!");
                 doTrackVisible = false;
                 dispatchEvent(new Event('button seen'));
-                clearInterval(intervalID);
             }
-        }, IS_VISIBLE_INTERVAL);
-    }
+        }
+        // }else{
+        //     clearInterval(intervalID);
+        // }
+    }, IS_VISIBLE_INTERVAL);
 }
 
 function wrap ({element, buttonDiv, url}) {

@@ -31,6 +31,7 @@ export const HOST_DOMAIN = {
         ND: 'https://api.trendi.guru/images',
         PD: 'https://extremeli.trendi.guru/api/images'
     }[api] || 'https://extremeli.trendi.guru/api/images',
+    BUTTON_SEEN_CHECK_INTERVAL = 1000,
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
         LOADING_IMAGES: [

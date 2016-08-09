@@ -66,7 +66,6 @@ domready(() => {
         let elemsFromPoint = document.elementsFromPoint(e.clientX, e.clientY);
         let i = 0;
         let lastIndex = elemsFromPoint.length - 1;
-        console.log(elemsFromPoint);
         while (!isTgButton(elemsFromPoint[i]) && i <= lastIndex) {
             //TODO:if it elemsFromPoint is not transparelnt return false;
             i++;

@@ -1,31 +1,26 @@
+import {BUTTON_SEEN_CHECK_INTERVAL} from 'constants';
 import {isVisible} from 'ext/visibility';
 // import {analytics} from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 
-const IS_VISIBLE_INTERVAL = 1000;
-
-let doTrackVisible = true;
+let trackedButton = false;
 
 export default function draw (ui, tgImg) {
-    let {buttonDiv} = tgImg;
-    buttonDiv = buttonDiv || ui.overlay(tgImg);
+    if (!tgImg.buttonDiv) {
+        ui.overlay(tgImg);
+    }
     wrap (tgImg);
 }
 
 function trackButtonSeen (el) {
-    if (doTrackVisible){
+    if (!trackedButton){
         let IntervalID = setInterval(() => {
-            if (doTrackVisible){
-                let rect = el.getBoundingClientRect();
-                if(isVisible(el, rect)){
-                    doTrackVisible = false;
-                    dispatchEvent(new Event('button seen'));
-                }
+            if (!trackedButton && isVisible(el, el.getBoundingClientRect())) {
+                trackedButton = true;
+                dispatchEvent(new Event('button seen'));
             }
-        }, IS_VISIBLE_INTERVAL);
-        addEventListener('button seen', () => {
-            clearInterval(IntervalID);
-        });
+        }, BUTTON_SEEN_CHECK_INTERVAL);
+        addEventListener('button seen', () => clearInterval(IntervalID));
     }
 }
 

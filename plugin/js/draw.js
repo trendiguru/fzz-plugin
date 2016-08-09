@@ -15,19 +15,15 @@ export default function draw (ui, tgImg) {
 function trackButtonSeen (el) {
     if (doTrackVisible){
         let IntervalID = setInterval(() => {
-            console.log(".");
             if (doTrackVisible){
-                console.log("check");
                 let rect = el.getBoundingClientRect();
                 if(isVisible(el, rect)){
-                    console.log("saw!");
                     doTrackVisible = false;
                     dispatchEvent(new Event('button seen'));
                 }
             }
         }, IS_VISIBLE_INTERVAL);
         addEventListener('button seen', () => {
-            console.log("BUTTONSEEN");
             clearInterval(IntervalID);
         });
     }

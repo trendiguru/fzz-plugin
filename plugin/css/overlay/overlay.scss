@@ -1,8 +1,10 @@
 @import 'round';
 @import 'preview';
+@import 'recruit';
 
 .fazz button,
 .fazz a {
+    background-color: rgba(0, 0, 0, 0);
     z-index: 100;
     border: none;
     outline: none;
@@ -11,7 +13,6 @@
 }
 
 .fazz button.fzzButton {
-    background: #fff;
     z-index: 100;
 }
 

@@ -43,11 +43,11 @@ module.exports = {
     entry: {
         'extensions/chrome/run_ext.js': ['regenerator-runtime/runtime', 'extensions/chrome/es6_run_ext.js'],
         'b_plugin.js':  ES_POLYFILLS.concat(['./plugin/js/plugin.js']),
-        'plugin/css/b_plugin.css': './plugin/css/plugin.scss',
-        'app/b_app.js': ES_POLYFILLS.concat('./app/main.js'),
-        'app/css/b_app.css': './app/css/app.scss',
-        'demo/b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
-        'demo/css/b_demo.css': './demo/css/demo.scss'
+        'b_plugin.css': './plugin/css/plugin.scss',
+        'b_app.js': ES_POLYFILLS.concat('./app/main.js'),
+        'b_app.css': './app/css/app.scss',
+        'b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
+        'b_demo.css': './demo/css/demo.scss'
     },
     output: {
         path: '.',

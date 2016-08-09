@@ -7,7 +7,7 @@ EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 webpack --progress --colors --config webpack.production.js
 
 gsutil -m rsync -x $EXCLUDE_REGEX . gs://$BUCKET_NAME
-for FOLDER in app plugin
+for FOLDER in . assets
 do
     gsutil -m rsync -r -x $EXCLUDE_REGEX ./$FOLDER gs://$BUCKET_NAME/$FOLDER
 done

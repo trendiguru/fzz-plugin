@@ -14,8 +14,8 @@ export const HOST_DOMAIN = {
     DEBUG = false,
     MIXPANEL_ID = '7b61e0db566195263d0fc9d203495e62',
     GA_CODE = 'UA-51323231-3',
-    IFRAME_SRC = `${HOST_DOMAIN}/app/index.html`,
-    CSS_URL = `${HOST_DOMAIN}/plugin/css/b_plugin.css`,
+    IFRAME_SRC = `${HOST_DOMAIN}/assets/app.html`,
+    CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
     IFRAME_ID = 'fazzi',
     INFO_URL = 'http://fazz.co',
     LIBNAME = 'fzz',
@@ -59,6 +59,16 @@ export function UISettings (host) {
         'dev-preview': {
             overlay: {
                 preview: 1.0
+            }
+        },
+        'recruit-pilot': {
+            overlay: {
+                recruit: 1.0
+            }
+        },
+        '6t50LSJxeNEkQ42p': {
+            overlay: {
+                recruit: 1.0
             }
         },
         '__default': {

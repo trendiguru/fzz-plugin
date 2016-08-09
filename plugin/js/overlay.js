@@ -16,6 +16,12 @@ export function roundAsos (tgImg) {
     return overlay;
 }
 
+export function recruit (tgImg) {
+    let overlay = Overlay(tgImg);
+    overlay.classList.add('round', 'recruit');
+    return overlay;
+}
+
 const TILES = 3;
 
 export function preview (tgImg) {

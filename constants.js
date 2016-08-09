@@ -50,7 +50,7 @@ export function UISettings (host) {
     let settings = {
         'dev-roundDress': {
             overlay: {
-                recruit: 1.0
+                roundDress: 1.0
             },
             // tutorial: {
             //     bar: 1.0
@@ -62,6 +62,11 @@ export function UISettings (host) {
             }
         },
         'recruit-pilot': {
+            overlay: {
+                recruit: 1.0
+            }
+        },
+        '6t50LSJxeNEkQ42p': {
             overlay: {
                 recruit: 1.0
             }

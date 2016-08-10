@@ -10,56 +10,60 @@ import {STACKS} from 'modules/devTools';
 let s = STACKS;
 let processQueue = [];
 
-export let relevantImgs = {},
-    irrelevantImgs = {},
+processQueue.isQueued = (element) => {
+    if (processQueue.includes(element)) {
+        return false;
+    }
+    else {
+        processQueue.push(element);
+        return true;
+    }
+};
+
+processQueue.clear = (element) => {
+    delete processQueue[processQueue.indexOf(element)];
+};
+
+export let irrelevantImgs = {},
     irrelevantElements = {};
 
 export function process (el, callback) {
     s.set('process', el);
     return Promise.resolve(el)
+        .then(processQueue.isQueued)
         .then(el => new TGImage (el))
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
         .then(smartCheckRelevancy)
         // .then(getData)
-        .then(
-        relevantImg => {
+        .then(relevantImg => {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             s.set('relevantImg', relevantImg.element);
             //TODO: check if not already in processQueue (in process) if so =>
             //remove from processQueue and do nothing.
             callback(relevantImg);
-        },
-        irrelevantImg => {
+            processQueue.clear(relevantImg.element);
+        })
+        .catch(irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
                 s.set('irrelevantImg', irrelevantImg.element);
             } else {
-                logIrrelevant(irrelevantImg);
+                s.set('logIrrelevant', irrelevantImg);
             }
+            processQueue.clear(irrelevantImg.element);
         });
 }
 
 function isNew (tgImg) {
     //if the obtainable object is already wrapped by fzz div => is not new.
     //TODO:define fzz classList in constans
-    let isWrapped = (element)=>{
-        if (!element.classList.includes("fzz_overlay")){
-            let children = element.parentElement.childNodes;
-            children.forEach((child)=>{
-                if (child.classList && Array.from(child.classList).includes("fzz_overlay")){
-                    return true;
-                }
-            });
-        }
-        return false;
-    }
-    if (isWrapped(tgImg.element)) {
+    if (tgImg.element.matches('.fzz_wrap *') && irrelevantImgs[tgImg.url]) {
         throw {
-            name: 'Not a New Image',
+            name: 'Not a New Element',
             element: tgImg
         };
     }
@@ -104,13 +108,3 @@ function isSuspicious (tgImg) {
 //         return tgImg;
 //     });
 // }
-
-function logIrrelevant(error) {
-    //console.log('reached logIrrelevant');
-    let errName = error.name;
-    let errElement = error.element;
-    let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
-    let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
-    errorCountforElem += 1;
-    s.set('logIrrelevant', error);
-}

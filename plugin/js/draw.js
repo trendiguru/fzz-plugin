@@ -26,6 +26,7 @@ function trackButtonSeen (el) {
 
 function wrap ({element, buttonDiv, url}) {
     let div = document.createElement('div');
+    div.classList.add('fzz_wrap');
     element.parentElement.insertBefore(div, element);
     div.appendChild(element);
     div.appendChild(buttonDiv);

@@ -109,7 +109,8 @@ domready(() => {
     });
     addEventListener('button seen', () => {
         s.set('requests', 'Button Seen');
-        analytics.track('Button Seen')});
+        analytics.track('Button Seen');
+    });
     // INFO BUTTON
     addEventListener('info button clicked', () => {
         s.set('requests', 'Info Button Clicked');

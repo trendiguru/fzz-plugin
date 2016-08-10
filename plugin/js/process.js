@@ -8,6 +8,7 @@ import TGImage from './tgimage';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
+let processQueue = [];
 
 export let relevantImgs = {},
     irrelevantImgs = {},
@@ -26,15 +27,15 @@ export function process (el, callback) {
         relevantImg => {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
-            relevantImgs[relevantImg.url] = relevantImg;
             s.set('relevantImg', relevantImg.element);
+            //TODO: check if not already in processQueue (in process) if so =>
+            //remove from processQueue and do nothing.
             callback(relevantImg);
         },
         irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
-                irrelevantImgs[irrelevantImg.url] = irrelevantImg;
                 s.set('irrelevantImg', irrelevantImg.element);
             } else {
                 logIrrelevant(irrelevantImg);
@@ -43,7 +44,20 @@ export function process (el, callback) {
 }
 
 function isNew (tgImg) {
-    if (tgImg.url in relevantImgs || tgImg.url in irrelevantImgs) {
+    //if the obtainable object is already wrapped by fzz div => is not new.
+    //TODO:define fzz classList in constans
+    let isWrapped = (element)=>{
+        if (!element.classList.includes("fzz_overlay")){
+            let children = element.parentElement.childNodes;
+            children.forEach((child)=>{
+                if (child.classList && Array.from(child.classList).includes("fzz_overlay")){
+                    return true;
+                }
+            });
+        }
+        return false;
+    }
+    if (isWrapped(tgImg.element)) {
         throw {
             name: 'Not a New Image',
             element: tgImg
@@ -52,6 +66,7 @@ function isNew (tgImg) {
     else {
         s.set('isNew', tgImg);
     }
+    //processQueue.push(tgImg.element);
     return tgImg;
 }
 

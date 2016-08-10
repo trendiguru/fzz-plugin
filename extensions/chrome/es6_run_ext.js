@@ -14,6 +14,7 @@ function getScript(url, callback) {
     script.id = 'fzz-script';
     script.setAttribute('data-whitelist', '*');
     script.setAttribute('data-pid', 'dev-roundDress');
+    script.setAttribute('data-api', 'ND');
     script.src = url;
     script.onload = callback;
     script.onreadystatechange = function() {

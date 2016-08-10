@@ -27,10 +27,11 @@ export const HOST_DOMAIN = {
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
     COOKIE_NAME = 'fzz_ui_3',
+    API = Query.parse(location.search).API || api,
     API_URL = {
         ND: 'https://api.trendi.guru/images',
         PD: 'https://extremeli.trendi.guru/api/images'
-    }[api] || 'https://extremeli.trendi.guru/api/images',
+    }[API] || 'https://extremeli.trendi.guru/api/images',
     BUTTON_SEEN_CHECK_INTERVAL = 1000,
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',

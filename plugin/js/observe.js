@@ -8,6 +8,10 @@ const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT'];
 
 export default class Observer {
     constructor ({ callback, config = DEFAULT_CONFIG, whitelist = '*', blacklist = '', root = document.body, callbackExisting = false }) {
+        let queue = [];
+        let observer = new MutationObserver(mutations => {
+            this.callback(mutations.filter(this.filter.bind(this)));
+        });
         whitelist = cssSplit(whitelist);
         blacklist = cssSplit(blacklist);
         Object.assign(this, {
@@ -22,18 +26,16 @@ export default class Observer {
             root,
             observed: new Map()
         });
-        devTools.STACKS.observed = this.observed;
-        let que = [];
         for (let element of evaluateElement(root, DalmatianPath(whitelist, blacklist))) {
             this.observed.set(element, 1);
             if (callbackExisting) {
-                que.push({type: 'init', target: element});
+                queue.push({type: 'init', target: element});
             }
         }
-        this.callback(que); // que might be empty
-        let observer = new MutationObserver(mutations => this.callback(mutations.filter(this.filter.bind(this))));
+        this.callback(queue); // que might be empty
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
+        devTools.STACKS.observed = this.observed;
     }
     /*
     * This filters mutations: 1. Cheaply get rid of or let through

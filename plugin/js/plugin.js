@@ -51,6 +51,9 @@ domready(() => {
                 }
                 else {
                     processElement(mutation.target);
+                    for (let node of Array.from(mutation.target.querySelectorAll('*'))) {
+                        processElement(node);
+                    }
                 }
             }
         },

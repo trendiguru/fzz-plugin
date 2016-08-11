@@ -89,6 +89,7 @@ function isSuspicious (tgImg) {
 function isRelevant (tgImg) {
     return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
+            s.set('smartCheckRelevancy', tgImg);
             return tgImg;
         }
         else {

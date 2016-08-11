@@ -44,6 +44,7 @@ domready(() => {
         blacklist: BLACK_LIST,
         callbackExisting: true,
         callback (mutations) {
+            console.debug(mutations);
             for (let mutation of mutations) {
                 if (mutation.type == 'childList') {
                     for (let node of mutation.addedNodes) {

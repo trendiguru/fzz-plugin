@@ -8,28 +8,6 @@ import TGImage from './tgimage';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
-let processQueue = {};
-
-function isQueued (tgImg) {
-    s.newStack('isQueued_input', tgImg.element);
-    if (processQueue[tgImg.url]) {
-        throw {
-            name: 'already in process',
-            tgImg
-        };
-    }
-    else {
-        processQueue[tgImg.url] = tgImg;
-        return tgImg;
-    }
-}
-
-function deleteFromQueue (tgImg) {
-    if (tgImg) {
-        delete processQueue[tgImg.url];
-    }
-    return tgImg;
-}
 
 export let irrelevantImgs = {},
     irrelevantElements = {};
@@ -38,13 +16,13 @@ export function process (el, callback) {
     s.set('process', el);
     return Promise.resolve(el)
         .then(el => new TGImage (el))
-        .then(isQueued)
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
-        .then(smartCheckRelevancy)
+        .then(isRelevant)
         // .then(getData)
         .then(relevantImg => {
+            console.debug({relevantImg});
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             s.set('relevantImg', relevantImg.element);
@@ -63,12 +41,11 @@ export function process (el, callback) {
             } else {
                 s.set('logIrrelevant', irrelevantImg);
             }
-        })
-        .then(deleteFromQueue);
+        });
 }
 
 function isNew (tgImg) {
-    if (tgImg.element.matches('.fzz_wrap *') || irrelevantImgs[tgImg.url]) {
+    if (tgImg.element.parentElement.matches('.fzz_wrap') || irrelevantImgs[tgImg.url]) {
         throw {
             name: 'Not a New Element',
             element: tgImg
@@ -107,6 +84,20 @@ function isSuspicious (tgImg) {
             element: tgImg
         };
     }
+}
+
+function isRelevant (tgImg) {
+    return smartCheckRelevancy(tgImg.url).then(res => {
+        if (res) {
+            return tgImg;
+        }
+        else {
+            throw {
+                name: 'Not a New Element',
+                element: tgImg
+            };
+        }
+    });
 }
 
 // function getData (tgImg) {

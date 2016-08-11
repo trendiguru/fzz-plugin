@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -23,7 +23,8 @@ let ui = getUI({overlay, tutorial});
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
     PID,
-    publisherDomain: refererDomain
+    publisherDomain: refererDomain,
+    API
 });
 
 let analytics = new Analytics('publisher', initAnaltics);

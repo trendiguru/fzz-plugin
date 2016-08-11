@@ -22,6 +22,7 @@ export function process (el, callback) {
         .then(isRelevant)
         // .then(getData)
         .then(relevantImg => {
+            console.debug({relevantImg});
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             s.set('relevantImg', relevantImg.element);
@@ -86,8 +87,7 @@ function isSuspicious (tgImg) {
 }
 
 function isRelevant (tgImg) {
-    return smartCheckRelevancy(tgImg.url)
-    .then(res => {
+    return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
             return tgImg;
         }

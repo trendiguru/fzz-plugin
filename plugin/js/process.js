@@ -11,12 +11,16 @@ let s = STACKS;
 let processQueue = [];
 
 processQueue.isQueued = (element) => {
+    s.newStack('isQueued_input', element);
     if (processQueue.includes(element)) {
-        return false;
+        throw {
+            name: 'already in process',
+            element: element
+        };
     }
     else {
         processQueue.push(element);
-        return true;
+        return element;
     }
 };
 
@@ -60,9 +64,7 @@ export function process (el, callback) {
 }
 
 function isNew (tgImg) {
-    //if the obtainable object is already wrapped by fzz div => is not new.
-    //TODO:define fzz classList in constans
-    if (tgImg.element.matches('.fzz_wrap *') && irrelevantImgs[tgImg.url]) {
+    if (tgImg.element.matches('.fzz_wrap *') || irrelevantImgs[tgImg.url]) {
         throw {
             name: 'Not a New Element',
             element: tgImg

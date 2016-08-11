@@ -44,9 +44,14 @@ domready(() => {
         callbackExisting: true,
         callback (mutations) {
             for (let mutation of mutations) {
-                if (mutation.type == 'nodeList') {
-                    for (let node of mutation.nodeList) {
+                if (mutation.type == 'childList') {
+                    for (let node of mutation.addedNodes) {
                         processElement(node);
+                        if (node.querySelectorAll){
+                            for (let el of node.querySelectorAll('*')){
+                                processElement(el);
+                            }
+                        }
                     }
                 }
                 else {
@@ -112,7 +117,8 @@ domready(() => {
     });
     addEventListener('button seen', () => {
         s.set('requests', 'Button Seen');
-        analytics.track('Button Seen')});
+        analytics.track('Button Seen');
+    });
     // INFO BUTTON
     addEventListener('info button clicked', () => {
         s.set('requests', 'Info Button Clicked');

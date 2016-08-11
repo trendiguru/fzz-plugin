@@ -2,33 +2,26 @@
 
 import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
-import {Query} from './utils';
+import {Query, wait} from './utils';
 
-let serverBuffer = [];
-let serverUploader;
-
-export function smartCheckRelevancy(tgImg) {
-    STACKS.set('smartCheckRelevancy_input', tgImg.element);
-    serverBuffer.push(tgImg);
-    if (!isAccumulating) {
-        serverUploader = accumulate(500).then(() => {
-            let p = checkRelevancy(serverBuffer.map((im) => im.url));
-            serverBuffer = [];
-            STACKS.set('smartCheckRelevancy', p);
-            return p;
-        });
-
+let urlStore = {
+    buffer: [],
+    state: {},
+    append (url) {
+        this.buffer.push(url);
+        return wait(500)
+        .then(() => {
+            let tempBuffer = [...this.buffer];
+            this.buffer = [];
+            return checkRelevancy(tempBuffer);
+        })
+        .then(res => Object.assign(this.state, res))
+        .then(res => res[url]);
     }
-    return new Promise((resolve, reject) => {
-        serverUploader.then(res => {
-            if (res.relevancy_dict[tgImg.url]) {
-                tgImg.relevant = true;
-                resolve(tgImg);
-            } else {
-                reject(tgImg);
-            }
-        });
-    });
+};
+
+export function smartCheckRelevancy(url) {
+    return urlStore.append(url);
 }
 
 export function getImageData(imageUrl) {
@@ -51,16 +44,6 @@ function checkRelevancy(imageUrls) {
             imageList: imageUrls
         })
     })
-    .then(res => res.json());
-}
-
-let isAccumulating = false; //???
-function accumulate(time, initialValue) {
-    isAccumulating = true;
-    return new Promise(function (fulfill) {
-        setTimeout(function () {
-            isAccumulating = false;
-            fulfill(initialValue);
-        }, time);
-    });
+    .then(res => res.json())
+    .then(res => res.relevancy_dict);
 }

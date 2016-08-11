@@ -9,8 +9,7 @@ import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
 
-export let relevantImgs = {},
-    irrelevantImgs = {},
+export let irrelevantImgs = {},
     irrelevantElements = {};
 
 export function process (el, callback) {
@@ -20,38 +19,42 @@ export function process (el, callback) {
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
-        .then(smartCheckRelevancy)
+        .then(isRelevant)
         // .then(getData)
-        .then(
-        relevantImg => {
+        .then(relevantImg => {
+            console.debug({relevantImg});
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
-            relevantImgs[relevantImg.url] = relevantImg;
             s.set('relevantImg', relevantImg.element);
+            //TODO: check if not already in processQueue (in process) if so =>
+            //remove from processQueue and do nothing.
             callback(relevantImg);
-        },
-        irrelevantImg => {
+            return relevantImg;
+        })
+        .catch(irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
                 s.set('irrelevantImg', irrelevantImg.element);
+                return irrelevantImg;
             } else {
-                logIrrelevant(irrelevantImg);
+                s.set('logIrrelevant', irrelevantImg);
             }
         });
 }
 
 function isNew (tgImg) {
-    if (tgImg.url in relevantImgs || tgImg.url in irrelevantImgs) {
+    if (tgImg.element.parentElement.matches('.fzz_wrap') || irrelevantImgs[tgImg.url]) {
         throw {
-            name: 'Not a New Image',
+            name: 'Not a New Element',
             element: tgImg
         };
     }
     else {
         s.set('isNew', tgImg);
     }
+    //processQueue.push(tgImg.element);
     return tgImg;
 }
 
@@ -83,19 +86,23 @@ function isSuspicious (tgImg) {
     }
 }
 
+function isRelevant (tgImg) {
+    return smartCheckRelevancy(tgImg.url).then(res => {
+        if (res) {
+            return tgImg;
+        }
+        else {
+            throw {
+                name: 'Not a New Element',
+                element: tgImg
+            };
+        }
+    });
+}
+
 // function getData (tgImg) {
 //     return getImageData(tgImg.url).then(data => {
 //         tgImg.data = data;
 //         return tgImg;
 //     });
 // }
-
-function logIrrelevant(error) {
-    //console.log('reached logIrrelevant');
-    let errName = error.name;
-    let errElement = error.element;
-    let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
-    let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
-    errorCountforElem += 1;
-    s.set('logIrrelevant', error);
-}

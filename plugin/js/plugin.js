@@ -52,7 +52,6 @@ domready(() => {
                                 processElement(el);
                             }
                         }
-                        processElement(node);
                     }
                 }
                 else {

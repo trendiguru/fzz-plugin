@@ -44,8 +44,14 @@ domready(() => {
         callbackExisting: true,
         callback (mutations) {
             for (let mutation of mutations) {
-                if (mutation.type == 'nodeList') {
-                    for (let node of mutation.nodeList) {
+                if (mutation.type == 'childList') {
+                    for (let node of mutation.addedNodes) {
+                        processElement(node);
+                        if (node.querySelectorAll){
+                            for (let el of node.querySelectorAll('*')){
+                                processElement(el);
+                            }
+                        }
                         processElement(node);
                     }
                 }

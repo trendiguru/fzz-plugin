@@ -8,25 +8,28 @@ import TGImage from './tgimage';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
-let processQueue = [];
+let processQueue = {};
 
-processQueue.isQueued = (element) => {
-    s.newStack('isQueued_input', element);
-    if (processQueue.includes(element)) {
+function isQueued (tgImg) {
+    s.newStack('isQueued_input', tgImg.element);
+    if (processQueue[tgImg.url]) {
         throw {
             name: 'already in process',
-            element: element
+            tgImg
         };
     }
     else {
-        processQueue.push(element);
-        return element;
+        processQueue[tgImg.url] = tgImg;
+        return tgImg;
     }
-};
+}
 
-processQueue.clear = (element) => {
-    delete processQueue[processQueue.indexOf(element)];
-};
+function deleteFromQueue (tgImg) {
+    if (tgImg) {
+        delete processQueue[tgImg.url];
+    }
+    return tgImg;
+}
 
 export let irrelevantImgs = {},
     irrelevantElements = {};
@@ -34,8 +37,8 @@ export let irrelevantImgs = {},
 export function process (el, callback) {
     s.set('process', el);
     return Promise.resolve(el)
-        .then(processQueue.isQueued)
         .then(el => new TGImage (el))
+        .then(isQueued)
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
@@ -48,7 +51,7 @@ export function process (el, callback) {
             //TODO: check if not already in processQueue (in process) if so =>
             //remove from processQueue and do nothing.
             callback(relevantImg);
-            processQueue.clear(relevantImg.element);
+            return relevantImg;
         })
         .catch(irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
@@ -56,11 +59,12 @@ export function process (el, callback) {
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
                 s.set('irrelevantImg', irrelevantImg.element);
+                return irrelevantImg;
             } else {
                 s.set('logIrrelevant', irrelevantImg);
             }
-            processQueue.clear(irrelevantImg.element);
-        });
+        })
+        .then(deleteFromQueue);
 }
 
 function isNew (tgImg) {

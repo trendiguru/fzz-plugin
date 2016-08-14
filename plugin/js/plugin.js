@@ -34,7 +34,6 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-
 domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
@@ -44,7 +43,6 @@ domready(() => {
         blacklist: BLACK_LIST,
         callbackExisting: true,
         callback (mutations) {
-            console.debug(mutations);
             for (let mutation of mutations) {
                 if (mutation.type == 'childList') {
                     for (let node of mutation.addedNodes) {

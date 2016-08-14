@@ -4,6 +4,8 @@ import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
 import {Query, wait} from './utils';
 
+let queue = Promise.resolve();
+
 let urlStore = {
     state: {}, // dictionary of urls and thier relevany
     buffer: [], // array of urls to request from server
@@ -12,23 +14,19 @@ let urlStore = {
      * @returns {promise} - A promise that fullfils to a boolean of relevancy
      */
     append (url) {
-        if (this.state[url]) {
-            return this.state[url];
-        }
-        else {
+        return new Promise(resolve => {
+            if (this.state[url]) {
+                resolve(this.state[url]);
+            }
             this.buffer.push(url);
-            return wait(500)
-            .then(() => {
-                if (this.buffer.length) {
-                    let tempBuffer = [...this.buffer];
-                    this.buffer = [];
-                    return checkRelevancy(tempBuffer); // returns promise that fufills to relevancy_dict
-                }
-                return {};
-            })
-            .then(res => Object.assign(this.state, res))
-            .then(res => res[url]);
-        }
+            if (!queue) {
+                queue = wait(500)
+                .then(() => checkRelevancy(this.buffer))
+                .then(res => Object.assign(this.state, res))
+                .then(() => resolve(this.state[url]));
+            }
+            queue.then(() => resolve(this.state[url]));
+        });
     }
 };
 

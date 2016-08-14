@@ -4,11 +4,12 @@ import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
 import {Query, wait} from './utils';
 
-let queue = Promise.resolve();
+let queue;
 
 let urlStore = {
     state: {}, // dictionary of urls and thier relevany
     buffer: [], // array of urls to request from server
+    accumulating: false,
     /**
      * @param {string} url - URL of given image that we'd like to check if relevant
      * @returns {promise} - A promise that fullfils to a boolean of relevancy
@@ -18,14 +19,17 @@ let urlStore = {
             if (this.state[url]) {
                 resolve(this.state[url]);
             }
-            this.buffer.push(url);
-            if (!queue) {
-                queue = wait(500)
-                .then(() => checkRelevancy(this.buffer))
-                .then(res => Object.assign(this.state, res))
-                .then(() => resolve(this.state[url]));
+            else {
+                this.buffer.push(url);
+                if (!this.accumulating) {
+                    this.accumulating = true;
+                    queue = wait(500)
+                    .then(() => this.accumulating = false)
+                    .then(() => checkRelevancy(this.buffer))
+                    .then(res => Object.assign(this.state, res));
+                }
+                queue = queue.then(() => resolve(this.state[url]));
             }
-            queue.then(() => resolve(this.state[url]));
         });
     }
 };

@@ -99,3 +99,39 @@ function logIrrelevant(error) {
     errorCountforElem += 1;
     s.set('logIrrelevant', error);
 }
+
+/*The function will observe deletitions from DOM and update relevantImgs dict
+  up to this changes.*/
+export function cleanRelevantImgDict(){
+    let clean = (el)=>{
+        try{
+            let tgImg = new TGImage(el);
+            if ( tgImg.url !== undefined && (tgImg.url in relevantImgs)){
+                delete relevantImgs[tgImg.url];
+            }
+        }
+        catch(e){
+            s.set('cleanRelevantImgDict_log', e);
+        }
+    };
+    let observer = new MutationObserver((mutations) => {
+        for (let mutation of mutations) {
+            for (let node of mutation.removedNodes) {
+                //if it is realy deletet from dom and not replaced!
+                if (node.parentElement === null){
+                    clean(node);
+                    if (node.querySelectorAll){
+                        for (let el of node.querySelectorAll('*')){
+                            clean(el);
+                        }
+                    }
+                }
+            }
+        }
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+    });
+
+}

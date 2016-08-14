@@ -9,7 +9,7 @@ import * as tutorial from './tutorial';
 import Analytics from 'modules/analytics_wrapper';
 import draw from './draw';
 import Observer from './observe';
-import {process} from './process';
+import {process,cleanRelevantImgDict} from './process';
 import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
@@ -44,23 +44,24 @@ domready(() => {
         blacklist: BLACK_LIST,
         callbackExisting: true,
         callback (mutations) {
-           for (let mutation of mutations) {
-               if (mutation.type == 'childList') {
-                   for (let node of mutation.addedNodes) {
-                       processElement(node);
-                       if (node.querySelectorAll){
-                           for (let el of node.querySelectorAll('*')){
-                               processElement(el);
-                           }
-                       }
-                   }
-               }
-               else {
-                   processElement(mutation.target);
-               }
-           }
-       },
-   });
+            for (let mutation of mutations) {
+                if (mutation.type == 'childList') {
+                    for (let node of mutation.addedNodes) {
+                        processElement(node);
+                        if (node.querySelectorAll){
+                            for (let el of node.querySelectorAll('*')){
+                                processElement(el);
+                            }
+                        }
+                    }
+                }
+                else {
+                    processElement(mutation.target);
+                }
+            }
+        },
+    });
+    cleanRelevantImgDict()
     addEventListener('click', (e) => {
         let isTgButton = (el) => {
             if (el === undefined || el.classList === undefined) return false;

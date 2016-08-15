@@ -20,7 +20,7 @@ export function process (el, callback) {
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
-        .then(smartCheckRelevancy)
+        .then(isRelevant)
         // .then(getData)
         .then(
         relevantImg => {
@@ -81,6 +81,21 @@ function isSuspicious (tgImg) {
             element: tgImg
         };
     }
+}
+
+function isRelevant (tgImg) {
+    return smartCheckRelevancy(tgImg.url).then(res => {
+        if (res) {
+            s.set('smartCheckRelevancy', tgImg);
+            return tgImg;
+        }
+        else {
+            throw {
+                name: 'Not a Relevant Element',
+                element: tgImg
+            };
+        }
+    });
 }
 
 // function getData (tgImg) {

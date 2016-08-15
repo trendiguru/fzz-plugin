@@ -99,7 +99,7 @@ function ScriptElementDataAttributes () {
     };
     let fzzScript = document.getElementById('fzz-script');
     if (fzzScript) {
-        for (let attribute of fzzScript.attributes) {
+        for (let attribute of Array.from(fzzScript.attributes)) {
             if (attribute.name.search('data-') == 0) {
                 data[attribute.name.substr(5)] = attribute.value;
             }

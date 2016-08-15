@@ -2,37 +2,76 @@
 
 import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
-import {Query, wait} from './utils';
-
-let queue;
+import {Query} from './utils';
 
 let urlStore = {
     state: {}, // dictionary of urls and thier relevany
-    buffer: [], // array of urls to request from server
-    accumulating: false,
+    buffers: [], // array of buffers
     /**
      * @param {string} url - URL of given image that we'd like to check if relevant
      * @returns {promise} - A promise that fullfils to a boolean of relevancy
      */
+    get lastBuffer () {
+        let lastBuffer = this.buffers[this.buffers.length - 1];
+        if (lastBuffer && lastBuffer.accumulating) {
+            return lastBuffer;
+        }
+        else {
+            let buffer = new Buffer(checkRelevancy, 500);
+            buffer.on('fulfill', res => Object.assign(this.state, res));
+            return this.buffers[this.buffers.push(buffer)];
+        }
+    },
     append (url) {
-        return new Promise(resolve => {
+        this.state.url = true;
+        return new Promise((resolve, reject) => {
             if (this.state[url]) {
                 resolve(this.state[url]);
             }
             else {
-                this.buffer.push(url);
-                if (!this.accumulating) {
-                    this.accumulating = true;
-                    queue = wait(500)
-                    .then(() => this.accumulating = false)
-                    .then(() => checkRelevancy(this.buffer))
-                    .then(res => Object.assign(this.state, res));
-                }
-                queue = queue.then(() => resolve(this.state[url]));
+                let {lastBuffer} = this;
+                lastBuffer.append(url);
+                lastBuffer.on('fulfill', () => resolve(this.state[url]));
+                lastBuffer.on('error', reject);
             }
         });
     }
 };
+
+function Buffer (action, timeout) {
+    Object.assign(this, {
+        listeners: {
+            fulfill: [],
+            error: []
+        },
+        accumulating: true,
+        launch () {
+            this.accumulating = false;
+            Promise.resolve(action(Array.from(this)))
+            .then(res => {
+                for (let callback of this.listeners.fulfill) {
+                    callback(res);
+                }
+            })
+            .catch(err => {
+                for (let callback of this.listeners.error) {
+                    callback(err);
+                }
+            });
+        },
+        append (element) {
+            if (this.push(element) == 20) {
+                this.launch();
+            }
+        },
+        on (event, callback) {
+            this.listeners[event].push(callback);
+        }
+    });
+    setTimeout(this.launch.bind(this), timeout);
+}
+
+Buffer.prototype = Object.create(Array.prototype);
 
 export function smartCheckRelevancy(url) {
     return urlStore.append(url);

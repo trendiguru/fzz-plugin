@@ -55,6 +55,7 @@ export default class Observer {
         if (this.observed.has(target)) {
             return true;
         }
+        console.log(target);
         return false;
     }
 

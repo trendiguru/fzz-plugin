@@ -34,7 +34,6 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-
 domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);
@@ -116,7 +115,8 @@ domready(() => {
     });
     addEventListener('button seen', () => {
         s.set('requests', 'Button Seen');
-        analytics.track('Button Seen')});
+        analytics.track('Button Seen');
+    });
     // INFO BUTTON
     addEventListener('info button clicked', () => {
         s.set('requests', 'Info Button Clicked');

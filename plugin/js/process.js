@@ -22,7 +22,6 @@ export function process (el, callback) {
         .then(isRelevant)
         // .then(getData)
         .then(relevantImg => {
-            console.debug({relevantImg});
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             s.set('relevantImg', relevantImg.element);
@@ -45,7 +44,7 @@ export function process (el, callback) {
 }
 
 function isNew (tgImg) {
-    if (tgImg.element.parentElement.matches('.fzz_wrap') || irrelevantImgs[tgImg.url]) {
+    if (tgImg.element.matches('.fzz_wrap *') || irrelevantImgs[tgImg.url]) {
         throw {
             name: 'Not a New Element',
             element: tgImg
@@ -87,15 +86,14 @@ function isSuspicious (tgImg) {
 }
 
 function isRelevant (tgImg) {
-    console.debug('isRelevant()', tgImg);
-    return smartCheckRelevancy(tgImg.url).then(console.log.bind(console)).then(res => {
+    return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
             s.set('smartCheckRelevancy', tgImg);
             return tgImg;
         }
         else {
             throw {
-                name: 'Not a New Element',
+                name: 'Not a Relevant Element',
                 element: tgImg
             };
         }

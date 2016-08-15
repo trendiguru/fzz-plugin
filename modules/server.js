@@ -2,41 +2,12 @@
 
 import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
-import {Query, wait} from './utils';
+import URLStore from './urlstore';
+import {Query} from './utils';
 
-let queue;
+let urlStore = new URLStore;
 
-let urlStore = {
-    state: {}, // dictionary of urls and thier relevany
-    buffer: [], // array of urls to request from server
-    accumulating: false,
-    /**
-     * @param {string} url - URL of given image that we'd like to check if relevant
-     * @returns {promise} - A promise that fullfils to a boolean of relevancy
-     */
-    append (url) {
-        return new Promise(resolve => {
-            if (this.state[url]) {
-                resolve(this.state[url]);
-            }
-            else {
-                this.buffer.push(url);
-                if (!this.accumulating) {
-                    this.accumulating = true;
-                    queue = wait(500)
-                    .then(() => this.accumulating = false)
-                    .then(() => checkRelevancy(this.buffer))
-                    .then(res => Object.assign(this.state, res));
-                }
-                queue = queue.then(() => resolve(this.state[url]));
-            }
-        });
-    }
-};
-
-export function smartCheckRelevancy(url) {
-    return urlStore.append(url);
-}
+export let smartCheckRelevancy = urlStore.append.bind(urlStore);
 
 export function getImageData(imageUrl) {
     return fetch(API_URL + '?' + Query.stringify({
@@ -44,20 +15,4 @@ export function getImageData(imageUrl) {
         PID
     }))
     .then(res => res.json());
-}
-
-function checkRelevancy(imageUrls) {
-    return fetch(API_URL + '?' + Query.stringify({PID}), {
-        method: 'POST',
-        // headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        // },
-        body: JSON.stringify({
-            pageUrl: window.location.href,
-            imageList: imageUrls
-        })
-    })
-    .then(res => res.json())
-    .then(res => res.relevancy_dict);
 }

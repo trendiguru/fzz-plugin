@@ -9,7 +9,8 @@ import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
 
-export let irrelevantImgs = {},
+export let relevantImgs = {},
+    irrelevantImgs = {},
     irrelevantElements = {};
 
 export function process (el, callback) {
@@ -21,39 +22,36 @@ export function process (el, callback) {
         .then(isSuspicious)
         .then(isRelevant)
         // .then(getData)
-        .then(relevantImg => {
+        .then(
+        relevantImg => {
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
+            relevantImgs[relevantImg.url] = relevantImg;
             s.set('relevantImg', relevantImg.element);
-            //TODO: check if not already in processQueue (in process) if so =>
-            //remove from processQueue and do nothing.
             callback(relevantImg);
-            return relevantImg;
-        })
-        .catch(irrelevantImg => {
+        },
+        irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (irrelevantImg.url) {
                 irrelevantImgs[irrelevantImg.url] = irrelevantImg;
                 s.set('irrelevantImg', irrelevantImg.element);
-                return irrelevantImg;
             } else {
-                s.set('logIrrelevant', irrelevantImg);
+                logIrrelevant(irrelevantImg);
             }
         });
 }
 
 function isNew (tgImg) {
-    if (tgImg.element.matches('.fzz_wrap *') || irrelevantImgs[tgImg.url]) {
+    if (tgImg.url in relevantImgs || tgImg.url in irrelevantImgs) {
         throw {
-            name: 'Not a New Element',
+            name: 'Not a New Image',
             element: tgImg
         };
     }
     else {
         s.set('isNew', tgImg);
     }
-    //processQueue.push(tgImg.element);
     return tgImg;
 }
 
@@ -106,3 +104,49 @@ function isRelevant (tgImg) {
 //         return tgImg;
 //     });
 // }
+
+function logIrrelevant(error) {
+    //console.log('reached logIrrelevant');
+    let errName = error.name;
+    let errElement = error.element;
+    let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
+    let errorCountforElem = errorCounts[errElement] = errorCounts[errElement] || 0;
+    errorCountforElem += 1;
+    s.set('logIrrelevant', error);
+}
+
+/*The function will observe deletitions from DOM and update relevantImgs dict
+  up to this changes.*/
+export function cleanRelevantImgDict(){
+    let clean = (el)=>{
+        try{
+            let tgImg = new TGImage(el);
+            if ( tgImg.url !== undefined && (tgImg.url in relevantImgs)){
+                delete relevantImgs[tgImg.url];
+            }
+        }
+        catch(e){
+            s.set('cleanRelevantImgDict_log', e);
+        }
+    };
+    let observer = new MutationObserver((mutations) => {
+        for (let mutation of mutations) {
+            for (let node of mutation.removedNodes) {
+                //if it is realy deletet from dom and not replaced!
+                if (node.parentElement === null){
+                    clean(node);
+                    if (node.querySelectorAll){
+                        for (let el of node.querySelectorAll('*')){
+                            clean(el);
+                        }
+                    }
+                }
+            }
+        }
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+    });
+
+}

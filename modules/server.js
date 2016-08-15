@@ -2,27 +2,12 @@
 
 import {API_URL, PID} from 'constants';
 import {STACKS} from 'modules/devTools';
-import {Query, wait} from './utils';
+import URLStore from './urlstore';
+import {Query} from './utils';
 
-let urlStore = {
-    buffer: [],
-    state: {},
-    append (url) {
-        this.buffer.push(url);
-        return wait(500)
-        .then(() => {
-            let tempBuffer = [...this.buffer];
-            this.buffer = [];
-            return checkRelevancy(tempBuffer);
-        })
-        .then(res => Object.assign(this.state, res))
-        .then(res => res[url]);
-    }
-};
+let urlStore = new URLStore;
 
-export function smartCheckRelevancy(url) {
-    return urlStore.append(url);
-}
+export let smartCheckRelevancy = urlStore.append.bind(urlStore);
 
 export function getImageData(imageUrl) {
     return fetch(API_URL + '?' + Query.stringify({
@@ -30,20 +15,4 @@ export function getImageData(imageUrl) {
         PID
     }))
     .then(res => res.json());
-}
-
-function checkRelevancy(imageUrls) {
-    return fetch(API_URL + '?' + Query.stringify({PID}), {
-        method: 'POST',
-        // headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        // },
-        body: JSON.stringify({
-            pageUrl: window.location.href,
-            imageList: imageUrls
-        })
-    })
-    .then(res => res.json())
-    .then(res => res.relevancy_dict);
 }

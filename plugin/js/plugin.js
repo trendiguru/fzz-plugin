@@ -34,7 +34,6 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-
 domready(() => {
     console.log('FZZ: domready');
     document.body.appendChild(iframe);

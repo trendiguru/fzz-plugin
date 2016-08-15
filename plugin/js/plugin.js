@@ -97,10 +97,10 @@ domready(() => {
         }
     });
     // BUTTON
-    addEventListener('button drawn', ({url: imageURL}) => {
+    addEventListener('button drawn', (eventRecord) => {
         s.set('requests', 'Trendi Button Drawn');
         analytics.track('Trendi Button Drawn', {
-            imageURL,
+            imageURL:eventRecord.info.image,
             pageUrl: window.location.href
         });
     });

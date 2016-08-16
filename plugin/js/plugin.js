@@ -15,8 +15,8 @@ import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
-console.log("pid"+PID);
-console.log("api"+API);
+console.log("pid "+PID);
+console.log("api "+API);
 let refererDomain = window.location.hostname.replace('www.', '');
 
 let ui = getUI({overlay, tutorial});

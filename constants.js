@@ -100,6 +100,7 @@ function ScriptElementDataAttributes () {
     let data = {
         userConfig: {},
         pid: '',
+        api: '',
         whitelist: '*'
     };
     let fzzScript = document.getElementById('fzz-script');

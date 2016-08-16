@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import domready from 'ext/domready';
-import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {API, PID, RUN_PRIORITY, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -15,7 +15,8 @@ import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
-
+console.log("pid"+PID);
+console.log("api"+API);
 let refererDomain = window.location.hostname.replace('www.', '');
 
 let ui = getUI({overlay, tutorial});
@@ -35,105 +36,144 @@ let iframe = new iFrame(initAnaltics);
 analytics.track('Page Hit');
 analytics.listen('scroll');
 domready(() => {
+    console.log("WWWWWWW");
+    console.log(RUN_PRIORITY);
+    console.log(PID);
     console.log('FZZ: domready');
-    document.body.appendChild(iframe);
-    document.head.appendChild(style);
-    new Observer({
-        whitelist: WHITE_LIST,
-        blacklist: BLACK_LIST,
-        callbackExisting: true,
-        callback (mutations) {
-            for (let mutation of mutations) {
-                if (mutation.type == 'childList') {
-                    for (let node of mutation.addedNodes) {
-                        processElement(node);
-                        if (node.querySelectorAll){
-                            for (let el of node.querySelectorAll('*')){
-                                processElement(el);
+    if (startCondition()){
+        document.body.appendChild(iframe);
+        document.head.appendChild(style);
+        new Observer({
+            whitelist: WHITE_LIST,
+            blacklist: BLACK_LIST,
+            callbackExisting: true,
+            callback (mutations) {
+                for (let mutation of mutations) {
+                    if (mutation.type == 'childList') {
+                        for (let node of mutation.addedNodes) {
+                            processElement(node);
+                            if (node.querySelectorAll){
+                                for (let el of node.querySelectorAll('*')){
+                                    processElement(el);
+                                }
                             }
                         }
                     }
+                    else {
+                        processElement(mutation.target);
+                    }
                 }
-                else {
-                    processElement(mutation.target);
+            },
+        });
+        cleanRelevantImgDict()
+        addEventListener('click', (e) => {
+            let isTgButton = (el) => {
+                if (el === undefined || el.classList === undefined) return false;
+                if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
+                    return true;
                 }
+                return false;
+            };
+            let elemsFromPoint = document.elementsFromPoint(e.clientX, e.clientY);
+            let i = 0;
+            let lastIndex = elemsFromPoint.length - 1;
+            while (!isTgButton(elemsFromPoint[i]) && i <= lastIndex) {
+                //TODO:if it elemsFromPoint is not transparelnt return false;
+                i++;
             }
-        },
-    });
-    cleanRelevantImgDict()
-    addEventListener('click', (e) => {
-        let isTgButton = (el) => {
-            if (el === undefined || el.classList === undefined) return false;
-            if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
+            if (i <= lastIndex) {
+                console.log(elemsFromPoint[i]);
+                elemsFromPoint[i].click();
                 return true;
             }
             return false;
-        };
-        let elemsFromPoint = document.elementsFromPoint(e.clientX, e.clientY);
-        let i = 0;
-        let lastIndex = elemsFromPoint.length - 1;
-        while (!isTgButton(elemsFromPoint[i]) && i <= lastIndex) {
-            //TODO:if it elemsFromPoint is not transparelnt return false;
-            i++;
-        }
-        if (i <= lastIndex) {
-            console.log(elemsFromPoint[i]);
-            elemsFromPoint[i].click();
-            return true;
-        }
-        return false;
-    });
-    // MESSAGE
-    addEventListener('message', msg => {
-        let {data} = msg;
-        if (data === 'show') {
+        });
+        // MESSAGE
+        addEventListener('message', msg => {
+            let {data} = msg;
+            if (data === 'show') {
+                iframe.show();
+            }
+            if (data === 'hide') {
+                iframe.hide();
+            }
+            if (data.fzz_id){
+                console.log('Received fzz_id: ' + msg.data.fzz_id);
+            }
+        });
+        // BUTTON
+        addEventListener('button drawn', ({url: imageURL}) => {
+            s.set('requests', 'Trendi Button Drawn');
+            analytics.track('Trendi Button Drawn', {
+                imageURL,
+                pageUrl: window.location.href
+            });
+        });
+        addEventListener('button clicked', ({url: imageURL}) => {
+            s.set('requests', 'Trendi Button Clicked');
+            analytics.track('Trendi Button Clicked', {
+                imageURL,
+                pageUrl: window.location.href
+            });
             iframe.show();
-        }
-        if (data === 'hide') {
-            iframe.hide();
-        }
-        if (data.fzz_id){
-            console.log('Received fzz_id: ' + msg.data.fzz_id);
-        }
-    });
-    // BUTTON
-    addEventListener('button drawn', ({url: imageURL}) => {
-        s.set('requests', 'Trendi Button Drawn');
-        analytics.track('Trendi Button Drawn', {
-            imageURL,
-            pageUrl: window.location.href
+            iframe.contentWindow.postMessage({imageURL}, '*');
         });
-    });
-    addEventListener('button clicked', ({url: imageURL}) => {
-        s.set('requests', 'Trendi Button Clicked');
-        analytics.track('Trendi Button Clicked', {
-            imageURL,
-            pageUrl: window.location.href
+        addEventListener('button seen', () => {
+            s.set('requests', 'Button Seen');
+            analytics.track('Button Seen');
         });
-        iframe.show();
-        iframe.contentWindow.postMessage({imageURL}, '*');
-    });
-    addEventListener('button seen', () => {
-        s.set('requests', 'Button Seen');
-        analytics.track('Button Seen');
-    });
-    // INFO BUTTON
-    addEventListener('info button clicked', () => {
-        s.set('requests', 'Info Button Clicked');
-        analytics.track('Info Button Clicked');
-        window.open(INFO_URL, '_blank');
-    });
-    // TUTORIAL
-    let fzz_tutorial_version = Cookies.get('fzz_tutorial_version');
-    if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {
-    // if (true) {
-        document.body.appendChild(ui.tutorial());
-        addEventListener('tutorial closed', ({closed_after}) => {
-            analytics.track('Tutorial Closed', {closed_after});
+        // INFO BUTTON
+        addEventListener('info button clicked', () => {
+            s.set('requests', 'Info Button Clicked');
+            analytics.track('Info Button Clicked');
+            window.open(INFO_URL, '_blank');
         });
+        // TUTORIAL
+        let fzz_tutorial_version = Cookies.get('fzz_tutorial_version');
+        if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {
+        // if (true) {
+            document.body.appendChild(ui.tutorial());
+            addEventListener('tutorial closed', ({closed_after}) => {
+                analytics.track('Tutorial Closed', {closed_after});
+            });
+        }
     }
 });
 
 function processElement (el) {
     return process(el, el => draw(ui, el));
+}
+
+function startCondition(){
+    let getPriority = ()=>{
+        let runKey;
+        if (PID.includes("dev")){
+            console.log("ffff");
+            console.log(PID.includes("dev"));
+            runKey = "DEV";
+        }else{
+            if (PID.includes("chrome")){
+                runKey = "EXTENSION";
+            }else{
+                runKey = "PLUGIN";
+            }
+        }
+        return RUN_PRIORITY[runKey];
+    };
+    let scripts = document.querySelectorAll("#fzz-script");
+    let foreignPID;
+    scripts.forEach(function(script){
+        if (script.dataset.pid!==PID){
+            foreignPID = script.dataset.pid;
+            console.log(PID);
+            console.log("dddddd"+foreignPID);
+        }
+    })
+    if (scripts.length === 1){
+        return true;
+    }
+    console.log(PID);
+    console.log(getPriority(PID));
+    console.log(getPriority(foreignPID));
+    return (getPriority(PID)<getPriority(foreignPID));
 }

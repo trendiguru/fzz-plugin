@@ -26,6 +26,11 @@ export const HOST_DOMAIN = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
+    RUN_PRIORITY = {
+        DEV:1,
+        PLUGIN:2,
+        EXTENSION:3
+    },
     COOKIE_NAME = 'fzz_ui_3',
     API = Query.parse(location.search).API || api,
     API_URL = {

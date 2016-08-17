@@ -21,17 +21,14 @@ export const HOST_DOMAIN = {
     LIBNAME = 'fzz',
     BLACK_LIST = blacklist,
     WHITE_LIST = whitelist,
-    PID = pid || Query.parse(location.search).PID || '',
+    PID = Query.parse(location.search).PID || pid,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
     COOKIE_NAME = 'fzz_ui_3',
     API = Query.parse(location.search).API || api,
-    API_URL = {
-        ND: 'https://api.trendi.guru/images',
-        PD: 'https://extremeli.trendi.guru/api/images'
-    }[API] || 'https://extremeli.trendi.guru/api/images',
+    API_URL = `https://api.trendi.guru/images?method=${API}`,
     BUTTON_SEEN_CHECK_INTERVAL = 1000,
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
@@ -94,7 +91,7 @@ export function UISettings (host) {
 function ScriptElementDataAttributes () {
     let data = {
         userConfig: {},
-        pid: '',
+        api: 'PD',
         whitelist: '*'
     };
     let fzzScript = document.getElementById('fzz-script');

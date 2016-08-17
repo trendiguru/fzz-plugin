@@ -103,7 +103,43 @@ function ScriptElementDataAttributes () {
         api: '',
         whitelist: '*'
     };
-    let fzzScript = document.getElementById('fzz-script');
+
+    let fzzScript = null;
+    for (let script of document.querySelectorAll('#fzz-script')){
+        let attr = script.attributes['data-pid'];
+        console.log(attr);
+        console.log(script);
+        if (attr){
+            if (ENVIRONMENT === 'PRODUCTION'){
+                if (!(attr.textContent.slice(0,3)).includes("dev") && !(attr.textContent.slice(0,3)).includes("ext")){
+                    fzzScript = script;
+                }
+            }
+            if (ENVIRONMENT === 'DEV'){
+                if ((attr.textContent.slice(0,3)).includes("dev")){
+                    fzzScript = script;
+                    console.log("dev");
+                }
+            }
+            if (ENVIRONMENT === 'EXT'){
+                if ((attr.textContent.slice(0,3)).includes("ext")){
+                    fzzScript = script;
+                }
+            }
+        }
+    /* if data-pid of "fzz-script" at the beginning contains an ENVIRONMANT
+       (string) => that is the script we are running from.
+       That means if we will publish an extension we must add
+       ENVIRONMENT = "EXT". and data-pid must also contain
+       "ext" (at the beginning).
+
+       if (attr.name === 'data-pid' && (attr.textContent).includes(ENVIRONMENT.toLowerCase())){
+          fzzScript = script;
+       }
+     */
+    }
+    console.log("**********");
+    console.log(fzzScript);
     if (fzzScript) {
         for (let attribute of Array.from(fzzScript.attributes)) {
             if (attribute.name.search('data-') == 0) {

@@ -14,6 +14,8 @@ import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
+const THIS_SCRIPT = document.currentScript;
+
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
@@ -140,27 +142,18 @@ function processElement (el) {
 
 function startCondition(){
     let getPriority = (pid)=>{
-        let runKey;
-        if (pid.includes("dev")){
-            runKey = "DEV";
-        }else{
-            if (pid.includes("chrome")){
-                runKey = "EXTENSION";
-            }else{
-                runKey = "PLUGIN";
-            }
-        }
-        return RUN_PRIORITY[runKey];
+        if (pid.includes("dev")){RUN_PRIORITY["DEV"];}
+        if (pid.includes("ext")){RUN_PRIORITY["EXTENSION"];}
+        else{RUN_PRIORITY["PLUGIN"];}
     };
     let scripts = document.querySelectorAll("#fzz-script");
-    let foreignPID;
+    let result = true;
     scripts.forEach(function(script){
-        if (script.dataset.pid!==PID){
-            foreignPID = script.dataset.pid;
+        console.log(script+" "+THIS_SCRIPT);
+        if (script !== THIS_SCRIPT){
+            result = (getPriority(PID)<getPriority(script.dataset.pid))&&result;
         }
     })
-    if (scripts.length === 1){
-        return true;
-    }
-    return (getPriority(PID)<getPriority(foreignPID));
+    console.log(result);
+    return result;
 }

@@ -15,8 +15,6 @@ import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
-console.log("pid "+PID);
-console.log("api "+API);
 let refererDomain = window.location.hostname.replace('www.', '');
 
 let ui = getUI({overlay, tutorial});
@@ -79,7 +77,6 @@ domready(() => {
                 i++;
             }
             if (i <= lastIndex) {
-                console.log(elemsFromPoint[i]);
                 elemsFromPoint[i].click();
                 return true;
             }
@@ -160,14 +157,11 @@ function startCondition(){
     scripts.forEach(function(script){
         if (script.dataset.pid!==PID){
             foreignPID = script.dataset.pid;
-            console.log(PID);
-            console.log("dddddd"+foreignPID);
         }
     })
     if (scripts.length === 1){
         return true;
     }
-    console.log(PID);
     console.log("pid"+getPriority(PID)+"  foreignPid"+getPriority(foreignPID));
     return (getPriority(PID)<getPriority(foreignPID));
 }

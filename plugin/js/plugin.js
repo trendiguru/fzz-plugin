@@ -162,6 +162,5 @@ function startCondition(){
     if (scripts.length === 1){
         return true;
     }
-    console.log("pid"+getPriority(PID)+"  foreignPid"+getPriority(foreignPID));
     return (getPriority(PID)<getPriority(foreignPID));
 }

@@ -36,9 +36,6 @@ let iframe = new iFrame(initAnaltics);
 analytics.track('Page Hit');
 analytics.listen('scroll');
 domready(() => {
-    console.log("WWWWWWW");
-    console.log(RUN_PRIORITY);
-    console.log(PID);
     console.log('FZZ: domready');
     if (startCondition()){
         document.body.appendChild(iframe);
@@ -145,14 +142,12 @@ function processElement (el) {
 }
 
 function startCondition(){
-    let getPriority = ()=>{
+    let getPriority = (pid)=>{
         let runKey;
-        if (PID.includes("dev")){
-            console.log("ffff");
-            console.log(PID.includes("dev"));
+        if (pid.includes("dev")){
             runKey = "DEV";
         }else{
-            if (PID.includes("chrome")){
+            if (pid.includes("chrome")){
                 runKey = "EXTENSION";
             }else{
                 runKey = "PLUGIN";
@@ -173,7 +168,6 @@ function startCondition(){
         return true;
     }
     console.log(PID);
-    console.log(getPriority(PID));
-    console.log(getPriority(foreignPID));
+    console.log("pid"+getPriority(PID)+"  foreignPid"+getPriority(foreignPID));
     return (getPriority(PID)<getPriority(foreignPID));
 }

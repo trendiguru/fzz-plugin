@@ -30,20 +30,21 @@
     "whatwg-fetch": ""
   },
   "devDependencies": {
-    "webpack": "",
-    "babel-loader": "",
+    "autoprefixer": "",
     "babel-core": "",
+    "babel-generator": "",
+    "babel-loader": "",
+    "babel-polyfill": "",
     "babel-preset-es2015": "",
     "babel-preset-react": "",
-    "babel-polyfill": "",
-    "babel-generator": "",
     "css-loader": "",
+    "extract-text-webpack-plugin": "",
+    "mocha-generators": "^1.2.0",
+    "nightmare": "",
+    "node-sass": "",
     "postcss-loader": "",
     "sass-loader": "",
-    "node-sass": "",
-    "extract-text-webpack-plugin": "",
-    "autoprefixer": "",
-    "nightmare": ""
+    "webpack": ""
   },
   "babel": {
     "presets": [

@@ -142,16 +142,17 @@ function processElement (el) {
 
 function startCondition(){
     let getPriority = (pid)=>{
-        if (pid.includes("dev")){RUN_PRIORITY["DEV"];}
-        if (pid.includes("ext")){RUN_PRIORITY["EXTENSION"];}
-        else{RUN_PRIORITY["PLUGIN"];}
+        if (pid.includes("dev")){return RUN_PRIORITY["DEV"];}
+        if (pid.includes("ext")){return RUN_PRIORITY["EXTENSION"];}
+        else{return RUN_PRIORITY["PLUGIN"];}
     };
     let scripts = document.querySelectorAll("#fzz-script");
     let result = true;
     scripts.forEach(function(script){
         console.log(script+" "+THIS_SCRIPT);
         if (script !== THIS_SCRIPT){
-            result = (getPriority(PID)<getPriority(script.dataset.pid))&&result;
+            console.log(getPriority(PID)+"  pid "+PID+" pid "+script.dataset.pid+" "+getPriority(script.dataset.pid));
+            result = (getPriority(PID)<getPriority(script.dataset.pid)) && result;
         }
     })
     console.log(result);

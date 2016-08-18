@@ -144,7 +144,7 @@ function startCondition(){
     let getPriority = (pid)=>{
         if (pid.includes("dev")){return RUN_PRIORITY["DEV"];}
         if (pid.includes("ext")){return RUN_PRIORITY["EXTENSION"];}
-        else{return RUN_PRIORITY["PLUGIN"];}
+        return RUN_PRIORITY["PLUGIN"];
     };
     let scripts = document.querySelectorAll("#fzz-script");
     let result = true;

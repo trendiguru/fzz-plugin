@@ -94,7 +94,7 @@ domready(() => {
                 iframe.hide();
             }
             if (data.fzz_id){
-                console.log('Received fzz_id: ' + msg.data.fzz_id);
+                console.debug('Received fzz_id: ' + msg.data.fzz_id);
             }
         });
         // BUTTON
@@ -149,12 +149,10 @@ function startCondition(){
     let scripts = document.querySelectorAll("#fzz-script");
     let result = true;
     scripts.forEach(function(script){
-        console.log(script+" "+THIS_SCRIPT);
         if (script !== THIS_SCRIPT){
-            console.log(getPriority(PID)+"  pid "+PID+" pid "+script.dataset.pid+" "+getPriority(script.dataset.pid));
+            //console.debug(getPriority(PID)+"  pid "+PID+" pid "+script.dataset.pid+" "+getPriority(script.dataset.pid));
             result = (getPriority(PID)<getPriority(script.dataset.pid)) && result;
         }
     })
-    console.log(result);
     return result;
 }

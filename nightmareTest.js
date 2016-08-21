@@ -10,6 +10,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+let injectedFile;
 /*Very important!!!
   1. nightmare test fails in case (1:we run an extension) AND (2:fzzPages list contains site/s that our pluging is installed on it/them).
   2. nightmare test checks only an extension perfomence AND not published code.
@@ -35,6 +36,8 @@ rl.question('To test published version of code enter: 0, to test local version o
 
   rl.close();
   answer = answer || 1;
+  injectedFile = [null,'b_plugin.js'][answer];
+  console.log(injectedFile);
   fzzPages = fzzPages[['publishers','potencial'][answer]];
   let promises = fzzPages.map((page) => checkPage(page, checkStacks));
   Promise.all(promises)
@@ -58,12 +61,9 @@ function checkPage (url) {
             'allow_running_insecure_content': true
         }
     });
-    return nightmare.goto(url)
-        .viewport(2000, 1000)
-        //.inject('js', 'b_plugin.js')
-        .then(function(){//console.log(this)
-            return this.inject('js', 'b_plugin.js');
-        })
+    let nightMare = nightmare.goto(url);
+    if (injectedFile){nightMare = nightMare.inject('js', 'b_plugin.js');}
+    nightMare = nightMare.viewport(2000, 1000)
         .wait('.fzzButton')
         .wait(WAIT_TIME)
         .click('.fzzButton')
@@ -76,6 +76,7 @@ function checkPage (url) {
             console.error('nightmare test failed:', error);
             return false;
         });
+        return nightMare;
 }
 
 function checkStacks(pageName, stacks) {

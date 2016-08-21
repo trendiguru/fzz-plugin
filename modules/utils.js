@@ -61,6 +61,13 @@ export function getDomainName(urlStr){
     return urlStr.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);//es6
 }
 
+export function setAttributes (element, attributes) {
+    for (let attribute in attributes) {
+        element.setAttribute(attribute, attributes[attribute]);
+    }
+    return element;
+}
+
 export class Query {
     static stringify (query) {
         let result = '';

@@ -1,37 +1,35 @@
-import * as constants from 'constants';
+import {setAttributes} from 'modules/utils';
+import {HOST_DOMAIN} from 'constants';
 
-const {HOST_DOMAIN} = constants;
-
-const URL = `${HOST_DOMAIN}/b_plugin.js`;
-//const URL = `${HOST_DOMAIN}/fzz.min.js`;
-
+// const URL = `${HOST_DOMAIN}/fzz.min.js`;
 // should output <script src="fzz.min.js" data-whitelist="*" data-pid="dev-roundDress"></script>
 
-function getScript(url, callback) {
-    var headTag = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.id = 'fzz-script';
-    script.setAttribute('data-whitelist', '*');
-    script.setAttribute('data-pid', 'dev-roundDress');
-    script.setAttribute('data-api', 'ND');
-    script.src = url;
-    script.onload = callback;
-    script.onreadystatechange = function() {
-        if (this.readyState == 'complete') {
-            callback();
-        }
-    };
-    headTag.appendChild(script);
-    console.info({description: 'Script Tag: ', script: script.outerHTML});
-}
+const URL = `${HOST_DOMAIN}/b_plugin.js`;
 
-window.addEventListener('DOMContentLoaded', function() {
-    getScript(URL, function() {
-        window.FZZ = {logList: []};
-        window.FZZ.log = function(message){
-            window.FZZ.logList.push(message);
-        };
-        window.FZZ.log('TG Extension Done at: ' + new Date());
-    });
+appendScript(URL).then(() => {
+    let FZZ = window.FZZ = {logList: []};
+    FZZ.log = (message) => window.FZZ.logList.push(message);
+    FZZ.log(`TG Extension Done at: ${new Date()}`);
 });
+
+function appendScript(url) {
+    return new Promise ((resolve) => {
+        let script = setAttributes(document.createElement('script'), {
+            'type': 'text/javascript',
+            'class': 'fzz-script',
+            'src': url,
+            'data-whitelist': '*',
+            'data-pid': 'dev-roundDress',
+            'data-api': 'ND',
+            async: false
+        });
+        script.onload = resolve;
+        script.onreadystatechange = () => {
+            if (script.readyState == 'complete') {
+                resolve();
+            }
+        };
+        document.documentElement.appendChild(script);
+        console.info('Script Tag', script);
+    });
+}

@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
-import domready from 'ext/domready';
-import {API, PID, RUN_PRIORITY, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {API, PID, PID_PREFIXES, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -35,9 +34,10 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-domready(() => {
-    console.log('FZZ: domready');
-    if (startCondition()){
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (isRelevantScript(THIS_SCRIPT)) {
+        console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);
         new Observer({
@@ -152,6 +152,7 @@ function startCondition(){
         if (script !== THIS_SCRIPT){
             //console.debug(getPriority(PID)+"  pid "+PID+" pid "+script.dataset.pid+" "+getPriority(script.dataset.pid));
             result = (getPriority(PID)<getPriority(script.dataset.pid)) && result;
+            if (pid && pid.includes(key)) {
         }
     })
     return result;

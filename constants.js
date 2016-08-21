@@ -1,43 +1,32 @@
 /* globals ENVIRONMENT */
-
+import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
-let {blacklist, whitelist, pid, api} = ScriptElementDataAttributes();
+let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 
 export const HOST_DOMAIN = {
         DEV: 'https://localhost:4443',
         PRODUCTION: 'https://fzz.storage.googleapis.com',
         TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],
-    MIN_IMG_WIDTH = 151,
-    MIN_IMG_HEIGHT = 181,
-    DEBUG = false,
+    // analytics
+    LIBNAME = 'fzz',
     MIXPANEL_ID = '7b61e0db566195263d0fc9d203495e62',
     GA_CODE = 'UA-51323231-3',
-    IFRAME_SRC = `${HOST_DOMAIN}/assets/app.html`,
-    CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
-    IFRAME_ID = 'fazzi',
-    INFO_URL = 'http://fazz.co',
-    LIBNAME = 'fzz',
+    BUTTON_SEEN_CHECK_INTERVAL = 1000,
+    // filter
+    MIN_IMG_WIDTH = 151,
+    MIN_IMG_HEIGHT = 181,
     BLACK_LIST = blacklist,
     WHITE_LIST = whitelist,
-    PID = pid || Query.parse(location.search).PID || '',
-    SERVER_URL = {
-        PRODUCTION:'https://track.trendi.guru/tr/web?',
-        DEV: 'https://track.trendi.guru/tr/test?'
-    }[ENVIRONMENT],
-    RUN_PRIORITY = {
-        DEV:1,
-        PLUGIN:2,
-        EXTENSION:3
-    },
+    // draw
+    INFO_URL = 'http://fazz.co',
+    // iframe
+    IFRAME_ID = 'fazzi',
+    CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
+    IFRAME_SRC = `${HOST_DOMAIN}/assets/app.html`,
+    // ui
     COOKIE_NAME = 'fzz_ui_3',
-    API = Query.parse(location.search).API || api,
-    API_URL = {
-        ND: 'https://api.trendi.guru/images',
-        PD: 'https://extremeli.trendi.guru/api/images'
-    }[API] || 'https://extremeli.trendi.guru/api/images',
-    BUTTON_SEEN_CHECK_INTERVAL = 1000,
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
         LOADING_IMAGES: [

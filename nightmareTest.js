@@ -3,26 +3,21 @@ const readline = require('readline');
 
 const WAIT_TIME = 3500;
 const RELEVANT_STACKS = ['smartCheckRelevancy', 'content'];
-const RELEVANT_REQUESTS = [ 'Trendi Button Drawn', 'Trendi Button Clicked','Button Seen'];
+const RELEVANT_REQUESTS = ['Trendi Button Drawn', 'Trendi Button Clicked', 'Button Seen'];
 
 const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+    input: process.stdin,
+    output: process.stdout
 });
 
 let injectedFile;
-/*Very important!!!
-  1. nightmare test fails in case (1:we run an extension) AND (2:fzzPages list contains site/s that our pluging is installed on it/them).
-  2. nightmare test checks only an extension perfomence AND not published code.
-  3. if you want check 'Button seen' request you must set "show:true" attribute in nightmare object definition.
-  */
 let fzzPages = {
-    'publishers':[
+    'publishers': [
         'http://amaze-magazine.com/2016/08/cute-fall-denim-everybody/',
-        'http://robshelter.blogspot.co.il/2015/09/forget.html',
+        //'http://robshelter.blogspot.co.il/2015/09/forget.html',// Currently i do not knw what is the problem with this site&electron.
         'http://www.fashionseoul.com/?p=119333',
     ],
-    'potencial':[
+    'potencial': [
         'http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-fotos-ihrer-familie_1166388-i10704220.html',
         'http://www.gala.de/beauty-fashion/fashion/fashion-looks-der-style-von-jennifer-lawrence_1171061_782392-i9736316.html',
         'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
@@ -30,30 +25,34 @@ let fzzPages = {
     ]
 };
 
+/*Very important!!!
+  1. nightmare test fails in case (1:we run an extension) AND (2:fzzPages list contains site/s that our pluging is installed on it/them).
+  2. if you want check 'Button seen' request you must set "show:true" attribute in nightmare object definition.
+  */
 
-rl.question('To test published version of code enter: 0, to test local version of code enter: 1     ', (answer) => {
-  console.log('Please wait. It will take up to minute', answer);
+rl.question('To test published version of code enter: 0, \r\nTo test local version of code enter: 1\r\n', (answer) => {
+    console.log('Please wait. It will take up to minute');
 
-  rl.close();
-  answer = answer || 1;
-  injectedFile = [null,'b_plugin.js'][answer];
-  console.log(injectedFile);
-  fzzPages = fzzPages[['publishers','potencial'][answer]];
-  let promises = fzzPages.map((page) => checkPage(page, checkStacks));
-  Promise.all(promises)
-  .then((results) => {
-      let flag = true;
-      for (let result of results) {
-          flag = (flag && result);
-      }
-      console.log(`_________TOTAL_RESULT_________${flag}`);
-      return flag;
-  });
+    rl.close();
+    answer = answer || 1;
+    subject = ['publishers', 'potencial'][answer]
+    fzzPages = fzzPages[subject];
+    injectedFile = {publishers:null, potencial: 'b_plugin.js'}[subject];
+    let promises = fzzPages.map((page) => checkPage(page, checkStacks));
+    Promise.all(promises)
+        .then((results) => {
+            let flag = true;
+            for (let result of results) {
+                flag = (flag && result);
+            }
+            console.log(`_________TOTAL_RESULT_________${flag}`);
+            return flag;
+        });
 });
 
-function checkPage (url) {
+function checkPage(url) {
     let nightmare = new Nightmare({
-        show: true,
+        //show: true,
         openDevTools: true,
         switches: {
             'ignore-certificate-errors': true,
@@ -61,9 +60,11 @@ function checkPage (url) {
             'allow_running_insecure_content': true
         }
     });
-    let nightMare = nightmare.goto(url);
-    if (injectedFile){nightMare = nightMare.inject('js', 'b_plugin.js');}
-    nightMare = nightMare.viewport(2000, 1000)
+    let nm = nightmare.goto(url);
+    if (injectedFile) {
+        nm = nm.inject('js', 'b_plugin.js');
+    }
+    nm = nm.viewport(2000, 1000)
         .wait('.fzzButton')
         .wait(WAIT_TIME)
         .click('.fzzButton')
@@ -76,7 +77,7 @@ function checkPage (url) {
             console.error('nightmare test failed:', error);
             return false;
         });
-        return nightMare;
+    return nm;
 }
 
 function checkStacks(pageName, stacks) {
@@ -89,7 +90,7 @@ function checkStacks(pageName, stacks) {
     return (result && checkRequests(stacks.requests));
 }
 
-function checkRequests(requests){
+function checkRequests(requests) {
     let result = true;
     for (let request of RELEVANT_REQUESTS) {
         console.log(`${request}: ${requests.includes(request)}`);

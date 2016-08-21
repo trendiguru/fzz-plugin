@@ -62,25 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
         });
-        cleanRelevantImgDict()
-        addEventListener('click', (e) => {
-            let isTgButton = (el) => {
-                if (el === undefined || el.classList === undefined) return false;
-                if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
+        cleanRelevantImgDict();
+        addEventListener('click', e => {
+            for (let element of Array.from(document.elementsFromPoint(e.clientX, e.clientY))) {
+                if (isTGButton(element)) {
+                    element.click();
                     return true;
                 }
-                return false;
-            };
-            let elemsFromPoint = document.elementsFromPoint(e.clientX, e.clientY);
-            let i = 0;
-            let lastIndex = elemsFromPoint.length - 1;
-            while (!isTgButton(elemsFromPoint[i]) && i <= lastIndex) {
-                //TODO:if it elemsFromPoint is not transparelnt return false;
-                i++;
-            }
-            if (i <= lastIndex) {
-                elemsFromPoint[i].click();
-                return true;
             }
             return false;
         });
@@ -140,20 +128,28 @@ function processElement (el) {
     return process(el, el => draw(ui, el));
 }
 
-function startCondition(){
-    let getPriority = (pid)=>{
-        if (pid.includes("dev")){return RUN_PRIORITY["DEV"];}
-        if (pid.includes("ext")){return RUN_PRIORITY["EXTENSION"];}
-        return RUN_PRIORITY["PLUGIN"];
-    };
-    let scripts = document.querySelectorAll("#fzz-script");
-    let result = true;
-    scripts.forEach(function(script){
-        if (script !== THIS_SCRIPT){
-            //console.debug(getPriority(PID)+"  pid "+PID+" pid "+script.dataset.pid+" "+getPriority(script.dataset.pid));
-            result = (getPriority(PID)<getPriority(script.dataset.pid)) && result;
+function isTGButton (el) {
+    if (el === undefined || el.classList === undefined) return false;
+    if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
+        return true;
+    }
+    return false;
+}
+
+function isRelevantScript (script) {
+    let fzzScripts = Array.from(document.getElementsByClassName('fzz-script'));
+    let relevantScript = fzzScripts.sort(script => {
+        let pid = getPID(script);
+        for (let key in PID_PREFIXES) {
             if (pid && pid.includes(key)) {
+                return PID_PREFIXES[key];
+            }
         }
-    })
-    return result;
+        return 0;
+    }).pop();
+    return script === relevantScript;
+}
+
+function getPID (script) {
+    return script.getAttribute('data-pid');
 }

@@ -39,7 +39,23 @@ export const HOST_DOMAIN = {
             'VLHmZU5YQidm8'
         ]
     },
-    TUTOIRAL_VERSION = '1.0.0';
+    TUTOIRAL_VERSION = '1.0.0',
+    // server
+    PID_PREFIXES = {
+        dev: 1,
+        ext: -1
+    },
+    PID = pid || Query.parse(location.search).PID || '',
+    SERVER_URL = {
+        PRODUCTION:'https://track.trendi.guru/tr/web?',
+        DEV: 'https://track.trendi.guru/tr/test?'
+    }[ENVIRONMENT],
+    API = Query.parse(location.search).API || api,
+    API_URL = {
+        ND: 'https://api.trendi.guru/images',
+        PD: 'https://extremeli.trendi.guru/api/images'
+    }[API] || 'https://extremeli.trendi.guru/api/images',
+    DEBUG = false;
 
 export function UISettings (host) {
     let settings = {
@@ -83,23 +99,4 @@ export function UISettings (host) {
             return settings[domain];
     }
     return settings.__default;
-}
-
-function ScriptElementDataAttributes () {
-    let data = {
-        userConfig: {},
-        pid: '',
-        api: '',
-        whitelist: '*'
-    };
-
-    let fzzScript = document.currentScript;
-    if (fzzScript) {
-        for (let attribute of Array.from(fzzScript.attributes)) {
-            if (attribute.name.search('data-') == 0) {
-                data[attribute.name.substr(5)] = attribute.value;
-            }
-        }
-    }
-    return data;
 }

@@ -27,7 +27,6 @@ let fzzPages = {
 
 /*Very important!!!
   1. nightmare test fails in case (1:we run an extension) AND (2:fzzPages list contains site/s that our pluging is installed on it/them).
-  2. if you want check 'Button seen' request you must set "show:true" attribute in nightmare object definition.
   */
 
 rl.question('To test published version of code enter: 0, \r\nTo test local version of code enter: 1\r\n', (answer) => {

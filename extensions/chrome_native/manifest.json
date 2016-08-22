@@ -20,5 +20,5 @@
 
     "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
 
-    "content_security_policy": "script-src 'self'; object-src 'self'"
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
 }

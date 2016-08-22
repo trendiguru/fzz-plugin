@@ -12,13 +12,13 @@
             "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["*://www.facebook.com/*", "*://www.messenger.com/*", "*://*.google.com/*"],
             "run_at": "document_start",
-            "js": ["extension.js"]
+            "js": ["b_plugin.js"]
         }
     ],
 
     "permissions": ["http://*/*", "https://*/*"],
 
-    "web_accessible_resources": ["http://*/*", "https://*/*"],
+    "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
 
     "content_security_policy": "script-src 'self'; object-src 'self'"
 }

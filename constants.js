@@ -1,11 +1,11 @@
-/* globals ENVIRONMENT */
+/* globals ENVIRONMENT chrome */
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 
 export const HOST_DOMAIN = {
-        DEV: 'https://localhost:4443',
+        DEV: chrome ? chrome.extension.getURL('').substr(0, chrome.extension.getURL('').length - 1) : '',
         PRODUCTION: 'https://fzz.storage.googleapis.com',
         TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],

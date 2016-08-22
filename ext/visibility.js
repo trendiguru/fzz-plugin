@@ -1,5 +1,5 @@
 /*
- * Author: Sergey Starodub 
+ * Author: Sergey Starodub
  * Description: Checks if a DOM element is truly visible.
  */
 
@@ -11,7 +11,7 @@ const VISIBLE_PADDING_RIGHT = 0.3;
 // relates to "is under to any object on screen, or not" calculation.
 const VISIBLE_PADDING = 0.3;// HERE YOU MAY CHANGE THE VISIBILITY AREA!!!
 const UNVISIBLE_PADDING = 1 - VISIBLE_PADDING;
-const LEVEL = 2; 
+const LEVEL = 2;
 
 //let tStyles = [['backgroundColor','rgba(0, 0, 0, 0)']];
 
@@ -51,7 +51,7 @@ function checkVisibility(x, y, w, h, level, obj){
         return true;
     }
     if (visibleInPoint(x+w/2, y+h/2, obj)){
-        level -=1; 
+        level -=1;
         return (checkVisibility(x, y, w/2, h/2, level, obj) &&
                 checkVisibility(x+w/2, y, w/2, h/2, level, obj) &&
                 checkVisibility(x, y+h/2, w/2, h/2, level, obj) &&
@@ -68,8 +68,9 @@ function getStyle(obj, property) {
     if ( obj.currentStyle ) {
         return obj.currentStyle[property];
     }
+    return null;
 }
- 
+
 function isFazzDescendant(elem){
     return (elem && elem.parentElement) ? elem.parentElement.classList.contains("fazz") : false
 }

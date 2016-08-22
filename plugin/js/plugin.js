@@ -13,8 +13,6 @@ import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
-const THIS_SCRIPT = document.currentScript;
-
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
@@ -35,8 +33,10 @@ let iframe = new iFrame(initAnaltics);
 analytics.track('Page Hit');
 analytics.listen('scroll');
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (isRelevantScript(THIS_SCRIPT)) {
+document.addEventListener('DOMContentLoaded', init);
+
+function init () {
+    if (isRelevantScript()) {
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-});
+}
 
 function processElement (el) {
     return process(el, el => draw(ui, el));
@@ -136,18 +136,24 @@ function isTGButton (el) {
     return false;
 }
 
-function isRelevantScript (script) {
+function isRelevantScript () {
     let fzzScripts = Array.from(document.getElementsByClassName('fzz-script'));
-    let relevantScript = fzzScripts.sort(script => {
-        let pid = getPID(script);
-        for (let key in PID_PREFIXES) {
-            if (pid && pid.includes(key)) {
-                return PID_PREFIXES[key];
-            }
+    if (fzzScripts.length > 1) {
+        let pids = fzzScripts.map(script => getPID(script));
+        if (!pids.includes(PID)) {
+            return true;
         }
-        return 0;
-    }).pop();
-    return script === relevantScript;
+        let relevantPID = pids.sort(pid => {
+            for (let key in PID_PREFIXES) {
+                if (pid && pid.includes(key)) {
+                    return PID_PREFIXES[key];
+                }
+            }
+            return 0;
+        }).pop();
+        return PID === relevantPID;
+    }
+    return true;
 }
 
 function getPID (script) {

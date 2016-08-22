@@ -12,12 +12,12 @@ appendScript(URL).then(() => {
     FZZ.log(`TG Extension Done at: ${new Date()}`);
 });
 
-function appendScript(url) {
+function appendScript(src) {
     return new Promise ((resolve) => {
         let script = setAttributes(document.createElement('script'), {
             'type': 'text/javascript',
             'class': 'fzz-script',
-            'src': url,
+            src,
             'data-whitelist': '*',
             'data-pid': 'dev-roundDress',
             'data-api': 'ND',

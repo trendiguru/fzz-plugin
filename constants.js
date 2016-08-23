@@ -91,7 +91,7 @@ export function UISettings (host) {
 function ScriptElementDataAttributes () {
     let data = {
         userConfig: {},
-        api: 'PD',
+        api: 'pd',
         whitelist: '*'
     };
     let fzzScript = document.getElementById('fzz-script');

@@ -1,4 +1,4 @@
-import {API_URL, PID} from 'constants';
+import {API_URL, PID, API} from 'constants';
 import {Query} from './utils';
 import ActionBuffer from './actionbuffer';
 

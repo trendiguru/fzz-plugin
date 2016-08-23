@@ -27,7 +27,7 @@ function trackButtonSeen (el) {
 function wrap ({element, buttonDiv, url}) {
     let div;
     let {width, margin, padding, display, position} = getComputedStyle(element);
-    if (element.tagName === 'img') {
+    if (element.tagName === 'IMG') {
         div = document.createElement('div');
         element.parentElement.insertBefore(div, element);
         div.appendChild(element);

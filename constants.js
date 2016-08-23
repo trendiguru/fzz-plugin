@@ -28,7 +28,7 @@ export const HOST_DOMAIN = {
     }[ENVIRONMENT],
     COOKIE_NAME = 'fzz_ui_3',
     API = Query.parse(location.search).API || api,
-    API_URL = `https://api.trendi.guru/images?method=${API}`,
+    API_URL = 'https://api.trendi.guru/images',
     BUTTON_SEEN_CHECK_INTERVAL = 1000,
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
@@ -91,7 +91,7 @@ export function UISettings (host) {
 function ScriptElementDataAttributes () {
     let data = {
         userConfig: {},
-        api: 'PD',
+        api: 'pd',
         whitelist: '*'
     };
     let fzzScript = document.getElementById('fzz-script');

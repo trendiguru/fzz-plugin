@@ -1,7 +1,7 @@
 {
     // Required
     "manifest_version": 2,
-    "name": "Find that Dress! (Native)",
+    "name": "Find that Dress!",
     "version": "0.9",
 
     // Recommended

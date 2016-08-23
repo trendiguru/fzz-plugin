@@ -25,23 +25,36 @@ function trackButtonSeen (el) {
 }
 
 function wrap ({element, buttonDiv, url}) {
-    let div = document.createElement('div');
-    div.classList.add('fzz_wrap');
-    element.parentElement.insertBefore(div, element);
-    div.appendChild(element);
-    div.appendChild(buttonDiv);
-    if (!element.originalInlineStyle) {
-        element.originalInlineStyle = element.getAttribute('style');
+    let div;
+    let {width, margin, padding, display, position} = getComputedStyle(element);
+    if (element.tagName === 'img') {
+        div = document.createElement('div');
+        element.parentElement.insertBefore(div, element);
+        div.appendChild(element);
+        if (!element.originalInlineStyle) {
+            element.originalInlineStyle = element.getAttribute('style');
+        }
+        element.setAttribute('style', element.originalInlineStyle);
+        Object.assign(element.style, {
+            padding: '0px',
+            margin: '0px',
+            display: 'block'
+        });
+        Object.assign(div.style, {
+            width,
+            margin,
+            padding
+        });
     }
-    element.setAttribute('style', element.originalInlineStyle);
-    let {width, margin, padding, display} = getComputedStyle(element);
+    else {
+        div = element;
+    }
+    div.classList.add('fzz_wrap');
+    div.appendChild(buttonDiv);
     Object.assign(div.style, {
-        position: 'relative',
+        position: ['absolute', 'fixed'].includes(position) ? position : 'relative',
         isolation: 'isolate',
         display: display !== 'inline' ? display : 'inline-block',
-        width,
-        margin,
-        padding
     });
     Object.assign(buttonDiv.style, {
         width: '100%',
@@ -49,11 +62,6 @@ function wrap ({element, buttonDiv, url}) {
         position: 'absolute',
         top: 0,
         left: 0
-    });
-    Object.assign(element.style, {
-        padding: '0px',
-        margin: '0px',
-        display: 'block'
     });
     trackButtonSeen(element);
     dispatchEvent(Object.assign(new Event('button drawn'), {

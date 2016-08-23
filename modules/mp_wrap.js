@@ -1,31 +1,24 @@
-/*global mixpanel*/
 
-import runMixpanelSnippet from 'ext/mixpanel-snippet';
 import * as constants from 'constants';
 //import mixpanel from 'ext/mixpanel/loader-module';
 
-const {LIBNAME, MIXPANEL_ID} = constants;
+const {MIXPANEL_ID} = constants;
 
 export default {
+    clientId: '',
     load () {
-        return new Promise(function (resolve) {
-            runMixpanelSnippet();
-            mixpanel.init(MIXPANEL_ID, {
-                loaded: () => resolve()
-            }, LIBNAME);
-        });
+        return 0;
     },
     init (clientId) {
-        return new Promise(resolve =>{
-            if (clientId !== undefined) {
-                mixpanel[LIBNAME].identify(clientId);
-            } else {
-                mixpanel.track('No client ID');
-            }
-            resolve();
+        return Promise.resolve().then(() => {
+            if (clientId)
+                this.clientId = clientId;
+            else
+                this.track('No client ID');
         });
     },
-    track (eventName, properties) {
-        mixpanel[LIBNAME].track(eventName, properties);
+    track (event, properties = {}) {
+        Object.assign(properties, {token: MIXPANEL_ID, distinct_id: this.clientId});
+        return fetch(`https://api.mixpanel.com/track/?data=${btoa(JSON.stringify({event, properties}))}`);
     }
 };

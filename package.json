@@ -5,9 +5,9 @@
   "main": "plugin/js/plugin.js",
   "scripts": {
     "init": "npm i -g webpack",
-    "start": "npm run serve & npm run watch",
+    "start": "npm run watch",
     "stop": "pkill -f python.*HTTP.*4443",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node nightmareTest",
     "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
     "watch": "webpack --watch --progress",
     "bundle": "webpack & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
@@ -27,6 +27,8 @@
     "imagesloaded": "",
     "js-cookie": "",
     "mixpanel-browser": "",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
     "whatwg-fetch": ""
   },
   "devDependencies": {
@@ -38,8 +40,8 @@
     "babel-preset-es2015": "",
     "babel-preset-react": "",
     "css-loader": "",
+    "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "",
-    "mocha-generators": "^1.2.0",
     "nightmare": "",
     "node-sass": "",
     "postcss-loader": "",

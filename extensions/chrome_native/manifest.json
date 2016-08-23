@@ -11,14 +11,14 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "exclude_matches": ["*://www.facebook.com/*", "*://www.messenger.com/*", "*://*.google.com/*"],
-            "run_at": "document_end",
-            "js": ["bootstrap_script_tag.js","b_plugin.js"]
+            "run_at": "document_start",
+            "js": ["b_plugin.js"]
         }
     ],
 
     "permissions": ["http://*/*", "https://*/*"],
 
-    "web_accessible_resources": ["http://*/*", "https://*/*"],
-    
-    "content_security_policy": "script-src 'self' https://cdn.mxpnl.com/libs/*; object-src 'self'"
+    "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
+
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
 }

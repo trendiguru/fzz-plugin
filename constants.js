@@ -1,11 +1,17 @@
-/* globals ENVIRONMENT chrome */
+/* globals ENVIRONMENT */
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 
+let chromeExtensionURL = null;
+if (window.chrome) {
+    let url = window.chrome.extension.getURL('');
+    chromeExtensionURL = url.substr(0, url.length - 1);
+}
+
 export const HOST_DOMAIN = {
-        DEV: chrome ? chrome.extension.getURL('').substr(0, chrome.extension.getURL('').length - 1) : '',
+        DEV: chromeExtensionURL || '',
         PRODUCTION: 'https://fzz.storage.googleapis.com',
         TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],

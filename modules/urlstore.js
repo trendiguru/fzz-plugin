@@ -43,7 +43,7 @@ export default class URLStore {
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(API_URL + '?' + Query.stringify({PID}), {
+    return fetch(API_URL + '?' + Query.stringify({method: API, pid: PID}), {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

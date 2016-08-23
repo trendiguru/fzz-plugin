@@ -1,13 +1,16 @@
-/* globals ENVIRONMENT */
+/* globals ENVIRONMENT chrome */
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 
-let chromeExtensionURL = null;
-if (window.chrome) {
-    let url = window.chrome.extension.getURL('');
+let chromeExtensionURL;
+try {
+    let url = chrome.extension.getURL('');
     chromeExtensionURL = url.substr(0, url.length - 1);
+}
+catch (e) {
+    chromeExtensionURL = null;
 }
 
 export const HOST_DOMAIN = {

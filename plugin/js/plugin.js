@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {API, PID, PID_PREFIXES, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
 import getUI from './ui';
 import * as overlay from './overlay';
@@ -15,6 +15,8 @@ import {STACKS} from 'modules/devTools';
 
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
+
+window.fzz_run = true;
 
 let ui = getUI({overlay, tutorial});
 
@@ -137,25 +139,5 @@ function isTGButton (el) {
 }
 
 function isRelevantScript () {
-    let fzzScripts = Array.from(document.getElementsByClassName('fzz-script'));
-    if (fzzScripts.length > 1) {
-        let pids = fzzScripts.map(script => getPID(script));
-        if (!pids.includes(PID)) {
-            return true;
-        }
-        let relevantPID = pids.sort(pid => {
-            for (let key in PID_PREFIXES) {
-                if (pid && pid.includes(key)) {
-                    return PID_PREFIXES[key];
-                }
-            }
-            return 0;
-        }).pop();
-        return PID === relevantPID;
-    }
-    return true;
-}
-
-function getPID (script) {
-    return script.getAttribute('data-pid');
+    return window.fzz_run;
 }

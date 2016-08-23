@@ -10,12 +10,14 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "exclude_matches": ["*://*.facebook.com/*",
+            "exclude_matches": [
+                "*://*.facebook.com/*",
                 "*://*.google.com/*",
                 "*://*.whatsapp.com/*",
-                "*://*.messenger.com/*"],
-            "run_at": "document_start",
-            "js": ["run_ext.js"]
+                "*://*.messenger.com/*"
+            ],
+            "js": ["run_ext.js"],
+            "run_at": "document_start"
         }
     ],
 

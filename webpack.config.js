@@ -41,13 +41,21 @@ module.exports = {
         return [autoprefixer];
     },
     entry: {
-        'extensions/chrome/run_ext.js': ['regenerator-runtime/runtime', 'extensions/chrome/es6_run_ext.js'],
-        'b_plugin.js':  ES_POLYFILLS.concat(['./plugin/js/plugin.js']),
+        'b_plugin.js':  ES_POLYFILLS.concat('./plugin/js/plugin.js'),
         'b_plugin.css': './plugin/css/plugin.scss',
         'b_app.js': ES_POLYFILLS.concat('./app/main.js'),
         'b_app.css': './app/css/app.scss',
         'b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
-        'b_demo.css': './demo/css/demo.scss'
+        'b_demo.css': './demo/css/demo.scss',
+        // CHROME EXTENSION ALIAS
+        'extensions/chrome_native/b_plugin.js': ES_POLYFILLS.concat('./plugin/js/plugin.js'),
+        'extensions/chrome_native/b_plugin.css': './plugin/css/plugin.scss',
+        'extensions/chrome_native/b_app.js': ES_POLYFILLS.concat([
+            'expose?React!react',
+            'expose?ReactDOM!react-dom',
+            './app/main.js'
+        ]),
+        'extensions/chrome_native/b_app.css': './app/css/app.scss',
     },
     output: {
         path: '.',

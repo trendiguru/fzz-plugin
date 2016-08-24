@@ -55,7 +55,7 @@ module.exports = {
             'expose?ReactDOM!react-dom',
             './app/main.js'
         ]),
-        'extensions/chrome_native/b_app.css': './app/css/app.scss',
+        'extensions/chrome_dev/b_app.css': './app/css/app.scss',
     },
     output: {
         path: '.',

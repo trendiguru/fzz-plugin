@@ -1,17 +1,18 @@
 /* eslint-disable no-console */
 
-import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Cookies from 'js-cookie';
+import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import Analytics from 'modules/analytics_wrapper';
+import {STACKS} from 'modules/devTools';
+import {Version, domready} from 'modules/utils';
+import draw from './draw';
+import {iFrame, Style} from './elements';
+import Observer from './observe';
+import {process,cleanRelevantImgDict} from './process';
+import TGImage from './tgimage';
 import getUI from './ui';
 import * as overlay from './overlay';
 import * as tutorial from './tutorial';
-import Analytics from 'modules/analytics_wrapper';
-import draw from './draw';
-import Observer from './observe';
-import {process,cleanRelevantImgDict} from './process';
-import {iFrame, Style} from './elements';
-import {Version} from 'modules/utils';
-import {STACKS} from 'modules/devTools';
 
 let body = document.body;
 let s = STACKS;
@@ -43,28 +44,12 @@ domready(() => {
             whitelist: WHITE_LIST,
             blacklist: BLACK_LIST,
             callbackExisting: true,
-            callback (mutations) {
-                for (let mutation of mutations) {
-                    if (mutation.type == 'childList') {
-                        for (let node of mutation.addedNodes) {
-                            processElement(node);
-                            if (node.querySelectorAll){
-                                for (let el of node.querySelectorAll('*')){
-                                    processElement(el);
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        processElement(mutation.target);
-                    }
-                }
-            },
+            callback: onMutation(el => process(el, el => draw(ui, el))),
         });
         cleanRelevantImgDict();
         addEventListener('click', e => {
             for (let element of Array.from(document.elementsFromPoint(e.clientX, e.clientY))) {
-                if (isTGButton(element)) {
+                if (TGImage.isTGButton(element)) {
                     element.click();
                     return true;
                 }
@@ -123,25 +108,24 @@ domready(() => {
     }
 });
 
-function domready (action) {
-    if (document.readyState == 'interactive') {
-        action();
-    }
-    else {
-        addEventListener('DOMContentLoaded', action);
-    }
-}
-
-function processElement (el) {
-    return process(el, el => draw(ui, el));
-}
-
-function isTGButton (el) {
-    if (el === undefined || el.classList === undefined) return false;
-    if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
-        return true;
-    }
-    return false;
+function onMutation (action) {
+    return (mutations) => {
+        for (let mutation of mutations) {
+            if (mutation.type == 'childList') {
+                for (let node of mutation.addedNodes) {
+                    action(node);
+                    if (node.querySelectorAll){
+                        for (let el of node.querySelectorAll('*')){
+                            action(el);
+                        }
+                    }
+                }
+            }
+            else {
+                action(mutation.target);
+            }
+        }
+    };
 }
 
 function isRelevantScript () {

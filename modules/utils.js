@@ -24,6 +24,15 @@ export function promiseWithTimeout(p, ms) {
     return Promise.race([p, wait(ms)]);
 }
 
+export function domready (action) {
+    if (document.readyState == 'interactive') {
+        action();
+    }
+    else {
+        addEventListener('DOMContentLoaded', action);
+    }
+}
+
 /* Usage:
 var l = getLocation("http://example.com/path");
 console.debug(l.hostname)

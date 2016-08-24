@@ -13,10 +13,9 @@ import {iFrame, Style} from './elements';
 import {Version} from 'modules/utils';
 import {STACKS} from 'modules/devTools';
 
+let body = document.body;
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
-
-window.fzz_run = true;
 
 let ui = getUI({overlay, tutorial});
 
@@ -146,5 +145,9 @@ function isTGButton (el) {
 }
 
 function isRelevantScript () {
-    return window.fzz_run;
+    if (body.getAttribute('data-fzz-run')) {
+        return false;
+    }
+    body.setAttribute('data-fzz-run', true);
+    return true;
 }

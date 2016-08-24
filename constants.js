@@ -6,6 +6,7 @@ import {Query} from 'modules/utils';
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 
 let chromeExtUrl = isChromeExt ? window.chrome.extension.getURL('') : '';
+chromeExtUrl = chromeExtUrl.substr(0, chromeExtUrl.length - 1);
 
 export const HOST_DOMAIN = {
         DEV: chromeExtUrl || '',

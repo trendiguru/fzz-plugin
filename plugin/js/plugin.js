@@ -35,9 +35,7 @@ let iframe = new iFrame(initAnaltics);
 analytics.track('Page Hit');
 analytics.listen('scroll');
 
-document.addEventListener('DOMContentLoaded', init);
-
-function init () {
+domready(() => {
     if (isRelevantScript()) {
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
@@ -123,6 +121,15 @@ function init () {
                 analytics.track('Tutorial Closed', {closed_after});
             });
         }
+    }
+});
+
+function domready (action) {
+    if (document.readyState == 'interactive') {
+        action();
+    }
+    else {
+        addEventListener('DOMContentLoaded', action);
     }
 }
 

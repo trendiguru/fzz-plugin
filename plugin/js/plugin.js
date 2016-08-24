@@ -14,7 +14,6 @@ import getUI from './ui';
 import * as overlay from './overlay';
 import * as tutorial from './tutorial';
 
-let body = document.body;
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
@@ -129,6 +128,7 @@ function onMutation (action) {
 }
 
 function isRelevantScript () {
+    let body = document.body;
     if (body.getAttribute('data-fzz-run')) {
         return false;
     }

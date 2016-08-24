@@ -126,10 +126,10 @@ domready(() => {
 
 function domready (action) {
     if (document.readyState == 'interactive') {
-        addEventListener('DOMContentLoaded', action);
+        action();
     }
     else {
-        action();
+        addEventListener('DOMContentLoaded', action);
     }
 }
 

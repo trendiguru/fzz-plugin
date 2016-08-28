@@ -25,7 +25,7 @@ export function promiseWithTimeout(p, ms) {
 }
 
 export function domready (action) {
-    if (document.readyState == 'interactive') {
+    if (['interactive','complete'].includes(document.readyState)) {
         action();
     }
     else {

@@ -114,7 +114,7 @@ export function css2xpath (cssSelector) {
 }
 
 export function* evaluateElement (el, xpath) {
-    let evaluation = document.evaluate(xpath, el);
+    let evaluation = document.evaluate(xpath, el, null, XPathResult.ANY_TYPE, null);
     let iterated;
     while (iterated = evaluation.iterateNext()) {
         yield iterated;

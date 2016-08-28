@@ -14,4 +14,4 @@ catch (e) {
     }
 }
 
-export default crossExtension;
+export default {extension: crossExtension};

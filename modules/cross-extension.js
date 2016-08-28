@@ -1,10 +1,17 @@
-let extension = null;
+/* globals extension chrome */
 
-if (window.extension) {
-    extension = window.extension;
+let crossExtension = null;
+
+try {
+    crossExtension = extension;
 }
-else if (window.chrome && window.chrome.extension) {
-    extension = window.chrome.extension;
+catch (e) {
+    try {
+        crossExtension = chrome.extension;
+    }
+    catch (e) {
+        () => e;
+    }
 }
 
-export default extension;
+export default crossExtension;

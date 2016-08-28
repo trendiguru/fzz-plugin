@@ -1,15 +1,13 @@
 /* globals ENVIRONMENT */
-import isChromeExt from 'modules/ischromeext';
+import extension from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
-
-let chromeExtUrl = isChromeExt ? window.chrome.extension.getURL('') : '';
-chromeExtUrl = chromeExtUrl.substr(0, chromeExtUrl.length - 1);
+let extUrl = extension.getURL('').substr(0, extension.getURL('').length - 1);
 
 export const HOST_DOMAIN = {
-        DEV: chromeExtUrl || '',
+        DEV: extUrl || '',
         PRODUCTION: 'https://fzz.storage.googleapis.com',
         TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],
@@ -45,7 +43,7 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = isChromeExt ? 'dev' : pid || Query.parse(location.search).PID || '',
+    PID = extension ? 'dev' : pid || Query.parse(location.search).PID || '',
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'

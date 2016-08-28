@@ -32,7 +32,7 @@ export default class Observer {
                 queue.push({type: 'init', target: element});
             }
         }
-        this.callback(queue); // que might be empty
+        this.callback(queue); // queue might be empty
         observer.observe(root, config);
         devTools.STACKS.newStack('observed');
         devTools.STACKS.observed = this.observed;

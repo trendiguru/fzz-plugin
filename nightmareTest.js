@@ -21,7 +21,9 @@ let fzzPages = {
         'http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-fotos-ihrer-familie_1166388-i10704220.html',
         'http://www.gala.de/beauty-fashion/fashion/fashion-looks-der-style-von-jennifer-lawrence_1171061_782392-i9736316.html',
         'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
-        'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D'
+        'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D',
+        'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
+        'http://www.plus-model-mag.com/'
     ]
 };
 
@@ -51,7 +53,7 @@ rl.question('To test published version of code enter: 0, \r\nTo test local versi
 
 function checkPage(url) {
     let nightmare = new Nightmare({
-        //show: true,
+        show: true,
         openDevTools: true,
         switches: {
             'ignore-certificate-errors': true,

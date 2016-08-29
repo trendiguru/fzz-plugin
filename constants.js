@@ -43,7 +43,7 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = (extension ? 'dev' : Query.parse(location.search).PID || pid || '').toLocaleLowerCase(),
+    PID = Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'

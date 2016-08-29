@@ -100,4 +100,3 @@ export function UISettings (host) {
     }
     return settings.__default;
 }
-console.log("fire")

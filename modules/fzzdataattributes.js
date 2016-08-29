@@ -2,7 +2,7 @@ export default class FzzDataAttributes {
     constructor () {
         Object.assign(this, {
             pid: 'dev',
-            api: 'nd',
+            api: 'pd',
             whitelist: '*'
         });
         if (document.currentScript) {

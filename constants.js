@@ -89,3 +89,10 @@ export const HOST_DOMAIN = {
             // }
         }
     };
+
+    for (let domain in settings) {
+        if (host && host.includes(domain))
+            return settings[domain];
+    }
+    return settings.__default;
+}

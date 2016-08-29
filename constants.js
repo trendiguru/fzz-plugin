@@ -6,8 +6,10 @@ import {Query} from 'modules/utils';
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 
+console.log(extension);
+
 export const HOST_DOMAIN = {
-        DEV: extUrl || '',
+        DEV: extUrl,
         PRODUCTION: 'https://fzz.storage.googleapis.com',
         TEST: 'https://fzz-test.storage.googleapis.com'
     }[ENVIRONMENT],

@@ -1,4 +1,5 @@
-/* eslint-disable no-unused-vars */
+import {LOADING} from 'constants';
+import UI from 'modules/ui';
 import store from '../store';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
@@ -9,9 +10,14 @@ import Loading from './loading';
 import Labels from './labels';
 import Price from './price';
 
-const {Component} = React;
+let ui = new UI ({loading: LOADING.IMAGES});
 
-class App extends Component {
+class App extends React.Component {
+    static get propTypes () {
+        return {
+            close: React.PropTypes.func.isRequired
+        };
+    }
     constructor (props) {
         super(props);
         store.rerender('images', this);
@@ -19,7 +25,7 @@ class App extends Component {
     componentDidMount () {
         dispatchEvent(new Event('app opened', {bubbles: true}));
     }
-    close (e) {
+    close () {
         this.props.close();
         dispatchEvent(new Event('app closed', {bubbles: true}));
     }
@@ -40,7 +46,7 @@ class App extends Component {
             <i className="md-icon">{button.icon}</i>
         </button>);
         if (data === undefined) {
-            TabNodes = <Loading />;
+            TabNodes = <Loading images={ui.loading} />;
         }
         else if (data === null) {
             TabNodes = <div>No data found for this image</div>;

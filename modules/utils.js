@@ -130,3 +130,16 @@ export function validateSelector (selector) {
         return false;
     }
 }
+
+export function getRandom (probabilityDict) {
+    let cumulative = 0;
+    let cumulativeProbs = Object.keys(probabilityDict).map(
+        key => [key, cumulative += probabilityDict[key]]
+    );
+    let rand = Math.random();
+    for (let [key, cumProb] of cumulativeProbs) {
+        if (rand < cumProb) {
+            return key;
+        }
+    }
+}

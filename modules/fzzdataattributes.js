@@ -1,8 +1,10 @@
+import {extension} from 'modules/cross-extension';
+
 export default class FzzDataAttributes {
     constructor () {
         Object.assign(this, {
             pid: 'dev',
-            api: 'nd',
+            api: extension ? 'nd' : 'pd',
             whitelist: '*'
         });
         if (document.currentScript) {

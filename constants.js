@@ -43,7 +43,7 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = (extension ? 'dev' : pid || Query.parse(location.search).PID || '').toLocaleLowerCase(),
+    PID = (extension ? 'dev' : Query.parse(location.search).PID || pid || '').toLocaleLowerCase(),
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
@@ -89,3 +89,10 @@ export const HOST_DOMAIN = {
             // }
         }
     };
+
+    for (let domain in settings) {
+        if (host && host.includes(domain))
+            return settings[domain];
+    }
+    return settings.__default;
+}

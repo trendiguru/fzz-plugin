@@ -6,8 +6,6 @@ import {Query} from 'modules/utils';
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 
-console.log(extension);
-
 export const HOST_DOMAIN = {
         DEV: extUrl,
         PRODUCTION: 'https://fzz.storage.googleapis.com',
@@ -45,20 +43,18 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = extension ? 'dev' : pid || Query.parse(location.search).PID || '',
+    PID = (extension ? 'dev' : Query.parse(location.search).PID || pid || '').toLocaleLowerCase(),
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
-    API = Query.parse(location.search).API || api,
+    API = (Query.parse(location.search).API || api).toLowerCase(),
     API_URL = {
-        ND: 'https://api.trendi.guru/images',
-        PD: 'https://extremeli.trendi.guru/api/images'
+        nd: 'https://api.trendi.guru/images',
+        pd: 'https://extremeli.trendi.guru/api/images'
     }[API] || 'https://extremeli.trendi.guru/api/images',
-    DEBUG = false;
-
-export function UISettings (host) {
-    let settings = {
+    DEBUG = false,
+    UI = {
         'dev-roundDress': {
             overlay: {
                 roundDress: 1.0
@@ -93,10 +89,3 @@ export function UISettings (host) {
             // }
         }
     };
-
-    for (let domain in settings) {
-        if (host && host.includes(domain))
-            return settings[domain];
-    }
-    return settings.__default;
-}

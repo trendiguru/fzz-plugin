@@ -5,19 +5,20 @@ import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSIO
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
+import UI from 'modules/ui';
 import draw from './draw';
 import {iFrame, Style} from './elements';
 import Observer from './observe';
 import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
-import getUI from './ui';
+
 import * as overlay from './overlay';
 import * as tutorial from './tutorial';
 
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
-let ui = getUI({overlay, tutorial});
+let ui = new UI({overlay, tutorial});
 
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,

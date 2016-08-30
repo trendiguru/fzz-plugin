@@ -1,16 +1,11 @@
 import Block from './block';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {domready} from 'modules/utils';
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
-
-let wrapper = document.createElement("DIV");
-wrapper.className = "react-container";
-document.body.appendChild(wrapper);
-wrapper.style.height ='100%';
-
 
 let props = {
     styleString: {
@@ -29,6 +24,18 @@ let props = {
         //padding:'5px'
     }
 };
+
+domready(()=>{ReactDOM.render(createBoard(15).render(), createWrapper());});
+
+function createWrapper(){
+    let wrapper = document.createElement("DIV");
+    wrapper.className = "react-container";
+    console.log(document.body);
+    console.log(document.body);
+    document.body.appendChild(wrapper);
+    wrapper.style.height ='100%';
+    return wrapper;
+}
 
 function createBoard(rowNum){
     let l = [];
@@ -53,5 +60,3 @@ function createBoard(rowNum){
     props.children = l;
     return new Block(props);
 }
-
-ReactDOM.render(createBoard(15).render(), wrapper);

@@ -2,7 +2,8 @@ import Block from './block';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    domready
+    domready,
+    getAnswer
 } from 'modules/utils';
 //import 'extensions/chrome_dev/assets/css/popup.scss'; TODO: learn a little bit more about scss
 
@@ -26,24 +27,27 @@ let props = {
         position: 'relative',
     }
 };
+//-------------------test-------------------------------------------------
+// chrome.tabs.query({
+//     active: true,
+//     currentWindow: true
+// }, function(tabs) {
+//     chrome.tabs.sendMessage(tabs[0].id, {postKey: "hello"}, function(response) {
+//         console.log(response.farewell);
+//     });
+// });
+//
+// chrome.tabs.query({
+//     active: true,
+//     currentWindow: true
+// }, function(tabs) {
+//     chrome.tabs.sendMessage(tabs[0].id, {postKey: "devTools"}, function(response) {
+//         console.log(response);
+//     });
+// });
+getAnswer("devTools").then((answer)=>{console.log(answer);});
+//------------------------end_test---------------------------------------
 
-chrome.tabs.query({
-    active: true,
-    currentWindow: true
-}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {postKey: "hello"}, function(response) {
-        console.log(response.farewell);
-    });
-});
-
-chrome.tabs.query({
-    active: true,
-    currentWindow: true
-}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {postKey: "devTools"}, function(response) {
-        console.log(response);
-    });
-});
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());
 });

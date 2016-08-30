@@ -1,4 +1,4 @@
-import {getDomainName, postMan} from 'modules/utils';
+import {getDomainName, postQuestion} from 'modules/utils';
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';
@@ -79,4 +79,4 @@ export function clrscrn () {
 }
 
 window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
-postMan('devTools', window.devTools);
+postQuestion('devTools', window.devTools);

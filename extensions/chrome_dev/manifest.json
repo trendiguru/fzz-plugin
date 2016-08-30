@@ -14,8 +14,8 @@
         "js": ["b_plugin.js"]
     }],
     "browser_action": {
-        "default_icon": "devToolsPopUp/img/devTools.jpg",
-        "default_popup": "devToolsPopUp/popup.html"
+        "default_icon": "assets/img/devTools.jpg",
+        "default_popup": "popup.html"
     },
 
     "permissions": ["http://*/*", "https://*/*", "activeTab"],

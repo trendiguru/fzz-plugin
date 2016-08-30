@@ -91,10 +91,7 @@ export const HOST_DOMAIN = {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    console.log("contentScript had received popups's message!!!");
-    if (request.greeting == "hello")
+    console.debug(sender.tab ? "from a content script:" + sender.tab.url : "from the popup");
+    if (request.postKey == "hello")
       sendResponse({farewell: "goodbye"});
   });

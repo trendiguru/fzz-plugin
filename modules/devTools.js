@@ -1,27 +1,8 @@
-import {getDomainName} from 'modules/utils';
+import {getDomainName, postMan} from 'modules/utils';
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';
 export let modules = {};
-export let MUT = {
-    active,
-    srcMut: [],
-    nodeMut: [],
-    attrMut: [],
-    mainObserver: [],
-    observers: [],
-    _node (obj) {this.nodeMut.push(obj);},
-    _attribute (obj) {this.attrMut.push(obj);},
-    _src (obj) {this.srcMut.push(obj);},
-    _mainObserver (obj) {this.mainObserver.push(obj);},
-    _observer (obj) {this.observers.push(obj);},
-    set (obj, mType) {
-        mType = `_${mType}`;
-        if (this.active === true && this[mType]) {
-            this[mType](obj);
-        }
-    }
-};
 
 export let REQUESTS = {
     active,
@@ -97,4 +78,5 @@ export function clrscrn () {
     }
 }
 
-window.devTools = window.devTools || {MUT, REQUESTS, STACKS, coloredReport, clrscrn, modules};
+window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
+postMan('devTools', window.devTools);

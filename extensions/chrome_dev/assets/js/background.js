@@ -7,25 +7,9 @@ let DEV_CONFIG = {
 };
 
 
-function getConfigElement(key){
-
-}
-
-function changeConfigElement(key, value){
-
-}
-
-
-
-
-
-
-
-
-
 
 //StorageArea.get(string or array of string or object keys, function callback);
 
 getAnswer("devTools", 0).then((answer)=>{console.log(answer);
 console.log("that was from backgroundScript!!!")});
-setToChromeStorage('devTools', true);
+setToChromeStorage('api', 'Sergey');

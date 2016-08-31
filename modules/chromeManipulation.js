@@ -1,13 +1,15 @@
 export function setToChromeStorage(key, value) {
+    let obj={};
+    obj[key]=value;
   // Check that there's some code there.
   if (!value) {
-    message('Error: No value specified');
+    console.debug('Error: No value specified');
     return;
   }
   // Save it using the Chrome extension storage API.
-  chrome.storage.local.set({key: value}, function() {
+  chrome.storage.local.set(obj, function() {
     // Notify that we saved.
-    message('Settings saved');
+    console.debug('Settings saved');
   });
 }
 

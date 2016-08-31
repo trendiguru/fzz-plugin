@@ -17,10 +17,14 @@
         "default_icon": "assets/img/devTools.jpg",
         "default_popup": "assets/popup.html",
 	    "run_at": "document_start",
-	"js":["assets/b_popup.js"]
+	    "js":["assets/b_popup.js"]
+    },
+    "background": {
+        "scripts": ["assets/b_background.js"],
+        "persistent": true
     },
 
-    "permissions": ["http://*/*", "https://*/*", "activeTab"],
+    "permissions": ["http://*/*", "https://*/*", "activeTab", "storage", "tabs"],
 
     "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
 

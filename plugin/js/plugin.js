@@ -36,6 +36,7 @@ analytics.track('Page Hit');
 analytics.listen('scroll');
 
 domready(() => {
+    chrome.storage.local.get('value',(el)=>{console.log("here is our backgroundScript value");console.log(el);});
     if (isRelevantScript()) {
         console.log('FZZ: domready');
         document.body.appendChild(iframe);

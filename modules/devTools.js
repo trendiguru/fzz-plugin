@@ -1,4 +1,5 @@
-import {getDomainName, postQuestion} from 'modules/utils';
+import {getDomainName} from 'modules/utils';
+import {postQuestion} from 'modules/chromeManipulation';
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';

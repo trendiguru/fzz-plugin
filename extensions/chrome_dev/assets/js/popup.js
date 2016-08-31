@@ -1,10 +1,8 @@
 import Block from './block';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-    domready,
-    getAnswer
-} from 'modules/utils';
+import {domready} from 'modules/utils';
+import {setToChromeStorage, getAnswer} from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss'; TODO: learn a little bit more about scss
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
@@ -28,7 +26,7 @@ let props = {
     }
 };
 
-getAnswer("devTools").then((answer)=>{console.log(answer);});
+getAnswer("devTools",0).then((answer)=>{console.log(answer);});
 
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());

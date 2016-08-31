@@ -2,9 +2,7 @@
 import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
-
-getAnswer("reload").then(()=>{chrome.tabs.reload();})
-
+import {getAnswer} from 'modules/chromeManipulation';
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 export const HOST_DOMAIN = {
@@ -90,10 +88,3 @@ export const HOST_DOMAIN = {
             // }
         }
     };
-
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.debug(sender.tab ? "from a content script:" + sender.tab.url : "from the popup");
-    if (request.postKey == "hello")
-      sendResponse({farewell: "goodbye"});
-  });

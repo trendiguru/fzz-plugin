@@ -9,6 +9,19 @@ const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
+console.log(chrome.tabs);
+//-----------------------------
+var port = chrome.runtime.connect({name: "knockknock"});
+port.postMessage({joke: "Knock knock"});
+console.log("posted");
+port.onMessage.addListener(function(msg) {
+  if (msg.question == "Who's there?")
+    port.postMessage({answer: "Madame"});
+  else if (msg.question == "Madame who?")
+    port.postMessage({answer: "Madame... Bovary"});
+});
+//-----------------------------------------------
+
 let props = {
     styleString: {
         fontSize: '50%',

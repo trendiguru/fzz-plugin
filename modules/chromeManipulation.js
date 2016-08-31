@@ -30,6 +30,8 @@ export function getAnswer(postKey, tabIndex=0){
             currentWindow: true
         }, function(tabs) {
             chrome.tabs.sendMessage(tabs[tabIndex].id, {postKey: postKey}, function(response) {
+                console.log('tabs');
+                console.log(tabs);
                 resolve(response);
             });
         });

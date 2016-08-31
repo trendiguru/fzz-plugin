@@ -26,13 +26,14 @@ let props = {
     }
 };
 
-getAnswer("devTools",0).then((answer)=>{console.log(answer);});
 
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());
-    //-----------------------test-------------------------//
-    window.sendToBackground = ()=>{
-        publishQuestion('api', 'Gilman');
+    getAnswer("devTools",0).then((answer)=>{window.devTools = answer;});
+    window.setToConfig = (key, value)=>{
+            setToChromeStorage(key, value);
+            publishQuestion("reload");
+            //chrome.tabs.reload(0,function(){});
     };
 });
 

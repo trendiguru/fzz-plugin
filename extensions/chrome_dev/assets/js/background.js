@@ -13,6 +13,7 @@ for(let key in DEV_CONFIG){
         console.debug('received from popup');
         console.debug(answer);
         setToChromeStorage(key, answer); });
+        // chrome.tabs.reload(function(){});
 }
 
 getAnswer("devTools", 0).then((answer)=>{console.log(answer);

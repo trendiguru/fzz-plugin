@@ -3,6 +3,8 @@ import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
+getAnswer("reload").then(()=>{chrome.tabs.reload();})
+
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 export const HOST_DOMAIN = {

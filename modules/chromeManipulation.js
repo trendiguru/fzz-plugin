@@ -5,7 +5,7 @@ export function setToChromeStorage(key, value) {
     return;
   }
   // Save it using the Chrome extension storage API.
-  chrome.storage.local.set(devConfig, function() {
+  chrome.storage.local.set({key: value}, function() {
     // Notify that we saved.
     message('Settings saved');
   });

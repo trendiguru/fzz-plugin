@@ -3,11 +3,11 @@ import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 
-// chrome.storage.local.get('devTools',(el)=>{console.log("here is our backgroundScript value");console.log(el);});
-// console.log("let see if it works!:");
-// console.log(chrome.extension);
-// console.log(extension.getViews("tab"));
-// console.log(extension.getBackgroundPage());
+chrome.storage.local.get('devTools',(el)=>{console.log("here is our backgroundScript value");console.log(el);});
+console.log("let see if it works!:");
+console.log(chrome.extension);
+//console.log(extension.getViews("tab"));
+console.log(extension.getBackgroundPage());
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 export const HOST_DOMAIN = {

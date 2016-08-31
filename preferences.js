@@ -1,25 +1,23 @@
 import {PID, API} from 'constants';
 
-let prefences =  {
+let preferences =  {
     pid: PID,
     api: API
 }
 
-addEventListener('message', e => {
-    if (e.type === 'prefences') {
-        Object.assign(prefences, e.data);
-    }
-});
-chrome.storage.local.get('PID',(el)=>{
-    console.debug("PID constant attribute was changed by developer");
-    console.log(el);
-    Object.assign(prefences, el);
-    console.debug(prefences);
-});
-chrome.storage.local.get('PID',(el)=>{
-    console.debug("PID constant attribute was changed by developer");
-    console.log(el);
-    Object.assign(prefences, el);
-    console.debug(prefences);
-});
-export default prefences;
+for(let key in preferences){
+    updatePreference(key);
+}
+
+function updatePreference(key){
+    chrome.storage.local.get(key,(obj)=>{
+        console.debug("constant attribute was changed by developer");
+        console.log(obj);
+        if (obj){
+            Object.assign(preferences, obj);
+            console.debug(preferences);
+        }
+    });
+}
+
+export default preferences;

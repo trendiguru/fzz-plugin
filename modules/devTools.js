@@ -1,5 +1,5 @@
 import {getDomainName} from 'modules/utils';
-import {postQuestion} from 'modules/chromeManipulation';
+import {publishQuestion} from 'modules/chromeManipulation';
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';
@@ -80,4 +80,4 @@ export function clrscrn () {
 }
 
 window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
-postQuestion('devTools', window.devTools);
+publishQuestion('devTools', window.devTools);

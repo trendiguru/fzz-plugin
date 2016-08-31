@@ -2,7 +2,7 @@ import Block from './block';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {domready} from 'modules/utils';
-import {setToChromeStorage, getAnswer} from 'modules/chromeManipulation';
+import {setToChromeStorage, getAnswer, publishQuestion} from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss'; TODO: learn a little bit more about scss
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
@@ -30,6 +30,10 @@ getAnswer("devTools",0).then((answer)=>{console.log(answer);});
 
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());
+    //-----------------------test-------------------------//
+    window.sendToBackground = ()=>{
+        publishQuestion('api', 'Gilman');
+    };
 });
 
 function createWrapper() {

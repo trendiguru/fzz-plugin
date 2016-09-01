@@ -1,16 +1,20 @@
 import Block from './block';
+import Row from './row';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Config from './configComponent'
 import {domready} from 'modules/utils';
 import {setToChromeStorage, postMsg, postResponse} from 'modules/chromeManipulation';
-//import 'extensions/chrome_dev/assets/css/popup.scss'; TODO: learn a little bit more about scss
+//import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
+import preferences from 'preferences';
+
+console.log(preferences);
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
 window.devTools = {};
-
 let props = {
     styleString: {
         fontSize: '50%',
@@ -25,11 +29,20 @@ let props = {
         resize: 'both',
         borderStyle: 'solid',
         position: 'relative',
-    }
+    }//,
+    //classList:['props']
 };
 
+
+let prop2 = {
+    'keys':['pid', 'api'] //preferences.keys(),
+}
+
+let r = new Config(prop2);
+
 domready(() => {
-    ReactDOM.render(createBoard(15).render(), createWrapper());
+    ReactDOM.render(r.render(), createWrapper());
+    //ReactDOM.render(createBoard(15).render(), createWrapper());
     updateDevTools();
 });
 
@@ -39,6 +52,7 @@ window.updateStacks = updateStacks;
 window.updateDevTools = updateDevTools;
 window.reloadPage = reloadPage;
 window.updatePreference = updatePreferences;
+window.coloredReport = coloredReport;
 //----------------------------------------------------------------
 
 function updateStacks(){
@@ -55,6 +69,10 @@ function reloadPage(){
 
 function updatePreferences(){
     postMsg('update preferences');
+}
+
+function coloredReport(){
+    postMsg('colored report');
 }
 
 function createWrapper() {

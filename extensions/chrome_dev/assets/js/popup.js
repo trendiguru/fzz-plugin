@@ -2,25 +2,14 @@ import Block from './block';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {domready} from 'modules/utils';
-import {setToChromeStorage, getAnswer, publishQuestion} from 'modules/chromeManipulation';
+import {setToChromeStorage, postMsg, postResponse} from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss'; TODO: learn a little bit more about scss
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
-console.log(chrome.tabs);
-//-----------------------------
-var port = chrome.runtime.connect({name: "knockknock"});
-port.postMessage({joke: "Knock knock"});
-console.log("posted");
-port.onMessage.addListener(function(msg) {
-  if (msg.question == "Who's there?")
-    port.postMessage({answer: "Madame"});
-  else if (msg.question == "Madame who?")
-    port.postMessage({answer: "Madame... Bovary"});
-});
-//-----------------------------------------------
+window.devTools = {};
 
 let props = {
     styleString: {
@@ -39,20 +28,40 @@ let props = {
     }
 };
 
-
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());
-    getAnswer("devTools",0).then((answer)=>{window.devTools = answer;});
     window.setToConfig = (key, value)=>{
             setToChromeStorage(key, value);
-            publishQuestion("reload");
-            //chrome.tabs.reload(0,function(){});
     };
 });
 
+//test------------------------------------------------------------
+window.setToChromeStorage = setToChromeStorage;
+window.updateStacks = updateStacks;
+window.updateDevTools = updateDevTools;
+window.reloadPage = reloadPage;
+window.updatePreference = updatePreferences;
+//----------------------------------------------------------------
+
+function updateStacks(){
+    postMsg('stacks').then((reply)=>{window.STACKS = reply;});
+}
+
+function updateDevTools(){
+    postMsg('devTools').then((reply)=>{window.devTools = reply;});
+}
+
+function reloadPage(){
+    postMsg('reload page');
+}
+
+function updatePreferences(){
+    postMsg('update preferences');
+}
+
 function createWrapper() {
-    let wrapper = document.createElement("DIV");
-    wrapper.className = "react-container";
+    let wrapper = document.createElement('DIV');
+    wrapper.className = 'react-container';
     console.log(document.body);
     console.log(document.body);
     document.body.appendChild(wrapper);

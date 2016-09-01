@@ -5,9 +5,21 @@ let preferences =  {
     api: API
 }
 
+//test----------------------------
+window.preferences = preferences;
+//--------------------------------
+
 for(let key in preferences){
     updatePreference(key);
 }
+
+chrome.extension.onMessage.addListener(function(msg) {
+    if (msg.postKey == 'update preferences') {
+        for(let key in preferences){
+            updatePreference(key);
+        }
+    }
+});
 
 function updatePreference(key){
     chrome.storage.local.get(key,(obj)=>{

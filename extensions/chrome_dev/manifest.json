@@ -24,7 +24,7 @@
         "persistent": true
     },
 
-    "permissions": ["http://*/*", "https://*/*", "activeTab", "storage", "tabs","background"],
+    "permissions": ["http://*/*", "https://*/*", "activeTab", "storage", "tabs", "background"],
 
     "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
 

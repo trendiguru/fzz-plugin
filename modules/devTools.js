@@ -1,5 +1,5 @@
 import {getDomainName} from 'modules/utils';
-import {publishQuestion} from 'modules/chromeManipulation';
+import {postResponse} from 'modules/chromeManipulation';
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';
@@ -80,4 +80,11 @@ export function clrscrn () {
 }
 
 window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
-publishQuestion('devTools', window.devTools);
+postResponse('devTools', window.devTools);
+postResponse('stacks', window.devTools.STACKS);
+
+chrome.extension.onMessage.addListener(function(msg) {
+    if (msg.postKey == 'colored report') {
+        coloredReport();
+    }
+});

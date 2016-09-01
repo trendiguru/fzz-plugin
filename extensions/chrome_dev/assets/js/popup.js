@@ -30,9 +30,7 @@ let props = {
 
 domready(() => {
     ReactDOM.render(createBoard(15).render(), createWrapper());
-    window.setToConfig = (key, value)=>{
-            setToChromeStorage(key, value);
-    };
+    updateDevTools();
 });
 
 //test------------------------------------------------------------

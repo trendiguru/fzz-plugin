@@ -1,5 +1,6 @@
 import {getDomainName} from 'modules/utils';
 import {postResponse} from 'modules/chromeManipulation';
+import {ENVIRONMENT} from 'constants';//TODO: check why environment is undefind?
 
 let active = true; //TODO: get 'ective' variable from the current environment variable.
 // let OPACITY = '0.01';
@@ -65,7 +66,7 @@ export function coloredReport () {
     let {sColor, show} = STACKS, defaultColor = STACKS.sColor;
     STACKS.sColor = 'red';
     show('irrelevantImg');
-    STACKS.sColor = 'yellow';
+    STACKS.sColor = 'blue';
     show('smartCheckRelevancy_input');
     STACKS.sColor = 'green';
     show('relevantImg');

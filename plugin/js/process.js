@@ -90,6 +90,7 @@ function isRelevant (tgImg) {
             return tgImg;
         }
         else {
+            s.set('smartCheckRelevancy_input', tgImg.element);
             throw {
                 name: 'Not a Relevant Element',
                 element: tgImg

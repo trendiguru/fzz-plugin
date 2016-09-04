@@ -1,8 +1,7 @@
 import Block from './block';
-import Row from './row';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Config from './configComponent'
+import Box from './box'
 import {domready} from 'modules/utils';
 import {setToChromeStorage, postMsg, postResponse} from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
@@ -15,34 +14,11 @@ const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
 window.devTools = {};
-let props = {
-    styleString: {
-        fontSize: '50%',
-        width: '100%',
-        height: '100%',
-        lineHeight: '100%',
-        left: '-' + BORDER_WIDTH + 'px',
-        top: '-' + BORDER_WIDTH + 'px',
-        backgroundColor: BACKGROUND_COLOR,
-        borderColor: BORDER_COLOR,
-        borderWidth: BORDER_WIDTH,
-        resize: 'both',
-        borderStyle: 'solid',
-        position: 'relative',
-    }//,
-    //classList:['props']
-};
-
-
-let prop2 = {
-    'keys':['pid', 'api'] //preferences.keys(),
-}
-
-let r = new Config(prop2);
 
 domready(() => {
-    ReactDOM.render(r.render(), createWrapper());
-    //ReactDOM.render(createBoard(15).render(), createWrapper());
+    let b = new Box({childNum:126});
+    b.fillTable(preferences);
+    ReactDOM.render(b.render(), createWrapper());
     updateDevTools();
 });
 
@@ -83,28 +59,4 @@ function createWrapper() {
     document.body.appendChild(wrapper);
     wrapper.style.height = '100%';
     return wrapper;
-}
-
-function createBoard(rowNum) {
-    let l = [];
-    for (let i = 0; i < rowNum; i++) {
-        let rowProps = {
-            styleString: {
-                fontSize: '50%',
-                height: (100.0 / rowNum) + '%',
-                width: '100%',
-                left: '-' + BORDER_WIDTH + 'px',
-                top: '-' + BORDER_WIDTH + 'px',
-                backgroundColor: BACKGROUND_COLOR,
-                borderColor: BORDER_COLOR,
-                borderWidth: BORDER_WIDTH,
-                resize: 'both',
-                borderStyle: 'solid',
-                position: 'relative',
-            }
-        };
-        l.push((new Block(rowProps)).render());
-    }
-    props.children = l;
-    return new Block(props);
 }

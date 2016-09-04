@@ -43,8 +43,9 @@ export default class Box extends React.Component{
         this.createRow = this.createRow.bind(this);
         this.fillConfigTable = this.fillConfigTable.bind(this);
         this.fillFunctionsList = this.fillFunctionsList.bind(this);
+        this.createButton = this.createButton.bind(this);
         this.render = this.render.bind(this);
-        this.state = {styleString: initStyle()};
+        this.state = Object.assign({styleString : initStyle()}, this.props.styleString || {});
         this.state.children = this.state.children ||
         Array.from(Array(this.props.childNum)).map(()=>{return (new Block({children:this.createRow()})).render()});
     }
@@ -69,8 +70,9 @@ export default class Box extends React.Component{
             <input type={'text'}  value={value} key={1} style={style}></input>
         ];
     }
-    fillConfigTable(obj){
+    fillConfigTable(obj, callback){
         let  elems = [];
+        elems.push((new Block({children:this.createButton('update config', callback)})).render());
         for (let key in obj){
             elems.push((new Block({children:this.createRow(key, obj[key])})).render());
         }

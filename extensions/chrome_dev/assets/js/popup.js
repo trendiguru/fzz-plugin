@@ -25,9 +25,9 @@ const FUNCTION_LIST = {
 window.devTools = {};
 
 domready(() => {
-    let b1 = new Box({title: 'CONFIGURATION TABLE'});
-    b1.fillConfigTable(preferences);
-    let b2 = new Box({title: 'FUNCTION LIST'});
+    let b1 = new Box({title: 'CONFIGURATION TABLE',styleString:{ position:'static'}});
+    b1.fillConfigTable(preferences, ()=>{console.log("do not forget to build here function")});
+    let b2 = new Box({title: 'FUNCTION LIST' ,styleString:{ position:'static'}});
     b2.fillFunctionsList(FUNCTION_LIST);
     ReactDOM.render((new Block({children: [b1.render(),b2.render()]})).render(), createWrapper());
     updateDevTools();

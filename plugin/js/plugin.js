@@ -37,7 +37,7 @@ analytics.listen('scroll');
 
 chrome.extension.onMessage.addListener(function(msg) {
     if (msg.postKey == 'reload page') {
-        window.location.reload()
+        window.location.reload();
     }
 });
 

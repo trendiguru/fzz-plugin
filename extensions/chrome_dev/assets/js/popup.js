@@ -18,7 +18,7 @@ const FUNCTION_LIST = {
     updateStacks: updateStacks,
     updateDevTools: updateDevTools,
     reloadPage: reloadPage,
-    updatePreference: updatePreferences,
+    updatePreferences: updatePreferences,
     coloredReport: coloredReport
 };
 
@@ -38,7 +38,7 @@ window.setToChromeStorage = setToChromeStorage;
 window.updateStacks = updateStacks;
 window.updateDevTools = updateDevTools;
 window.reloadPage = reloadPage;
-window.updatePreference = updatePreferences;
+window.updatePreferences = updatePreferences;
 window.coloredReport = coloredReport;
 //----------------------------------------------------------------
 

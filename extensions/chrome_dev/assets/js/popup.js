@@ -28,7 +28,7 @@ domready(() => {
     initPage();
 });
 
-//test------------------------------------------------------------
+//----------------------------------------------------------------
 window.setToChromeStorage = setToChromeStorage;
 window.updateStacks = updateStacks;
 window.updateDevTools = updateDevTools;
@@ -67,9 +67,9 @@ function createWrapper() {
     return wrapper;
 }
 function initPage(){
-    let b1 = new Box({title: 'CONFIGURATION TABLE',styleString:{ height:'auto'}});
+    let b1 = new Box({title: 'CONFIGURATION TABLE',styleString:{ height:'auto', top:'-7px',backgroundColor:'green'}});
     b1.fillConfigTable(preferences, updateConfig);
-    let b2 = new Box({title: 'FUNCTION LIST' ,styleString:{ height:'auto'}});
+    let b2 = new Box({title: 'FUNCTION LIST' ,styleString:{ height:'auto', top:'-7px',backgroundColor:'green'}});
     b2.fillFunctionsList(FUNCTION_LIST);
     ReactDOM.render((new Block({children: [b1.render(),b2.render()]})).render(), createWrapper());
     updateDevTools();

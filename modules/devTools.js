@@ -1,8 +1,9 @@
 import {getDomainName} from 'modules/utils';
 import {postResponse} from 'modules/chromeManipulation';
-import {ENVIRONMENT} from 'constants';//TODO: check why environment is undefind?
+import {ENV} from 'constants';//TODO: check why environment is undefind?
 
-let active = true; //TODO: get 'ective' variable from the current environment variable.
+let active = active || (ENV==="DEV");
+console.log('active:'+active);
 // let OPACITY = '0.01';
 export let modules = {};
 

@@ -33,7 +33,7 @@ export function process (el, callback) {
         irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
-            if (irrelevantImg.element.url) {
+            if (irrelevantImg.element && irrelevantImg.element.url) {
                 irrelevantImgs[irrelevantImg.element.url] = irrelevantImg.element;
                 s.set('irrelevantImg', irrelevantImg.element.element);
             } else {

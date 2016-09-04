@@ -47,6 +47,7 @@ export const HOST_DOMAIN = {
         pd: 'https://extremeli.trendi.guru/api/images'
     }[API] || 'https://extremeli.trendi.guru/api/images',
     DEBUG = false,
+    ENV = ENVIRONMENT,
     LOADING = {
         IMAGES: {
             giphy: [

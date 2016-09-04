@@ -62,14 +62,13 @@ if (active) {
 }
 
 export function coloredReport () {
-    let {sColor, show} = STACKS,
-        defaultColor = STACKS.sColor;
+    let {sColor, show} = STACKS, defaultColor = STACKS.sColor;
+    STACKS.sColor = 'red';
+    show('irrelevantImg');
     STACKS.sColor = 'yellow';
     show('smartCheckRelevancy_input');
     STACKS.sColor = 'green';
     show('relevantImg');
-    STACKS.sColor = 'red';
-    show('irrelevantImg');
     STACKS.sColor = defaultColor;
 }
 

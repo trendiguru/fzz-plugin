@@ -104,6 +104,7 @@ function initPage() {
         }
     })).render(), createWrapper());
     updateDevTools();
+    updateStacks();
 }
 
 function updateConfig() {

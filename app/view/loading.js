@@ -1,12 +1,15 @@
-import {GIPHY} from 'constants';
-import giphy from 'modules/giphy';
-
 export default class Loading extends React.Component {
+
+    static get propTypes () {
+        return {
+            images: React.PropTypes.array
+        };
+    }
 
     constructor (props) {
         super(props);
         this.state = {
-            giphy: undefined
+            image: undefined
         };
     }
 
@@ -16,14 +19,14 @@ export default class Loading extends React.Component {
 
     setRandomImage () {
         this.setState({
-            giphy: randomElementFromArray(GIPHY.LOADING_IMAGES)
+            image: randomElementFromArray(this.props.images)
         });
     }
 
     render () {
         return <div className="loading">
             <div className="giphy" onClick={this.setRandomImage.bind(this)} style={{
-                backgroundImage: `url('${giphy.GIF(this.state.giphy)}')`
+                backgroundImage: `url('${this.state.image}')`
             }}></div>
             <h3>LOADING</h3>
         </div>;

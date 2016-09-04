@@ -3,6 +3,7 @@ import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 import {postMsg} from 'modules/chromeManipulation';
+import giphy from 'modules/giphy';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
@@ -32,19 +33,10 @@ export const HOST_DOMAIN = {
     COOKIE_NAME = 'fzz_ui_3',
     GIPHY = {
         API_KEY: 'dc6zaTOxFJmzC',
-        LOADING_IMAGES: [
-            'UPAJRWATdepFK',
-            'PLw7s7Ezb50OY',
-            '13SHVEhqEPfSXC',
-            'hLBNOS9GOBCH6',
-            '7DNcclBIsgUzC',
-            '5AtHzs3lLbbWg',
-            'VLHmZU5YQidm8'
-        ]
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = (extension ? 'dev' : Query.parse(location.search).PID || pid || '').toLocaleLowerCase(),
+    PID = Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
@@ -55,38 +47,43 @@ export const HOST_DOMAIN = {
         pd: 'https://extremeli.trendi.guru/api/images'
     }[API] || 'https://extremeli.trendi.guru/api/images',
     DEBUG = false,
+    LOADING = {
+        IMAGES: {
+            giphy: [
+                'UPAJRWATdepFK',
+                'PLw7s7Ezb50OY',
+                '13SHVEhqEPfSXC',
+                'hLBNOS9GOBCH6',
+                '7DNcclBIsgUzC',
+                '5AtHzs3lLbbWg',
+                'VLHmZU5YQidm8'
+            ].map(giphy.GIF),
+            recruit: ['/assets/img/recruit_loading_v1.gif']
+        }
+    },
     UI = {
-        'dev-roundDress': {
-            overlay: {
-                roundDress: 1.0
-            },
-            // tutorial: {
-            //     bar: 1.0
-            // }
-        },
-        'dev-preview': {
-            overlay: {
-                preview: 1.0
-            }
-        },
         'recruit-pilot': {
             overlay: {
-                recruit: 1.0
-            }
+                recruit: 1.0,
+            },
+            loading: {
+                recruit: 1.0,
+            },
         },
         '6t50LSJxeNEkQ42p': {
             overlay: {
-                recruit: 1.0
-            }
+                recruit: 1.0,
+            },
+            loading: {
+                recruit: 1.0,
+            },
         },
         '__default': {
             overlay: {
-                roundDress: 1.0
+                roundDress: 1.0,
             },
-            // tutorial: {
-            //     bar: 0.3,
-            //     sample: 0.3,
-            //     highlight: 0.3
-            // }
-        }
+            loading: {
+                giphy: 1.0,
+            },
+        },
     };

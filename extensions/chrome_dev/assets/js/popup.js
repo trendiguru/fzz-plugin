@@ -25,12 +25,7 @@ const FUNCTION_LIST = {
 window.devTools = {};
 
 domready(() => {
-    let b1 = new Box({title: 'CONFIGURATION TABLE',styleString:{ position:'static'}});
-    b1.fillConfigTable(preferences, ()=>{console.log("do not forget to build here function")});
-    let b2 = new Box({title: 'FUNCTION LIST' ,styleString:{ position:'static'}});
-    b2.fillFunctionsList(FUNCTION_LIST);
-    ReactDOM.render((new Block({children: [b1.render(),b2.render()]})).render(), createWrapper());
-    updateDevTools();
+    initPage();
 });
 
 //test------------------------------------------------------------
@@ -70,4 +65,23 @@ function createWrapper() {
     document.body.appendChild(wrapper);
     wrapper.style.height = '100%';
     return wrapper;
+}
+function initPage(){
+    let b1 = new Box({title: 'CONFIGURATION TABLE',styleString:{ height:'auto'}});
+    b1.fillConfigTable(preferences, updateConfig);
+    let b2 = new Box({title: 'FUNCTION LIST' ,styleString:{ height:'auto'}});
+    b2.fillFunctionsList(FUNCTION_LIST);
+    ReactDOM.render((new Block({children: [b1.render(),b2.render()]})).render(), createWrapper());
+    updateDevTools();
+}
+function updateConfig(){
+    let inputs = Array.from(document.getElementsByTagName('INPUT'));
+    console.debug(inputs);
+    let index = 0;
+    //be carefull here!
+    for (let key in preferences){
+        setToChromeStorage(key,  inputs[index].value);
+        index++;
+    }
+    reloadPage();
 }

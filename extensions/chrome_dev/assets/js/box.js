@@ -37,6 +37,7 @@ let ID = -1;
 export default class Box extends React.Component{
     constructor(props={}){
         super(props);
+        console.debug(this.props.styleString);
         this.props.key = ID++;
         this.props.title = this.props.title || "wello world";
         this.props.childNum = this.props.childNum || 3;
@@ -45,7 +46,7 @@ export default class Box extends React.Component{
         this.fillFunctionsList = this.fillFunctionsList.bind(this);
         this.createButton = this.createButton.bind(this);
         this.render = this.render.bind(this);
-        this.state = Object.assign({styleString : initStyle()}, this.props.styleString || {});
+        this.state = {styleString : Object.assign(initStyle(), this.props.styleString || {})};
         this.state.children = this.state.children ||
         Array.from(Array(this.props.childNum)).map(()=>{return (new Block({children:this.createRow()})).render()});
     }
@@ -67,7 +68,7 @@ export default class Box extends React.Component{
         Object.assign(style, TEXT_STYLE);
         return [
             <p style={style} key={0}>{text}</p>,
-            <input type={'text'}  value={value} key={1} style={style}></input>
+            <input type={'text'} defaultValue={value}  key={1} style={style} onChange={(ev)=>{}}></input>
         ];
     }
     fillConfigTable(obj, callback){
@@ -90,5 +91,4 @@ export default class Box extends React.Component{
     createButton(name, callback){
         return [<button onClick={callback}>{name}</button>];
     }
-
 }

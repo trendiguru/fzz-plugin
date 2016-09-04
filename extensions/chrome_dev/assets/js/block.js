@@ -32,7 +32,8 @@ export default class Block extends React.Component{
         this.props.key = ID++;
         this.props.children = this.props.children || [];
         this.render = this.render.bind(this);
-        this.state = Object.assign({styleString : initStyle()}, this.props.styleString || {});
+        this.state = {styleString : Object.assign(initStyle(), this.props.styleString || {})};
+        console.debug(this.state.styleString);
     }
     render(){
         return <div style={this.state.styleString} key={this.props.key}>

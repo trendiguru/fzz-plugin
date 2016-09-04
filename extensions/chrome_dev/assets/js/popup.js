@@ -13,12 +13,23 @@ const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
+const FUNCTION_LIST = {
+    setToChromeStorage: setToChromeStorage,
+    updateStacks: updateStacks,
+    updateDevTools: updateDevTools,
+    reloadPage: reloadPage,
+    updatePreference: updatePreferences,
+    coloredReport: coloredReport
+};
+
 window.devTools = {};
 
 domready(() => {
-    let b = new Box({childNum:126});
-    b.fillTable(preferences);
-    ReactDOM.render(b.render(), createWrapper());
+    let b1 = new Box({title: 'CONFIGURATION TABLE'});
+    b1.fillConfigTable(preferences);
+    let b2 = new Box({title: 'FUNCTION LIST'});
+    b2.fillFunctionsList(FUNCTION_LIST);
+    ReactDOM.render((new Block({children: [b1.render(),b2.render()]})).render(), createWrapper());
     updateDevTools();
 });
 

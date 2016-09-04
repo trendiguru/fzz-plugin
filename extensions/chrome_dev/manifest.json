@@ -14,7 +14,7 @@
         "js": ["b_plugin.js"]
     }],
     "browser_action": {
-        "default_icon": "assets/img/devTools.jpg",
+        "default_icon": "assets/img/recruit.png",
         "default_popup": "assets/popup.html",
 	    "run_at": "document_start",
 	    "js":["assets/b_popup.js"]

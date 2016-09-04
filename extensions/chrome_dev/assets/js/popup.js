@@ -20,7 +20,7 @@ const BORDER_COLOR = 'blue';
 const BORDER_WIDTH = 4;
 
 const FUNCTION_LIST = {
-    setToChromeStorage: setToChromeStorage,
+    //setToChromeStorage: setToChromeStorage,
     updateStacks: updateStacks,
     updateDevTools: updateDevTools,
     reloadPage: reloadPage,

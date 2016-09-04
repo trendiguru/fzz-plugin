@@ -9,20 +9,32 @@ const BLOCK_STYLE = {
     fontSize: '50%',
     height: HEIGHT,
     width: '100%',
-    left:'-'+BORDER_WIDTH+'px',
-    top:'-'+BORDER_WIDTH+'px',
+    // left:'-'+BORDER_WIDTH+'px',
+    // top:'-'+BORDER_WIDTH+'px',
     backgroundColor: BACKGROUND_COLOR,
-    borderColor: BORDER_COLOR,
-    borderWidth: BORDER_WIDTH,
+    // borderColor: BORDER_COLOR,
+    // borderWidth: BORDER_WIDTH,
     resize: 'both',
-    borderStyle: 'solid',
+    // borderStyle: 'solid',
+    align:'middle',
     position:'relative'
 };
 const TEXT_STYLE = {
     fontFamily: "'Times New Roman', Times, serif",
     fontStyle: 'oblique',
     fontSize: '23px',
+    align:'middle',
 }
+
+const ROW_STYLE = {
+    align:'middle',
+    width:'40%',
+    height:'90%',
+    position:'relative',
+    display: 'inline-block',
+    left:+2*BORDER_WIDTH+'px',
+    top:'-'+3*BORDER_WIDTH+'px',
+};
 
 function initStyle(){
     let styleObj = {};
@@ -57,18 +69,10 @@ export default class Box extends React.Component{
         </div>;
     }
     createRow(text='text', value='value'){
-        let style = {
-            width:'40%',
-            height:'90%',
-            position:'relative',
-            display: 'inline-block',
-            left:+2*BORDER_WIDTH+'px',
-            top:'-'+3*BORDER_WIDTH+'px',
-        };
-        Object.assign(style, TEXT_STYLE);
+        Object.assign(ROW_STYLE, TEXT_STYLE);
         return [
-            <p style={style} key={0}>{text}</p>,
-            <input type={'text'} defaultValue={value}  key={1} style={style} onChange={(ev)=>{}}></input>
+            <p style={ROW_STYLE} key={0}>{text}</p>,
+            <input type={'text'} defaultValue={value}  key={1} style={ROW_STYLE} onChange={(ev)=>{}}></input>
         ];
     }
     fillConfigTable(obj, callback){
@@ -89,6 +93,6 @@ export default class Box extends React.Component{
         this.state.children = elems;
     }
     createButton(name, callback){
-        return [<button onClick={callback}>{name}</button>];
+        return [<button onClick={callback} style={ROW_STYLE}>{name}</button>];
     }
 }

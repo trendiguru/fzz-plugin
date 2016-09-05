@@ -13,12 +13,12 @@ import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
 
 import * as overlay from './overlay';
-import * as tutorial from './tutorial';
+// import * as tutorial from './tutorial';
 
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
-let ui = new UI({overlay, tutorial});
+let ui = new UI({overlay});
 
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,

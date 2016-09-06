@@ -2,6 +2,7 @@
 import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
+import {postMsg} from 'modules/chromeManipulation';
 import giphy from 'modules/giphy';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
@@ -46,6 +47,7 @@ export const HOST_DOMAIN = {
         pd: 'https://extremeli.trendi.guru/api/images'
     }[API] || 'https://extremeli.trendi.guru/api/images',
     DEBUG = false,
+    ENV = ENVIRONMENT,
     LOADING = {
         IMAGES: {
             giphy: [

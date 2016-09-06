@@ -47,6 +47,8 @@ module.exports = {
         'b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
         'b_demo.css': './demo/css/demo.scss',
         // CHROME EXTENSION ALIAS
+	    'extensions/chrome_dev/assets/b_popup.js':ES_POLYFILLS.concat('./extensions/chrome_dev/assets/js/popup.js'),
+        'extensions/chrome_dev/assets/b_background.js':ES_POLYFILLS.concat('./extensions/chrome_dev/assets/js/background.js'),
         'extensions/chrome_dev/b_plugin.js': ES_POLYFILLS.concat('./plugin/js/plugin.js'),
         'extensions/chrome_dev/b_plugin.css': './plugin/css/plugin.scss',
         'extensions/chrome_dev/b_app.js': ES_POLYFILLS.concat([

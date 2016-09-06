@@ -1,4 +1,5 @@
-import {API_URL, PID, API} from 'constants';
+import {API_URL} from 'constants';
+import preferences from 'preferences';
 import {Query} from './utils';
 import ActionBuffer from './actionbuffer';
 
@@ -43,7 +44,7 @@ export default class URLStore {
 }
 
 function checkRelevancy(imageUrls) {
-    return fetch(API_URL + '?' + Query.stringify({method: API, pid: PID}), {
+    return fetch(API_URL + '?' + Query.stringify({method: preferences.api, pid: preferences.pid}), {
         method: 'POST',
         // headers: {
         //     'Accept': 'application/json',

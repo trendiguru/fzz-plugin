@@ -7,16 +7,24 @@
     // Recommended
     "description": "Click on the purple F button to see fashion items inspired by the image :)",
 
-    "content_scripts": [
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "exclude_matches": ["*://www.facebook.com/*", "*://www.messenger.com/*", "*://*.google.com/*"],
-            "run_at": "document_start",
-            "js": ["b_plugin.js"]
-        }
-    ],
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "exclude_matches": ["*://www.facebook.com/*", "*://www.messenger.com/*", "*://*.google.com/*"],
+        "run_at": "document_start",
+        "js": ["b_plugin.js"]
+    }],
+    "browser_action": {
+        "default_icon": "assets/img/recruit.png",
+        "default_popup": "assets/popup.html",
+	    "run_at": "document_start",
+	    "js":["assets/b_popup.js"]
+    },
+    "background": {
+        "scripts": ["assets/b_background.js"],
+        "persistent": true
+    },
 
-    "permissions": ["http://*/*", "https://*/*"],
+    "permissions": ["http://*/*", "https://*/*", "activeTab", "storage", "tabs", "background"],
 
     "web_accessible_resources": ["http://*/*", "https://*/*", "*"],
 

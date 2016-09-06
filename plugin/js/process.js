@@ -33,9 +33,9 @@ export function process (el, callback) {
         irrelevantImg => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
-            if (irrelevantImg.url) {
-                irrelevantImgs[irrelevantImg.url] = irrelevantImg;
-                s.set('irrelevantImg', irrelevantImg.element);
+            if (irrelevantImg.element && irrelevantImg.element.url) {
+                irrelevantImgs[irrelevantImg.element.url] = irrelevantImg.element;
+                s.set('irrelevantImg', irrelevantImg.element.element);
             } else {
                 logIrrelevant(irrelevantImg);
             }
@@ -90,6 +90,7 @@ function isRelevant (tgImg) {
             return tgImg;
         }
         else {
+            s.set('smartCheckRelevancy_input', tgImg.element);
             throw {
                 name: 'Not a Relevant Element',
                 element: tgImg

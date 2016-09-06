@@ -1,27 +1,11 @@
 import {getDomainName} from 'modules/utils';
+import {postResponse} from 'modules/chromeManipulation';
+import {ENV} from 'constants';//TODO: check why environment is undefind?
 
-let active = true; //TODO: get 'ective' variable from the current environment variable.
+let active = active || (ENV==="DEV");
+console.log('active:'+active);
 // let OPACITY = '0.01';
 export let modules = {};
-export let MUT = {
-    active,
-    srcMut: [],
-    nodeMut: [],
-    attrMut: [],
-    mainObserver: [],
-    observers: [],
-    _node (obj) {this.nodeMut.push(obj);},
-    _attribute (obj) {this.attrMut.push(obj);},
-    _src (obj) {this.srcMut.push(obj);},
-    _mainObserver (obj) {this.mainObserver.push(obj);},
-    _observer (obj) {this.observers.push(obj);},
-    set (obj, mType) {
-        mType = `_${mType}`;
-        if (this.active === true && this[mType]) {
-            this[mType](obj);
-        }
-    }
-};
 
 export let REQUESTS = {
     active,
@@ -80,14 +64,13 @@ if (active) {
 }
 
 export function coloredReport () {
-    let {sColor, show} = STACKS,
-        defaultColor = STACKS.sColor;
-    STACKS.sColor = 'yellow';
+    let {sColor, show} = STACKS, defaultColor = STACKS.sColor;
+    STACKS.sColor = 'red';
+    show('irrelevantImg');
+    STACKS.sColor = 'blue';
     show('smartCheckRelevancy_input');
     STACKS.sColor = 'green';
     show('relevantImg');
-    STACKS.sColor = 'red';
-    show('irrelevantImg');
     STACKS.sColor = defaultColor;
 }
 
@@ -97,4 +80,12 @@ export function clrscrn () {
     }
 }
 
-window.devTools = window.devTools || {MUT, REQUESTS, STACKS, coloredReport, clrscrn, modules};
+window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
+postResponse('devTools', window.devTools);
+postResponse('stacks', window.devTools.STACKS);
+
+chrome.extension.onMessage.addListener(function(msg) {
+    if (msg.postKey == 'colored report') {
+        coloredReport();
+    }
+});

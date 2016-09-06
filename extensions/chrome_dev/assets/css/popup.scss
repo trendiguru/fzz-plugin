@@ -1,0 +1,42 @@
+// $BACKGROUND_COLOR: rgba(1,2,3,1);
+// $BORDER_COLOR: blue;
+// $BORDER_WIDTH:4px;
+// $rowNum: 15px;
+
+html {
+    .props {
+        $BACKGROUND_COLOR: rgba(1,2,3,1);
+        $BORDER_COLOR: blue;
+        $BORDER_WIDTH:4px;
+        $rowNum: 15px;
+        font-size: 50%;
+        width: 100%;
+        height: 100%;
+        line-height: 100%;
+        left: $BORDER_WIDTH;
+        top: $BORDER_WIDTH;
+        background-color: $BACKGROUND_COLOR;
+        border-color: $BORDER_COLOR;
+        border-width: $BORDER_WIDTH;
+        resize: both;
+        border-style: solid;
+        position: relative;
+    },
+    .rowProps {
+        $BACKGROUND_COLOR: rgba(1,2,3,1);
+        $BORDER_COLOR: blue;
+        $BORDER_WIDTH:4px;
+        $rowNum: 15px;
+        font-size: 50%;
+        //height: (100.0/rowNum)+'%';
+        width: 100%;
+        left: $BORDER_WIDTH;
+        top: $BORDER_WIDTH;
+        background-color: $BACKGROUND_COLOR;
+        border-color: $BORDER_COLOR;
+        border-width: $BORDER_WIDTH;
+        resize: both;
+        border-style: solid;
+        position: relative;
+    }
+}

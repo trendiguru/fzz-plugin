@@ -80,12 +80,16 @@ export function clrscrn () {
     }
 }
 
-window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
-postResponse('devTools', window.devTools);
-postResponse('stacks', window.devTools.STACKS);
 
-chrome.extension.onMessage.addListener(function(msg) {
-    if (msg.postKey == 'colored report') {
-        coloredReport();
-    }
-});
+window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
+
+if (active){
+    postResponse('devTools', window.devTools);
+    postResponse('stacks', window.devTools.STACKS);
+
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'colored report') {
+            coloredReport();
+        }
+    });
+}

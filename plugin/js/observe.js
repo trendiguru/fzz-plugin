@@ -2,8 +2,6 @@
 
 import {cssSplit, css2xpath, evaluateElement, validateSelector} from 'modules/utils';
 
-devTools.STACKS.active = true;
-
 const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT'];
 
 export default class Observer {

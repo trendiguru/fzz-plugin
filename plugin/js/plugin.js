@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import Cookies from 'js-cookie';
-import {API, PID, WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
@@ -11,6 +11,9 @@ import {iFrame, Style} from './elements';
 import Observer from './observe';
 import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
+import preferences from 'preferences';
+let PID = preferences.pid;
+let API = preferences.api;
 
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';

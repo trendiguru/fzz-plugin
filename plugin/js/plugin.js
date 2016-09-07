@@ -37,12 +37,13 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-
-chrome.extension.onMessage.addListener(function(msg) {
-    if (msg.postKey == 'reload page') {
-        window.location.reload();
-    }
-});
+if (ENV === "DEV"){
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'reload page') {
+            window.location.reload();
+        }
+    });
+}
 
 domready(() => {
     if (isRelevantScript()) {

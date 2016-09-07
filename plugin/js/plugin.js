@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import Cookies from 'js-cookie';
-import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION} from 'constants';
+import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
@@ -37,12 +37,13 @@ let iframe = new iFrame(initAnaltics);
 
 analytics.track('Page Hit');
 analytics.listen('scroll');
-
-chrome.extension.onMessage.addListener(function(msg) {
-    if (msg.postKey == 'reload page') {
-        window.location.reload();
-    }
-});
+if (ENV === "DEV"){
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'reload page') {
+            window.location.reload();
+        }
+    });
+}
 
 domready(() => {
     if (isRelevantScript()) {

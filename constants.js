@@ -2,7 +2,6 @@
 import {extension} from 'modules/cross-extension';
 import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
-import {postMsg} from 'modules/chromeManipulation';
 import giphy from 'modules/giphy';
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();

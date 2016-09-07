@@ -1,6 +1,8 @@
-import {UI as settings, PID, COOKIE_NAME} from 'constants';
+import {UI as settings, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 import {getRandom} from './utils';
+import preferences from 'preferences';
+let PID = preferences.pid;
 
 export default class UI {
     constructor (options) {

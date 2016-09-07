@@ -29,7 +29,7 @@ export default class UI {
         let {__default} = settings;
         for (let pid in settings) {
             if (pid === PID) {
-                return Object.assign({}, settings[pid], __default);
+                return Object.assign({}, __default, settings[pid]);
             }
         }
         return __default;

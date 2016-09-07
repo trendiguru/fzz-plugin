@@ -1,4 +1,4 @@
-/* globals extension chrome */
+/* globals extension storage chrome */
 
 let crossExtension = null;
 
@@ -15,3 +15,19 @@ catch (e) {
 }
 
 export {crossExtension as extension};
+
+let crossStorage = null;
+
+try {
+    crossStorage = storage;
+}
+catch (e) {
+    try {
+        crossStorage = chrome.storage;
+    }
+    catch (e) {
+        () => e;
+    }
+}
+
+export {crossStorage as storage};

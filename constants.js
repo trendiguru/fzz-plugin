@@ -43,8 +43,8 @@ export const HOST_DOMAIN = {
     API = (Query.parse(location.search).API || api).toLowerCase(),
     API_URL = {
         nd: 'https://api.trendi.guru/images',
-        pd: 'https://extremeli.trendi.guru/api/images'
-    }[API] || 'https://extremeli.trendi.guru/api/images',
+        pd: 'https://api.trendi.guru/images'
+    }[API] || 'https://api.trendi.guru/images',
     DEBUG = false,
     ENV = ENVIRONMENT,
     LOADING = {

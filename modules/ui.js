@@ -2,10 +2,11 @@ import {UI as settings, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 import {getRandom} from './utils';
 import preferences from 'preferences';
-let PID = preferences.pid;
 
 export default class UI {
     constructor (options) {
+        console.log("DDD");
+        console.log(preferences.pid);
         if (!compareKeys(options, this.settings)) {
             throw new Error ('The UI section in constants must include all the used options');
         }
@@ -30,7 +31,7 @@ export default class UI {
     get settings () {
         let {__default} = settings;
         for (let pid in settings) {
-            if (pid === PID) {
+            if (pid === preferences.pid) {
                 return Object.assign({}, __default, settings[pid]);
             }
         }

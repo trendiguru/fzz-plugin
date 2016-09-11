@@ -21,8 +21,6 @@ import * as overlay from './overlay';
 let s = STACKS;
 let refererDomain = window.location.hostname.replace('www.', '');
 
-let ui = new UI({overlay});
-
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
     PID,
@@ -47,6 +45,7 @@ if (ENV === "DEV"){
 
 domready(() => {
     if (isRelevantScript()) {
+        let ui = new UI({overlay});
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);

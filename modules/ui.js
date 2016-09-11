@@ -2,7 +2,6 @@ import {UI as settings, COOKIE_NAME} from 'constants';
 import Cookies from 'js-cookie';
 import {getRandom} from './utils';
 import preferences from 'preferences';
-let PID = preferences.pid;
 
 export default class UI {
     constructor (options) {
@@ -30,7 +29,7 @@ export default class UI {
     get settings () {
         let {__default} = settings;
         for (let pid in settings) {
-            if (pid === PID) {
+            if (pid === preferences.pid) {
                 return Object.assign({}, __default, settings[pid]);
             }
         }

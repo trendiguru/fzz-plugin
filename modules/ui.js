@@ -5,8 +5,6 @@ import preferences from 'preferences';
 
 export default class UI {
     constructor (options) {
-        console.log("DDD");
-        console.log(preferences.pid);
         if (!compareKeys(options, this.settings)) {
             throw new Error ('The UI section in constants must include all the used options');
         }

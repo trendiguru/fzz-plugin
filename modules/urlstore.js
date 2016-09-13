@@ -1,5 +1,5 @@
 import {API_URL} from 'constants';
-import preferences from 'preferences';
+import {preferences} from 'preferences';
 import {Query} from './utils';
 import ActionBuffer from './actionbuffer';
 

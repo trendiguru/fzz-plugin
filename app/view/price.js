@@ -1,14 +1,13 @@
-export default class Price extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render () {
-        let {currency, price} = this.props.data;
-        return <span className="price" data-currency={CURRENCIES[currency]}>{price}</span>;
-    }
+export default function Price ({data: {currency, price}}) {
+    return <span className="price" data-currency={CURRENCIES[currency]}>{price}</span>;
 }
+
+Price.propTypes = {
+    data: React.PropTypes.object.isRequired
+};
 
 const CURRENCIES = {
     USD: '$',
-    Yen: '‎¥'
+    Yen: '‎¥',
+    EUR: '€'
 };

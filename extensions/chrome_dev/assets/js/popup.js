@@ -11,7 +11,7 @@ import {
     postResponse
 } from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
-import preferences from 'preferences';
+import {preferences} from 'preferences';
 
 console.log(preferences);
 

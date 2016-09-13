@@ -1,7 +1,7 @@
 /* eslint-disable console */
 
 import {API_URL} from 'constants';
-import preferences from 'preferences';
+import {preferences} from 'preferences';
 import {STACKS} from 'modules/devTools';
 import URLStore from './urlstore';
 import {Query} from './utils';

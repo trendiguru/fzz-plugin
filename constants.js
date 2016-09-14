@@ -7,6 +7,12 @@ import giphy from 'modules/giphy';
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 
+console.log("LLL");
+console.log((ENVIRONMENT === "DEV" && localStorage.getItem("api")) ? localStorage.getItem("api") :(Query.parse(location.search).API || api).toLowerCase());
+console.log("ENVIRONMENT");
+console.log(ENVIRONMENT);
+console.log(localStorage.getItem("api"));
+
 export const HOST_DOMAIN = {
         DEV: extUrl,
         PRODUCTION: 'https://fzz.storage.googleapis.com',
@@ -87,3 +93,6 @@ export const HOST_DOMAIN = {
             },
         },
     };
+
+    console.log(PID);
+    console.log(API);

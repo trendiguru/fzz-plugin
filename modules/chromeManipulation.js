@@ -15,6 +15,7 @@ export function setToChromeStorage(key, value) {
         // Save it using the Chrome extension storage API.
         chrome.storage.local.set(obj, function() {
             // Notify that we saved.
+            console.debug(obj);
             console.debug('Settings saved');
             resolve();
         });

@@ -18,6 +18,8 @@ export function updateLocalStorage(){
                 storage.local.get(key, (obj) => {
                     console.info('constant attribute was changed by developer', obj);
                     if (obj) {
+                        console.log(key);
+                        console.log(preferences[key]);
                         localStorage.setItem(key, preferences[key]);
                         console.info(key+" : "+preferences[key]+" was stored into local storage");
                         resolve();

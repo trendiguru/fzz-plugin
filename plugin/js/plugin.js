@@ -42,7 +42,7 @@ if (ENV === "DEV"){
     chrome.extension.onMessage.addListener(function(msg) {
         console.log('rewrite local storage');
         if (msg.postKey == 'rewrite storage') {
-            updateLocalStorage().then(()=>{window.location.reload();})
+            updateLocalStorage()//.then(()=>{window.location.reload();})
         }
     });
 }

@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const ENVIRONMENT = process.env.ENVIRONMENT || 'DEV';
 const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills'];
 
-module.exports = {
+let config = {
     module: {
         loaders: [
             {
@@ -28,13 +29,10 @@ module.exports = {
         ]
     },
     plugins: [
-        // This needs to be in index 0 to remain accessible
-        // in webpack.production & webpack.test
         new webpack.DefinePlugin({
-            'ENVIRONMENT': '"DEV"'
+            ENVIRONMENT: `"${ENVIRONMENT}"`
         }),
-        //-------------------------------------------------
-        new ExtractTextPlugin('[name]')
+        new ExtractTextPlugin('[name]'),
     ],
     postcss () {
         return [autoprefixer];
@@ -47,10 +45,10 @@ module.exports = {
         'b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
         'b_demo.css': './demo/css/demo.scss',
         // Extension
-        'assets/b_popup.js':ES_POLYFILLS.concat('./extensions/chrome_dev/assets/js/popup.js'),
-        'assets/b_background.js':ES_POLYFILLS.concat('./extensions/chrome_dev/assets/js/background.js'),
+        'assets/b_popup.js':ES_POLYFILLS.concat('./assets/js/popup.js'),
+        'assets/b_background.js':ES_POLYFILLS.concat('./assets/js/background.js'),
         // Alias
-        'extensions/chrome_dev/b_app.local.js': ES_POLYFILLS.concat([
+        'b_app.local.js': ES_POLYFILLS.concat([
             'expose?React!react',
             'expose?ReactDOM!react-dom',
             './app/main.js'
@@ -62,3 +60,11 @@ module.exports = {
     },
     devtool: 'source-map'
 };
+
+if (ENVIRONMENT === 'PRODUCTION') {
+    webpack.optimize.UglifyJsPlugin();
+    webpack.optimize.DedupePlugin();
+    delete config.devtool;
+}
+
+module.exports = config;

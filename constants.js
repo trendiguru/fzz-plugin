@@ -35,12 +35,12 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = Query.parse(location.search).PID || pid || null,
+    PID = (ENVIRONMENT === "DEV") ? storage.getItem("pid") : Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
-    API = (Query.parse(location.search).API || api).toLowerCase(),
+    API = (ENVIRONMENT === "DEV") ? storage.getItem("api") :(Query.parse(location.search).API || api).toLowerCase(),
     API_URL = {
         nd: 'https://api.trendi.guru/images',
         pd: 'https://api.trendi.guru/images'

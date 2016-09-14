@@ -24,7 +24,6 @@ const FUNCTION_LIST = {
     updateStacks: updateStacks,
     updateDevTools: updateDevTools,
     reloadPage: reloadPage,
-    updatePreferences: updatePreferences,
     coloredReport: coloredReport
 };
 
@@ -39,47 +38,8 @@ window.setToChromeStorage = setToChromeStorage;
 window.updateStacks = updateStacks;
 window.updateDevTools = updateDevTools;
 window.reloadPage = reloadPage;
-window.updatePreferences = updatePreferences;
 window.coloredReport = coloredReport;
 //----------------------------------------------------------------
-
-function updateStacks() {
-    postMsg('stacks').then((reply) => {
-        window.STACKS = reply;
-    });
-}
-
-function updateDevTools() {
-    postMsg('devTools').then((reply) => {
-        window.devTools = reply;
-    });
-}
-
-function reloadPage() {
-    postMsg('reload page');
-}
-
-function updatePreferences() {
-    postMsg('update preferences');
-}
-
-function coloredReport() {
-    postMsg('colored report');
-}
-
-function rewriteLocalStorage() {
-    postMsg('rewrite local storage');
-}
-
-function createWrapper() {
-    let wrapper = document.createElement('DIV');
-    wrapper.className = 'react-container';
-    console.log(document.body);
-    console.log(document.body);
-    document.body.appendChild(wrapper);
-    wrapper.style.height = '100%';
-    return wrapper;
-}
 
 function initPage() {
     let b1 = new Box({
@@ -109,6 +69,41 @@ function initPage() {
     })).render(), createWrapper());
     updateDevTools();
     updateStacks();
+}
+
+
+function updateStacks() {
+    postMsg('stacks').then((reply) => {
+        window.STACKS = reply;
+    });
+}
+
+function updateDevTools() {
+    postMsg('devTools').then((reply) => {
+        window.devTools = reply;
+    });
+}
+
+function reloadPage() {
+    postMsg('reload page');
+}
+
+function coloredReport() {
+    postMsg('colored report');
+}
+
+function rewriteLocalStorage() {
+    postMsg('rewrite local storage');
+}
+
+function createWrapper() {
+    let wrapper = document.createElement('DIV');
+    wrapper.className = 'react-container';
+    console.log(document.body);
+    console.log(document.body);
+    document.body.appendChild(wrapper);
+    wrapper.style.height = '100%';
+    return wrapper;
 }
 
 function updateConfig() {

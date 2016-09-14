@@ -11,7 +11,7 @@ import {
     postResponse
 } from 'modules/chromeManipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
-import preferences from 'preferences';
+import {preferences} from 'preferences';
 
 console.log(preferences);
 
@@ -67,6 +67,10 @@ function coloredReport() {
     postMsg('colored report');
 }
 
+function rewriteLocalStorage() {
+    postMsg('rewrite local storage');
+}
+
 function createWrapper() {
     let wrapper = document.createElement('DIV');
     wrapper.className = 'react-container';
@@ -111,10 +115,11 @@ function updateConfig() {
     let inputs = Array.from(document.getElementsByTagName('INPUT'));
     console.debug(inputs);
     let index = 0;
+    let promises = [];
     //be carefull here!
     for (let key in preferences) {
-        setToChromeStorage(key, inputs[index].value);
+        promises.push(setToChromeStorage(key, inputs[index].value));
         index++;
     }
-    reloadPage();
+    Promise.all(promises).then(rewriteLocalStorage());
 }

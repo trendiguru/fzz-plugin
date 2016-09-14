@@ -1,16 +1,25 @@
 export function setToChromeStorage(key, value) {
-    let obj={};
-    obj[key]=value;
-  // Check that there's some code there.
-  if (!value) {
-    console.debug('Error: No value specified');
-    return;
-  }
-  // Save it using the Chrome extension storage API.
-  chrome.storage.local.set(obj, function() {
-    // Notify that we saved.
-    console.debug('Settings saved');
-  });
+    /*
+        This function sets data into crome.storage and returns a promise
+        when the operation is comleted.
+    */
+    return new Promise((resolve, reject)=>{
+        let obj={};
+        obj[key]=value;
+        // Check that there's some code there.
+        if (!value) {
+            console.debug('Error: No value specified');
+            reject();
+            return;
+        }
+        // Save it using the Chrome extension storage API.
+        chrome.storage.local.set(obj, function() {
+            // Notify that we saved.
+            console.debug(obj);
+            console.debug('Settings saved');
+            resolve();
+        });
+    });
 }
 
 export function postResponse(postKey, obj){

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import Cookies from 'js-cookie';
-import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV} from 'constants';
+import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
@@ -11,19 +11,14 @@ import {iFrame, Style} from './elements';
 import Observer from './observe';
 import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
-import {preferences, updatePreferences} from 'preferences';
-let PID = preferences.pid;
-let API = preferences.api;
+import {updateLocalStorage} from 'preferences';
+
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
-let s;
-let refererDomain;
-let ui;
-let initAnaltics;
-let analytics;
-let style;
-let iframe;
+let s = STACKS;
+let ui = new UI({overlay});
+let refererDomain = window.location.hostname.replace('www.', '');
 
 function onScriptStart(){
     s = STACKS;
@@ -39,41 +34,38 @@ function onScriptStart(){
 
     analytics = new Analytics('publisher', initAnaltics);
 
-    style = new Style ();
-    iframe = new iFrame(initAnaltics);
-
-    analytics.track('Page Hit');
-    analytics.listen('scroll');
-    if (ENV === "DEV"){
-        chrome.extension.onMessage.addListener(function(msg) {
-            if (msg.postKey == 'reload page') {
-                window.location.reload();
-            }
-        });
-    }
+analytics.track('Page Hit');
+analytics.listen('scroll');
+if (ENV === "DEV"){
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'reload page') {
+            window.location.reload();
+        }
+    });
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'rewrite storage') {
+            updateLocalStorage().then(()=>{window.location.reload();})
+        }
+    });
 }
 
-console.log("start");
-updatePreferences().then(onScriptStart).then(()=>{
-    console.log("updatePreferences works!")
-    domready(() => {
-        if (isRelevantScript()) {
-            console.log('FZZ: domready');
-            document.body.appendChild(iframe);
-            document.head.appendChild(style);
-            new Observer({
-                whitelist: WHITE_LIST,
-                blacklist: BLACK_LIST,
-                callbackExisting: true,
-                callback: onMutation(el => process(el, el => draw(ui, el))),
-            });
-            cleanRelevantImgDict();
-            addEventListener('click', e => {
-                for (let element of Array.from(document.elementsFromPoint(e.clientX, e.clientY))) {
-                    if (TGImage.isTGButton(element)) {
-                        element.click();
-                        return true;
-                    }
+domready(() => {
+    if (isRelevantScript()) {
+        console.log('FZZ: domready');
+        document.body.appendChild(iframe);
+        document.head.appendChild(style);
+        new Observer({
+            whitelist: WHITE_LIST,
+            blacklist: BLACK_LIST,
+            callbackExisting: true,
+            callback: onMutation(el => process(el, el => draw(ui, el))),
+        });
+        cleanRelevantImgDict();
+        addEventListener('click', e => {
+            for (let element of Array.from(document.elementsFromPoint(e.clientX, e.clientY))) {
+                if (TGImage.isTGButton(element)) {
+                    element.click();
+                    return true;
                 }
                 return false;
             });

@@ -24,7 +24,6 @@ const FUNCTION_LIST = {
     updateStacks: updateStacks,
     updateDevTools: updateDevTools,
     reloadPage: reloadPage,
-    updatePreferences: updatePreferences,
     coloredReport: coloredReport
 };
 
@@ -39,43 +38,8 @@ window.setToChromeStorage = setToChromeStorage;
 window.updateStacks = updateStacks;
 window.updateDevTools = updateDevTools;
 window.reloadPage = reloadPage;
-window.updatePreferences = updatePreferences;
 window.coloredReport = coloredReport;
 //----------------------------------------------------------------
-
-function updateStacks() {
-    postMsg('stacks').then((reply) => {
-        window.STACKS = reply;
-    });
-}
-
-function updateDevTools() {
-    postMsg('devTools').then((reply) => {
-        window.devTools = reply;
-    });
-}
-
-function reloadPage() {
-    postMsg('reload page');
-}
-
-function updatePreferences() {
-    postMsg('update preferences');
-}
-
-function coloredReport() {
-    postMsg('colored report');
-}
-
-function createWrapper() {
-    let wrapper = document.createElement('DIV');
-    wrapper.className = 'react-container';
-    console.log(document.body);
-    console.log(document.body);
-    document.body.appendChild(wrapper);
-    wrapper.style.height = '100%';
-    return wrapper;
-}
 
 function initPage() {
     let b1 = new Box({
@@ -107,14 +71,50 @@ function initPage() {
     updateStacks();
 }
 
+
+function updateStacks() {
+    postMsg('stacks').then((reply) => {
+        window.STACKS = reply;
+    });
+}
+
+function updateDevTools() {
+    postMsg('devTools').then((reply) => {
+        window.devTools = reply;
+    });
+}
+
+function reloadPage() {
+    postMsg('reload page');
+}
+
+function coloredReport() {
+    postMsg('colored report');
+}
+
+function rewriteLocalStorage() {
+    postMsg('rewrite storage');
+}
+
+function createWrapper() {
+    let wrapper = document.createElement('DIV');
+    wrapper.className = 'react-container';
+    console.log(document.body);
+    console.log(document.body);
+    document.body.appendChild(wrapper);
+    wrapper.style.height = '100%';
+    return wrapper;
+}
+
 function updateConfig() {
     let inputs = Array.from(document.getElementsByTagName('INPUT'));
     console.debug(inputs);
     let index = 0;
+    let promises = [];
     //be carefull here!
     for (let key in preferences) {
-        setToChromeStorage(key, inputs[index].value);
+        promises.push(setToChromeStorage(key, inputs[index].value));
         index++;
     }
-    reloadPage();
+    Promise.all(promises).then(rewriteLocalStorage());
 }

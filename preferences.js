@@ -1,41 +1,13 @@
 /* eslint-disable no-console */
-
-import {PID, API, ENV} from 'constants';
+import {ENV} from 'constants';
 import {extension, storage} from 'modules/cross-extension';
 
-let preferences = {
-    pid: PID,
-    api: API,
+export let preferences = {
+    pid: 'dev',
+    api: 'nd',
 };
 
-//test----------------------------
-window.preferences = preferences;
-//--------------------------------
-
-if (ENV === 'DEV'){
-    for (let key in preferences) {
-        updatePreference(key);
-    }
-
-    extension.onMessage.addListener((msg) => {
-        if (msg.postKey == 'update preferences') {
-            for (let key in preferences) {
-                updatePreference(key);
-            }
-        }
-    });
-}
-function updatePreference(key){
-    storage.local.get(key, (obj) => {
-        console.info('constant attribute was changed by developer', obj);
-        if (obj) {
-            Object.assign(preferences, obj);
-            console.info({preferences});
-        }
-    });
-}
-
-function updatePreferences(){
+export function updateLocalStorage(){
     /* the function returns promise which will be processed when all
     commponents of "preferences" obj will be taken from chrome storage*/
     if (ENV === 'DEV'){
@@ -45,10 +17,10 @@ function updatePreferences(){
                 storage.local.get(key, (obj) => {
                     console.info('constant attribute was changed by developer', obj);
                     if (obj) {
-                        Object.assign(preferences, obj);
-                        console.info({preferences});
+                        localStorage.setItem(key, obj[key]);
+                        console.info(key+" : "+obj+" was stored into local storage");
                         resolve();
-                    }
+                    }else{reject();}
                 });
             }));
         }

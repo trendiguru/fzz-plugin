@@ -17,6 +17,7 @@ import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
 let s = STACKS;
+let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');
 
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
@@ -40,16 +41,14 @@ if (ENV === "DEV"){
         }
     });
     chrome.extension.onMessage.addListener(function(msg) {
-        console.log('rewrite local storage');
         if (msg.postKey == 'rewrite storage') {
-            updateLocalStorage()//.then(()=>{window.location.reload();})
+            updateLocalStorage().then(()=>{window.location.reload();})
         }
     });
 }
 
 domready(() => {
     if (isRelevantScript()) {
-        let ui = new UI({overlay});
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);

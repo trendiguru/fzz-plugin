@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import Cookies from 'js-cookie';
-import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV} from 'constants';
+import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
@@ -12,8 +12,6 @@ import Observer from './observe';
 import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
 import {updateLocalStorage} from 'preferences';
-let PID = preferences.pid;
-let API = preferences.api;
 
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
@@ -42,11 +40,11 @@ if (ENV === "DEV"){
         }
     });
     chrome.extension.onMessage.addListener(function(msg) {
-        if (msg.postKey == 'rewrite local storage') {
-            updateLocalStorage.then(()=>{window.location.reload();})
+        console.log('rewrite local storage');
+        if (msg.postKey == 'rewrite storage') {
+            updateLocalStorage().then(()=>{window.location.reload();})
         }
     });
-}
 }
 
 domready(() => {

@@ -93,7 +93,7 @@ function coloredReport() {
 }
 
 function rewriteLocalStorage() {
-    postMsg('rewrite local storage');
+    postMsg('rewrite storage');
 }
 
 function createWrapper() {

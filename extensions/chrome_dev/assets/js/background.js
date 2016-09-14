@@ -1,9 +1,7 @@
-import {PID as pid, API as api} from 'constants';
+import {preferences} from 'preferences';
 import {setToChromeStorage} from 'modules/chromeManipulation';
-
- let initPreferences = {pid, api};
- console.debug(initPreferences);
+ console.debug(preferences);
  // initial update of storageData;
- for(let key in initPreferences){
-    setToChromeStorage(key, initPreferences[key]);
+ for(let key in preferences){
+    setToChromeStorage(key, preferences[key]);
  }

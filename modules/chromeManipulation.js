@@ -3,12 +3,13 @@ export function setToChromeStorage(key, value) {
         This function sets data into crome.storage and returns a promise
         when the operation is comleted.
     */
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject)=>{
         let obj={};
         obj[key]=value;
         // Check that there's some code there.
         if (!value) {
             console.debug('Error: No value specified');
+            reject();
             return;
         }
         // Save it using the Chrome extension storage API.
@@ -45,16 +46,3 @@ export function postMsg(postKey){
         });
     })
 }
-
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-     for (key in changes) {
-       var storageChange = changes[key];
-       console.log('Storage key "%s" in namespace "%s" changed. ' +
-                   'Old value was "%s", new value is "%s".',
-                   key,
-                   namespace,
-                   storageChange.oldValue,
-                   storageChange.newValue);
-     }
-   });

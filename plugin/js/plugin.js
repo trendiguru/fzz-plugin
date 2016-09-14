@@ -11,7 +11,7 @@ import {iFrame, Style} from './elements';
 import Observer from './observe';
 import {process,cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
-import preferences from 'preferences';
+import {updateLocalStorage} from 'preferences';
 let PID = preferences.pid;
 let API = preferences.api;
 
@@ -41,6 +41,12 @@ if (ENV === "DEV"){
             window.location.reload();
         }
     });
+    chrome.extension.onMessage.addListener(function(msg) {
+        if (msg.postKey == 'rewrite local storage') {
+            updateLocalStorage.then(()=>{window.location.reload();})
+        }
+    });
+}
 }
 
 domready(() => {

@@ -27,7 +27,7 @@ export const HOST_DOMAIN = {
     // iframe
     IFRAME_ID = 'fazzi',
     CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
-    IFRAME_SRC = `${HOST_DOMAIN}/assets/${extension ? 'app.local' : 'app'}.html`,
+    IFRAME_SRC = `${HOST_DOMAIN}/app/${extension ? 'app.local' : 'app'}.html`,
     // ui
     COOKIE_NAME = 'fzz_ui_3',
     GIPHY = {

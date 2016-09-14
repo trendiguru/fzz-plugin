@@ -6,6 +6,7 @@ fzz.min.js
 *.map
 */*.map
 *.zip
+manifest.json
 
 # NPM #
 #######

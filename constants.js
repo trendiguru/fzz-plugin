@@ -27,7 +27,7 @@ export const HOST_DOMAIN = {
     // iframe
     IFRAME_ID = 'fazzi',
     CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
-    IFRAME_SRC = `${HOST_DOMAIN}/app/${extension ? 'app.local' : 'app'}.html`,
+    IFRAME_SRC = `${HOST_DOMAIN}/assets/${extension ? 'app.local' : 'app'}.html`,
     // ui
     COOKIE_NAME = 'fzz_ui_3',
     GIPHY = {
@@ -35,12 +35,12 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
-    PID = (ENVIRONMENT === "DEV" && localStorage.getItem("pid")) ? localStorage.getItem("pid") : Query.parse(location.search).PID || pid || null,
+    PID = (ENVIRONMENT === 'DEV' && localStorage.getItem('pid')) ? localStorage.getItem('pid') : Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
-    API = (ENVIRONMENT === "DEV" && localStorage.getItem("api")) ? localStorage.getItem("api") :(Query.parse(location.search).API || api).toLowerCase(),
+    API = (ENVIRONMENT === 'DEV' && localStorage.getItem('api')) ? localStorage.getItem('api') :(Query.parse(location.search).API || api).toLowerCase(),
     API_URL = {
         nd: 'https://api.trendi.guru/images',
         pd: 'https://api.trendi.guru/images'
@@ -87,6 +87,3 @@ export const HOST_DOMAIN = {
             },
         },
     };
-
-    console.log(PID);
-    console.log(API);

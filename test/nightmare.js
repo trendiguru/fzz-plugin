@@ -36,7 +36,7 @@ rl.question('To test published version of code enter: 0, \r\nTo test local versi
 
     rl.close();
     answer = answer || 1;
-    subject = ['publishers', 'potencial'][answer]
+    let subject = ['publishers', 'potencial'][answer]
     fzzPages = fzzPages[subject];
     injectedFile = {publishers:null, potencial: 'b_plugin.js'}[subject];
     let promises = fzzPages.map((page) => checkPage(page, checkStacks));
@@ -54,7 +54,7 @@ rl.question('To test published version of code enter: 0, \r\nTo test local versi
 
 function checkPage(url) {
     let nightmare = new Nightmare({
-        show: true,
+        //show: true,
         openDevTools: true,
         switches: {
             'ignore-certificate-errors': true,

@@ -29,5 +29,3 @@ export function updateLocalStorage(){
     //if we are not in dev mode => return promise that ends emediatly:
     return Promise.resolve();
 }
-
-export {preferences, updatePreferences};

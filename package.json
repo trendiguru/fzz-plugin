@@ -5,15 +5,13 @@
   "main": "plugin/js/plugin.js",
   "scripts": {
     "init": "npm i -g webpack",
-    "start": "npm run watch",
+    "start": "ENVIRONMENT=DEV npm run watch & cp manifest.dev.json manifest.json",
     "stop": "pkill -f python.*HTTP.*4443",
-    "test": "webpack --progress && node nightmareTest",
+    "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
     "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
     "watch": "webpack --watch --progress",
-    "bundle": "webpack & wait && cp b_plugin.js extensions/chrome_native/b_plugin.js",
-    "bundle_chrome": "jspm bundle-sfx extensions/chrome/es6_run_ext.js extensions/chrome/run_ext.js && echo \"\nPlease go to chrome://extensions and reload the Chrome Extension\n\"",
-    "deploy": "jspm bundle-sfx --minify app/desktop.js app/b_desktop.js & jspm bundle-sfx --minify plugin/js/plugin.js fzz.min.js & wait && cp fzz.min.js b_plugin.js",
-    "publish": "./upload_to_gs.sh fzz"
+    "publish": "ENVIRONMENT=PRODUCTION ./upload_to_gs.sh fzz & cp manifest.production.json manifest.json",
+    "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html"
   },
   "author": "Trendi Guru Ltd.",
   "license": "UNLICENSED",

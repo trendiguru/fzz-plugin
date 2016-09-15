@@ -1,0 +1,56 @@
+{
+    "manifest_version": 2,
+    "name": "infashion (dev)",
+    "version": "1.0.2",
+    "description": "Click on the pink shirt to shop for fashion items inspired by images",
+    "icons": {
+        "16": "assets/icons/icon16.png",
+        "48": "assets/icons/icon48.png",
+        "128": "assets/icons/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "exclude_matches": [
+                "*://www.facebook.com/*",
+                "*://www.messenger.com/*",
+                "*://*.google.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "b_plugin.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "activeTab",
+        "storage",
+        "tabs",
+        "background"
+    ],
+    "browser_action": {
+        "default_icon": "assets/icons/icon128.png",
+        "default_popup": "assets/popup.html",
+        "run_at": "document_start",
+        "js": [
+            "assets/b_popup.js"
+        ]
+    },
+    "background": {
+        "scripts": [
+            "assets/b_background.js"
+        ],
+        "persistent": true
+    },
+    "web_accessible_resources": [
+        "http://*/*",
+        "https://*/*",
+        "*"
+    ],
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+}

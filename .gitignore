@@ -6,6 +6,7 @@ fzz.min.js
 *.map
 */*.map
 *.zip
+manifest.json
 
 # NPM #
 #######
@@ -20,7 +21,6 @@ node_modules/
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
 

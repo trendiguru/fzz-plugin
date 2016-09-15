@@ -17,7 +17,7 @@ let fzzPages = {
         //'http://robshelter.blogspot.co.il/2015/09/forget.html',// Currently i do not knw what is the problem with this site&electron.
         'http://www.fashionseoul.com/?p=119333',
     ],
-    'potencial': [
+    'potential': [
         'http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-fotos-ihrer-familie_1166388-i10704220.html',
         'http://www.gala.de/beauty-fashion/fashion/fashion-looks-der-style-von-jennifer-lawrence_1171061_782392-i9736316.html',
         'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
@@ -36,9 +36,9 @@ rl.question('To test published version of code enter: 0, \r\nTo test local versi
 
     rl.close();
     answer = answer || 1;
-    let subject = ['publishers', 'potencial'][answer]
+    let subject = ['publishers', 'potential'][answer]
     fzzPages = fzzPages[subject];
-    injectedFile = {publishers:null, potencial: 'b_plugin.js'}[subject];
+    injectedFile = {publishers:null, potential: 'b_plugin.js'}[subject];
     let promises = fzzPages.map((page) => checkPage(page, checkStacks));
     Promise.all(promises)
         .then((results) => {

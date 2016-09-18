@@ -11,34 +11,37 @@ const rl = readline.createInterface({
 });
 
 let injectedFile;
+let publishers = [
+    'http://amaze-magazine.com/2016/08/cute-fall-denim-everybody/',
+    //'http://robshelter.blogspot.co.il/2015/09/forget.html',// Currently i do not knw what is the problem with this site&electron.
+    'http://www.fashionseoul.com/?p=119333'
+];
+let potential= [
+    'http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-fotos-ihrer-familie_1166388-i10704220.html',
+    'http://www.gala.de/beauty-fashion/fashion/fashion-looks-der-style-von-jennifer-lawrence_1171061_782392-i9736316.html',
+    'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
+    'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D',
+    'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
+    'http://www.plus-model-mag.com/'
+];
 let fzzPages = {
-    'publishers': [
-        'http://amaze-magazine.com/2016/08/cute-fall-denim-everybody/',
-        //'http://robshelter.blogspot.co.il/2015/09/forget.html',// Currently i do not knw what is the problem with this site&electron.
-        'http://www.fashionseoul.com/?p=119333',
-    ],
-    'potential': [
-        'http://www.gala.de/stars/news/michelle-hunziker-die-schoensten-fotos-ihrer-familie_1166388-i10704220.html',
-        'http://www.gala.de/beauty-fashion/fashion/fashion-looks-der-style-von-jennifer-lawrence_1171061_782392-i9736316.html',
-        'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
-        'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D',
-        'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
-        'http://www.plus-model-mag.com/'
-    ]
+    'fzz-publish': publishers,
+    'fzz-test': potential,
+    'local':potential
 };
 
 /*Very important!!!
   1. nightmare test fails in case (1:we run an extension) AND (2:fzzPages list contains site/s that our pluging is installed on it/them).
   */
 
-rl.question('To test published version of code enter: 0, \r\nTo test local version of code enter: 1\r\n', (answer) => {
+rl.question('To test published version of code enter: 0, \r\nTo test local version of code enter: 1\r\nTo test fzz-test version of code enter: 2\r\n', (answer) => {
     console.log('Please wait. It will take up to minute');
 
     rl.close();
     answer = answer || 1;
-    let subject = ['publishers', 'potential'][answer]
+    let subject = ['fzz-publish', 'local', 'fzz-test', ][answer];
     fzzPages = fzzPages[subject];
-    injectedFile = {publishers:null, potential: 'b_plugin.js'}[subject];
+    injectedFile = {'fzz-publish':null, 'fzz-test': './test/snippet.js','local':'b_plugin.js'}[subject];
     let promises = fzzPages.map((page) => checkPage(page, checkStacks));
     Promise.all(promises)
         .then((results) => {
@@ -54,7 +57,7 @@ rl.question('To test published version of code enter: 0, \r\nTo test local versi
 
 function checkPage(url) {
     let nightmare = new Nightmare({
-        //show: true,
+        show: true,
         openDevTools: true,
         switches: {
             'ignore-certificate-errors': true,
@@ -64,7 +67,8 @@ function checkPage(url) {
     });
     let nm = nightmare.goto(url);
     if (injectedFile) {
-        nm = nm.inject('js', 'b_plugin.js');
+        console.log("injected file: "+injectedFile);
+        nm = nm.inject('js', injectedFile);
     }
     nm = nm.viewport(2000, 1000)
         .wait('.fzzButton')

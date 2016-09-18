@@ -96,7 +96,7 @@ export let postMsg = (postKey) => new Promise((resolve) => tabs.query(
         active: true,
         currentWindow: true
     },
-    (tabs) => tabs.sendMessage(tabs[0].id, {postKey}, (response) => {
+    (resTabs) => tabs.sendMessage(resTabs[0].id, {postKey}, (response) => {
         console.log('tabs');
         console.log(tabs);
         resolve(response);

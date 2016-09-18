@@ -4,10 +4,8 @@ import ReactDOM from 'react-dom';
 import Block from './block';
 import Box from './box';
 import {domready} from 'modules/utils';
-import {setToChromeStorage, postMsg, postResponse, preferences} from 'modules/chrome-manipulation';
+import {setToChromeStorage, postMsg, preferences} from 'modules/chrome-manipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
-
-console.log(preferences);
 
 const BACKGROUND_COLOR = 'rgba(1,2,3,1)';
 const BORDER_COLOR = 'blue';
@@ -28,11 +26,7 @@ domready(() => {
 });
 
 //----------------------------------------------------------------
-window.setToChromeStorage = setToChromeStorage;
-window.updateStacks = updateStacks;
-window.updateDevTools = updateDevTools;
-window.reloadPage = reloadPage;
-window.coloredReport = coloredReport;
+Object.assign(window, {setToChromeStorage, updateStacks, updateDevTools, reloadPage, coloredReport});
 //----------------------------------------------------------------
 
 function initPage() {

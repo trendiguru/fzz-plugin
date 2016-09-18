@@ -10,7 +10,7 @@ nav {
         background: $pink500;
         position: absolute;
         bottom: 0;
-        transition: left .25s;
+        transition: transform .25s;
     }
 
     ul {
@@ -81,7 +81,7 @@ main {
         height: 100%;
         overflow: scroll;
         position: absolute;
-        transition: left .4s;
+        transition: transform .4s;
     }
 
 }

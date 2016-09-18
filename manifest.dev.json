@@ -17,7 +17,9 @@
             "exclude_matches": [
                 "*://www.facebook.com/*",
                 "*://www.messenger.com/*",
-                "*://*.google.com/*"
+                "*://*.google.com/*",
+                "*://*/*.PDF",
+                "*://*/*.pdf"
             ],
             "run_at": "document_start",
             "js": [

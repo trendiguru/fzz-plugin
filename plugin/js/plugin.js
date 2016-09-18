@@ -6,14 +6,12 @@ import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
 import UI from 'modules/ui';
+import {listenToExtension} from 'modules/chrome-manipulation';
 import draw from './draw';
 import {iFrame, Style} from './elements';
 import Observer from './observe';
-import {process,cleanRelevantImgDict} from './process';
+import {process, cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
-import {updateLocalStorage} from 'preferences';
-import {extension} from 'modules/cross-extension';
-
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
@@ -26,25 +24,14 @@ let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     publisherDomain: refererDomain,
     API
 });
-
 let analytics = new Analytics('publisher', initAnaltics);
 let style = new Style ();
 let iframe = new iFrame(initAnaltics);
 analytics.track('Page Hit');
 analytics.listen('scroll');
+
 if (ENV === 'DEV'){
-    extension.onMessage.addListener(function(msg) {
-        if (msg.postKey == 'reload page') {
-            window.location.reload();
-        }
-    });
-    extension.onMessage.addListener(function(msg) {
-        if (msg.postKey == 'rewrite storage') {
-            updateLocalStorage().then(()=>{
-                window.location.reload();
-            });
-        }
-    });
+    listenToExtension();
 }
 
 domready(() => {
@@ -121,6 +108,7 @@ domready(() => {
         }
     }
 });
+
 function onMutation (action) {
     return (mutations) => {
         for (let mutation of mutations) {

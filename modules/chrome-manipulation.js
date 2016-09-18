@@ -1,4 +1,54 @@
-import {storage, runtime, tabs} from './cross-extension';
+import {ENV} from 'constants';
+import {extension, storage, runtime, tabs} from './cross-extension';
+
+export let preferences = {
+    pid: 'dev',
+    api: 'nd',
+};
+
+/**
+ * Returns promise which will be processed when all commponents of 'preferences' obj will be taken from chrome storage
+ * @returns {promise}
+ */
+export function updateLocalStorage () {
+    if (ENV === 'DEV'){
+        let promisesList = [];
+        for (let key in preferences) {
+            promisesList.push(new Promise((resolve, reject)=>{
+                storage.local.get(key, (obj) => {
+                    console.info('constant attribute was changed by developer', obj);
+                    if (obj) {
+                        localStorage.setItem(key, obj[key]);
+                        console.info(key+' : '+obj+' was stored into local storage');
+                        resolve();
+                    }
+                    else{
+                        reject();
+                    }
+                });
+            }));
+        }
+        return Promise.all(promisesList);
+    }
+    //if we are not in dev mode => return promise that ends emediatly:
+    return Promise.resolve();
+}
+
+/**
+ * listen to messages from the extension
+ */
+export function listenToExtension () {
+    extension.onMessage.addListener((msg) => {
+        if (msg.postKey == 'reload page') {
+            location.reload();
+        }
+    });
+    extension.onMessage.addListener((msg) => {
+        if (msg.postKey == 'rewrite storage') {
+            updateLocalStorage().then(() => location.reload());
+        }
+    });
+}
 
 /**
  * Sets data into crome.storage and returns a promise when the operation is comleted.

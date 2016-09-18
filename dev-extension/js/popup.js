@@ -1,17 +1,11 @@
-import Block from './block';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Box from './box'
-import {
-    domready
-} from 'modules/utils';
-import {
-    setToChromeStorage,
-    postMsg,
-    postResponse
-} from 'modules/chrome-manipulation';
+import Block from './block';
+import Box from './box';
+import {domready} from 'modules/utils';
+import {setToChromeStorage, postMsg, postResponse, preferences} from 'modules/chrome-manipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
-import {preferences} from 'preferences';
 
 console.log(preferences);
 

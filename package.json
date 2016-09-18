@@ -1,102 +1,108 @@
 {
-  "name": "fzz-plugin",
-  "version": "1.0.0",
-  "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
-  "main": "plugin/js/plugin.js",
-  "scripts": {
-    "init": "npm i -g webpack",
-    "start": "ENVIRONMENT=DEV npm run watch & cp manifest.dev.json manifest.json",
-    "stop": "pkill -f python.*HTTP.*4443",
-    "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
-    "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
-    "watch": "webpack --watch --progress",
-    "publish": "./upload_to_gs.sh fzz & cp manifest.production.json manifest.json",
-    "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html"
-  },
-  "author": "Trendi Guru Ltd.",
-  "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/trendiguru/fzz-plugin.git"
-  },
-  "dependencies": {
-    "classnames": "^2.2.5",
-    "delux": "^1.1.0",
-    "delux-react": "^1.1.0",
-    "es6-promise": "",
-    "imagesloaded": "",
-    "js-cookie": "",
-    "mixpanel-browser": "",
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1",
-    "whatwg-fetch": ""
-  },
-  "devDependencies": {
-    "autoprefixer": "",
-    "babel-core": "",
-    "babel-generator": "",
-    "babel-loader": "",
-    "babel-polyfill": "",
-    "babel-preset-es2015": "",
-    "babel-preset-react": "",
-    "css-loader": "",
-    "expose-loader": "^0.7.1",
-    "extract-text-webpack-plugin": "",
-    "nightmare": "",
-    "node-sass": "",
-    "postcss-loader": "",
-    "sass-loader": "",
-    "webpack": ""
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
-  "eslintConfig": {
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "globals": {
-      "React": false,
-      "ReactDOM": false
+    "name": "fzz-plugin",
+    "version": "1.0.0",
+    "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
+    "main": "plugin/js/plugin.js",
+    "scripts": {
+        "init": "npm i -g webpack",
+        "start": "ENVIRONMENT=DEV npm run watch & cp manifest.dev.json manifest.json",
+        "stop": "pkill -f python.*HTTP.*4443",
+        "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
+        "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
+        "watch": "webpack --watch --progress",
+        "publish": "./upload_to_gs.sh fzz & cp manifest.production.json manifest.json",
+        "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html"
     },
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
+    "author": "Trendi Guru Ltd.",
+    "license": "UNLICENSED",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/trendiguru/fzz-plugin.git"
     },
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+    "dependencies": {
+        "classnames": "^2.2.5",
+        "delux": "^1.1.0",
+        "delux-react": "^1.1.0",
+        "es6-promise": "",
+        "imagesloaded": "",
+        "js-cookie": "",
+        "mixpanel-browser": "",
+        "react": "^15.3.1",
+        "react-dom": "^15.3.1",
+        "whatwg-fetch": ""
     },
-    "plugins": [
-      "react"
-    ],
-    "parserOptions": {
-      "sourceType": "module"
+    "devDependencies": {
+        "autoprefixer": "",
+        "babel-core": "",
+        "babel-generator": "",
+        "babel-loader": "",
+        "babel-polyfill": "",
+        "babel-preset-es2015": "",
+        "babel-preset-react": "",
+        "css-loader": "",
+        "expose-loader": "^0.7.1",
+        "extract-text-webpack-plugin": "",
+        "nightmare": "",
+        "node-sass": "",
+        "postcss-loader": "",
+        "sass-loader": "",
+        "webpack": ""
     },
-    "rules": {
-      "indent": [
-        2,
-        4
-      ],
-      "quotes": [
-        2,
-        "single"
-      ],
-      "linebreak-style": [
-        2,
-        "unix"
-      ],
-      "semi": [
-        2,
-        "always"
-      ]
-    }
-  },
-  "bugs": {
-    "url": "https://github.com/trendiguru/fzz-plugin/issues"
-  },
-  "homepage": "https://github.com/trendiguru/fzz-plugin#readme",
-  "keywords": []
+    "babel": {
+        "presets": [
+            "es2015",
+            "react"
+        ]
+    },
+    "eslintConfig": {
+        "extends": [
+            "eslint:recommended",
+            "plugin:react/recommended"
+        ],
+        "globals": {
+            "React": false,
+            "ReactDOM": false
+        },
+        "env": {
+            "es6": true,
+            "node": true,
+            "browser": true
+        },
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        },
+        "plugins": [
+            "react"
+        ],
+        "parserOptions": {
+            "sourceType": "module"
+        },
+        "rules": {
+            "indent": [
+                2,
+                4
+            ],
+            "quotes": [
+                2,
+                "single"
+            ],
+            "linebreak-style": [
+                2,
+                "unix"
+            ],
+            "semi": [
+                2,
+                "always"
+            ],
+            "no-console": [
+                1
+            ]
+        }
+    },
+    "bugs": {
+        "url": "https://github.com/trendiguru/fzz-plugin/issues"
+    },
+    "homepage": "https://github.com/trendiguru/fzz-plugin#readme",
+    "keywords": []
 }

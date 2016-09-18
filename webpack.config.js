@@ -45,8 +45,8 @@ let config = {
         'b_demo.js': ES_POLYFILLS.concat('./demo/main.js'),
         'b_demo.css': './demo/css/demo.scss',
         // Extension
-        'assets/b_popup.js':ES_POLYFILLS.concat('./assets/js/popup.js'),
-        'assets/b_background.js':ES_POLYFILLS.concat('./assets/js/background.js'),
+        'dev-extension/b_popup.js':ES_POLYFILLS.concat('./dev-extension/js/popup.js'),
+        'dev-extension/b_background.js':ES_POLYFILLS.concat('./dev-extension/js/background.js'),
         // Alias
         'b_app.local.js': ES_POLYFILLS.concat([
             'expose?React!react',

@@ -1,9 +1,12 @@
-import {getDomainName} from 'modules/utils';
-import {postResponse} from 'modules/chromeManipulation';
+import {getDomainName} from './utils';
+import {extension} from './cross-extension';
+import {postResponse} from './chrome-manipulation';
 import {ENV} from 'constants';//TODO: check why environment is undefind?
 
-let active = active || (ENV==="DEV");
-console.log('active:'+active);
+let active = active || (ENV === 'DEV');
+
+console.log('active:' + active);
+
 // let OPACITY = '0.01';
 export let modules = {};
 
@@ -64,7 +67,8 @@ if (active) {
 }
 
 export function coloredReport () {
-    let {sColor, show} = STACKS, defaultColor = STACKS.sColor;
+    let {sColor, show} = STACKS;
+    let defaultColor = sColor;
     STACKS.sColor = 'red';
     show('irrelevantImg');
     STACKS.sColor = 'blue';
@@ -80,14 +84,13 @@ export function clrscrn () {
     }
 }
 
-
 window.devTools = window.devTools || {REQUESTS, STACKS, coloredReport, clrscrn, modules};
 
-if (active){
+if (extension && active) {
     postResponse('devTools', window.devTools);
     postResponse('stacks', window.devTools.STACKS);
 
-    chrome.extension.onMessage.addListener(function(msg) {
+    extension.onMessage.addListener(function(msg) {
         if (msg.postKey == 'colored report') {
             coloredReport();
         }

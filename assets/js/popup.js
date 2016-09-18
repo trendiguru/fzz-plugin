@@ -9,7 +9,7 @@ import {
     setToChromeStorage,
     postMsg,
     postResponse
-} from 'modules/chromeManipulation';
+} from 'modules/chrome-manipulation';
 //import 'extensions/chrome_dev/assets/css/popup.scss';// TODO: learn a little bit more about scss
 import {preferences} from 'preferences';
 

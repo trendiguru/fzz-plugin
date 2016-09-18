@@ -1,5 +1,5 @@
 import {preferences} from 'preferences';
-import {setToChromeStorage} from 'modules/chromeManipulation';
+import {setToChromeStorage} from 'modules/chrome-manipulation';
  console.debug(preferences);
  // initial update of storageData;
  for(let key in preferences){

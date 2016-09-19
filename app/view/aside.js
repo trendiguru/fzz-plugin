@@ -3,8 +3,8 @@ export default class Aside extends React.Component {
         super(props);
         this.state = {
             img: {
-                width: 0,
-                height: 0
+                width: 1,
+                height: 1
             }
         };
         this.load(props);
@@ -19,7 +19,7 @@ export default class Aside extends React.Component {
             return this.refs.root.clientHeight;
         }
         else {
-            return 0;
+            return 1;
         }
     }
     componentWillReceiveProps (props) {
@@ -31,8 +31,9 @@ export default class Aside extends React.Component {
         img.onload = () => this.setState({img});
     }
     render () {
+        let {img} = this.state;
         return <aside ref="root" style={{
-            width: this.state.img.width / this.state.img.height * this.height,
+            width: img.width / img.height * this.height,
             backgroundImage: `url('${this.props.imageURL}')`
         }}></aside>;
     }

@@ -5,7 +5,7 @@ export class TabView extends React.Component {
     }
     static get propTypes () {
         return {
-            children: React.PropTypes.array.isRequired,
+            children: React.PropTypes.element.isRequired,
             aside: React.PropTypes.array,
             select: React.PropTypes.number,
         };
@@ -48,14 +48,14 @@ export class TabView extends React.Component {
     }
 }
 
-export function Tab (props) {
+export function Tab ({index, select, children}) {
     return <section style={{
         width: '100%',
-        transform: `translateX(${(props.index - props.select) * 100}%)`,
-        WebkitTransform: `translateX(${(props.index - props.select) * 100}%)`,
+        transform: `translateX(${(index - select) * 100}%)`,
+        WebkitTransform: `translateX(${(index - select) * 100}%)`,
         top: 0,
         position: 'absolute'
-    }}>{props.children}</section>;
+    }}>{children}</section>;
 }
 
 Tab.propTypes = {

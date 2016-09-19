@@ -20,10 +20,9 @@ class App extends React.Component {
     }
     constructor (props) {
         super(props);
-        console.log(store);
         store.observe('images', ({images}) => {
             console.debug(images);
-            console.debug(this.setState({images}));
+            this.setState({images});
         });
         this.state = {
             images: {}
@@ -83,7 +82,7 @@ class App extends React.Component {
                 </Tab>
             );
         }
-        return <Lightbox ref="app">
+        return <Lightbox>
             <Aside imageURL={imageURL} />
             <TabView
                 aside={NavButtonNodes}

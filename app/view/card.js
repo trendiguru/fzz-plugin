@@ -1,5 +1,5 @@
 export default function Card (props) {
-    return <a ref="card" href={props.link} onClick={handleClick.bind(null, props.link)} target="_blank">
+    return <a href={props.link} onClick={handleClick.bind(null, props.link)} target="_blank">
         <img src={props.image} />
         <div className="tag">{props.children}</div>
     </a>;

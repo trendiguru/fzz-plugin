@@ -19,11 +19,12 @@ export default class Assemblage extends React.Component {
         return new Promise ((resolve, reject) => {
             let img = Object.assign(new Image(), origin);
             img.onload = () => {
-                this.setState(state => {
-                    state.src.push(img);
-                    state.done[i] = true;
-                    return state;
-                });
+                this.setState(state => Object.assign({}, state, {
+                    src: state.src.concat(img),
+                    done: Object.assign({}, state.done, {
+                        [i]: true
+                    })
+                }));
                 resolve(img);
             };
             img.onerror = reject;
@@ -43,42 +44,45 @@ export default class Assemblage extends React.Component {
         });
         addEventListener('resize', this.forceUpdate.bind(this, null));
     }
+    get width () {
+        if (this.refs.root) {
+            return this.refs.root.clientWidth;
+        }
+        else {
+            return 1;
+        }
+    }
     render () {
+        let {state: {src}, props: {template, margin, minWidth, marginBottom = margin}} = this;
         let ImageNodes = [];
-        try {
-            let {clientWidth} = this.refs.root,
-                col = Math.floor(clientWidth / this.props.minWidth),
-                width = clientWidth / col,
-                {src} = this.state,
-                {margin} = this.props,
-                marginBottom = this.props.marginBottom || margin,
-                indexed = Array(Math.ceil(src.length / col)).fill(0).map(() => []);
-            for (let i = 0; i < src.length; i++) {
-                let img = this.state.src[i],
-                    row = (i - i % col) / col,
-                    index = i % col;
-                Object.assign(img, {
-                    proportion: img.height / img.width,
-                    top: 0
-                });
-                if (row) {
-                    img.top += indexed[row - 1][index].proportion;
-                    if (row - 1) {
-                        img.top += indexed[row - 1][index].top;
-                    }
+        let col = Math.floor(this.width / minWidth) || 1;
+        let width = this.width / col;
+        let indexed = Array(Math.ceil(src.length / col)).fill(0).map(() => []);
+        for (let i = 0; i < src.length; i++) {
+            let img = src[i],
+                row = (i - i % col) / col,
+                index = i % col;
+            Object.assign(img, {
+                proportion: img.height / img.width,
+                top: 0
+            });
+            if (row) {
+                img.top += indexed[row - 1][index].proportion;
+                if (row - 1) {
+                    img.top += indexed[row - 1][index].top;
                 }
-                indexed[row][index] = img;
-                ImageNodes[i] = <div
-                        key={i}
-                        style={{
-                            width: width - margin,
-                            top: width * img.top + marginBottom * row,
-                            left: width * index + margin /  2,
-                            position: 'absolute'
-                        }}
-                    >{this.props.template(img)}</div>;
             }
-        } catch (e) {() => e;} // swallow the error as a check
+            indexed[row][index] = img;
+            ImageNodes[i] = <div
+                    key={i}
+                    style={{
+                        width: width - margin,
+                        top: width * img.top + marginBottom * row,
+                        left: width * index + margin /  2,
+                        position: 'absolute'
+                    }}
+                >{template(img)}</div>;
+        }
         return <div ref="root" className="assemblage" style={{position: 'relative'}}>{ImageNodes}</div>;
     }
 }

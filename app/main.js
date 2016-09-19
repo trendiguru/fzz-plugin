@@ -12,9 +12,8 @@ ReactDOM.render(
 );
 
 /*------ MESSAGES ------*/
-
 addEventListener('message', msg => {
-    if (store.state.images.imageURL !== msg.data.imageURL) {
+    if (store.images.state.imageURL !== msg.data.imageURL) {
         store.dispatch({
             type: 'newImageURL',
             payload: msg.data.imageURL,

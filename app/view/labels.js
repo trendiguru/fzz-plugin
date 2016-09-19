@@ -7,6 +7,11 @@ export default class Labels extends React.Component {
             labels: []
         };
     }
+    static get propTypes () {
+        return {
+            labels: React.propTypes.object
+        };
+    }
     componentDidMount () {
         let {labels} = this.props;
         Promise.all(Object.keys(labels).map(label => giphy.search(label)))

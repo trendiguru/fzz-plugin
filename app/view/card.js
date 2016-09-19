@@ -1,18 +1,16 @@
-export default class Card extends React.Component {
-    constructor (props) {
-        super(props);
-    }
-    click () {
-        let event = new Event('result clicked', {bubbles: true});
-        event.data = {
-            result: this.props.link
-        };
-        dispatchEvent(event);
-    }
-    render () {
-        return <a ref="card" href={this.props.link} onClick={this.click.bind(this)} target="_blank">
-            <img src={this.props.image} />
-            <div className="tag">{this.props.children}</div>
-        </a>;
-    }
+export default function Card (props) {
+    return <a href={props.link} onClick={handleClick.bind(null, props.link)} target="_blank">
+        <img src={props.image} />
+        <div className="tag">{props.children}</div>
+    </a>;
+}
+
+Card.propTypes = {
+    link: React.PropTypes.string,
+    image: React.PropTypes.string,
+    children: React.PropTypes.array
+};
+
+function handleClick (result) {
+    dispatchEvent(Object.assign(new Event('result clicked'), {data: {result}}));
 }

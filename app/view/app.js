@@ -20,7 +20,13 @@ class App extends React.Component {
     }
     constructor (props) {
         super(props);
-        store.rerender('images', this);
+        store.observe('images', ({images}) => {
+            console.debug(images);
+            this.setState({images});
+        });
+        this.state = {
+            images: {}
+        };
     }
     componentDidMount () {
         dispatchEvent(new Event('app opened', {bubbles: true}));
@@ -30,7 +36,7 @@ class App extends React.Component {
         dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
-        let {data, imageURL} = store.state.images;
+        let {data, imageURL} = this.state.images;
         let TabNodes = [];
         let buttons = [
             {
@@ -76,7 +82,7 @@ class App extends React.Component {
                 </Tab>
             );
         }
-        return <Lightbox ref="app">
+        return <Lightbox>
             <Aside imageURL={imageURL} />
             <TabView
                 aside={NavButtonNodes}

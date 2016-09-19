@@ -21,8 +21,7 @@
     },
     "dependencies": {
         "classnames": "^2.2.5",
-        "delux": "^1.1.0",
-        "delux-react": "^1.1.0",
+        "delux": "^1.2.0",
         "es6-promise": "",
         "imagesloaded": "",
         "js-cookie": "",
@@ -39,6 +38,7 @@
         "babel-polyfill": "",
         "babel-preset-es2015": "",
         "babel-preset-react": "",
+        "babel-preset-stage-0": "",
         "css-loader": "",
         "expose-loader": "^0.7.1",
         "extract-text-webpack-plugin": "",

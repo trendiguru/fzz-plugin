@@ -4,9 +4,11 @@ import analytics from './analytics';
 
 let images = new Collection({imageURL: ''});
 
-images.on('newImageURL', (action, images) => images.imageURL = action.payload);
+images.on('newImageURL', (images, action) => Object.assign({}, images, {
+    imageURL: action.payload
+}));
 
-images.on('getImageData', (action, images) =>
+images.on('getImageData', (images) =>
     getImageData(images.imageURL)
     .then(data => {
         if (data && data.items) {
@@ -17,12 +19,12 @@ images.on('getImageData', (action, images) =>
         }
         return data;
     })
-    .then(data => images.data = data)
+    .then(data => Object.assign({}, images, {data}))
 );
 
-images.on('clearImageData', (action, images) => {
-    images.imageURL = '';
-    delete images.data;
-});
+images.on('clearImageData', (images) => Object.assign({}, images, {
+    imageURL: '',
+    data: undefined
+}));
 
 export default images;

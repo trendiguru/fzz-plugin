@@ -4,9 +4,9 @@ import analytics from './analytics';
 
 let images = new Collection({imageURL: ''});
 
-images.on('newImageURL', (action, images) => images.imageURL = action.payload);
+images.on('newImageURL', (images, action) => images.imageURL = action.payload);
 
-images.on('getImageData', (action, images) =>
+images.on('getImageData', (images) =>
     getImageData(images.imageURL)
     .then(data => {
         if (data && data.items) {
@@ -20,7 +20,7 @@ images.on('getImageData', (action, images) =>
     .then(data => images.data = data)
 );
 
-images.on('clearImageData', (action, images) => {
+images.on('clearImageData', (images) => {
     images.imageURL = '';
     delete images.data;
 });

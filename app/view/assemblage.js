@@ -6,6 +6,15 @@ export default class Assemblage extends React.Component {
             done: Array(this.props.src.length).fill(false)
         };
     }
+    static get propTypes () {
+        return {
+            src: React.PropTypes.array,
+            minWidth: React.PropTypes.number,
+            margin: React.PropTypes.number,
+            marginBottom: React.PropTypes.number,
+            template: React.PropTypes.func
+        };
+    }
     loadImage (origin, i) {
         return new Promise ((resolve, reject) => {
             let img = Object.assign(new Image(), origin);

@@ -31,7 +31,6 @@ export class TabView extends React.Component {
             TitleNodes.push(<li key={i} onClick={this.setTab.bind(this, i)} className={this.state.tab == i ? 'select' : ''}>{tab.props.title}</li>);
             TabNodes.push(React.cloneElement(tab, {key: i, index: i, select: this.state.tab}));
         });
-        console.log(`translateX(${this.state.tab * 100}%)`);
         return <div ref="root">
             <nav>
                 <ul>
@@ -39,7 +38,7 @@ export class TabView extends React.Component {
                     <label className="indicator" style={{
                         width: liWidth + '%',
                         transform: `translateX(${this.state.tab * 100}%)`,
-                        webkitTransform: `translateX(${this.state.tab * 100}%)`
+                        WebkitTransform: `translateX(${this.state.tab * 100}%)`
                     }}></label>
                 </ul>
                 <aside>{this.props.aside}</aside>
@@ -53,7 +52,7 @@ export function Tab (props) {
     return <section style={{
         width: '100%',
         transform: `translateX(${(props.index - props.select) * 100}%)`,
-        webkitTransform: `translateX(${(props.index - props.select) * 100}%)`,
+        WebkitTransform: `translateX(${(props.index - props.select) * 100}%)`,
         top: 0,
         position: 'absolute'
     }}>{props.children}</section>;

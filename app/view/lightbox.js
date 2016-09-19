@@ -1,10 +1,7 @@
-export default class Lightbox extends React.Component {
-    constructor (props) {
-        super(props);
-    }
-    render () {
-        return <div id="lightbox">
-            {this.props.children}
-        </div>;
-    }
+export default function Lightbox (props) {
+    return <div id="lightbox">{props.children}</div>;
 }
+
+Lightbox.propTypes = {
+    children: React.PropTypes.array
+};

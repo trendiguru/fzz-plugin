@@ -9,6 +9,11 @@ export default class Aside extends React.Component {
         };
         this.load(props);
     }
+    static get propTypes () {
+        return {
+            imageURL: React.PropTypes.string.isRequired
+        };
+    }
     get height () {
         if (this.refs.root) {
             return this.refs.root.clientHeight;

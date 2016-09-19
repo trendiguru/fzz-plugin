@@ -20,7 +20,14 @@ class App extends React.Component {
     }
     constructor (props) {
         super(props);
-        store.rerender('images', this);
+        console.log(store);
+        store.observe('images', ({images}) => {
+            console.debug(images);
+            console.debug(this.setState({images}));
+        });
+        this.state = {
+            images: {}
+        };
     }
     componentDidMount () {
         dispatchEvent(new Event('app opened', {bubbles: true}));
@@ -30,7 +37,7 @@ class App extends React.Component {
         dispatchEvent(new Event('app closed', {bubbles: true}));
     }
     render () {
-        let {data, imageURL} = store.state.images;
+        let {data, imageURL} = this.state.images;
         let TabNodes = [];
         let buttons = [
             {

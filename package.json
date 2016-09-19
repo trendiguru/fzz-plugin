@@ -54,6 +54,10 @@
     "presets": [
       "es2015",
       "react"
+    ],
+    "plugins": [
+      "transform-es3-property-literals",
+      "transform-es3-member-expression-literals"
     ]
   },
   "eslintConfig": {
@@ -75,9 +79,7 @@
       "experimentalObjectRestSpread": true
     },
     "plugins": [
-      "react",
-      "transform-es3-property-literals",
-      "transform-es3-member-expression-literals"
+      "react"
     ],
     "parserOptions": {
       "sourceType": "module"

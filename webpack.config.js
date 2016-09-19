@@ -4,15 +4,15 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const ENVIRONMENT = process.env.ENVIRONMENT || 'DEV';
-const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills'];
+const ES_POLYFILLS = ['babel-polyfill'];//['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills'];
 
 let config = {
     module: {
         loaders: [
-            {
-                test: /\.jsx?$/,
-                loader: 'babel'
-            },
+            // {
+            //     test: /\.jsx?$/,
+            //     loader: 'babel'
+            // },
             {
                 test: /\.s?css$/,
                 loader: ExtractTextPlugin.extract([
@@ -58,7 +58,7 @@ let config = {
         path: '.',
         filename: '[name]'
     },
-    devtool: 'source-map'
+    //devtool: 'source-map'
 };
 
 if (ENVIRONMENT === 'PRODUCTION') {

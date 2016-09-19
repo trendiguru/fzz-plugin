@@ -5,7 +5,7 @@ export class TabView extends React.Component {
     }
     static get propTypes () {
         return {
-            children: React.PropTypes.element.isRequired,
+            children: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
             aside: React.PropTypes.array,
             select: React.PropTypes.number,
         };

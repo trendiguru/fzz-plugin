@@ -21,11 +21,12 @@ class App extends React.Component {
     constructor (props) {
         super(props);
         store.observe('images', ({images}) => {
-            console.debug(images);
             this.setState({images});
         });
         this.state = {
-            images: {}
+            images: {
+                imageURL: ''
+            }
         };
     }
     componentDidMount () {
@@ -52,13 +53,13 @@ class App extends React.Component {
             <i className="md-icon">{button.icon}</i>
         </button>);
         if (data === undefined) {
-            TabNodes = <Loading images={ui.loading} />;
+            TabNodes = [<Loading key="loading" images={ui.loading} />];
         }
         else if (data === null) {
-            TabNodes = <div>No data found for this image</div>;
+            TabNodes = [<div>No data found for this image</div>];
         }
         else if (data.labels) {
-            TabNodes = <Labels labels={data.labels}/>;
+            TabNodes = [<Labels key="labels" labels={data.labels}/>];
         }
         else if (data.items) {
             TabNodes = data.items.map(

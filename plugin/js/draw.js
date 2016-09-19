@@ -57,11 +57,9 @@ function wrap ({element, buttonDiv, url}) {
         display: display !== 'inline' ? display : 'inline-block',
     });
     Object.assign(buttonDiv.style, {
-        width: '100%',
-        height: '100%',
         position: 'absolute',
         top: 0,
-        left: 0
+        right: 0
     });
     trackButtonSeen(element);
     dispatchEvent(Object.assign(new Event('button drawn'), {

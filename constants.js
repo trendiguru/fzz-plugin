@@ -4,6 +4,8 @@ import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 import giphy from 'modules/giphy';
 
+const FZZ = window.FZZ = {};
+
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
 
@@ -35,6 +37,7 @@ export const HOST_DOMAIN = {
     },
     TUTOIRAL_VERSION = '1.0.0',
     // server
+    INITIAL_URL_STATE = FZZ.URL_STATE,
     PID = (ENVIRONMENT === 'DEV' && localStorage.getItem('pid')) ? localStorage.getItem('pid') : Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',

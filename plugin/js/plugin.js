@@ -14,6 +14,7 @@ import TGImage from './tgimage';
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
+wgxpath.install();
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');

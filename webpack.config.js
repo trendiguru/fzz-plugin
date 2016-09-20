@@ -11,7 +11,8 @@ let config = {
         loaders: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel'
+                loader: 'babel',
+                exclude: /node_modules/,
             },
             {
                 test: /\.s?css$/,
@@ -58,7 +59,7 @@ let config = {
         path: '.',
         filename: '[name]'
     },
-    //devtool: 'source-map'
+    devtool: 'source-map'
 };
 
 if (ENVIRONMENT === 'PRODUCTION') {

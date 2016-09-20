@@ -5,7 +5,7 @@ import {STACKS} from 'modules/devTools';
 import URLStore from './urlstore';
 import {Query} from './utils';
 
-let urlStore = new URLStore;
+export let urlStore = new URLStore;
 
 export let smartCheckRelevancy = urlStore.append.bind(urlStore);
 

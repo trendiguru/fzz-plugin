@@ -12,5 +12,5 @@ Card.propTypes = {
 };
 
 function handleClick (result) {
-    dispatchEvent(Object.assign(new Event('result clicked'), {data: {result}}));
+    dispatchEvent(Object.assign(CustomEvent('result clicked'), {data: {result}}));
 }

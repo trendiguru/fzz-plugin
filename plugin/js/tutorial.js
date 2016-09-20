@@ -62,7 +62,7 @@ function Tutorial () {
         opened: Date.now(),
         className: 'tutorial',
         close () {
-            let e = new Event('tutorial closed');
+            let e = CustomEvent('tutorial closed');
             e.closed_after = Date.now() - this.opened;
             dispatchEvent(e);
             this.remove();

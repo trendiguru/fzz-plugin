@@ -23,6 +23,7 @@
     "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
     "babel-plugin-transform-es3-property-literals": "^6.8.0",
     "classnames": "^2.2.5",
+    "custom-event-polyfill": "^0.3.0",
     "delux": "^1.2.0",
     "es6-promise": "",
     "imagesloaded": "",

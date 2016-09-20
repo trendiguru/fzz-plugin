@@ -17,7 +17,7 @@ function trackButtonSeen (el) {
         let IntervalID = setInterval(() => {
             if (!trackedButton && isVisible(el, el.getBoundingClientRect())) {
                 trackedButton = true;
-                dispatchEvent(new Event('button seen'));
+                dispatchEvent(CustomEvent('button seen'));
             }
         }, BUTTON_SEEN_CHECK_INTERVAL);
         addEventListener('button seen', () => clearInterval(IntervalID));
@@ -64,7 +64,7 @@ function wrap ({element, buttonDiv, url}) {
         left: 0
     });
     trackButtonSeen(element);
-    dispatchEvent(Object.assign(new Event('button drawn'), {
+    dispatchEvent(Object.assign(CustomEvent('button drawn'), {
         info: {
             image: url
         }

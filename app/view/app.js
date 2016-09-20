@@ -30,11 +30,11 @@ class App extends React.Component {
         };
     }
     componentDidMount () {
-        dispatchEvent(new Event('app opened', {bubbles: true}));
+        dispatchEvent(CustomEvent('app opened', {bubbles: true}));
     }
     close () {
         this.props.close();
-        dispatchEvent(new Event('app closed', {bubbles: true}));
+        dispatchEvent(CustomEvent('app closed', {bubbles: true}));
     }
     render () {
         let {data, imageURL} = this.state.images;

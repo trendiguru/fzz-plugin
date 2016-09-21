@@ -20,7 +20,8 @@ let config = {
                     'css?sourceMap',
                     'postcss',
                     'sass?sourceMap'
-                ])
+                ]),
+                exclude: /node_modules\/(?!delux)/
             }
         ]
     },

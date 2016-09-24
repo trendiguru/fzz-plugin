@@ -43,7 +43,7 @@ export class TabView extends React.Component {
                 </ul>
                 <aside>{this.props.aside}</aside>
             </nav>
-            <main style={{position: 'relative'}}>{TabNodes}</main>
+            <div style={{position: 'relative'}}>{TabNodes}</div>
         </div>;
     }
 }

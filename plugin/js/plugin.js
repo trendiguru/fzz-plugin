@@ -16,8 +16,6 @@ import TGImage from './tgimage';
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
-console.log(urlStore);
-
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');
@@ -86,7 +84,7 @@ domready(() => {
                 pageUrl: window.location.href
             });
             iframe.show();
-            iframe.contentWindow.postMessage({imageURL, data: urlStore[imageURL]}, '*');
+            iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
         addEventListener('button seen', () => {
             s.set('requests', 'Button Seen');

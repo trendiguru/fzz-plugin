@@ -11,6 +11,7 @@ let config = {
         loaders: [
             {
                 test: /\.jsx?$/,
+                exclude: /node_modules(?!\/delux)/,
                 loader: 'babel'
             },
             {

@@ -4,7 +4,7 @@ import FzzDataAttributes from 'modules/fzzdataattributes';
 import {Query} from 'modules/utils';
 import giphy from 'modules/giphy';
 
-const FZZ = window.FZZ = {};
+const FZZ = window.FZZ = window.FZZ || {};
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;

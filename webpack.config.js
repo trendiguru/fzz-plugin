@@ -11,8 +11,8 @@ let config = {
         loaders: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel',
-                exclude: /node_modules\/(?!delux)/
+                exclude: /node_modules(?!\/delux)/,
+                loader: 'babel'
             },
             {
                 test: /\.s?css$/,

@@ -28,11 +28,12 @@ function wrap ({element, buttonDiv, url}) {
     let div;
     let {width, margin, padding, display, position} = getComputedStyle(element);
     if (element.tagName === 'IMG') {
+        let previousHeight = element.clientHeight;
+        let parentHeight = element.parentElement.clientHeight || 'xxx';
         div = document.createElement('div');
         element.parentElement.insertBefore(div, element);
         div.appendChild(element);
         if (!element.originalInlineStyle) {
-            console.log(element.getAttribute('style'));
             element.originalInlineStyle = element.getAttribute('style');
         }
         element.setAttribute('style', element.originalInlineStyle);
@@ -46,9 +47,8 @@ function wrap ({element, buttonDiv, url}) {
             margin,
             padding
         });
-        console.log(div.style.height);
-        let elemHeight = getComputedStyle(element).height;
-        if ((div.height === '0px' || !div.style.height) || (elemHeight=== '0px'|| elemHeight==='')){
+        let currentHeight = element.clientHeight;
+        if (currentHeight!==previousHeight && (element.parentElement && previousHeight===parentHeight)){
             div.style.height = '100%';
         }
     }

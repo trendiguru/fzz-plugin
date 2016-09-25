@@ -6,19 +6,22 @@ export function round (tgImg) {
 
 export function roundDress (tgImg) {
     let overlay = Overlay(tgImg);
-    overlay.classList.add('round','dress');
+    overlay.classList.add('round');
+    overlay.classList.add('dress');
     return overlay;
 }
 
 export function roundAsos (tgImg) {
     let overlay = Overlay(tgImg);
-    overlay.classList.add('round','asos');
+    overlay.classList.add('round');
+    overlay.classList.add('asos');
     return overlay;
 }
 
 export function recruit (tgImg) {
     let overlay = Overlay(tgImg);
-    overlay.classList.add('round', 'recruit');
+    overlay.classList.add('round');
+    overlay.classList.add('recruit');
     return overlay;
 }
 
@@ -67,8 +70,10 @@ function Overlay (tgImg) {
     let button = buttonDiv.button   = document.createElement('button');
     let info = buttonDiv.info       = document.createElement('button');
     button.classList.add('fzzButton');
-    info.classList.add('round', 'fzzInfo');
-    buttonDiv.classList.add('fazz', 'fzz_overlay');
+    info.classList.add('round');
+    info.classList.add('fzzInfo');
+    buttonDiv.classList.add('fzz_overlay');
+    buttonDiv.classList.add('fazz');
     buttonDiv.appendChild(button);
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));
@@ -79,11 +84,11 @@ function Overlay (tgImg) {
 let click = {
     button (e) {
         block(e);
-        dispatchEvent(Object.assign(new Event ('button clicked'), this));
+        dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
     },
     info (e) {
         block(e);
-        dispatchEvent(new Event ('info button clicked'));
+        dispatchEvent(CustomEvent ('info button clicked'));
     }
 };
 

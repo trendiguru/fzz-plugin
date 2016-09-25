@@ -4,7 +4,7 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const ENVIRONMENT = process.env.ENVIRONMENT || 'DEV';
-const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills'];
+const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills', 'wicked-good-xpath', 'custom-event-polyfill'];
 
 let config = {
     module: {
@@ -20,7 +20,8 @@ let config = {
                     'css?sourceMap',
                     'postcss',
                     'sass?sourceMap'
-                ])
+                ]),
+                exclude: /node_modules\/(?!delux)/
             }
         ]
     },

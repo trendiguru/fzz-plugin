@@ -18,7 +18,8 @@ export function bar () {
     let tutorial = new Tutorial ();
     tutorial.content.appendChild(document.createTextNode('click the pink button'));
     tutorial.closeButton.appendChild(document.createTextNode('GOT IT'));
-    tutorial.classList.add('bar', 'closed');
+    tutorial.classList.add('bar');
+    tutorial.classList.add('closed');
     return tutorial;
 }
 
@@ -62,7 +63,7 @@ function Tutorial () {
         opened: Date.now(),
         className: 'tutorial',
         close () {
-            let e = new Event('tutorial closed');
+            let e = CustomEvent('tutorial closed');
             e.closed_after = Date.now() - this.opened;
             dispatchEvent(e);
             this.remove();

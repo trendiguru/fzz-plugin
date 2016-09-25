@@ -38,7 +38,7 @@ export default class Assemblage extends React.Component {
     }
     componentDidMount () {
         this.loadImages(this.props.src).then(() => {
-            let done = new Event('done', {bubbles: true});
+            let done = CustomEvent('done', {bubbles: true});
             done.info = {loaded: this.state.done};
             dispatchEvent(done);
         });

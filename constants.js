@@ -12,7 +12,8 @@ let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').len
 export const HOST_DOMAIN = {
         DEV: extUrl,
         PRODUCTION: 'https://fzz.storage.googleapis.com',
-        TEST: 'https://fzz-test.storage.googleapis.com'
+        TEST: 'https://fzz-test.storage.googleapis.com',
+        LOCAL_TEST:''
     }[ENVIRONMENT],
     // analytics
     LIBNAME = 'fzz',

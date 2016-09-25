@@ -12,7 +12,7 @@ export class TabView extends React.Component {
     }
     setTab (i) {
         this.setState({tab: i});
-        let e = Object.assign(new Event('tab set', {bubbles: true}), {
+        let e = Object.assign(CustomEvent('tab set', {bubbles: true}), {
             info: {
                 title: this.props.children[i].props.title
             }
@@ -43,7 +43,7 @@ export class TabView extends React.Component {
                 </ul>
                 <aside>{this.props.aside}</aside>
             </nav>
-            <main style={{position: 'relative'}}>{TabNodes}</main>
+            <div className="main" style={{position: 'relative'}}>{TabNodes}</div>
         </div>;
     }
 }

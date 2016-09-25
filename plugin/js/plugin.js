@@ -9,6 +9,7 @@ import {listenToExtension} from 'modules/chrome-manipulation';
 import draw from './draw';
 import {iFrame, Style} from './elements';
 import Observer from './observe';
+import {urlStore} from 'modules/server';
 import {process, cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
 import * as overlay from './overlay';
@@ -88,7 +89,7 @@ domready(() => {
                 pageUrl: window.location.href
             });
             iframe.show();
-            iframe.contentWindow.postMessage({imageURL}, '*');
+            iframe.contentWindow.postMessage({imageURL, data: urlStore[imageURL]}, '*');
         });
         addEventListener('button seen', () => {
             s.set('requests', 'Button Seen');

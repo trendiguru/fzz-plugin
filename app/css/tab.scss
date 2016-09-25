@@ -71,7 +71,7 @@ nav {
 
 }
 
-main {
+.main {
     height: calc(100% - 3em);
     overflow-x: hidden;
     overflow-y: scroll;
@@ -93,7 +93,7 @@ main {
         left: 0;
     }
 
-    main {
+    .main {
         width: 100%;
         left: 0;
     }

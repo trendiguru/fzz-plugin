@@ -12,15 +12,23 @@ ReactDOM.render(
 );
 
 /*------ MESSAGES ------*/
-addEventListener('message', msg => {
-    if (store.images.state.imageURL !== msg.data.imageURL) {
+addEventListener('message', ({data: {imageURL, data}}) => {
+    if (store.images.state.imageURL !== imageURL) {
         store.dispatch({
             type: 'newImageURL',
-            payload: msg.data.imageURL,
+            payload: imageURL,
         });
-        store.dispatch({
-            type: 'getImageData',
-        });
+        if (typeof data === 'object') {
+            store.dispatch({
+                type: 'addImageData',
+                payload: data
+            });
+        }
+        else {
+            store.dispatch({
+                type: 'getImageData',
+            });
+        }
     }
 });
 

@@ -8,6 +8,8 @@ images.on('newImageURL', (images, action) => Object.assign({}, images, {
     imageURL: action.payload
 }));
 
+images.on('addImageData', (images, action) => Object.assign({}, images, {data: action.payload}));
+
 images.on('getImageData', (images) =>
     getImageData(images.imageURL)
     .then(data => {

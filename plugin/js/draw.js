@@ -28,7 +28,6 @@ function wrap ({element, buttonDiv, url}) {
     let div;
     let {width, margin, padding, display, position} = getComputedStyle(element);
     if (element.tagName === 'IMG') {
-        let imgHeight = element.clientHeight;
         div = document.createElement('div');
         element.parentElement.insertBefore(div, element);
         div.appendChild(element);
@@ -47,10 +46,10 @@ function wrap ({element, buttonDiv, url}) {
             margin,
             padding
         });
-        while (div.clientHeight !== imgHeight) {
-            let {parentElement} = div;
-            div.parentElement.parentElement.appendChild(div);
-            div.appendChild(parentElement);
+        console.log(div.style.height);
+        let elemHeight = getComputedStyle(element).height;
+        if ((div.height === '0px' || !div.style.height) || (elemHeight=== '0px'|| elemHeight==='')){
+            div.style.height = '100%';
         }
     }
     else {

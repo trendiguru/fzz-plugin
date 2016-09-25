@@ -18,7 +18,8 @@ export function bar () {
     let tutorial = new Tutorial ();
     tutorial.content.appendChild(document.createTextNode('click the pink button'));
     tutorial.closeButton.appendChild(document.createTextNode('GOT IT'));
-    tutorial.classList.add('bar', 'closed');
+    tutorial.classList.add('bar');
+    tutorial.classList.add('closed');
     return tutorial;
 }
 

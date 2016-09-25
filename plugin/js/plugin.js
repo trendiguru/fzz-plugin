@@ -15,12 +15,8 @@ import TGImage from './tgimage';
 import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
-//test:----------------------------------------------------------
+//xpath polyfill init:
 wgxpath.install();
-let event = CustomEvent('f');
-document.addEventListener('f' , function(){console.log('event')});
-document.dispatchEvent(event);
-//---------------------------------------------------------------
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');

@@ -1,8 +1,4 @@
 {
-    "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
-    "babel-plugin-transform-es3-property-literals": "^6.8.0",
-    "wicked-good-xpath": "^1.3.0"
-    "local-test":"ENVIRONMENT=LOCAL_TEST webpack --progress && node test/nightmare",
     "name": "fzz-plugin",
     "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
     "version": "1.0.0",
@@ -23,6 +19,7 @@
         "init": "npm i -g webpack",
         "start": "cp manifest.dev.json manifest.json && ENVIRONMENT=DEV npm run watch",
         "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
+        "local-test": "ENVIRONMENT=LOCAL_TEST webpack --progress && node test/nightmare",
         "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html",
         "publish": "cp manifest.production.json manifest.json && ./upload_to_gs.sh fzz",
         "watch": "webpack --watch --progress",
@@ -38,13 +35,28 @@
         "mixpanel-browser": "",
         "react": "^15.3.1",
         "react-dom": "^15.3.1",
-        "whatwg-fetch": ""
+        "whatwg-fetch": "",
+        "wicked-good-xpath": "^1.3.0"
     },
-    "plugins": [
-      "react"
-    ],
-    "parserOptions": {
-      "sourceType": "module"
+    "devDependecies": {
+        "autoprefixer": "",
+        "babel-core": "",
+        "babel-generator": "",
+        "babel-loader": "",
+        "babel-polyfill": "",
+        "babel-preset-es2015": "",
+        "babel-preset-react": "",
+        "babel-preset-stage-0": "",
+        "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
+        "babel-plugin-transform-es3-property-literals": "^6.8.0",
+        "css-loader": "",
+        "expose-loader": "^0.7.1",
+        "extract-text-webpack-plugin": "",
+        "nightmare": "",
+        "node-sass": "",
+        "postcss-loader": "",
+        "sass-loader": "",
+        "webpack": ""
     },
     "babel": {
         "presets": [
@@ -53,6 +65,12 @@
         ]
     },
     "eslintConfig": {
+        "plugins": [
+            "react"
+        ],
+        "parserOptions": {
+            "sourceType": "module"
+        },
         "extends": [
             "plugin:react/recommended"
         ],
@@ -68,12 +86,6 @@
         "ecmaFeatures": {
             "jsx": true,
             "experimentalObjectRestSpread": true
-        },
-        "plugins": [
-            "react"
-        ],
-        "parserOptions": {
-            "sourceType": "module"
         },
         "rules": {
             "no-cond-assign": 0,

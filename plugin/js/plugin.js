@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* globals wgxpath */
 import Cookies from 'js-cookie';
 import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
@@ -16,7 +16,7 @@ import * as overlay from './overlay';
 // import * as tutorial from './tutorial';
 
 wgxpath.install();
-//xpath polyfill init:
+
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');

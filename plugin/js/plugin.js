@@ -52,9 +52,8 @@ domready(() => {
             for (let element of Array.from(document.elementsFromPoint(e.clientX, e.clientY))) {
                 if (TGImage.isTGButton(element)) {
                     element.click();
-                    return true;
+                    return;
                 }
-                return false;
             }
         });
         // MESSAGE

@@ -39,7 +39,7 @@
         "wicked-good-xpath": "^1.3.0",
         "custom-event-polyfill": ""
     },
-    "devDependecies": {
+    "devDependencies": {
         "autoprefixer": "",
         "babel-core": "",
         "babel-generator": "",

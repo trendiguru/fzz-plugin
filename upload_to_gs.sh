@@ -1,13 +1,12 @@
 #!/bin/bash
-PROD_BUCKET='fzz'
-TEST_BUCKET='fzz-test'
+PROD_BUCKET='fzz-app'
 BUCKET_NAME=$1
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
 ENVIRONMENT=PRODUCTION webpack --progress --colors
 
 gsutil -m rsync -x $EXCLUDE_REGEX . gs://$BUCKET_NAME
-for FOLDER in . assets
+for FOLDER in assets
 do
     gsutil -m rsync -r -x $EXCLUDE_REGEX ./$FOLDER gs://$BUCKET_NAME/$FOLDER
 done

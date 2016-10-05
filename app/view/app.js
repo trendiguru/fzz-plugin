@@ -1,4 +1,4 @@
-import {LOADING} from 'constants';
+import {LOADING, APP} from 'constants';
 import UI from 'modules/ui';
 import store from '../store';
 import Lightbox from './lightbox';
@@ -10,7 +10,7 @@ import Loading from './loading';
 import Labels from './labels';
 import Price from './price';
 
-let ui = new UI ({loading: LOADING.IMAGES});
+let ui = new UI ({loading: LOADING.IMAGES, className: APP.CLASSNAME});
 
 class App extends React.Component {
     static get propTypes () {
@@ -83,7 +83,7 @@ class App extends React.Component {
                 </Tab>
             );
         }
-        return <Lightbox>
+        return <Lightbox className={ui.classname}>
             <Aside imageURL={imageURL} />
             <TabView
                 aside={NavButtonNodes}

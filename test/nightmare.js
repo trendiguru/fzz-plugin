@@ -24,6 +24,9 @@ let potential= [
     'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
     'http://www.plus-model-mag.com/'
 ];
+let tricky =[
+    'https://www.instagram.com/forever21/'
+];
 let fzzPages = {
     'fzz-publish': publishers,
     'fzz-test': potential,

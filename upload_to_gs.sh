@@ -1,13 +1,25 @@
 #!/bin/bash
 PROD_BUCKET='fzz'
-TEST_BUCKET='fzz-test'
 BUCKET_NAME=$1
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
+echo Switching to production branch
+
+git checkout production
+
+echo Refreshing node_modules
+
+rm -r node_modules
+npm install
+
+echo Bundling minified version
+
 ENVIRONMENT=PRODUCTION webpack --progress --colors
 
+echo Pushing to Google Cloud Storage
+
 gsutil -m rsync -x $EXCLUDE_REGEX . gs://$BUCKET_NAME
-for FOLDER in . assets
+for FOLDER in assets
 do
     gsutil -m rsync -r -x $EXCLUDE_REGEX ./$FOLDER gs://$BUCKET_NAME/$FOLDER
 done

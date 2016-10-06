@@ -1,20 +1,16 @@
-# Bundles #
-###########
+# Bundles
 b_*
-*/run_ext.js
 fzz.min.js
 *.map
 */*.map
 *.zip
 manifest.json
 
-# NPM #
-#######
+# NPM
 npm-debug.log*
 node_modules/
 
-# OS generated files #
-######################
+# OS generated files
 */.DS_Store
 .DS_Store
 .DS_Store?
@@ -23,7 +19,3 @@ node_modules/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-fzz.min.js
-*.map
-run_ext.js

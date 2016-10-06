@@ -11,5 +11,10 @@ export let smartCheckRelevancy = urlStore.append.bind(urlStore);
 
 export function getImageData(imageUrl) {
     return fetch(API_URL + '?' + Query.stringify({imageUrl, pid: PID}))
-    .then(res => res.json());
+    .then((res) =>{
+        if (!res.ok) {
+            throw new Error(res.statusText);
+        }
+        return res.json();
+    });
 }

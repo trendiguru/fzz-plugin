@@ -124,6 +124,7 @@ export function cleanRelevantImgDict(){
             let tgImg = new TGImage(el);
             if ( tgImg.url !== undefined && (tgImg.url in relevantImgs)){
                 delete relevantImgs[tgImg.url];
+                delete irrelevantImgs[tgImg.url];
             }
         }
         catch(e){

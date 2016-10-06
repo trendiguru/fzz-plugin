@@ -15,6 +15,6 @@ export function getImageData(imageUrl) {
         if (!res.ok) {
             throw new Error(res.statusText);
         }
-        return res;
+        return res.json();
     });
 }

@@ -13,11 +13,11 @@ images.on('addImageData', (images, action) => Object.assign({}, images, {data: a
 images.on('getImageData', (images) =>
     getImageData(images.imageURL)
     .then(data => {
+        console.log(data);
         if (data && data.items) {
-            data.items = data.items.map(item => {
-                item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
-                return item;
-            });
+            data.items = data.items.map(item => Object.assign(item, {
+                similar_results: item.similar_results.map(result => analytics.appendResultLink(result))
+            }));
         }
         return data;
     })

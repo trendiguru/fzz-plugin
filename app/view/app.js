@@ -10,7 +10,7 @@ import Loading from './loading';
 import Labels from './labels';
 import Price from './price';
 
-let ui = new UI ({loading: LOADING.IMAGES, className: APP.CLASSNAME});
+let ui = new UI ({loading: LOADING.IMAGES, classname: APP.CLASSNAME});
 
 class App extends React.Component {
     static get propTypes () {

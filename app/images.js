@@ -22,6 +22,7 @@ images.on('getImageData', (images) =>
         return data;
     })
     .then(data => Object.assign({}, images, {data}))
+    .catch(() => Object.assign({}, images, {data: null}))
 );
 
 images.on('clearImageData', (images) => Object.assign({}, images, {

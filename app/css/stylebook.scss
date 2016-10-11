@@ -1,0 +1,13 @@
+$stylebook: #ff00cc;
+
+.stylebook {
+    nav ul li.select {
+        color: $stylebook;
+    }
+    section div > div .tag .price {
+        color: $stylebook;
+    }
+    nav .indicator {
+        background: $stylebook;
+    }
+}

@@ -96,7 +96,7 @@ export const HOST_DOMAIN = {
         },
         '6nGzEP7cp5s957P4': {
             overlay: {
-                roundDress: 1.0,
+                stylebook: 1.0,
             },
             loading: {
                 giphy: 1.0,

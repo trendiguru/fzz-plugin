@@ -1,68 +1,68 @@
 {
-    "name": "fzz-plugin",
-    "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
-    "version": "1.0.0",
-    "author": "Trendi Guru Ltd.",
-    "license": "UNLICENSED",
-    "main": "plugin/js/plugin.js",
-    "private": true,
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@github.com/trendiguru/fzz-plugin.git"
-    },
-    "bugs": {
-        "url": "https://github.com/trendiguru/fzz-plugin/issues"
-    },
-    "homepage": "https://github.com/trendiguru/fzz-plugin#readme",
-    "keywords": [],
-    "scripts": {
-        "init": "npm i -g webpack",
-        "start": "cp manifest.dev.json manifest.json && ENVIRONMENT=DEV npm run watch",
-        "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
-        "local-test": "ENVIRONMENT=LOCAL_TEST webpack --progress && node test/nightmare",
-        "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html",
-        "publish": "cp manifest.production.json manifest.json && ./upload_to_gs.sh fzz",
-        "watch": "webpack --watch --progress",
-        "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
-        "stop": "pkill -f python.*HTTP.*4443"
-    },
-    "dependencies": {
-        "classnames": "^2.2.5",
-        "delux": "^1.2.0",
-        "es6-promise": "",
-        "imagesloaded": "",
-        "js-cookie": "",
-        "mixpanel-browser": "",
-        "react": "^15.3.1",
-        "react-dom": "^15.3.1",
-        "whatwg-fetch": "",
-        "wicked-good-xpath": "^1.3.0",
-        "custom-event-polyfill": ""
-    },
-    "devDependecies": {
-        "autoprefixer": "",
-        "babel-core": "",
-        "babel-generator": "",
-        "babel-loader": "",
-        "babel-polyfill": "",
-        "babel-preset-es2015": "",
-        "babel-preset-react": "",
-        "babel-preset-stage-0": "",
-        "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
-        "babel-plugin-transform-es3-property-literals": "^6.8.0",
-        "css-loader": "",
-        "expose-loader": "^0.7.1",
-        "extract-text-webpack-plugin": "",
-        "nightmare": "",
-        "node-sass": "",
-        "postcss-loader": "",
-        "sass-loader": "",
-        "webpack": ""
-    },
-    "babel": {
-        "presets": [
-            "es2015",
-            "react"
-        ]
-    }
+  "name": "fzz-plugin",
+  "description": "Fazz™ plugin for websites, Chrome, demo, and internal usage",
+  "version": "1.0.0",
+  "author": "Trendi Guru Ltd.",
+  "license": "UNLICENSED",
+  "main": "plugin/js/plugin.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/trendiguru/fzz-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trendiguru/fzz-plugin/issues"
+  },
+  "homepage": "https://github.com/trendiguru/fzz-plugin#readme",
+  "keywords": [],
+  "scripts": {
+    "init": "npm i -g webpack",
+    "start": "cp manifest.dev.json manifest.json && ENVIRONMENT=DEV npm run watch",
+    "test": "ENVIRONMENT=TEST webpack --progress && node test/nightmare",
+    "local-test": "ENVIRONMENT=LOCAL_TEST webpack --progress && node test/nightmare",
+    "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html",
+    "publish": "cp manifest.production.json manifest.json && ./upload_to_gs.sh fzz",
+    "watch": "webpack --watch --progress",
+    "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
+    "stop": "pkill -f python.*HTTP.*4443"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "delux": "^1.2.0",
+    "es6-promise": "",
+    "imagesloaded": "",
+    "js-cookie": "",
+    "mixpanel-browser": "",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "whatwg-fetch": "",
+    "wicked-good-xpath": "^1.3.0",
+    "custom-event-polyfill": ""
+  },
+  "devDependencies": {
+    "autoprefixer": "",
+    "babel-core": "",
+    "babel-generator": "",
+    "babel-loader": "",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
+    "babel-plugin-transform-es3-property-literals": "^6.8.0",
+    "babel-polyfill": "",
+    "babel-preset-es2015": "",
+    "babel-preset-react": "",
+    "babel-preset-stage-0": "",
+    "css-loader": "",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "",
+    "nightmare": "",
+    "node-sass": "",
+    "postcss-loader": "",
+    "sass-loader": "",
+    "webpack": "^1.13.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
 }

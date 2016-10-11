@@ -7,7 +7,7 @@ import giphy from 'modules/giphy';
 const FZZ = window.FZZ = window.FZZ || {};
 
 let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
-let extUrl = extension ? extension.getURL('').substr(0, extension.getURL('').length - 1) : null;
+let extUrl = extension ? extension.getURL('').slice(0, -1) : null;
 
 export const HOST_DOMAIN = {
         DEV: extUrl,
@@ -39,12 +39,12 @@ export const HOST_DOMAIN = {
     TUTOIRAL_VERSION = '1.0.0',
     // server
     INITIAL_URL_STATE = FZZ.URL_STATE,
-    PID = (ENVIRONMENT === 'DEV' && localStorage.getItem('pid')) ? localStorage.getItem('pid') : Query.parse(location.search).PID || pid || null,
+    PID = ENVIRONMENT === 'DEV' && localStorage.getItem('pid') ? localStorage.getItem('pid') : Query.parse(location.search).PID || pid || null,
     SERVER_URL = {
         PRODUCTION:'https://track.trendi.guru/tr/web?',
         DEV: 'https://track.trendi.guru/tr/test?'
     }[ENVIRONMENT],
-    API = (ENVIRONMENT === 'DEV' && localStorage.getItem('api')) ? localStorage.getItem('api') :(Query.parse(location.search).API || api).toLowerCase(),
+    API = ENVIRONMENT === 'DEV' && localStorage.getItem('api') ? localStorage.getItem('api') :(Query.parse(location.search).API || api).toLowerCase(),
     API_URL = {
         nd: 'https://api.trendi.guru/images',
         pd: 'https://api.trendi.guru/images'
@@ -65,6 +65,12 @@ export const HOST_DOMAIN = {
             recruit: ['/assets/img/recruit_loading_v1.gif']
         }
     },
+    APP = {
+        CLASSNAME: {
+            stylebook: 'stylebook',
+            default: ''
+        }
+    },
     UI = {
         'recruit-pilot': {
             overlay: {
@@ -72,6 +78,9 @@ export const HOST_DOMAIN = {
             },
             loading: {
                 recruit: 1.0,
+            },
+            classname: {
+                default: 1.0,
             },
         },
         '6t50LSJxeNEkQ42p': {
@@ -81,6 +90,20 @@ export const HOST_DOMAIN = {
             loading: {
                 recruit: 1.0,
             },
+            classname: {
+                default: 1.0,
+            },
+        },
+        '6nGzEP7cp5s957P4': {
+            overlay: {
+                stylebook: 1.0,
+            },
+            loading: {
+                giphy: 1.0,
+            },
+            classname: {
+                stylebook: 1.0
+            }
         },
         '__default': {
             overlay: {
@@ -88,6 +111,9 @@ export const HOST_DOMAIN = {
             },
             loading: {
                 giphy: 1.0,
+            },
+            classname: {
+                default: 1.0,
             },
         },
     };

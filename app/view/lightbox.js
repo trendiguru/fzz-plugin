@@ -1,7 +1,8 @@
-export default function Lightbox (props) {
-    return <div id="lightbox">{props.children}</div>;
+export default function Lightbox ({children, className = ''}) {
+    return <div className={className} id="lightbox">{children}</div>;
 }
 
 Lightbox.propTypes = {
-    children: React.PropTypes.array
+    children: React.PropTypes.array,
+    className: React.PropTypes.string
 };

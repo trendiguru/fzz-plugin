@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ENVIRONMENT = process.env.ENVIRONMENT || 'DEV';
+const {env: {ENVIRONMENT = 'DEV'}} = process;
 const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills', 'wicked-good-xpath', 'custom-event-polyfill'];
 
 let config = {

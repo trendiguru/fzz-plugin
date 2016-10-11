@@ -28,6 +28,8 @@ function wrap ({element, buttonDiv, url}) {
     let div;
     let {width, margin, padding, display, position} = getComputedStyle(element);
     if (element.tagName === 'IMG') {
+        let previousHeight = element.clientHeight;
+        let parentHeight = element.parentElement.clientHeight || 'xxx';
         div = document.createElement('div');
         element.parentElement.insertBefore(div, element);
         div.appendChild(element);
@@ -45,6 +47,10 @@ function wrap ({element, buttonDiv, url}) {
             margin,
             padding
         });
+        let currentHeight = element.clientHeight;
+        if (currentHeight!==previousHeight && (element.parentElement && previousHeight===parentHeight)){
+            div.style.height = '100%';
+        }
     }
     else {
         div = element;

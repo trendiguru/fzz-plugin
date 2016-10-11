@@ -5,7 +5,6 @@ import './analytics';
 import store from './store';
 
 /*------ RENDER ------*/
-console.log("start");
 ReactDOM.render(
     React.createElement(App, {close}),
     document.getElementById('app')
@@ -34,7 +33,6 @@ addEventListener('message', ({data: {imageURL, data}}) => {
 
 document.getElementById('shadow').addEventListener('click', close);
 addEventListener('app close', close);
-console.log("end");
 
 function close () {
     window.parent.postMessage('hide', '*');

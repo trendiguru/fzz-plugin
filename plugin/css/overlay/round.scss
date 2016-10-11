@@ -33,14 +33,20 @@
 
 /*------ ICONS -------*/
 
-/*---- DEFAULT ----*/
+.fazz.round {
 
-.fazz.round button.fzzButton {
-    background-image: url('/assets/img/fazz.svg');
-}
+    /*---- DEFAULT ----*/
+    button.fzzButton {
+        background-image: url('/assets/img/fazz.svg');
+    }
 
-/*---- DRESS ----*/
+    /*---- DRESS ----*/
+    &.dress button.fzzButton {
+        background-image: url('/assets/img/dress.svg');
+    }
 
-.fazz.round.dress button.fzzButton {
-    background-image: url('/assets/img/dress.svg');
+    /*---- STYLEBOOK ----*/
+    &.stylebook button.fzzButton {
+        background-image: url('/assets/img/stylebook.svg');
+    }
 }

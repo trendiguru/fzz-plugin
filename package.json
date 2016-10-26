@@ -27,6 +27,7 @@
     "stop": "pkill -f python.*HTTP.*4443"
   },
   "dependencies": {
+    "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
     "custom-event-polyfill": "",
     "delux": "^1.2.0",

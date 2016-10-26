@@ -10,7 +10,7 @@ git checkout production
 echo Refreshing node_modules
 
 rm -r node_modules
-npm install
+yarn
 
 echo Bundling minified version
 

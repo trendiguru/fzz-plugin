@@ -48,7 +48,8 @@ function Overlay (tgImg, classList = []) {
     let button = buttonDiv.button = document.createElement('button');
     let info = buttonDiv.info = document.createElement('button');
     classList = Array.isArray(classList) ? classList : [classList];
-    buttonDiv.classList.add('fzz_overlay', 'fazz', ...classList);
+    buttonDiv.className = ['fzz_overlay', 'fazz', ...classList].join(' ');
+    // buttonDiv.classList.add('fzz_overlay', 'fazz', ...classList);
     button.classList.add('fzzButton');
     info.classList.add('round', 'fzzInfo');
     buttonDiv.appendChild(button);

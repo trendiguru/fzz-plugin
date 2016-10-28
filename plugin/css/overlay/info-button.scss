@@ -1,3 +1,4 @@
+@import 'css_modules/colors';
 @import 'css_modules/card';
 
 .fzz-info {
@@ -7,11 +8,18 @@
     padding: 0;
     border-radius: 50%;
     background: {
+        color: $white;
         image: url('https://storage.googleapis.com/fzz/assets/img/ic_info_grey_24px.svg');
         size: 100%;
     }
-    transition: {
-        delay: 0s;
-    }
-    z-index: 0;
+    position: absolute;
+    top: 1.5em;
+    right: 1.5em;
+    transition: transform .25s;
+    pointer-events: all;
+    z-index: 0 !important;
+}
+
+.fazz:hover .fzz-info {
+    transform: translate(1.5em, -1.5em);
 }

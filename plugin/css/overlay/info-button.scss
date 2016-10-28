@@ -4,8 +4,8 @@
 .fazz {
     .fzz-info {
         @include card (1);
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.5 * 16px;
+        height: 1.5 * 16px;
         padding: 0;
         border-radius: 50%;
         background: {
@@ -14,8 +14,8 @@
             size: 100%;
         }
         position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
+        top: 1.5 * 16px;
+        right: 1.5 * 16px;
         transition: transform .25s;
         pointer-events: all;
         z-index: 0 !important;
@@ -23,6 +23,6 @@
 }
 
 .fazz:hover .fzz-info {
-    transform: translate(1.5rem, -1.5rem);
+    transform: translate(1.5 * 16px, -1.5 * 16px);
     z-index: 100 !important;
 }

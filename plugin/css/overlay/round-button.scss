@@ -2,7 +2,7 @@
 @import 'css_modules/card';
 @import 'css_modules/animate';
 
-@mixin round-button-overlay ($icon: '/assets/img/shirt.svg', $color: $pink500, $size: 3.3rem, $margin: 1rem, $halos: 3, $halo-max-scale: 15, $duration: .5s) {
+@mixin round-button-overlay ($icon: '/assets/img/shirt.svg', $color: $pink500, $size: 3.3 * 16px, $margin: 1 * 16px, $halos: 3, $halo-max-scale: 15, $duration: .5s) {
     position: relative;
     display: inline-block;
 
@@ -98,8 +98,8 @@
     .tutorial {
         @include elevation (3, false);
         width: $size * 3.75;
-        padding: .25rem 0;
-        border-radius: 2rem;
+        padding: .25 * 16px 0;
+        border-radius: 2 * 16px;
         font: {
             weight: bold;
         }

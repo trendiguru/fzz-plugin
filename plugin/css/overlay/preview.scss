@@ -5,7 +5,7 @@
 
     .footer {
         width: 100%;
-        height: 7rem;
+        height: 7 * 16px;
         position: absolute;
         left: 0;
         bottom: 0;
@@ -15,22 +15,22 @@
     a,
     .fzzButton {
         @include card (1);
-        width: 5rem;
-        height: 5rem;
+        width: 5 * 16px;
+        height: 5 * 16px;
         background: {
             position: center;
             size: contain;
             repeat: no-repeat;
         }
         position: absolute;
-        left: 1rem;
-        bottom: 1rem;
+        left: 1 * 16px;
+        bottom: 1 * 16px;
 
         @for $index from 1 to 4 {
             $nth-child: $index + 1;
 
             &:nth-child(#{$nth-child}) {
-                transform: translateX(calc($index * 100% + $index * 1rem));
+                transform: translateX(calc($index * 100% + $index * 1 * 16px));
             }
         }
     }

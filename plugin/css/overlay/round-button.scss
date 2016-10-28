@@ -10,7 +10,6 @@
         animation: {
             fill-mode: backwards;
             timing-function: ease-in-out;
-            play-state: paused;
         }
     }
 
@@ -35,11 +34,11 @@
         z-index: 10;
         cursor: pointer;
 
-        &:hover + .halo * {
+        &:hover ~ .halo * {
             transform: scale(6);
         }
 
-        &:active + .halo * {
+        &:active ~ .halo * {
             opacity: 0;
             transform: scale(15);
         }

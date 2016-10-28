@@ -1,0 +1,19 @@
+// scss-lint:disable ColorVariable
+
+@mixin elevation ($elevation: 1, $elevate-on-hover: true, $transition-duriation: .25s) {
+    $elevation-box-shadows: (
+        0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24),
+        0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23),
+        0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23),
+        0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22),
+        0 19px 38px rgba(0, 0, 0, .3), 0 15px 12px rgba(0, 0, 0, .22)
+    );
+    box-shadow: nth($elevation-box-shadows, $elevation);
+    transition: box-shadow $transition-duriation;
+
+    @if $elevate-on-hover {
+        &:hover {
+            box-shadow: nth($elevation-box-shadows, $elevation + 2);
+        }
+    }
+}

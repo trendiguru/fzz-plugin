@@ -1,0 +1,17 @@
+@import 'css_modules/card';
+
+.fzz-info {
+    @include card (1);
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0;
+    border-radius: 50%;
+    background: {
+        image: url('https://storage.googleapis.com/fzz/assets/img/ic_info_grey_24px.svg');
+        size: 100%;
+    }
+    transition: {
+        delay: 0s;
+    }
+    z-index: 0;
+}

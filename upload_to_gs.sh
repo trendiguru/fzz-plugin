@@ -6,6 +6,7 @@ EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 echo Switching to production branch
 
 git checkout production
+git pull
 
 echo Refreshing node_modules
 

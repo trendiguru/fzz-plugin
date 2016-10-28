@@ -1,8 +1,65 @@
-export let round = (tgImg) => new Overlay(tgImg, ['round']);
-export let roundDress = (tgImg) => new Overlay(tgImg, ['round', 'dress']);
-export let roundAsos = (tgImg) => new Overlay(tgImg, ['round', 'asos']);
-export let recruit = (tgImg) => new Overlay(tgImg, ['round', 'recruit']);
-export let stylebook = (tgImg) => new Overlay(tgImg, ['round', 'stylebook']);
+/**
+ * Create the overlay div and the buttons within
+ * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
+ * @returns {object} buttonDiv that was created and attached.
+ */
+
+function Overlay (tgImg, classList = []) {
+    let buttonDiv = tgImg.buttonDiv = document.createElement('div');
+    let button = buttonDiv.button = document.createElement('button');
+    let info = buttonDiv.info = document.createElement('button');
+    classList = Array.isArray(classList) ? classList : [classList];
+    buttonDiv.className = ['fzz_overlay', 'fazz', ...classList].join(' ');
+    // buttonDiv.classList.add('fzz_overlay', 'fazz', ...classList);
+    button.classList.add('fzz-button');
+    info.classList.add('round', 'fzz-info');
+    buttonDiv.appendChild(button);
+    buttonDiv.appendChild(info);
+    button.addEventListener('click', click.button.bind(tgImg));
+    info.addEventListener('click', click.info);
+    return buttonDiv;
+}
+
+Overlay.extend = (extension) =>
+    function ExtendedOverlay () {
+        let buttonDiv = Overlay(...arguments);
+        extension(buttonDiv);
+        return buttonDiv;
+    };
+
+const Round = Overlay.extend(buttonDiv => {
+    let halo = document.createElement('div');
+
+    buttonDiv.classList.add('round');
+    halo.classList.add('halo');
+
+    for (let i = 0; i < 3; i++) {
+        halo.appendChild(document.createElement('div'));
+    }
+    buttonDiv.appendChild(halo);
+    if (!localStorage.getItem('infashion tutorial was shown')) {
+        let tutorial = document.createElement('div');
+        tutorial.classList.add('tutorial');
+        tutorial.appendChild(document.createTextNode('Find similar clothes'));
+        buttonDiv.appendChild(tutorial);
+    }
+});
+
+if (!localStorage.getItem('infashion tutorial was shown')) {
+    addEventListener('button clicked', () => {
+        console.log('hello');
+        localStorage.setItem('infashion tutorial was shown', true);
+        for (let tutoiral of Array.from(document.querySelectorAll('.fazz .tutorial'))) {
+            tutoiral.remove();
+        }
+    });
+}
+
+export let round = (tgImg) => Round(tgImg);
+export let roundDress = (tgImg) => Round(tgImg, ['dress']);
+export let roundAsos = (tgImg) => Round(tgImg, ['asos']);
+export let recruit = (tgImg) => Round(tgImg, ['recruit']);
+export let stylebook = (tgImg) => Round(tgImg, ['stylebook']);
 
 const TILES = 3;
 
@@ -35,28 +92,6 @@ export function preview (tgImg) {
     overlay.button.appendChild(plus);
     plus.appendChild(document.createTextNode('+'));
     return overlay;
-}
-
-/**
- * Create the overlay div and the buttons within
- * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
- * @returns {object} buttonDiv that was created and attached.
- */
-
-function Overlay (tgImg, classList = []) {
-    let buttonDiv = tgImg.buttonDiv = document.createElement('div');
-    let button = buttonDiv.button = document.createElement('button');
-    let info = buttonDiv.info = document.createElement('button');
-    classList = Array.isArray(classList) ? classList : [classList];
-    buttonDiv.className = ['fzz_overlay', 'fazz', ...classList].join(' ');
-    // buttonDiv.classList.add('fzz_overlay', 'fazz', ...classList);
-    button.classList.add('fzzButton');
-    info.classList.add('round', 'fzzInfo');
-    buttonDiv.appendChild(button);
-    buttonDiv.appendChild(info);
-    button.addEventListener('click', click.button.bind(tgImg));
-    info.addEventListener('click', click.info);
-    return buttonDiv;
 }
 
 let click = {

@@ -1,0 +1,14 @@
+@import 'css_modules/colors';
+
+.fazz {
+    a,
+    button {
+        border: 0;
+        font: inherit;
+        background: $transparent;
+        outline: none;
+        cursor: pointer;
+        pointer-events: all;
+        z-index: 100;
+    }
+}

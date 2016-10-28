@@ -1,39 +1,10 @@
-@import 'round';
+@import 'reset';
+@import 'info-button';
+@import 'round-button';
 @import 'preview';
-@import 'recruit';
 
 .fazz {
+    width: 100%;
+    height: 100%;
     padding: 1em;
-    pointer-events: all;
-    a,
-    button {
-        background-color: rgba(0, 0, 0, 0);
-        z-index: 100;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        pointer-events: all;
-    }
-
-    button {
-        &.fzzButton {
-            font-style: normal;
-            z-index: 100;
-        }
-        &.fzzInfo {
-            width: 1.5em;
-            height: 1.5em;
-            padding: 0;
-            border-radius: 50%;
-            background-color: $white;
-            background-image: url('https://storage.googleapis.com/fzz/assets/img/ic_info_grey_24px.svg');
-            background-size: 100%;
-            transition-delay: 0s;
-            box-shadow: none;
-            z-index: 0;
-            &:hover {
-                box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            }
-        }
-    }
 }

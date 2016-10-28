@@ -6,9 +6,9 @@
     z-index: 1000;
 
     .content {
-        padding: 1em;
+        padding: 1rem;
         background: $pink500;
-        font-size: 1.2em;
+        font-size: 1.2rem;
         color: white;
         transform: translateY(0);
         transition: transform .25s;
@@ -21,15 +21,15 @@
     }
 
     button.fzz_close {
-        width: 6em;
-        padding: .25em;
+        width: 6rem;
+        padding: .25rem;
         border: 0rs;
         border-radius: 4px;
         background: none;
         color: $white;
         position: absolute;
-        top: .75em;
-        right: 1em;
+        top: .75rem;
+        right: 1rem;
         box-shadow: 0 0 0 2px $white inset;
         opacity: 1;
         cursor: pointer;

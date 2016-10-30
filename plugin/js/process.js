@@ -171,7 +171,7 @@ let addContentBlock = (tgImg) => Object.assign(tgImg, {
 });
 
 function drawLoading (tgImg) {
-    if (window['fzz-loading']) {
+    if (!window['fzz-loading']) {
         if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
             tgImg.contentBlock.appendChild(Object.assign(document.createElement('div'), {
                 className: 'fzz-loading'
@@ -182,17 +182,15 @@ function drawLoading (tgImg) {
 }
 
 function removeLoading (tgImg) {
-    if (window['fzz-loading']) {
+    if (!window['fzz-loading']) {
         tgImg.contentBlock.querySelector('.fzz-loading').remove();
     }
     return tgImg;
 }
 
-function removeAllLoading () {
+addEventListener('button will be drawn', () => {
+    window['fzz-loading'] = true;
     for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
         loading.remove();
     }
-}
-
-addEventListener('button will be drawn', removeAllLoading);
-addEventListener('button click', removeAllLoading);
+});

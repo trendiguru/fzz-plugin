@@ -1,0 +1,14 @@
+@import 'css_modules/card';
+
+.fzz-loading {
+    @include card (1);
+    width: 3.3em;
+    height: 3.3em;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+
+    &::before {
+        content: '...'
+    }
+}

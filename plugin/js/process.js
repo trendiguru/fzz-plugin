@@ -27,6 +27,7 @@ export function process (el, callback) {
         .then(isRelevant)
         .then(removeLoading)
         .then(relevantImg => {
+            dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
@@ -164,15 +165,28 @@ let addContentBlock = (tgImg) => Object.assign(tgImg, {
 });
 
 function drawLoading (tgImg) {
-    if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
-        tgImg.contentBlock.appendChild(Object.assign(document.createElement('div'), {
-            className: 'fzz-loading'
-        }));
+    if (window['fzz-loading']) {
+        if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
+            tgImg.contentBlock.appendChild(Object.assign(document.createElement('div'), {
+                className: 'fzz-loading'
+            }));
+        }
     }
     return tgImg;
 }
 
 function removeLoading (tgImg) {
-    tgImg.contentBlock.querySelector('.fzz-loading').remove();
+    if (window['fzz-loading']) {
+        tgImg.contentBlock.querySelector('.fzz-loading').remove();
+    }
     return tgImg;
 }
+
+function removeAllLoading () {
+    for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
+        loading.remove();
+    }
+}
+
+addEventListener('button will be drawn', removeAllLoading);
+addEventListener('button click', removeAllLoading);

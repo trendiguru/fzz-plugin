@@ -2,7 +2,21 @@
 
 import {cssSplit, css2xpath, evaluateElement, validateSelector} from 'modules/utils';
 
-const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT', 'HTML', 'WINDOW', 'BODY'];
+const FORBIDDEN_HTML_TAGS = [
+    'HTML',
+    'WINDOW',
+    'HEAD',
+    'META',
+    'TITLE',
+    'STYLE',
+    'LINK',
+    'BODY',
+    'TIME',
+    'SCRIPT',
+    'NOSCRIPT',
+    'INPUT',
+    'SCRIPT'
+];
 
 export default class Observer {
     constructor ({ callback, config = DEFAULT_CONFIG, whitelist = '*', blacklist = '', root = document.body, callbackExisting = false }) {
@@ -25,9 +39,11 @@ export default class Observer {
             observed: new Map()
         });
         for (let element of evaluateElement(root, DalmatianPath(whitelist, blacklist))) {
-            this.observed.set(element, 1);
-            if (callbackExisting) {
-                queue.push({type: 'init', target: element});
+            if (this.filterSelector(element)) {
+                this.observed.set(element, 1);
+                if (callbackExisting) {
+                    queue.push({type: 'init', target: element});
+                }
             }
         }
         this.callback(queue); // queue might be empty
@@ -41,21 +57,26 @@ export default class Observer {
     * 2. Check if the node is part of the white tree index (this.observed)
     */
     filter ({target}) {
-        if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
-            return false;
-        }
-        if (this.cssSelectors.whitelist.length && !target.matches(this.cssSelectors.whitelist.join(', '))) {
-            return false;
-        }
-        if (this.cssSelectors.blacklist.length && target.matches(this.cssSelectors.blacklist.join(', '))) {
-            return false;
-        }
-        if (this.observed.has(target)) {
-            return true;
-        }
-        return false;
+        return this.filterSelector(target) && this.observed.has(target);
     }
-
+    filterSelector (element) {
+        if (!element.matches || !element.tagName) {
+            return false;
+        }
+        if (element.nodeType !== 1) {
+            return false;
+        }
+        if (FORBIDDEN_HTML_TAGS.includes(element.tagName)) {
+            return false;
+        }
+        if (this.cssSelectors.whitelist.length && !element.matches(this.cssSelectors.whitelist.join(', '))) {
+            return false;
+        }
+        if (this.cssSelectors.blacklist.length && element.matches(this.cssSelectors.blacklist.join(', '))) {
+            return false;
+        }
+        return true;
+    }
 }
 
 const DEFAULT_CONFIG = {

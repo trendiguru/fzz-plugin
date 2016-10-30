@@ -47,7 +47,6 @@ const Round = Overlay.extend(buttonDiv => {
 
 if (!localStorage.getItem('infashion tutorial was shown')) {
     addEventListener('button clicked', () => {
-        console.log('hello');
         localStorage.setItem('infashion tutorial was shown', true);
         for (let tutoiral of Array.from(document.querySelectorAll('.fazz .tutorial'))) {
             tutoiral.remove();

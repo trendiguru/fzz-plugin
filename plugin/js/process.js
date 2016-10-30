@@ -7,6 +7,7 @@ import {smartCheckRelevancy} from 'modules/server';
 import TGImage from './tgimage';
 import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
+import {Loading} from './elements';
 
 let s = STACKS;
 
@@ -173,9 +174,7 @@ let addContentBlock = (tgImg) => Object.assign(tgImg, {
 function drawLoading (tgImg) {
     if (!window['fzz-loading']) {
         if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
-            tgImg.contentBlock.appendChild(Object.assign(document.createElement('div'), {
-                className: 'fzz-loading'
-            }));
+            tgImg.contentBlock.appendChild(Loading());
         }
     }
     return tgImg;

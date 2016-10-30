@@ -1,0 +1,31 @@
+linters:
+    Indentation:
+        width: 4
+    PropertySortOrder:
+        order:
+            - width
+            - min-width
+            - max-width
+            - height
+            - min-height
+            - max-height
+            - padding
+            - border-radius
+            - border
+            - outline
+            - overflow
+            - opacity
+            - font
+            - text
+            - color
+            - background
+            - position
+            - margin
+            - top
+            - left
+            - bottom
+            - right
+    SelectorDepth:
+        max_depth: 10
+    NestingDepth:
+        max_depth: 10

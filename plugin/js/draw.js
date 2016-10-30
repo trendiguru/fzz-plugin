@@ -9,7 +9,61 @@ export default function draw (ui, tgImg) {
     if (!tgImg.buttonDiv) {
         ui.overlay(tgImg);
     }
-    wrap (tgImg);
+    let contentBlock = makeContentBlock(tgImg.element);
+    contentBlock.appendChild(tgImg.buttonDiv);
+    trackButtonSeen(contentBlock);
+    dispatchEvent(Object.assign(CustomEvent('button drawn'), {
+        info: {
+            image: tgImg.url
+        }
+    }));
+    STACKS.set('content', tgImg.buttonDiv);
+}
+
+/**
+ * @param {Element} element - element to make content block out of it.
+ * @returns {Element} contentBlock - an element that can conatain foreign content elements.
+ */
+function makeContentBlock (element) {
+    let containable = makeContainable(element);
+    let {position} = getComputedStyle(element);
+    containable.classList.add('fzz-wrap');
+    Object.assign(containable.style, {
+        position: ['absolute', 'fixed'].includes(position) ? position : 'relative',
+    });
+    return containable;
+}
+
+/**
+ * TODO: general purpose DOM containable check
+ * @param {Element} element - element that should be containable.
+ * @return {Element} containable - element that is containable, has all the characteristics of the element and element is within it (or itself the element).
+ */
+function makeContainable (element) {
+    if (element.tagName !== 'IMG') {
+        return element;
+    }
+    let {width, margin, padding, display} = getComputedStyle(element);
+    let previousHeight = element.clientHeight;
+    let parentHeight = element.parentElement.clientHeight || 'xxx';
+    let container = document.createElement('div');
+    element.parentElement.insertBefore(container, element);
+    container.appendChild(element);
+    if (!element.originalInlineStyle) {
+        element.originalInlineStyle = element.getAttribute('style');
+    }
+    element.setAttribute('style', element.originalInlineStyle);
+    Object.assign(container.style, {
+        width,
+        margin,
+        padding,
+        display: display !== 'inline' ? display : 'inline-block',
+    });
+    let currentHeight = element.clientHeight;
+    if (currentHeight !== previousHeight && (element.parentElement && previousHeight === parentHeight)) {
+        container.style.height = '100%';
+    }
+    return container;
 }
 
 function trackButtonSeen (el) {
@@ -22,57 +76,4 @@ function trackButtonSeen (el) {
         }, BUTTON_SEEN_CHECK_INTERVAL);
         addEventListener('button seen', () => clearInterval(IntervalID));
     }
-}
-
-function wrap ({element, buttonDiv, url}) {
-    let div;
-    let {width, margin, padding, display, position} = getComputedStyle(element);
-    if (element.tagName === 'IMG') {
-        let previousHeight = element.clientHeight;
-        let parentHeight = element.parentElement.clientHeight || 'xxx';
-        div = document.createElement('div');
-        element.parentElement.insertBefore(div, element);
-        div.appendChild(element);
-        if (!element.originalInlineStyle) {
-            element.originalInlineStyle = element.getAttribute('style');
-        }
-        element.setAttribute('style', element.originalInlineStyle);
-        Object.assign(element.style, {
-            padding: '0px',
-            margin: '0px',
-            display: 'block'
-        });
-        Object.assign(div.style, {
-            width,
-            margin,
-            padding
-        });
-        let currentHeight = element.clientHeight;
-        if (currentHeight!==previousHeight && (element.parentElement && previousHeight===parentHeight)){
-            div.style.height = '100%';
-        }
-    }
-    else {
-        div = element;
-    }
-    div.classList.add('fzz_wrap');
-    div.appendChild(buttonDiv);
-    Object.assign(div.style, {
-        position: ['absolute', 'fixed'].includes(position) ? position : 'relative',
-        isolation: 'isolate',
-        display: display !== 'inline' ? display : 'inline-block',
-    });
-    Object.assign(buttonDiv.style, {
-        position: 'absolute',
-        top: 0,
-        right: 0
-    });
-    trackButtonSeen(element);
-    dispatchEvent(Object.assign(CustomEvent('button drawn'), {
-        info: {
-            image: url
-        }
-    }));
-    //STACKS.set('svg', svg);
-    STACKS.set('content', buttonDiv);
 }

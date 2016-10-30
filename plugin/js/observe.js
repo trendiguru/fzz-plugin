@@ -44,8 +44,8 @@ export default class Observer {
         if (FORBIDDEN_HTML_TAGS.includes(target.tagName)) {
             return false;
         }
-        if (this.cssSelectors.whitelist.length && target.matches(this.cssSelectors.whitelist.join(', '))) {
-            return true;
+        if (this.cssSelectors.whitelist.length && !target.matches(this.cssSelectors.whitelist.join(', '))) {
+            return false;
         }
         if (this.cssSelectors.blacklist.length && target.matches(this.cssSelectors.blacklist.join(', '))) {
             return false;

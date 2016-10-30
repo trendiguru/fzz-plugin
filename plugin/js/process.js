@@ -47,6 +47,12 @@ export function process (el, callback) {
 }
 
 function isProcessed (element) {
+    if (!element.matches) {
+        throw {
+            name: 'Not a relevant element',
+            element: element
+        };
+    }
     if (element.matches('.fzz-wrap, .fzz-wrap > *')) {
         throw {
             name: 'Proccessed element',

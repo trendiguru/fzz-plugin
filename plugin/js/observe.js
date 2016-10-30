@@ -2,7 +2,7 @@
 
 import {cssSplit, css2xpath, evaluateElement, validateSelector} from 'modules/utils';
 
-const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT'];
+const FORBIDDEN_HTML_TAGS = ['TEXT', 'TIME', 'SCRIPT', 'INPUT', 'HTML', 'WINDOW', 'BODY'];
 
 export default class Observer {
     constructor ({ callback, config = DEFAULT_CONFIG, whitelist = '*', blacklist = '', root = document.body, callbackExisting = false }) {

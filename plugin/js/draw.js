@@ -9,9 +9,8 @@ export default function draw (ui, tgImg) {
     if (!tgImg.buttonDiv) {
         ui.overlay(tgImg);
     }
-    let contentBlock = makeContentBlock(tgImg.element);
-    contentBlock.appendChild(tgImg.buttonDiv);
-    trackButtonSeen(contentBlock);
+    tgImg.contentBlock.appendChild(tgImg.buttonDiv);
+    trackButtonSeen(tgImg.contentBlock);
     dispatchEvent(Object.assign(CustomEvent('button drawn'), {
         info: {
             image: tgImg.url
@@ -24,7 +23,7 @@ export default function draw (ui, tgImg) {
  * @param {Element} element - element to make content block out of it.
  * @returns {Element} contentBlock - an element that can conatain foreign content elements.
  */
-function makeContentBlock (element) {
+export function makeContentBlock (element) {
     let containable = makeContainable(element);
     let {position} = getComputedStyle(element);
     containable.classList.add('fzz-wrap');
@@ -39,7 +38,7 @@ function makeContentBlock (element) {
  * @param {Element} element - element that should be containable.
  * @return {Element} containable - element that is containable, has all the characteristics of the element and element is within it (or itself the element).
  */
-function makeContainable (element) {
+export function makeContainable (element) {
     if (element.tagName !== 'IMG') {
         return element;
     }

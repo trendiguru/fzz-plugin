@@ -2,6 +2,7 @@
 
 import ga_wrap from './ga_wrap';
 import mp_wrap from './mp_wrap';
+import amplitude_wrap from './amplitude_wrap';
 import nginx, {buildQueryString} from './nginx_analytics';
 import {HOST_DOMAIN} from 'constants';
 import {REQUESTS} from './devTools';
@@ -20,6 +21,7 @@ export default class Analytics {
             libs: {
                 ga: ga_wrap,
                 mp: mp_wrap,
+                amplitude: amplitude_wrap,
                 nginx
             }
         });

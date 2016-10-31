@@ -41,7 +41,7 @@ domready(() => {
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);
-        new Observer({
+        void new Observer({
             whitelist: WHITE_LIST,
             blacklist: BLACK_LIST,
             callbackExisting: true,

@@ -1,9 +1,8 @@
-@import 'css_modules/colors';
 @import 'frame';
 @import 'wrap';
 @import 'overlay/overlay';
 @import 'tutorial/tutorial';
 
-body.fzz_lock {
+.fzz_lock {
     overflow: hidden;
 }

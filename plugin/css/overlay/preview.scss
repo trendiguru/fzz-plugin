@@ -1,41 +1,37 @@
-.fazz.preview .footer {
-    width: 100%;
-    height: 7em;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: 10000;
-}
+@import 'css_modules/colors';
+@import 'css_modules/card';
 
-.fazz.preview a,
-.fazz.preview button.fzzButton {
-    width: 5em;
-    height: 5em;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: white;
-    position: absolute;
-    left: 1em;
-    bottom: 1em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: box-shadow .25s;
-}
+.fazz.preview {
 
-.fazz.preview a:hover,
-.fazz.preview button.fzzButton:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
+    .footer {
+        width: 100%;
+        height: 7 * 16px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 10000;
+    }
 
-.fazz.preview a:nth-child(2) {
-    transform: translateX(calc(100% + 1em));
-}
+    a,
+    .fzzButton {
+        @include card (1);
+        width: 5 * 16px;
+        height: 5 * 16px;
+        background: {
+            position: center;
+            size: contain;
+            repeat: no-repeat;
+        }
+        position: absolute;
+        left: 1 * 16px;
+        bottom: 1 * 16px;
 
-.fazz.preview a:nth-child(3),
-.fazz.preview button.fzzButton:nth-child(3) {
-    transform: translateX(calc(200% + 2em));
-}
+        @for $index from 1 to 4 {
+            $nth-child: $index + 1;
 
-.fazz.preview button.fzzButton:nth-child(4) {
-    transform: translateX(calc(300% + 3em));
+            &:nth-child(#{$nth-child}) {
+                transform: translateX(calc($index * 100% + $index * 1 * 16px));
+            }
+        }
+    }
 }

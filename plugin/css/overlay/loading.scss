@@ -1,0 +1,18 @@
+@import 'css_modules/colors';
+@import 'css_modules/card';
+@import 'css_modules/spinner';
+
+.fzz-loading {
+    @include card (1, $white);
+    @include spinner (2.7em, $pink500, $white);
+    border: .25em solid $white;
+    border-radius: 100%;
+    overflow: hidden;
+    position: absolute !important;
+    top: 1em;
+    right: 1em;
+    left: auto !important;
+    bottom: auto !important;
+    box-sizing: content-box;
+    pointer-events: none;
+}

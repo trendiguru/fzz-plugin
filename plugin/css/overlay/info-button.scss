@@ -1,0 +1,28 @@
+@import 'css_modules/colors';
+@import 'css_modules/card';
+
+.fazz {
+    .fzz-info {
+        @include card (1);
+        width: 1.5 * 16px;
+        height: 1.5 * 16px;
+        padding: 0;
+        border-radius: 50%;
+        background: {
+            color: $white;
+            image: url('https://storage.googleapis.com/fzz/assets/img/ic_info_grey_24px.svg');
+            size: 100%;
+        }
+        position: absolute;
+        top: 1.5 * 16px;
+        right: 1.5 * 16px;
+        transition: transform .25s;
+        pointer-events: all;
+        z-index: 0 !important;
+    }
+}
+
+.fazz:hover .fzz-info {
+    transform: translate(1.5 * 16px, -1.5 * 16px);
+    z-index: 100 !important;
+}

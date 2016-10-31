@@ -100,10 +100,11 @@
 
     .tutorial {
         @include elevation (3, false);
-        width: $size * 3.75;
-        padding: .25 * 16px 0;
-        border-radius: 2 * 16px;
+        width: $size * 4;
+        padding: $margin / 3 $margin / 2;
+        border-radius: $margin 0 $margin $margin;
         font: {
+            size: 14px;
             weight: bold;
         }
         text: {
@@ -113,11 +114,10 @@
         color: $color;
         background: $white;
         position: absolute;
-        top: $margin * (-1.5);
-        right: $size + $margin * 5;
+        top: $size + $margin;
+        right: $size + $margin;
         left: auto;
         bottom: auto;
-        transform: translateX(100%);
         z-index: 20;
 
         &::after {

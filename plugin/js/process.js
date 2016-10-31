@@ -185,9 +185,9 @@ function removeLoading (tgImg) {
     return tgImg;
 }
 
-// addEventListener('button will be drawn', () => {
-//     window['fzz-loading'] = true;
-//     for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
-//         loading.remove();
-//     }
-// });
+addEventListener('button will be drawn', () => {
+    window['fzz-loading'] = true;
+    for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
+        loading.remove();
+    }
+});

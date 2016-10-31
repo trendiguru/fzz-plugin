@@ -12,6 +12,7 @@
     }
 
     .fzz-button {
+
         width: $size;
         height: $size;
         border-radius: 50%;
@@ -26,8 +27,10 @@
             repeat: no-repeat;
         };
         position: absolute;
+        left: auto;
         top: $margin;
         right: $margin;
+        bottom: auto;
         box-shadow: 0 0 0 3px $white inset;
         z-index: 10;
         cursor: pointer;
@@ -56,8 +59,10 @@
             border-radius: 50%;
             background: $color;
             position: absolute;
+            left: auto;
             top: $margin;
             right: $margin;
+            bottom: auto;
             transform-origin: center;
             transition: {
                 property: transform, opacity;
@@ -110,6 +115,8 @@
         position: absolute;
         top: $margin * (-1.5);
         right: $size + $margin * 5;
+        left: auto;
+        bottom: auto;
         transform: translateX(100%);
         z-index: 20;
 

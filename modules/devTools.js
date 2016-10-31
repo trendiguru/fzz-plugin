@@ -59,7 +59,7 @@ if (active) {
     //______STACKS_definition_____//
     ['isNew', 'isLoaded', 'isSuspicious', 'TGImage', 'smartCheckRelevancy', 'process',
      'relevantImg', 'irrelevantImg', 'logIrrelevant', 'smartCheckRelevancy_input',
-     'requests', 'observed', 'content','cleanRelevantImgDict_log'].forEach(stack => STACKS.newStack(stack));
+     'requests', 'observed', 'content','cleanRelevantImgDict_log', 'isProcessed'].forEach(stack => STACKS.newStack(stack));
 
     //______ective_functions______//
     modules = {};

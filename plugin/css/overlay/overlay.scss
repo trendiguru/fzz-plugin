@@ -2,9 +2,24 @@
 @import 'info-button';
 @import 'round-button';
 @import 'preview';
+@import 'loading';
+
+.fzz-wrap {
+    isolation: isolate;
+
+    > * {
+        padding: 0;
+        margin: 0;
+        display: block;
+        z-index: 100;
+    }
+}
 
 .fazz {
     width: 100%;
     height: 100%;
     padding: 1 * 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }

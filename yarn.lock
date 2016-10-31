@@ -1469,7 +1469,7 @@ escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-infashion@^1.1.1:
+eslint-config-infashion, eslint-config-infashion@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/eslint-config-infashion/-/eslint-config-infashion-1.1.1.tgz#faecedf9e6308ab624a723a273b7c14ba7e69268"
   dependencies:

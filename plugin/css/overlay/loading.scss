@@ -1,0 +1,8 @@
+@import 'css_modules/colors';
+@import 'css_modules/card';
+@import 'css_modules/spinner';
+
+.fzz-loading {
+    @include card (1);
+    @include spinner (3em, $pink500, $white);
+}

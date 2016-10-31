@@ -5,7 +5,9 @@ import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 // import {smartCheckRelevancy, getImageData} from 'modules/server';
 import TGImage from './tgimage';
+import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
+import {Loading} from './elements';
 
 let s = STACKS;
 
@@ -16,30 +18,50 @@ export let relevantImgs = {},
 export function process (el, callback) {
     s.set('process', el);
     return Promise.resolve(el)
+        .then(isProcessed)
         .then(el => new TGImage (el))
         .then(isNew)
         .then(isLoaded)
         .then(isSuspicious)
+        .then(addContentBlock)
+        .then(drawLoading)
         .then(isRelevant)
-        // .then(getData)
-        .then(
-        relevantImg => {
+        .then(removeLoading)
+        .then(relevantImg => {
+            dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
             console.log(`${date}: Found Relevant!: ${relevantImg.url}`);
             relevantImgs[relevantImg.url] = relevantImg;
             s.set('relevantImg', relevantImg.element);
             callback(relevantImg);
-        },
-        irrelevantImg => {
+        })
+        .catch(err => {
             // This will only have a url if it returns from smartRelevacyCheck as irrelevant,
             // the others will arrive as {name: nnn, element:eee} error objects.
-            if (irrelevantImg.element && irrelevantImg.element.url) {
-                irrelevantImgs[irrelevantImg.element.url] = irrelevantImg.element;
-                s.set('irrelevantImg', irrelevantImg.element.element);
+            if (err.element && err.element.url) {
+                irrelevantImgs[err.element.url] = err.element;
+                s.set('irrelevantImg', err.element.element);
             } else {
-                logIrrelevant(irrelevantImg);
+                logIrrelevant(err);
             }
         });
+}
+
+function isProcessed (element) {
+    if (!element.matches) {
+        throw {
+            name: 'Not a relevant element',
+            element: element
+        };
+    }
+    if (element.matches('.fzz-wrap, .fzz-wrap > *')) {
+        throw {
+            name: 'Proccessed element',
+            element
+        };
+    }
+    s.set('isProcessed', element);
+    return element;
 }
 
 function isNew (tgImg) {
@@ -99,13 +121,6 @@ function isRelevant (tgImg) {
     });
 }
 
-// function getData (tgImg) {
-//     return getImageData(tgImg.url).then(data => {
-//         tgImg.data = data;
-//         return tgImg;
-//     });
-// }
-
 function logIrrelevant(error) {
     //console.log('reached logIrrelevant');
     let errName = error.name;
@@ -150,5 +165,31 @@ export function cleanRelevantImgDict(){
         childList: true,
         subtree: true,
     });
-
 }
+
+let addContentBlock = (tgImg) => Object.assign(tgImg, {
+    contentBlock: tgImg.contentBlock || makeContentBlock(tgImg.element)
+});
+
+function drawLoading (tgImg) {
+    if (!window['fzz-loading']) {
+        if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
+            tgImg.contentBlock.appendChild(Loading());
+        }
+    }
+    return tgImg;
+}
+
+function removeLoading (tgImg) {
+    if (!window['fzz-loading']) {
+        tgImg.contentBlock.querySelector('.fzz-loading').remove();
+    }
+    return tgImg;
+}
+
+addEventListener('button will be drawn', () => {
+    window['fzz-loading'] = true;
+    for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
+        loading.remove();
+    }
+});

@@ -3,8 +3,6 @@
 @import 'css_modules/animate';
 
 @mixin round-button-overlay ($icon: '/assets/img/shirt.svg', $color: $pink500, $size: 3.3 * 16px, $margin: 1 * 16px, $halos: 3, $halo-max-scale: 15, $duration: .5s) {
-    position: relative;
-    display: inline-block;
 
     &:hover .halo * {
         animation: {

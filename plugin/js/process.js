@@ -26,7 +26,7 @@ export function process (el, callback) {
         .then(addContentBlock)
         .then(drawLoading)
         .then(isRelevant)
-        // .then(removeLoading)
+        .then(removeLoading)
         .then(relevantImg => {
             dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
@@ -185,9 +185,9 @@ function removeLoading (tgImg) {
     return tgImg;
 }
 
-// addEventListener('button will be drawn', () => {
-//     window['fzz-loading'] = true;
-//     for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
-//         loading.remove();
-//     }
-// });
+addEventListener('button will be drawn', () => {
+    window['fzz-loading'] = true;
+    for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
+        loading.remove();
+    }
+});

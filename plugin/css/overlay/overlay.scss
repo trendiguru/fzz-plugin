@@ -6,6 +6,7 @@
 
 .fzz-wrap {
     isolation: isolate;
+    z-index: 100;
 
     > * {
         padding: 0;

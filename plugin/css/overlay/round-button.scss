@@ -101,21 +101,20 @@
     .tutorial {
         @include card (1);
         overflow: visible;
-        width: $size + $margin * 2;
+        width: $size + $margin;
         padding: $margin / 3 $margin / 2;
         font: {
             size: 14px;
             weight: bold;
         }
         text: {
-            align: center;
-            transform: uppercase;
+            align: left;
         }
         color: $color;
         background: $white;
         position: absolute;
         top: $size + $margin * 2;
-        right: 3px;
+        right: $margin / 2;
         left: auto;
         bottom: auto;
         z-index: 20;
@@ -133,7 +132,7 @@
             left: 0;
             right: 0;
             margin: auto;
-            transform: translateY(-100%) translateX(3px);
+            transform: translateY(-100%);
         }
     }
 }

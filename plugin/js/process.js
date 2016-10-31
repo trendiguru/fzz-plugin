@@ -134,7 +134,7 @@ function logIrrelevant(error) {
 /*The function will observe deletitions from DOM and update relevantImgs dict
   up to this changes.*/
 export function cleanRelevantImgDict(){
-    let clean = (el)=>{
+    let clean = (el) => {
         try{
             let tgImg = new TGImage(el);
             if ( tgImg.url !== undefined && (tgImg.url in relevantImgs)){

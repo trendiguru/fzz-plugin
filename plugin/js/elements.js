@@ -34,7 +34,7 @@ export function Style () {
  */
 export function Loading () {
     let spinner = document.createElement('div');
-    let wrapper = document.creeateElement('div');
+    let wrapper = document.createElement('div');
     let rotator = document.createElement('div');
     spinner.className = 'fzz-loading';
     wrapper.className = 'fzz-loading__wrapper';

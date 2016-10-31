@@ -11,5 +11,8 @@
     position: absolute !important;
     top: 1em;
     right: 1em;
+    left: auto !important;
+    bottom: auto !important;
     box-sizing: content-box;
+    pointer-events: none;
 }

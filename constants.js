@@ -51,6 +51,7 @@ export const HOST_DOMAIN = {
     }[API] || 'https://api.trendi.guru/images',
     DEBUG = false,
     ENV = ENVIRONMENT,
+    LOADING_TIMEOUT = '3000',
     LOADING = {
         IMAGES: {
             giphy: [

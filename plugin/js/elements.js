@@ -29,6 +29,9 @@ export function Style () {
     return link;
 }
 
+/**
+ * @returns {Element} fzz-loading
+ */
 export function Loading () {
     let spinner = document.createElement('div');
     let wrapper = document.creeateElement('div');
@@ -38,6 +41,9 @@ export function Loading () {
     rotator.className = 'fzz-loading__wrapper__rotator';
     spinner.appendChild(wrapper);
     wrapper.appendChild(rotator);
+    rotator.appendChild(Object.assign(document.createElement('div'), {
+        className: 'fzz-loading__wrapper__rotator__inner-spin'
+    }));
     rotator.appendChild(Object.assign(document.createElement('div'), {
         className: 'fzz-loading__wrapper__rotator__inner-spin'
     }));

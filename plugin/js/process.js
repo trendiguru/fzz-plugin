@@ -172,10 +172,8 @@ let addContentBlock = (tgImg) => Object.assign(tgImg, {
 });
 
 function drawLoading (tgImg) {
-    if (!window['fzz-loading']) {
-        if (!tgImg.contentBlock.querySelector('.fzz-loading')) {
-            tgImg.contentBlock.appendChild(Loading());
-        }
+    if (!window['fzz-loading'] && !tgImg.contentBlock.querySelector('.fzz-loading')) {
+        tgImg.contentBlock.appendChild(Loading());
     }
     return tgImg;
 }

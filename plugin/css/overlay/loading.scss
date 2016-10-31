@@ -3,6 +3,13 @@
 @import 'css_modules/spinner';
 
 .fzz-loading {
-    @include card (1);
-    @include spinner (3em, $pink500, $white);
+    @include card (1, $white);
+    @include spinner (2.7em, $pink500, $white);
+    border: .25em solid $white;
+    border-radius: 100%;
+    overflow: hidden;
+    position: absolute !important;
+    top: 1em;
+    right: 1em;
+    box-sizing: content-box;
 }

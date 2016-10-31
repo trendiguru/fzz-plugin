@@ -4,16 +4,15 @@
     display: inline-block;
 
     &__wrapper {
-        width: 100%;
-        height: 100%;
-        border-radius: 100%;
+        width: $size;
+        height: $size;
+        border-radius: $size;
         position: relative;
-        left: calc(50% - $size / 2);
 
         &::after {
             content: '';
             background: $background;
-            border-radius: 100%;
+            border-radius: $size;
             width: $size - $size / 4;
             height: $size - $size / 4;
             position: absolute;

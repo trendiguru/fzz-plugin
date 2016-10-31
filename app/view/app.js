@@ -29,7 +29,7 @@ class App extends React.Component {
             }
         };
     }
-    componentDidMount () {
+    componentWillReceiveProps () {
         dispatchEvent(CustomEvent('app opened', {bubbles: true}));
     }
     close () {

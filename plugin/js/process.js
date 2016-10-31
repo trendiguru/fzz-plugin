@@ -105,9 +105,15 @@ function isSuspicious (tgImg) {
     }
 }
 
+let passedCheckRelevancy = false;
+
 function isRelevant (tgImg) {
     return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
+            if (!passedCheckRelevancy) {
+                passedCheckRelevancy = true;
+                dispatchEvent(CustomEvent('recieved results'));
+            }
             s.set('smartCheckRelevancy', tgImg);
             return tgImg;
         }

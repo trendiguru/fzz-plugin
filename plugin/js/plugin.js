@@ -86,6 +86,7 @@ domready(() => {
             iframe.show();
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
+        addEventListener('recieved results', () => analytics.track('Recieved Results'));
         addEventListener('button seen', () => {
             s.set('requests', 'Button Seen');
             analytics.track('Button Seen');

@@ -8,7 +8,7 @@
     border: .25em solid $white;
     border-radius: 100%;
     overflow: hidden;
-    position: absolute;
+    position: absolute !important;
     top: 1em;
     right: 1em;
     box-sizing: content-box;

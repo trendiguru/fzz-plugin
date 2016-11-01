@@ -3,10 +3,13 @@ PROD_BUCKET='fzz'
 BUCKET_NAME=$1
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
+if [ $BUCKET_NAME = $PROD_BUCKET ]
+then
 echo Switching to production branch
 
 git checkout production
 git pull
+fi
 
 echo Refreshing node_modules
 
@@ -32,7 +35,7 @@ gsutil -m acl set -r -a public-read gs://$BUCKET_NAME
 gsutil -m setmeta -r -h 'Cache-Control:public, max-age=5' gs://$BUCKET_NAME
 
 #For Backwards compatibility (fashioncelebstyle.com, etc..)
-if [ '$BUCKET_NAME' = '$PROD_BUCKET' ]
+if [ $BUCKET_NAME = $PROD_BUCKET ]
 then
     gcloud compute ssh extremeli-evolution-1 'sudo gsutil -m rsync -r gs://$BUCKET_NAME /var/www/latest/'
 fi

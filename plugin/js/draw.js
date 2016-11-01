@@ -68,7 +68,8 @@ export function makeContainable (element) {
 function trackButtonSeen (el) {
     if (!trackedButton){
         let IntervalID = setInterval(() => {
-            if (!trackedButton && isVisible(el, el.getBoundingClientRect())) {
+            console.log(isVisible(el));
+            if (!trackedButton && isVisible(el)) {
                 trackedButton = true;
                 dispatchEvent(CustomEvent('button seen'));
             }

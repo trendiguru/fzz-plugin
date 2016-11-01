@@ -93,7 +93,7 @@ function visibleInPoint(x, y, obj, wndw) {
         if (obj === elems[i]) {
             let elemIsNotCovered = true;
             for (let j = 0; j < i; j++) {
-                elemIsNotCovered = isTransparent(elem[j]) && elemIsNotCovered;
+                elemIsNotCovered = isTransparent(elems[j]) && elemIsNotCovered;
             }
             return elemIsNotCovered;
         }
@@ -102,7 +102,7 @@ function visibleInPoint(x, y, obj, wndw) {
 }
 
 //TODO: improve the isTransparent function
-function isTransparent(){
+function isTransparent(el){
     return true;
 }
 

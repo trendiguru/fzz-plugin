@@ -47,34 +47,13 @@ export default class Analytics {
     }
 
     appInit () {
-        this.inited = this.getClientId()
-        .then(this.initAll.bind(this))
-        .then(() => {
-            // console.debug(`Posted clientID: ${this.fzz_id}`);
-            // window.parent.postMessage({
-            //     fzz_id: this.fzz_id
-            // }, '*');
-        });
-
-        // timeme();
-        // window.onbeforeunload = () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${this.props.publisherDomain}`);
+        this.inited = Promise.resolve(this.sessionProps.fzz_id)
+        .then(this.initAll.bind(this));
     }
 
     publisherInit () {
-        this.inited = this.getClientId()
-        .then(clientID => {
-            console.log(clientID);
-            return clientID;
-        })
-        // .then(() => {
-        //     return new Promise(resolve => addEventListener('message', (msg) => {
-        //         if (msg.origin === HOST_DOMAIN && msg.data !== undefined && msg.data.fzz_id) {
-        //             this.fzz_id = msg.data.fzz_id;
-        //             // console.debug(`Got fzz_id: ${this.fzz_id}`);
-        //             resolve(this.fzz_id);
-        //         }
-        //     }));
-        // })
+        this.getClientId();
+        this.inited = Promise.resolve(this.fzz_id)
         .then(this.initAll.bind(this));
     }
 
@@ -121,7 +100,8 @@ export default class Analytics {
             id = Math.random().toString(36).substring(2);
             localStorage.setItem('infashion client id', id);
         }
-        return Promise.resolve(id);
+        this.fzz_id = id;
+        return id;
         // let a = this.libs.ga;
         // return a.loaded
         // .then(a.init)

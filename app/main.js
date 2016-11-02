@@ -4,6 +4,12 @@ import App from './view/app';
 import './analytics';
 import store from './store';
 
+store.use((action) => {
+    if (action.type === 'newImageURL') {
+        dispatchEvent(CustomEvent('app opened', {bubbles: true}));
+    }
+});
+
 /*------ RENDER ------*/
 ReactDOM.render(
     React.createElement(App, {close}),

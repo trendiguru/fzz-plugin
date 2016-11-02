@@ -29,9 +29,6 @@ class App extends React.Component {
             }
         };
     }
-    componentWillReceiveProps () {
-        dispatchEvent(CustomEvent('app opened', {bubbles: true}));
-    }
     close () {
         this.props.close();
         dispatchEvent(CustomEvent('app closed', {bubbles: true}));

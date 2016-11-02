@@ -15,7 +15,7 @@ const WAIT_TIME = 3500,
             // 'http://www.stylebook.de/stars/Lena-Meyer-Landrut-ueberrascht-mit-neuer-Frisur_1-784989.html',
             'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D',
             'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
-            'http://www.plus-model-mag.com/',
+            // 'http://www.plus-model-mag.com/',
             'http://www.stylebook.de/fashion/topmodel-doutzen-kroes-launcht-eigene-dessous-kollektion-829220.html'
         ]
     },
@@ -25,7 +25,7 @@ const WAIT_TIME = 3500,
         'local': 'b_plugin.js'
     },
     NIGHTMARE_DECLARATION = {
-        //show: true,
+        show: true,
         openDevTools: true,
         gotoTimeout: 30000,
         loadTimeout: 30000,

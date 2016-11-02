@@ -64,8 +64,10 @@ let config = {
 };
 
 if (ENVIRONMENT === 'PRODUCTION') {
-    webpack.optimize.UglifyJsPlugin();
-    webpack.optimize.DedupePlugin();
+    config.plugins = config.plugins.concat([
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin()
+    ]);
     delete config.devtool;
 }
 

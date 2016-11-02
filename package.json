@@ -22,7 +22,8 @@
     "local-test": "ENVIRONMENT=LOCAL_TEST webpack --progress && node test/nightmare",
     "build": "zip app.zip manifest.json, b_plugin.js, b_plugin.css, b_app.local.js, b_app.css, app/app.local.html",
     "publish": "cp manifest.production.json manifest.json && ./upload_to_gs.sh fzz",
-    "watch": "webpack --watch --progress",
+    "watch": "yarn run bundle -- --watch",
+    "bundle": "webpack --progress",
     "serve": "python -c \"import BaseHTTPServer, SimpleHTTPServer;import ssl;httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), SimpleHTTPServer.SimpleHTTPRequestHandler);httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem', server_side=True);httpd.serve_forever()\"",
     "stop": "pkill -f python.*HTTP.*4443"
   },

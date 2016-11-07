@@ -4,7 +4,16 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const {env: {ENVIRONMENT = 'DEV'}} = process;
-const ES_POLYFILLS = ['core-js', 'regenerator-runtime/runtime', 'whatwg-fetch', 'modules/polyfills', 'wicked-good-xpath', 'custom-event-polyfill', 'classlist-polyfill'];
+const ES_POLYFILLS = [
+    'core-js/es6',
+    'core-js/es7',
+    'regenerator-runtime/runtime',
+    'whatwg-fetch',
+    'modules/polyfills',
+    'wicked-good-xpath',
+    'custom-event-polyfill',
+    'classlist-polyfill'
+];
 
 let config = {
     module: {
@@ -64,8 +73,10 @@ let config = {
 };
 
 if (ENVIRONMENT === 'PRODUCTION') {
-    webpack.optimize.UglifyJsPlugin();
-    webpack.optimize.DedupePlugin();
+    config.plugins = config.plugins.concat([
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin()
+    ]);
     delete config.devtool;
 }
 

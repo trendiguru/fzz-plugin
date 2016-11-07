@@ -17,8 +17,8 @@ addEventListener('tab set', e => analytics.track('Category Clicked', {
     title: e.info.title
 }));
 
+addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));
+
 export default analytics;
 
 //publisherDomain = getLocation(document.referrer).hostname.replace('www.', '');
-
-// addEventListener('result clicked', e => analytics.track('Result Clicked', {clickUrl: e.info.clickURL, imageURL: window.app.props.imageURL}));

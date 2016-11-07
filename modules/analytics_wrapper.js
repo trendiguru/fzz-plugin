@@ -39,38 +39,21 @@ export default class Analytics {
     }
 
     initAll (clientID) {
-        Object.values(this.libs)
-        .filter(a => !a.hasOwnProperty('inited'))
-        .forEach(a => {
-            a.inited = a.init(clientID);
-        });
+        for (let a of Object.values(this.libs)) {
+            if (a.inited === undefined) {
+                a.inited = a.init(clientID);
+            }
+        }
     }
 
     appInit () {
-        this.inited = this.getClientId()
-        .then(this.initAll.bind(this))
-        .then(() => {
-            // console.debug(`Posted clientID: ${this.fzz_id}`);
-            window.parent.postMessage({
-                fzz_id: this.fzz_id
-            }, '*');
-        });
-
-        // timeme();
-        // window.onbeforeunload = () => fetch(`https://track.trendi.guru/tr/web?event=Page%20Unloaded&duration=${TimeMe.getTimeOnCurrentPageInSeconds()}&publisherDomain=${this.props.publisherDomain}`);
+        this.inited = Promise.resolve(this.sessionProps.fzz_id)
+        .then(this.initAll.bind(this));
     }
 
     publisherInit () {
-        this.inited = this.getClientId()
-        .then(() => {
-            return new Promise(resolve => addEventListener('message', (msg) => {
-                if (msg.origin === HOST_DOMAIN && msg.data !== undefined && msg.data.fzz_id) {
-                    this.fzz_id = msg.data.fzz_id;
-                    // console.debug(`Got fzz_id: ${this.fzz_id}`);
-                    resolve(this.fzz_id);
-                }
-            }));
-        })
+        this.getClientId();
+        this.inited = Promise.resolve(this.fzz_id)
         .then(this.initAll.bind(this));
     }
 
@@ -112,14 +95,21 @@ export default class Analytics {
     }
 
     getClientId () {
-        let a = this.libs.ga;
-        return a.loaded
-        .then(a.init)
-        .then(a.getClientId)
-        .then(clientId => {
-            this.fzz_id = clientId;
-            return clientId;
-        });
+        let id = localStorage.getItem('infashion client id');
+        if (!id) {
+            id = Math.random().toString(36).substring(2);
+            localStorage.setItem('infashion client id', id);
+        }
+        this.fzz_id = id;
+        return id;
+        // let a = this.libs.ga;
+        // return a.loaded
+        // .then(a.init)
+        // .then(a.getClientId)
+        // .then(clientId => {
+        //     this.fzz_id = clientId;
+        //     return clientId;
+        // });
     }
 
 }

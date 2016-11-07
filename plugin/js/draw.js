@@ -11,11 +11,7 @@ export default function draw (ui, tgImg) {
     }
     tgImg.contentBlock.appendChild(tgImg.buttonDiv);
     trackButtonSeen(tgImg.contentBlock);
-    dispatchEvent(Object.assign(CustomEvent('button drawn'), {
-        info: {
-            image: tgImg.url
-        }
-    }));
+    dispatchEvent(Object.assign(CustomEvent('button drawn'),tgImg));
     STACKS.set('content', tgImg.buttonDiv);
 }
 
@@ -68,7 +64,7 @@ export function makeContainable (element) {
 function trackButtonSeen (el) {
     if (!trackedButton){
         let IntervalID = setInterval(() => {
-            if (!trackedButton && isVisible(el, el.getBoundingClientRect())) {
+            if (!trackedButton && isVisible(el)) {
                 trackedButton = true;
                 dispatchEvent(CustomEvent('button seen'));
             }

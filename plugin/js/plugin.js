@@ -28,7 +28,7 @@ let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
 });
 let analytics = new Analytics('publisher', initAnaltics);
 let style = new Style ();
-let iframe = new iFrame(initAnaltics);
+let iframe = new iFrame(Object.assign({fzz_id: analytics.fzz_id}, initAnaltics));
 analytics.track('Page Hit');
 analytics.listen('scroll');
 
@@ -86,6 +86,7 @@ domready(() => {
             iframe.show();
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
+        addEventListener('recieved results', () => analytics.track('Recieved Results'));
         addEventListener('button seen', () => {
             s.set('requests', 'Button Seen');
             analytics.track('Button Seen');

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT} from 'constants';
+import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, LOADING_TIMEOUT} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 // import {smartCheckRelevancy, getImageData} from 'modules/server';
@@ -185,9 +185,13 @@ function removeLoading (tgImg) {
     return tgImg;
 }
 
-addEventListener('button will be drawn', () => {
+
+function removeAllLoading(){
     window['fzz-loading'] = true;
     for (let loading of Array.from(document.querySelectorAll('.fzz-loading'))) {
         loading.remove();
     }
-});
+}
+addEventListener('button will be drawn', removeAllLoading);
+console.log("timeout "+LOADING_TIMEOUT);
+setTimeout(removeAllLoading, LOADING_TIMEOUT);

@@ -1,31 +1,35 @@
 @mixin spinner ($size, $primary, $background) {
-    width: $size;
-    height: $size;
+    width: $size !important;
+    height: $size !important;
     display: inline-block;
 
     &__wrapper {
-        width: $size;
-        height: $size;
-        border-radius: $size;
-        position: relative;
+        width: $size !important;
+        height: $size !important;
+        border-radius: $size !important;
+        position: relative !important;
+        left: auto !important;
+        bottom: auto !important;
 
         &::after {
             content: '';
-            background: $background;
+            background: $background !important;
             border-radius: $size;
-            width: $size - $size / 4;
-            height: $size - $size / 4;
-            position: absolute;
+            width: $size - $size / 4 !important;
+            height: $size - $size / 4 !important;
+            position: absolute !important;
             top: $size * .125;
             left: $size * .125;
         }
 
         &__rotator {
-            width: $size;
-            border-radius: $size;
-            overflow: hidden;
-            position: relative;
+            width: $size !important;
+            border-radius: $size !important;
+            overflow: hidden !important;
+            position: relative !important;
             animation: rotate 2000ms infinite linear;
+            bottom: auto !important;
+            left: auto !important;
 
             &::before {
                 content: '';
@@ -40,15 +44,18 @@
             }
 
             &__inner-spin {
-                width: $size / 2;
-                height: $size;
-                border-radius: ($size / 2) 0 0 ($size / 2);
+                width: $size / 2 !important;
+                height: $size !important;
+                border-radius: ($size / 2) 0 0 ($size / 2) !important;
                 background: $background;
                 animation: rotate-left 2500ms infinite cubic-bezier(.445, .050, .550, .950);
                 transform-origin: ($size / 2) ($size / 2);
+                bottom: auto !important;
+                left: auto !important;
+                position: static !important;
 
                 &:last-child {
-                    border-radius: 0 ($size / 2) ($size / 2) 0;
+                    border-radius: 0 ($size / 2) ($size / 2) 0 !important;
                     float: right;
                     margin-top: -$size;
                     animation: rotate-right 2500ms infinite cubic-bezier(.445, .050, .550, .950);

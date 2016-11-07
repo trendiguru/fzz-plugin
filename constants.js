@@ -6,7 +6,7 @@ import giphy from 'modules/giphy';
 
 const FZZ = window.FZZ = window.FZZ || {};
 
-let {blacklist, whitelist, pid, api} = new FzzDataAttributes();
+let {blacklist = '.videoPlayer, .rotatingTeaser, .OUTBRAIN', whitelist, pid, api} = new FzzDataAttributes();
 let extUrl = extension ? extension.getURL('').slice(0, -1) : null;
 
 export const HOST_DOMAIN = {
@@ -51,6 +51,7 @@ export const HOST_DOMAIN = {
     }[API] || 'https://api.trendi.guru/images',
     DEBUG = false,
     ENV = ENVIRONMENT,
+    LOADING_TIMEOUT = '3000',
     LOADING = {
         IMAGES: {
             giphy: [
@@ -71,6 +72,7 @@ export const HOST_DOMAIN = {
             default: ''
         }
     },
+    AMPLITUDE_KEY = '3d4fa64b96ff312455271dade3170591',
     UI = {
         'recruit-pilot': {
             overlay: {

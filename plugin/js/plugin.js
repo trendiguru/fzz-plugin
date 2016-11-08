@@ -100,7 +100,7 @@ domready(() => {
         // CRAZY TAB
         addEventListener('message',(event)=>{
             if (event.data.key === 'results'){
-                window.open(event.data.results[0].similar_results[0].clickUrl);
+                window.open(event.data.results[0].similar_results[0].clickUrl, '_blank');
             }
         });
         // TUTORIAL

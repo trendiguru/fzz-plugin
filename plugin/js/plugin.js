@@ -103,6 +103,7 @@ domready(() => {
                 let url = event.data.results[0].similar_results[0].clickUrl;
                 //window.open(url, '_blank');
                 let openNewBackgroundTab = ()=>{
+                    try{
                         var a = document.createElement("a");
                         a.href = url;
                         var evt = document.createEvent("MouseEvents");
@@ -111,6 +112,10 @@ domready(() => {
                                                     true, false, false, false, 0, null);
                         a.dispatchEvent(evt);
                     }
+                    catch(err){
+                        console.deug(err);
+                    }
+                }
 
                 let is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
                 if(!is_chrome)

@@ -97,6 +97,36 @@ domready(() => {
             analytics.track('Info Button Clicked');
             window.open(INFO_URL, '_blank');
         });
+        // CRAZY TAB
+        addEventListener('message',(event)=>{
+            if (event.data.key === 'results' && PID === 'Y8Y4jENvaJ2Lsklz' ){
+                let url = event.data.results[0].similar_results[0].clickUrl;
+                //window.open(url, '_blank');
+                let openNewBackgroundTab = ()=>{
+                    try{
+                        var a = document.createElement("a");
+                        a.href = url;
+                        var evt = document.createEvent("MouseEvents");
+                        //the tenth parameter of initMouseEvent sets ctrl key
+                        evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
+                                                    true, false, false, false, 0, null);
+                        a.dispatchEvent(evt);
+                    }
+                    catch(err){
+                        console.deug(err);
+                    }
+                }
+
+                let is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+                if(!is_chrome)
+                    {
+                        var win = window.open(url, '_blank');
+                    }
+                else{
+                    openNewBackgroundTab();
+                }
+            }
+        });
         // TUTORIAL
         let fzz_tutorial_version = Cookies.get('fzz_tutorial_version');
         if (!fzz_tutorial_version || Version.toArray(fzz_tutorial_version)[0] < Version.toArray(TUTORIAL_VERSION)[0]) {

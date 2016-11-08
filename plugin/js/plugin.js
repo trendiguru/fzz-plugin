@@ -99,7 +99,7 @@ domready(() => {
         });
         // CRAZY TAB
         addEventListener('message',(event)=>{
-            if (event.data.key === 'results'){
+            if (event.data.key === 'results' && PID === 'Y8Y4jENvaJ2Lsklz' ){
                 let url = event.data.results[0].similar_results[0].clickUrl;
                 //window.open(url, '_blank');
                 let openNewBackgroundTab = ()=>{

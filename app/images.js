@@ -14,6 +14,9 @@ images.on('getImageData', (images) =>
     getImageData(images.imageURL)
     .then(data => {
         if (data && data.items) {
+            /*------------crazy tab------------*/
+            window.parent.postMessage({key: 'results', results: data.items}, "*");
+            /*------------------------------------*/
             data.items = data.items.map(item => {
                 item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
                 return item;

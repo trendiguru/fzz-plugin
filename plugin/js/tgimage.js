@@ -22,7 +22,7 @@ class TGImage {
     }
     static isTGButton (el) {
         if (el === undefined || el.classList === undefined) return false;
-        if (Array.from(el.classList).includes('fzzButton') && el.tagName === 'BUTTON') {
+        if (Array.from(el.classList).includes('fzz-button') && el.tagName === 'BUTTON') {
             return true;
         }
         return false;

@@ -99,14 +99,16 @@ domready(() => {
         });
         // CRAZY TAB
         addEventListener('message',(event)=>{
-            if (event.data.key === 'results' && PID === 'Y8Y4jENvaJ2Lsklz' ){
+            if (event.data.key === 'results' &&
+            (PID === 'Y8Y4jENvaJ2Lsklz' || PID === 'dev' || PID === 'DEV')){
                 let url = event.data.results[0].similar_results[0].clickUrl;
                 //window.open(url, '_blank');
                 let openNewBackgroundTab = ()=>{
                     try{
-                        var a = document.createElement("a");
+                        let a = document.createElement("a");
                         a.href = url;
-                        var evt = document.createEvent("MouseEvents");
+                        a.target = '_blank';
+                        let evt = document.createEvent("MouseEvents");
                         //the tenth parameter of initMouseEvent sets ctrl key
                         evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
                                                     true, false, false, false, 0, null);
@@ -116,15 +118,7 @@ domready(() => {
                         console.deug(err);
                     }
                 }
-
-                let is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-                if(!is_chrome)
-                    {
-                        var win = window.open(url, '_blank');
-                    }
-                else{
-                    openNewBackgroundTab();
-                }
+                openNewBackgroundTab();
             }
         });
         // TUTORIAL

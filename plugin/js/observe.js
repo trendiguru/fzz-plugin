@@ -69,9 +69,9 @@ export default class Observer {
         if (FORBIDDEN_HTML_TAGS.includes(element.tagName)) {
             return false;
         }
-        if (this.cssSelectors.whitelist.length && !element.matches(this.cssSelectors.whitelist.join(', '))) {
-            return false;
-        }
+        // if (this.cssSelectors.whitelist.length && !element.matches(this.cssSelectors.whitelist.join(', '))) {
+        //     return false;
+        // }
         if (this.cssSelectors.blacklist.length && element.matches(this.cssSelectors.blacklist.join(', '))) {
             return false;
         }

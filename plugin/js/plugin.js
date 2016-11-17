@@ -1,6 +1,6 @@
 /* globals wgxpath */
 import Cookies from 'js-cookie';
-import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API} from 'constants';
+import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API, AMPLITUDE_KEY} from 'constants';
 import Analytics from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
@@ -24,7 +24,8 @@ let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
     refererDomain,
     PID,
     publisherDomain: refererDomain,
-    API
+    API,
+    amplitude_key: AMPLITUDE_KEY
 });
 let analytics = new Analytics('publisher', initAnaltics);
 let style = new Style ();

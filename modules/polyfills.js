@@ -48,3 +48,13 @@ if (!document.elementsFromPoint) {
         return parents;
     };
 }
+
+// IE 11 node.remove
+
+ if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function() {
+        if (this.parentNode) {
+            this.parentNode.removeChild(this);
+        }
+    };
+}

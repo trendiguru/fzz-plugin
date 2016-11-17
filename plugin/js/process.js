@@ -153,8 +153,13 @@ export function cleanRelevantImgDict(){
         }
     };
     let observer = new MutationObserver((mutations) => {
-        for (let mutation of mutations) {
-            for (let node of mutation.removedNodes) {
+        //Plain objects are not iterable!
+        //biblio:https://github.com/babel/babel-loader/issues/84#issuecomment-120138968
+        for (let iKey in mutations) {
+            let mutation = mutations[iKey];
+            let addedNodes = mutation.removedNodes;
+            for (let jKey in addedNodes) {
+                let node = addedNodes[jKey];
                 //if it is realy deletet from dom and not replaced!
                 if (node.parentElement === null){
                     clean(node);
@@ -172,7 +177,6 @@ export function cleanRelevantImgDict(){
         subtree: true,
     });
 }
-
 let addContentBlock = (tgImg) => Object.assign(tgImg, {
     contentBlock: tgImg.contentBlock || makeContentBlock(tgImg.element)
 });

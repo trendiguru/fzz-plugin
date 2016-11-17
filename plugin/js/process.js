@@ -164,8 +164,9 @@ export function cleanRelevantImgDict(){
                 if (node.parentElement === null){
                     clean(node);
                     if (node.querySelectorAll){
-                        for (let el of node.querySelectorAll('*')){
-                            clean(el);
+                        let internalElems = node.querySelectorAll('*');
+                        for (let eKey in internalElems ){
+                            clean(internalElems[eKey]);
                         }
                     }
                 }

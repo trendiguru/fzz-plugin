@@ -10,6 +10,8 @@ export let urlStore = new URLStore;
 export let smartCheckRelevancy = urlStore.append.bind(urlStore);
 
 export function getImageData(imageUrl) {
+    console.log("********//*********");
+    console.log(API_URL + '?' + Query.stringify({imageUrl, pid: PID}));
     return fetch(API_URL + '?' + Query.stringify({imageUrl, pid: PID}))
     .then(res => res.json());
 }

@@ -8,6 +8,7 @@ import TGImage from './tgimage';
 import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
 import {Loading} from './elements';
+import {getImageData} from 'modules/server';
 
 let s = STACKS;
 
@@ -27,6 +28,7 @@ export function process (el, callback) {
         .then(drawLoading)
         .then(isRelevant)
         .then(removeLoading)
+        .then(attachResults)
         .then(relevantImg => {
             dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
@@ -45,6 +47,22 @@ export function process (el, callback) {
                 logIrrelevant(err);
             }
         });
+}
+
+function attachResults(tgImg){
+    // getImageData(tgImg.url)
+    // .then(data => {
+    //     // console.log(data);
+    //     // if (data && data.items) {
+    //     //     data.items = data.items.map(item => {
+    //     //         item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
+    //     //         return item;
+    //     //     });
+    //     // }
+    //     return data;
+    // })
+    // .then((data) =>{console.log(data)});//Object.assign({}, images, {data}));
+    return tgImage;
 }
 
 function isProcessed (element) {

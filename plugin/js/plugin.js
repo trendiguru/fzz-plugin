@@ -13,6 +13,7 @@ import {urlStore} from 'modules/server';
 import {process, cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
 import * as overlay from './overlay';
+import {getImageData} from 'modules/server';
 // import * as tutorial from './tutorial';
 
 wgxpath.install();
@@ -32,6 +33,16 @@ let style = new Style ();
 let iframe = new iFrame(Object.assign({fzz_id: analytics.fzz_id}, initAnaltics));
 analytics.track('Page Hit');
 analytics.listen('scroll');
+let processCallBack = (el)=>{
+    try{
+        attachResults(el, analytics).then((data)=>{console.log("kkkkkkk"); console.log(el.firstResult);});}
+    catch(e){
+        console.log(e);
+    }
+    console.log("before load")
+    console.log(el.firstResult);
+    draw(ui, el);
+}
 
 if (ENV === 'DEV'){
     listenToExtension();
@@ -46,7 +57,7 @@ domready(() => {
             whitelist: WHITE_LIST,
             blacklist: BLACK_LIST,
             callbackExisting: true,
-            callback: onMutation(el => process(el, el => draw(ui, el))),
+            callback: onMutation(el => process(el, processCallBack)),
         });
         cleanRelevantImgDict();
         addEventListener('click', e => {
@@ -139,4 +150,17 @@ function isRelevantScript () {
     }
     body.setAttribute('data-fzz-run', true);
     return true;
+}
+
+function attachResults(tgImg, analytics){
+    return new Promise((resolve, reject)=>{
+        console.log(tgImg.url);
+        getImageData(tgImg.url)
+        .then(data => {
+            if (data && data.items) {
+                tgImg.firstResult  = analytics.appendResultLink(data.items[0].similar_results[0]).link;
+            }
+            resolve(data);
+        });
+    });
 }

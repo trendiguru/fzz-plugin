@@ -28,7 +28,6 @@ export function process (el, callback) {
         .then(drawLoading)
         .then(isRelevant)
         .then(removeLoading)
-        .then(attachResults)
         .then(relevantImg => {
             dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
@@ -47,22 +46,6 @@ export function process (el, callback) {
                 logIrrelevant(err);
             }
         });
-}
-
-function attachResults(tgImg){
-    // getImageData(tgImg.url)
-    // .then(data => {
-    //     // console.log(data);
-    //     // if (data && data.items) {
-    //     //     data.items = data.items.map(item => {
-    //     //         item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
-    //     //         return item;
-    //     //     });
-    //     // }
-    //     return data;
-    // })
-    // .then((data) =>{console.log(data)});//Object.assign({}, images, {data}));
-    return tgImage;
 }
 
 function isProcessed (element) {
@@ -171,20 +154,14 @@ export function cleanRelevantImgDict(){
         }
     };
     let observer = new MutationObserver((mutations) => {
-        //Plain objects are not iterable!
-        //biblio:https://github.com/babel/babel-loader/issues/84#issuecomment-120138968
-        for (let iKey in mutations) {
-            let mutation = mutations[iKey];
-            let addedNodes = mutation.removedNodes;
-            for (let jKey in addedNodes) {
-                let node = addedNodes[jKey];
+        for (let mutation of mutations) {
+            for (let node of mutation.removedNodes) {
                 //if it is realy deletet from dom and not replaced!
                 if (node.parentElement === null){
                     clean(node);
                     if (node.querySelectorAll){
-                        let internalElems = node.querySelectorAll('*');
-                        for (let eKey in internalElems ){
-                            clean(internalElems[eKey]);
+                        for (let el of node.querySelectorAll('*')){
+                            clean(el);
                         }
                     }
                 }
@@ -196,6 +173,7 @@ export function cleanRelevantImgDict(){
         subtree: true,
     });
 }
+
 let addContentBlock = (tgImg) => Object.assign(tgImg, {
     contentBlock: tgImg.contentBlock || makeContentBlock(tgImg.element)
 });

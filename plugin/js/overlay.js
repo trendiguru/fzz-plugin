@@ -95,8 +95,11 @@ export function preview (tgImg) {
 
 let click = {
     button (e) {
-        block(e);
-        dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
+            block(e);
+            if (this.firstResult){
+            window.open(this.firstResult,'_blank');
+            dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
+        }
     },
     info (e) {
         block(e);

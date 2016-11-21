@@ -1,5 +1,5 @@
 import amplitude from '../ext/amplitude-3.3.2-min.gz';
-import {AMPLITUDE_KEY} from 'constants';
+import {AMPLITUDE_KEY, TRACKED_EVENTS} from 'constants';
 
 export default {
     load () {
@@ -10,6 +10,8 @@ export default {
         return Promise.resolve();
     },
     track (eventName, properties) {
-        amplitude.getInstance().logEvent(eventName, properties);
+        if (TRACKED_EVENTS.amplitude.includes(eventName)){
+            amplitude.getInstance().logEvent(eventName, properties);
+        }
     },
 };

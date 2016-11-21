@@ -75,6 +75,10 @@ export const HOST_DOMAIN = {
     AMPLITUDE_KEY = {
         fashionseoul:'fcdaab0bbcf0b89bf8ddb97ba30197e8'
     }[PID] || '3d4fa64b96ff312455271dade3170591',
+    TRACKED_EVENTS = {
+        amplitude:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
+        mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked']
+    },
     CRAZY_TAB_RECIPIENTS = ['dev', 'DEV', 'Y8Y4jENvaJ2Lsklz'],
     UI = {
         'recruit-pilot': {

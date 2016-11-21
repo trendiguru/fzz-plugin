@@ -35,12 +35,11 @@ analytics.track('Page Hit');
 analytics.listen('scroll');
 let processCallBack = (el)=>{
     try{
-        attachResults(el, analytics).then((data)=>{console.log("kkkkkkk"); console.log(el.firstResult);});}
+        attachResults(el, analytics);
+    }
     catch(e){
         console.log(e);
     }
-    console.log("before load")
-    console.log(el.firstResult);
     draw(ui, el);
 }
 
@@ -154,7 +153,6 @@ function isRelevantScript () {
 
 function attachResults(tgImg, analytics){
     return new Promise((resolve, reject)=>{
-        console.log(tgImg.url);
         getImageData(tgImg.url)
         .then(data => {
             if (data && data.items) {

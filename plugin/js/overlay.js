@@ -1,3 +1,4 @@
+import {CRAZY_TAB_RECIPIENTS, PID} from 'constants';
 /**
  * Create the overlay div and the buttons within
  * @param   {object} tgImg TGImage object for which to draw, attach as its buttonDiv.
@@ -95,11 +96,12 @@ export function preview (tgImg) {
 
 let click = {
     button (e) {
-            block(e);
-            if (this.firstResult){
+        block(e);
+        if (this.firstResult && CRAZY_TAB_RECIPIENTS.includes(PID)){
             window.open(this.firstResult,'_blank');
-            dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
         }
+        dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
+
     },
     info (e) {
         block(e);

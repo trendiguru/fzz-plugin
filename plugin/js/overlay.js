@@ -98,7 +98,32 @@ let click = {
     button (e) {
         block(e);
         if (this.firstResult && CRAZY_TAB_RECIPIENTS.includes(PID)){
-            window.open(this.firstResult,'_blank');
+            //window.open(this.firstResult,'_blank');
+            let url = this.firstResult;
+            let openNewBackgroundTab = ()=>{
+                try{
+                    var a = document.createElement("a");
+                    a.href = url;
+                    a.target = '_blank';
+                    var evt = document.createEvent("MouseEvents");
+                    //the tenth parameter of initMouseEvent sets ctrl key
+                    evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
+                                                true, false, false, false, 0, null);
+                    a.dispatchEvent(evt);
+                }
+                catch(err){
+                    console.deug(err);
+                }
+            }
+
+            let is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+            if(!is_chrome)
+                {
+                    var win = window.open(url, '_blank');
+                }
+            else{
+                openNewBackgroundTab();
+            }
         }
         dispatchEvent(Object.assign(CustomEvent ('button clicked'), this));
 

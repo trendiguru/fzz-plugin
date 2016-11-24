@@ -41,6 +41,7 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (err.element && err.element.url) {
                 irrelevantImgs[err.element.url] = err.element;
+                removeContentBlock(err.element);
                 s.set('irrelevantImg', err.element.element);
             } else {
                 logIrrelevant(err);
@@ -183,6 +184,17 @@ function drawLoading (tgImg) {
         tgImg.contentBlock.appendChild(Loading());
     }
     return tgImg;
+}
+
+function removeContentBlock(tgImage){
+    if (tgImage.contentBlock){
+        let fzzParent = tgImage.contentBlock.parentElement
+        fzzParent.insertBefore(tgImage.element, tgImage.contentBlock);
+        //if fzz-wrapper contains only fzz-objects => remove it.
+        if (tgImage.contentBlock.childNodes.length ===0){
+            fzzParent.removeChild(tgImage.contentBlock);
+        }
+    }
 }
 
 function removeLoading (tgImg) {

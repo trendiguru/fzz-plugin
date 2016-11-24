@@ -189,10 +189,9 @@ function drawLoading (tgImg) {
 function removeContentBlock(tgImage){
     if (tgImage.contentBlock){
         let fzzParent = tgImage.contentBlock.parentElement
-        fzzParent.appendChild(tgImage.element);
+        fzzParent.insertBefore(tgImage.element, tgImage.contentBlock);
         //if fzz-wrapper contains only fzz-objects => remove it.
-        if (tgImage.contentBlock.childList.length <=1 &&
-            tgImage.contentBlock.childList[0].classList.includes('fzz-button')){
+        if (tgImage.contentBlock.childNodes.length ===0){
             fzzParent.removeChild(tgImage.contentBlock);
         }
     }

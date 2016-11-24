@@ -190,7 +190,11 @@ function removeContentBlock(tgImage){
     if (tgImage.contentBlock){
         let fzzParent = tgImage.contentBlock.parentElement
         fzzParent.appendChild(tgImage.element);
-        fzzParent.removeChild(tgImage.contentBlock);
+        //if fzz-wrapper contains only fzz-objects => remove it.
+        if (tgImage.contentBlock.childList.length <=1 &&
+            tgImage.contentBlock.childList[0].classList.includes('fzz-button')){
+            fzzParent.removeChild(tgImage.contentBlock);
+        }
     }
 }
 

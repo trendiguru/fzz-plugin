@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, LOADING_TIMEOUT} from 'constants';
+import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, LOADING_TIMEOUT, CRAZY_AD_RECIPIENTS, PID} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 // import {smartCheckRelevancy, getImageData} from 'modules/server';
@@ -9,8 +9,11 @@ import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
 import {Loading} from './elements';
 import {getImageData} from 'modules/server';
+import addPlayer from './player';
 
 let s = STACKS;
+//---test---//
+console.log(CRAZY_AD_RECIPIENTS);
 
 export let relevantImgs = {},
     irrelevantImgs = {},
@@ -28,6 +31,7 @@ export function process (el, callback) {
         .then(drawLoading)
         .then(isRelevant)
         .then(removeLoading)
+        //.then(addAd)
         .then(relevantImg => {
             dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
@@ -41,7 +45,8 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (err.element && err.element.url) {
                 irrelevantImgs[err.element.url] = err.element;
-                removeContentBlock(err.element);
+                //removeContentBlock(err.element);TODO:Be carfull and turn it back!!!
+                addAd(err.element);
                 s.set('irrelevantImg', err.element.element);
             } else {
                 logIrrelevant(err);
@@ -211,6 +216,47 @@ function removeAllLoading(){
         loading.remove();
     }
 }
+
+//----test----//
+
+let count = 0;
+let params = [ '303084288'];
+const ADS_NUMBER = params.length;
+
+function addAd(tgImg){
+    console.log("bbb");
+    try{
+        console.log(CRAZY_AD_RECIPIENTS.includes(PID));
+        console.log(ADS_NUMBER);
+    }catch(err){
+        console.error(err);
+    }
+    if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
+        console.log("addAd");
+        try {
+            count++;
+            console.log(tgImg.element);
+            var w = tgImg.contentBlock;
+            var d = document.createElement("DIV");
+            d.style.height = "100%";
+            d.style.width = "100%";
+            d.style.position = 'absolute';
+            console.log(count);
+            console.log(params[count]);
+            addPlayer(d, params[count]);
+            w.insertBefore(d, w.childNodes[0]);
+        } catch (err) {
+            console.error(err);
+            throw {
+                name: err,
+                element: tgImg
+            };
+        }
+    }
+    return tgImg;
+}
+//-----end-test-----//
+
 addEventListener('button will be drawn', removeAllLoading);
 console.log("timeout "+LOADING_TIMEOUT);
 setTimeout(removeAllLoading, LOADING_TIMEOUT);

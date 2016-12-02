@@ -234,7 +234,7 @@ function addAd(tgImg){
     if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
         console.log("addAd");
         try {
-            count++;
+
             console.log(tgImg.element);
             var w = tgImg.contentBlock;
             var d = document.createElement("DIV");
@@ -245,6 +245,7 @@ function addAd(tgImg){
             console.log(params[count]);
             addPlayer(d, params[count]);
             w.insertBefore(d, w.childNodes[0]);
+            count++;
         } catch (err) {
             console.error(err);
             throw {

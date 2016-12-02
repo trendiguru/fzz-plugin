@@ -9,13 +9,13 @@ export default function addPlayer(targetEl, param){
     var head = document.getElementsByTagName('head')[0];
     var cedato = document.getElementById('cedato');
 
-
+    var but = document.createElement('a'); but.className = 'close_but'; but.href= 'javascript:void(0)';
     var img = document.createElement('img'); img.className = 'close_img';  img.src = 'data:image/png;base64,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';
 
     css.appendChild(sss);
     head.appendChild(css);
-
-
+    but.appendChild(img);
+    con.appendChild(but);
     con.appendChild(vid);
     lay.appendChild(con);
     //cedato.parentNode.insertBefore(lay, cedato);
@@ -57,7 +57,7 @@ export default function addPlayer(targetEl, param){
         addEvent(lay, transitionEnd, function wait(event){
             removeEvent(lay, transitionEnd, wait);
             removeClass(lay,'delay');
-           // addEvent(but, "click", destroy);
+            addEvent(but, "click", destroy);
             addEvent(window, "resize", onResizeListener);
             playerInterface.play();
         }, false);
@@ -230,4 +230,3 @@ export default function addPlayer(targetEl, param){
         return document[getHiddenProp()] || false;
     }
 }
-

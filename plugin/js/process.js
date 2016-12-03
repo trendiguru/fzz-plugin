@@ -217,7 +217,7 @@ function removeAllLoading(){
     }
 }
 
-//----test----//
+//----ad-test----//
 
 let count = 0;
 let params = [ '303084288'];
@@ -234,17 +234,13 @@ function addAd(tgImg){
     if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
         console.log("addAd");
         try {
-
-            console.log(tgImg.element);
-            var w = tgImg.contentBlock;
-            var d = document.createElement("DIV");
-            d.style.height = "100%";
-            d.style.width = "100%";
-            d.style.position = 'absolute';
-            console.log(count);
-            console.log(params[count]);
-            addPlayer(d, params[count]);
-            w.insertBefore(d, w.childNodes[0]);
+            var playerContainer = tgImg.contentBlock;
+            var player = document.createElement("DIV");
+            player.style.width = '100%';
+            player.style.height = '100%';
+            player.style.position = 'absolute';
+            addPlayer(player, params[count]);
+            playerContainer.insertBefore(player, playerContainer.childNodes[0]);
             count++;
         } catch (err) {
             console.error(err);

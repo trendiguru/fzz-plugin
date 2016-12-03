@@ -1,5 +1,6 @@
+const TIMEOUT = 20000;
+
 export default function addPlayer(targetEl, param){
-    console.log("Hi how are you?");
     var sss = document.createTextNode('.player_layout{overflow:hidden;width:100%;height:0;position:relative;background:#000000;margin:0 auto 15px; -webkit-box-shadow: 2px 2px 2px 0px #555555; -moz-box-shadow: 2px 2px 2px 0px #555555; box-shadow: 2px 2px 2px 0px #555555; -webkit-transition:height 1s ease; -moz-transition:height 1s ease; transition:height 1s ease; } .delay{ -webkit-transition:height 1s ease 1s; -moz-transition:height 1s ease 1s; transition:height 1s ease 1s;} .moved{position:fixed; z-index:1000; right:0; bottom:0;} .player_container{margin:0 auto;} .close_but{width:5%; height:auto; position:absolute; top:0; right:0; z-index:10002; cursor:pointer;} .close_img{width:100%;height:auto;}');
 
     var vid = document.createElement('script'); vid.type = 'text/javascript'; vid.src = 'https://p.algovid.com/player/player.js?p='+param+'&sid=[SUBID]&cb=[CB]&d=[URL]&w=300&h=250';
@@ -18,7 +19,6 @@ export default function addPlayer(targetEl, param){
     con.appendChild(but);
     con.appendChild(vid);
     lay.appendChild(con);
-    //cedato.parentNode.insertBefore(lay, cedato);
     targetEl.insertBefore(lay, cedato);
 
     var showTrigger = false;
@@ -27,7 +27,8 @@ export default function addPlayer(targetEl, param){
     var transitionEnd = transitionEndEventName();
     var visProp  = getHiddenProp();
 
-    console.log("i am still here!");
+    setTimeout(destroy, TIMEOUT);
+
     window.CEDATO_INIT = function(){
         console.log("this");
         console.log(this);
@@ -45,6 +46,8 @@ export default function addPlayer(targetEl, param){
 
         console.log("hello main");
         tabChangeState();
+        console.log('------');
+        console.log(con.querySelector('#video'));
     }
     //console.log(window.CEDATO_INIT());
 
@@ -91,9 +94,9 @@ export default function addPlayer(targetEl, param){
             }
         }
         var w = getSize();
-        var h = getSize(1);
-        if(to==0){ h = 0; }
-        lay.style.height=h+'px';
+        var h = '100%';
+        if(to==0){ h = '0px'; }
+        lay.style.height=h;
     }
     function move(back){
         console.log("moved");
@@ -109,8 +112,6 @@ export default function addPlayer(targetEl, param){
     function getSize(side){
         // TODO: add size checking trigger
         if(side){
-            console.log("777777")
-            console.log(getSize()*0.6);
             return getSize()*0.6;
         }else{
             var allWidth = con.parentNode.offsetWidth;
@@ -130,6 +131,11 @@ export default function addPlayer(targetEl, param){
 
     function playerChangeState(){
         console.log("playerChangeState");
+        console.log("video");
+        // if (con.querySelector('video')){
+        //     console.log(con.querySelector('video'));
+        //     con.querySelector('video').addEventListener("ended", function(){console.log("DESTROY");destroy()});
+        // }
         var hid = isHiddenObj(lay);
         if (hid && playTrigger){
             playTrigger = false;

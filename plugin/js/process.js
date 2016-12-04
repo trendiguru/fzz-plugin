@@ -45,8 +45,9 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (err.element && err.element.url) {
                 irrelevantImgs[err.element.url] = err.element;
-                //removeContentBlock(err.element);TODO:Be carfull and turn it back!!!
-                addAd(err.element);
+                if (err.element.contentBlock && !addAd(err.element)){
+                    //removeContentBlock(err.element);
+                }
                 s.set('irrelevantImg', err.element.element);
             } else {
                 logIrrelevant(err);
@@ -224,15 +225,9 @@ let params = [ '303084288'];
 const ADS_NUMBER = params.length;
 
 function addAd(tgImg){
-    console.log("bbb");
-    try{
-        console.log(CRAZY_AD_RECIPIENTS.includes(PID));
-        console.log(ADS_NUMBER);
-    }catch(err){
-        console.error(err);
-    }
     if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
         console.log("addAd");
+        console.log(tgImg);
         try {
             var playerContainer = tgImg.contentBlock;
             var player = document.createElement("DIV");
@@ -242,6 +237,7 @@ function addAd(tgImg){
             addPlayer(player, params[count]);
             playerContainer.insertBefore(player, playerContainer.childNodes[0]);
             count++;
+            return true;
         } catch (err) {
             console.error(err);
             throw {
@@ -250,7 +246,7 @@ function addAd(tgImg){
             };
         }
     }
-    return tgImg;
+    return false;
 }
 //-----end-test-----//
 

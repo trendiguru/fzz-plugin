@@ -12,8 +12,6 @@ import {getImageData} from 'modules/server';
 import addPlayer from './player';
 
 let s = STACKS;
-//---test---//
-console.log(CRAZY_AD_RECIPIENTS);
 
 export let relevantImgs = {},
     irrelevantImgs = {},
@@ -31,7 +29,6 @@ export function process (el, callback) {
         .then(drawLoading)
         .then(isRelevant)
         .then(removeLoading)
-        //.then(addAd)
         .then(relevantImg => {
             dispatchEvent(new CustomEvent('button will be drawn'));
             let date = new Date();
@@ -46,7 +43,7 @@ export function process (el, callback) {
             if (err.element && err.element.url) {
                 irrelevantImgs[err.element.url] = err.element;
                 if (err.element.contentBlock && !addAd(err.element)){
-                    //removeContentBlock(err.element);
+                    removeContentBlock(err.element);
                 }
                 s.set('irrelevantImg', err.element.element);
             } else {
@@ -136,7 +133,6 @@ function isRelevant (tgImg) {
 }
 
 function logIrrelevant(error) {
-    //console.log('reached logIrrelevant');
     let errName = error.name;
     let errElement = error.element;
     let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
@@ -226,8 +222,6 @@ const ADS_NUMBER = params.length;
 
 function addAd(tgImg){
     if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
-        console.log("addAd");
-        console.log(tgImg);
         try {
             var playerContainer = tgImg.contentBlock;
             var player = document.createElement("DIV");

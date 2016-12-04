@@ -1,9 +1,10 @@
-const TIMEOUT = 20000;
+import cedatoTagInitfunction from './player-ext';
+const TIMEOUT = 60000;
 
 export default function addPlayer(targetEl, param){
     var sss = document.createTextNode('.player_layout{overflow:hidden;width:100%;height:0;position:relative;background:#000000;margin:0 auto 15px; -webkit-box-shadow: 2px 2px 2px 0px #555555; -moz-box-shadow: 2px 2px 2px 0px #555555; box-shadow: 2px 2px 2px 0px #555555; -webkit-transition:height 1s ease; -moz-transition:height 1s ease; transition:height 1s ease; } .delay{ -webkit-transition:height 1s ease 1s; -moz-transition:height 1s ease 1s; transition:height 1s ease 1s;} .moved{position:fixed; z-index:1000; right:0; bottom:0;} .player_container{margin:0 auto;} .close_but{width:5%; height:auto; position:absolute; top:0; right:0; z-index:10002; cursor:pointer;} .close_img{width:100%;height:auto;}');
-
-    var vid = document.createElement('script'); vid.type = 'text/javascript'; vid.src = 'https://p.algovid.com/player/player.js?p='+param+'&sid=[SUBID]&cb=[CB]&d=[URL]&w=300&h=250';
+    cedatoTagInitfunction();
+    //var vid = document.createElement('script'); vid.type = 'text/javascript'; vid.src = 'https://p.algovid.com/player/player.js?p='+param+'&sid=[SUBID]&cb=[CB]&d=[URL]&w=300&h=250';
     var con = document.createElement('div'); con.id = 'video303084288[CB]'; con.className = 'player_container';
     var lay = document.createElement('div'); lay.className = 'player_layout';
     var css = document.createElement('style'); css.type = 'text/css';
@@ -17,7 +18,7 @@ export default function addPlayer(targetEl, param){
     head.appendChild(css);
     but.appendChild(img);
     con.appendChild(but);
-    con.appendChild(vid);
+    //con.appendChild(vid);
     lay.appendChild(con);
     targetEl.insertBefore(lay, cedato);
 
@@ -47,9 +48,8 @@ export default function addPlayer(targetEl, param){
         console.log("hello main");
         tabChangeState();
         console.log('------');
-        console.log(con.querySelector('#video'));
+        console.log(con.querySelector('video'));
     }
-    //console.log(window.CEDATO_INIT());
 
     function show(){
         console.log("show");
@@ -132,10 +132,10 @@ export default function addPlayer(targetEl, param){
     function playerChangeState(){
         console.log("playerChangeState");
         console.log("video");
-        // if (con.querySelector('video')){
-        //     console.log(con.querySelector('video'));
-        //     con.querySelector('video').addEventListener("ended", function(){console.log("DESTROY");destroy()});
-        // }
+        if (con.querySelector('video')){
+            console.log(con.querySelector('video'));
+            con.querySelector('video').addEventListener("ended", function(){console.log("DESTROY");destroy()});
+        }
         var hid = isHiddenObj(lay);
         if (hid && playTrigger){
             playTrigger = false;

@@ -9,7 +9,7 @@ import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
 import {Loading} from './elements';
 import {getImageData} from 'modules/server';
-import addPlayer from './player';
+import addAd from './video';
 
 let s = STACKS;
 
@@ -213,36 +213,6 @@ function removeAllLoading(){
         loading.remove();
     }
 }
-
-//----ad-test----//
-
-let count = 0;
-let params = [ '303084288'];
-const ADS_NUMBER = params.length;
-
-function addAd(tgImg){
-    if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID)) {
-        try {
-            var playerContainer = tgImg.contentBlock;
-            var player = document.createElement("DIV");
-            player.style.width = '100%';
-            player.style.height = '100%';
-            player.style.position = 'absolute';
-            addPlayer(player, params[count]);
-            playerContainer.insertBefore(player, playerContainer.childNodes[0]);
-            count++;
-            return true;
-        } catch (err) {
-            console.error(err);
-            throw {
-                name: err,
-                element: tgImg
-            };
-        }
-    }
-    return false;
-}
-//-----end-test-----//
 
 addEventListener('button will be drawn', removeAllLoading);
 console.log("timeout "+LOADING_TIMEOUT);

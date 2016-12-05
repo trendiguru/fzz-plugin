@@ -1,34 +1,56 @@
 import addPlayer from './player';
 import {CRAZY_AD_RECIPIENTS, PID} from 'constants';
+const LAYER_CLASSNAME = 'fzz-ad-layer';
 //----ad-test----//
 let count = 0;
 const PARAMS = [ '303084288'];
 const ADS_NUMBER = PARAMS.length;
-const PLAYER_HEIGHT = 250;
+const PLAYER_HEIGHT = 200;
 const PLAYER_WIDTH = 300;
-const MIN_BORDER = 0;
+const MIN_BORDER = 5;
+const PLAYER_CLASSNAME = 'fzz-ad-player';
 
 function validContainer(container){
     let contStyle = window.getComputedStyle(container);
     let contHeight = window.parseInt(contStyle.height.slice(0,-2));
     let contWidth = window.parseInt(contStyle.width.slice(0,-2));
-    console.log("validContainer");
-    console.log(contHeight);
-    console.log(contWidth);
-    return (PLAYER_HEIGHT/PLAYER_WIDTH < ((contHeight - MIN_BORDER*2)/contWidth));
+    return (contWidth && (PLAYER_HEIGHT/PLAYER_WIDTH < ((contHeight - MIN_BORDER*2)/contWidth)));
+}
+
+function calculateStyle(player, container){
+    let contStyle = window.getComputedStyle(container);
+    let contWidth = window.parseInt(contStyle.width.slice(0,-2));
+    let contHeight = window.parseInt(contStyle.height.slice(0,-2));
+    let playerHeight = contWidth*(PLAYER_HEIGHT/PLAYER_WIDTH);
+    let height = (playerHeight/contHeight)*100;// TODO : contHeight must be != 0!!!!!!
+    player.style.height = height+'%';
+    player.style.width = '100%';
+    player.style.position = 'absolute';
+    player.style.top = '0px';
+    player.className = PLAYER_CLASSNAME;
+    player.style.marginTop =  player.style.marginBottom = ((1-(playerHeight/contHeight))*50)+'%';
+}
+
+function addLayer(container){
+    let layer = document.createElement('DIV');
+    layer.style.height = '100%';
+    layer.style.width = '100%';
+    layer.style.position = 'absolute';
+    layer.style.backgroundColor = 'rgba(111, 20, 80, 0.701961)';
+    layer.style.top = '0px';
+    layer.className = LAYER_CLASSNAME;
+    container.appendChild(layer);
 }
 
 export default function addAd(tgImg){
-    if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID) && validContainer(tgImg.contentBlock)) {
+    var playerContainer = tgImg.contentBlock;
+    if (count<ADS_NUMBER && CRAZY_AD_RECIPIENTS.includes(PID) && validContainer(playerContainer)) {
         try {
-            var playerContainer = tgImg.contentBlock;
             var player = document.createElement("DIV");
-            player.style.width = '90%';
-            player.style.height = '90%';
-            player.style.position = 'absolute';
-            player.style.margin = '5%';
-            addPlayer(player, PARAMS[count]);
-            playerContainer.insertBefore(player, playerContainer.childNodes[0]);
+            calculateStyle(player, playerContainer);
+            addPlayer(player, playerContainer, PARAMS[count]);
+            addLayer(playerContainer);
+            playerContainer.appendChild(player);
             count++;
             return true;
         } catch (err) {

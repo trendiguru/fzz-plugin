@@ -1,5 +1,5 @@
 import cedatoTagInitfunction from './player-ext';
-const TIMEOUT = 60000;
+const TIMEOUT = 30000;
 
 export default function addPlayer(targetEl, container, param){
     var sss = document.createTextNode('.player_layout{overflow:hidden; width:80%; height:0; margin:0 auto; position:relative; background:#000000; -webkit-transition:height 1s ease; -moz-transition:height 1s ease; transition:height 1s ease; -webkit-box-shadow:2px 2px 2px 0px #555555; -moz-box-shadow:2px 2px 2px 0px #555555; box-shadow:2px 2px 2px 0px #555555;}.delay{-webkit-transition:height 1s ease 2s; -moz-transition:height 1s ease 2s; transition:height 1s ease 2s;}.player_container{margin:0 auto;}.close_but{width:5%;height:auto;position:absolute;top:0;right:0;z-index:10002;cursor:pointer;}.close_img{width:100%;height:auto;}');
@@ -27,6 +27,8 @@ export default function addPlayer(targetEl, container, param){
    var playerInterface = null;
    var transitionEnd = transitionEndEventName();
    var visProp  = getHiddenProp();
+
+   setTimeout(destroy, TIMEOUT);
 
    window.CEDATO_INIT = function(){
        playerInterface = this;

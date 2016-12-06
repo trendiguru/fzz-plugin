@@ -76,9 +76,10 @@ export default function addPlayer(targetEl, container, param){
                var evtname = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
                document.removeEventListener(evtname, tabChangeState);
            }
+           container.querySelector('.fzz-ad-layer').remove();
+           container.querySelector('.fzz-ad-player').remove();
        });
-       container.querySelector('.fzz-ad-layer').remove();
-       container.querySelector('.fzz-ad-player').remove();
+
    }
    function resize(to){
       if(isMobile()){

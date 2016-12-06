@@ -213,4 +213,6 @@ export default function addPlayer(targetEl, container, param){
    function isHiddenTab(){
        return document[getHiddenProp()] || false;
    }
+
+   return destroy;
 }

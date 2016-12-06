@@ -40,6 +40,7 @@ function addLayer(container){
     layer.style.top = '0px';
     layer.className = LAYER_CLASSNAME;
     container.appendChild(layer);
+    return layer;
 }
 
 export default function addAd(tgImg){
@@ -48,9 +49,11 @@ export default function addAd(tgImg){
         try {
             var player = document.createElement("DIV");
             calculateStyle(player, playerContainer);
-            addPlayer(player, playerContainer, PARAMS[count]);
-            addLayer(playerContainer);
+            let destroy = addPlayer(player, playerContainer, PARAMS[count]);
+            let layer = addLayer(playerContainer);
+            layer.addEventListener('click', destroy);
             playerContainer.appendChild(player);
+
             count++;
             return true;
         } catch (err) {

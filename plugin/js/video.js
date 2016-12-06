@@ -6,7 +6,7 @@ import {
 const LAYER_CLASSNAME = 'fzz-ad-layer';
 //----ad-test----//
 let count = 0;
-const PARAMS = ['303084288'];
+const PARAMS = ['196083928'];
 const ADS_NUMBER = PARAMS.length;
 const PLAYER_HEIGHT = 200;
 const PLAYER_WIDTH = 300;

@@ -1,4 +1,3 @@
-import cedatoTagInitfunction from './player-ext';
 const TIMEOUT = 30000;
 
 export default function addPlayer(targetEl, container, param){

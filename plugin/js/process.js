@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, LOADING_TIMEOUT} from 'constants';
+import {MIN_IMG_WIDTH, MIN_IMG_HEIGHT, LOADING_TIMEOUT, CRAZY_AD_RECIPIENTS, PID} from 'constants';
 import imagesLoaded from 'imagesloaded';
 import {smartCheckRelevancy} from 'modules/server';
 // import {smartCheckRelevancy, getImageData} from 'modules/server';
@@ -9,6 +9,7 @@ import {makeContentBlock} from './draw';
 import {STACKS} from 'modules/devTools';
 import {Loading} from './elements';
 import {getImageData} from 'modules/server';
+import addAd from './video';
 
 let s = STACKS;
 
@@ -41,7 +42,9 @@ export function process (el, callback) {
             // the others will arrive as {name: nnn, element:eee} error objects.
             if (err.element && err.element.url) {
                 irrelevantImgs[err.element.url] = err.element;
-                removeContentBlock(err.element);
+                if (err.element.contentBlock && !addAd(err.element)){
+                    removeContentBlock(err.element);
+                }
                 s.set('irrelevantImg', err.element.element);
             } else {
                 logIrrelevant(err);
@@ -130,7 +133,6 @@ function isRelevant (tgImg) {
 }
 
 function logIrrelevant(error) {
-    //console.log('reached logIrrelevant');
     let errName = error.name;
     let errElement = error.element;
     let errorCounts = irrelevantElements[errName] = irrelevantElements[errName] || {};
@@ -211,6 +213,7 @@ function removeAllLoading(){
         loading.remove();
     }
 }
+
 addEventListener('button will be drawn', removeAllLoading);
 console.log("timeout "+LOADING_TIMEOUT);
 setTimeout(removeAllLoading, LOADING_TIMEOUT);

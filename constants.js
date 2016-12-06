@@ -73,7 +73,9 @@ export const HOST_DOMAIN = {
         }
     },
     AMPLITUDE_KEY = {
-        fashionseoul:'fcdaab0bbcf0b89bf8ddb97ba30197e8'
+        'Y8Y4jENvaJ2Lsklz':'17417a62462da0797c51e59c675e547f',//healthyceleb
+        fashionseoul:'fcdaab0bbcf0b89bf8ddb97ba30197e8',
+        '6nGzEP7cp5s957P4':'bf3cbfdc2ba37f15e89af1fc66c1a5e4'//stylebook
     }[PID] || '3d4fa64b96ff312455271dade3170591',
     TRACKED_EVENTS = {
         amplitude:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],

@@ -27,7 +27,6 @@ export default function addPlayer(targetEl, container, param){
    var transitionEnd = transitionEndEventName();
    var visProp  = getHiddenProp();
 
-   setTimeout(destroy, TIMEOUT);
 
    window.CEDATO_INIT = function(){
        playerInterface = this;
@@ -51,6 +50,7 @@ export default function addPlayer(targetEl, container, param){
 
        addClass(lay,'delay');
        addEvent(lay, transitionEnd, function wait(event){
+           setTimeout(destroy, TIMEOUT);
            removeEvent(lay, transitionEnd, wait);
            removeClass(lay,'delay');
            addEvent(but, "click", destroy);

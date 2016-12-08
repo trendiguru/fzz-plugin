@@ -14,6 +14,7 @@ import {process, cleanRelevantImgDict} from './process';
 import TGImage from './tgimage';
 import * as overlay from './overlay';
 import {getImageData} from 'modules/server';
+import addAd from './video';
 // import * as tutorial from './tutorial';
 
 wgxpath.install();

@@ -84,7 +84,7 @@ export const HOST_DOMAIN = {
         mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked']
     },
     CRAZY_TAB_RECIPIENTS = ['dev', 'DEV', 'Y8Y4jENvaJ2Lsklz'],
-    CRAZY_AD_RECIPIENTS = ['dev', 'DEV', 'Y8Y4jENvaJ2Lsklz'],
+    CRAZY_AD_RECIPIENTS = ['dev', 'DEV'],
     UI = {
         'recruit-pilot': {
             overlay: {

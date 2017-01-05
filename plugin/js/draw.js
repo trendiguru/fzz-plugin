@@ -38,9 +38,7 @@ export function makeContainable (element) {
     if (element.tagName !== 'IMG') {
         return element;
     }
-    let {width, margin, padding, display} = getComputedStyle(element);
-    let previousHeight = element.clientHeight;
-    let parentHeight = element.parentElement.clientHeight || 'xxx';
+    let {width, margin, padding, display, height, zIndex} = getComputedStyle(element);
     let container = document.createElement('div');
     element.parentElement.insertBefore(container, element);
     container.appendChild(element);
@@ -52,11 +50,11 @@ export function makeContainable (element) {
         width,
         margin,
         padding,
+        zIndex,
         display: display !== 'inline' ? display : 'inline-block',
     });
-    let currentHeight = element.clientHeight;
-    if (currentHeight !== previousHeight && (element.parentElement && previousHeight === parentHeight)) {
-        container.style.height = '100%';
+    if (container.clientHeight === 0){
+        container.style.height = height;
     }
     return container;
 }

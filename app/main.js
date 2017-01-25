@@ -30,9 +30,20 @@ addEventListener('message', ({data: {imageURL, data}}) => {
             });
         }
         else {
-            store.dispatch({
-                type: 'getImageData',
-            });
+            // store.dispatch({
+            //     type: 'getImageData',
+            // });
+            getImageData(images.imageURL)
+            .then(data => {
+                if (data && data.items) {
+                    data.items = data.items.map(item => {
+                        item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
+                        return item;
+                    });
+                }
+                return data;
+            })
+            .then(data => Object.assign({}, images, {data}))
         }
     }
 });

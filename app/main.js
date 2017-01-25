@@ -49,7 +49,6 @@ addEventListener('message', ({data: {imageURL, data}}) => {
                 }
                 return data;
             })
-            .then(data => Object.assign({}, store.images, {data}))
             .then((data)=>{
                     console.log('dispatch results');
                     store.dispatch({

@@ -42,10 +42,6 @@ addEventListener('message', ({data: {imageURL, data}}) => {
                 return data;
             })
             .then((data)=>{
-                    console.log('imageURL');
-                    console.log(imageURL);
-                    console.log('store.images.state.imageURL');
-                    console.log(store.images.state.imageURL);
                     if (store.images.state.imageURL === imageURL){
                         store.dispatch({
                         type: 'getImageData',

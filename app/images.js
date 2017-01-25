@@ -1,5 +1,4 @@
 import {Collection} from 'delux';
-import {getImageData} from 'modules/server';
 import analytics from './analytics';
 
 let images = new Collection({imageURL: ''});
@@ -10,19 +9,13 @@ images.on('newImageURL', (images, action) => Object.assign({}, images, {
 
 images.on('addImageData', (images, action) => Object.assign({}, images, {data: action.payload}));
 
-images.on('getImageData', (images) =>
-    getImageData(images.imageURL)
-    .then(data => {
-        if (data && data.items) {
-            data.items = data.items.map(item => {
-                item.similar_results = item.similar_results.map(result => analytics.appendResultLink(result));
-                return item;
-            });
-        }
-        return data;
-    })
-    .then(data => Object.assign({}, images, {data}))
-);
+images.on('getImageData', (images, action) => {
+    console.log('getImageData is processed');
+    console.log('action');
+    console.log(action);
+    console.log('images');
+    console.log(images);
+    return Object.assign({}, images, {data: action.payload})});
 
 images.on('clearImageData', (images) => Object.assign({}, images, {
     imageURL: '',

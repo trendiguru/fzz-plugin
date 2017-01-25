@@ -42,6 +42,12 @@ addEventListener('message', ({data: {imageURL, data}}) => {
                 return data;
             })
             .then((data)=>{
+                /*
+                    This part of code is asynchronous=>  store.images.state.imageURL
+                    is not equals to the store.images.state.imageURL at the beginning
+                    of event-listener's callback for more information please see comments
+                    in #issue269 (MVC-promises-queue issue)
+                 */
                     if (store.images.state.imageURL === imageURL){
                         store.dispatch({
                         type: 'getImageData',

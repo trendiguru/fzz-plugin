@@ -83,7 +83,7 @@ export const HOST_DOMAIN = {
         amplitude:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
         mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked']
     },
-    CRAZY_TAB_RECIPIENTS = ['dev', 'DEV', 'Y8Y4jENvaJ2Lsklz'],
+    CRAZY_TAB_RECIPIENTS = ['dev', 'DEV'],
     CRAZY_AD_RECIPIENTS = ['dev', 'DEV'],
     UI = {
         'recruit-pilot': {

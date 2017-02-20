@@ -16,6 +16,7 @@ import * as overlay from './overlay';
 import {getImageData} from 'modules/server';
 import addAd from './video';
 // import * as tutorial from './tutorial';
+import browserSupport from 'modules/browser-support';
 
 wgxpath.install();
 
@@ -49,7 +50,7 @@ if (ENV === 'DEV'){
 }
 
 domready(() => {
-    if (isRelevantScript()) {
+    if (isRelevantScript() && browserSupport()) {
         console.log('FZZ: domready');
         document.body.appendChild(iframe);
         document.head.appendChild(style);

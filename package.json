@@ -28,12 +28,12 @@
     "stop": "pkill -f python.*HTTP.*4443"
   },
   "dependencies": {
+    "bowser": "^1.6.0",
     "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
     "custom-event-polyfill": "",
     "delux": "^1.2.0",
     "es6-promise": "",
-    "fzz-core": "https://github.com/trendiguru/fzz-core.git",
     "imagesloaded": "",
     "js-cookie": "",
     "mixpanel-browser": "",

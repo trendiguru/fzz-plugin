@@ -70,27 +70,19 @@ function _versionControl(browserName){
 
 export default function(){
     let browserSupportStatus = false;
-    console.log('TEST4565:')
-    console.log(bowser.version);
-    // try{
-        let browserNames = Object.keys(BROWSER_SUPPORT[PID]);
-        console.log('browserName');
-        console.log(browserName);
-        // if does not exist the browsers-support-definition for current PID => run the script independently.
-        //TODO: create a default browsers-support-definition.
-        if (!browserNames){
-            return true;
+    let browserNames = (BROWSER_SUPPORT[PID])? Object.keys(BROWSER_SUPPORT[PID]):undefined;
+    // if does not exist the browsers-support-definition for current PID => run the script independently.
+    //TODO: create a default browsers-support-definition.
+    if (!browserNames){
+        return true;
+    }
+    for(let key of browserNames){
+        if (bowser[key]){
+            browserSupportStatus=_versionControl(key);
         }
-        for(let key of browserNames){
-            if (bowser[key]){
-                browserSupportStatus=_versionControl(key);
-            }
-        }
-        if (browserSupportStatus===false){
-            console.log('tg app does not support current browser version.');
-        }
-    // }catch(error){
-        console.log('browserSupportStatus is failed with: '+error);
-    // }
+    }
+    if (browserSupportStatus===false){
+        console.log('tg app does not support current browser version.');
+    }
     return browserSupportStatus;
 }

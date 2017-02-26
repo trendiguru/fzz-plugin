@@ -22,7 +22,7 @@ export default class Analytics {
                 ga: ga_wrap,
                 mp: mp_wrap,
                 amplitude: amplitude_wrap,
-                nginx
+                //nginx
             }
         });
 

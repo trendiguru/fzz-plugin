@@ -126,12 +126,16 @@ domready(() => {
 
 function onMutation (action) {
     return (mutations) => {
-        for (let mutation of mutations) {
+        let mutationsList = Object.values(mutations);
+        for (let mutation of mutationsList) {
             if (mutation.type == 'childList') {
-                for (let node of mutation.addedNodes) {
+                let nodesList = Object.values(mutation.addedNodes);
+                for (let node of nodesList) {
                     action(node);
                     if (node.querySelectorAll){
-                        for (let el of node.querySelectorAll('*')){
+                        // let elemsList = Object.values(node.querySelectorAll('*'));
+                        let elemsList = Array.from(node.querySelectorAll('*'));
+                        for (let el of elemsList){
                             action(el);
                         }
                     }

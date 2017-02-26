@@ -7,74 +7,136 @@ const ua = window.navigator.userAgent;
 const BROWSER_SUPPORT = {
     //stylebook:
     '6nGzEP7cp5s957P4':{
-        chrome:{
-            MIN_VERSION:DEFAULT_MIN_VERSION,
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
+        browsers:{
+            chrome:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            chromium:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            opera:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            //ie
+            msie:{
+                MIN_VERSION:'11',
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            //edge
+            msedge:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            safari:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            // firefox:{
+            //     MIN_VERSION:DEFAULT_MIN_VERSION,
+            //     MAX_VERSION:DEFAULT_MAX_VERSION,
+            //     INCLUDE:[],
+            //     EXCLUDE:[],
+            // },
         },
-        chromium:{
-            MIN_VERSION:DEFAULT_MIN_VERSION,
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
+        tablet: false,
+        mobile: false,
+    },
+        'dev':{
+        browsers:{
+            chrome:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            chromium:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            opera:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            //ie
+            msie:{
+                MIN_VERSION:'11',
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            //edge
+            msedge:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            safari:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
+            // firefox:{
+            //     MIN_VERSION:DEFAULT_MIN_VERSION,
+            //     MAX_VERSION:DEFAULT_MAX_VERSION,
+            //     INCLUDE:[],
+            //     EXCLUDE:[],
+            // },
         },
-        opera:{
-            MIN_VERSION:DEFAULT_MIN_VERSION,
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
-        },
-        //ie
-        msie:{
-            MIN_VERSION:'11',
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
-        },
-        //edge
-        msedge:{
-            MIN_VERSION:DEFAULT_MIN_VERSION,
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
-        },
-        safari:{
-            MIN_VERSION:DEFAULT_MIN_VERSION,
-            MAX_VERSION:DEFAULT_MAX_VERSION,
-            INCLUDE:[],
-            EXCLUDE:[],
-        },
-        // firefox:{
-        //     MIN_VERSION:DEFAULT_MIN_VERSION,
-        //     MAX_VERSION:DEFAULT_MAX_VERSION,
-        //     INCLUDE:[],
-        //     EXCLUDE:[],
-        // }
+        tablet: false,
+        mobile: false,
     }
 };
 
 function _versionControl(browserName){
-    if (BROWSER_SUPPORT[PID][browserName].EXCLUDE.indexOf(bowser.version)!==-1){
+    if (BROWSER_SUPPORT[PID]['browsers'][browserName].EXCLUDE.indexOf(bowser.version)!==-1){
         return false;
     }
-    if (BROWSER_SUPPORT[PID][browserName].INCLUDE.indexOf(bowser.version)!==-1){
+    if (BROWSER_SUPPORT[PID]['browsers'][browserName].INCLUDE.indexOf(bowser.version)!==-1){
         return true;
     }
-    let minVersion = Number(BROWSER_SUPPORT[PID][browserName].MIN_VERSION.split('.')[0]);
-    let maxVersion = Number(BROWSER_SUPPORT[PID][browserName].MAX_VERSION.split('.')[0]);
-    let currentVersion = Number(bowser.version.split('.')[0]);
+    let minVersion = Number(BROWSER_SUPPORT[PID]['browsers'][browserName].MIN_VERSION.split('.')[0]);
+    let maxVersion = Number(BROWSER_SUPPORT[PID]['browsers'][browserName].MAX_VERSION.split('.')[0]);
+    let currentVersion = Number(bowser.version.split('.')[0]);//checks only the first number before dot (main version).
     return (currentVersion<=maxVersion && currentVersion>=minVersion);
 }
 
 
 export default function(){
     let browserSupportStatus = false;
-    let browserNames = (BROWSER_SUPPORT[PID])? Object.keys(BROWSER_SUPPORT[PID]):undefined;
-    // if does not exist the browsers-support-definition for current PID => run the script independently.
+    let browserNames = (BROWSER_SUPPORT[PID])? Object.keys(BROWSER_SUPPORT[PID]['browsers']):undefined;
+    // if does not exist the browsers-support-definition for current PID => DO NOT run the script independently.
     //TODO: create a default browsers-support-definition.
     if (!browserNames){
-        return true;
+        return false;
+    }
+    //check if supports mobile-browsers:
+    if (!BROWSER_SUPPORT[PID].mobile && bowser.mobile){
+        return false;
+    }
+    //check if supports tablet-browsers:
+    if (!BROWSER_SUPPORT[PID].tablet && bowser.tablet){
+        return false;
     }
     for(let key of browserNames){
         if (bowser[key]){

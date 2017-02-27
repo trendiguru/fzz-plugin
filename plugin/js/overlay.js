@@ -11,9 +11,8 @@ function Overlay (tgImg, classList = []) {
     let info = buttonDiv.info = document.createElement('button');
     classList = Array.isArray(classList) ? classList : [classList];
     buttonDiv.className = ['fzz_overlay', 'fazz', ...classList].join(' ');
-    // buttonDiv.classList.add('fzz_overlay', 'fazz', ...classList);
     button.classList.add('fzz-button');
-    info.classList.add('round', 'fzz-info');
+    info.className = 'round fzz-info';
     buttonDiv.appendChild(button);
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));

@@ -81,7 +81,8 @@ export const HOST_DOMAIN = {
     }[PID] || '3d4fa64b96ff312455271dade3170591',
     TRACKED_EVENTS = {
         amplitude:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
-        mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked']
+        mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
+        nginx:[],
     },
     CRAZY_TAB_RECIPIENTS = ['dev', 'DEV'],
     CRAZY_AD_RECIPIENTS = ['dev', 'DEV'],

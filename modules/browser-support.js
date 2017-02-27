@@ -46,12 +46,6 @@ const BROWSER_SUPPORT = {
                 INCLUDE:[],
                 EXCLUDE:[],
             },
-            // firefox:{
-            //     MIN_VERSION:DEFAULT_MIN_VERSION,
-            //     MAX_VERSION:DEFAULT_MAX_VERSION,
-            //     INCLUDE:[],
-            //     EXCLUDE:[],
-            // },
         },
         tablet: false,
         mobile: false,
@@ -96,15 +90,15 @@ const BROWSER_SUPPORT = {
                 INCLUDE:[],
                 EXCLUDE:[],
             },
-            // firefox:{
-            //     MIN_VERSION:DEFAULT_MIN_VERSION,
-            //     MAX_VERSION:DEFAULT_MAX_VERSION,
-            //     INCLUDE:[],
-            //     EXCLUDE:[],
-            // },
+            firefox:{
+                MIN_VERSION:DEFAULT_MIN_VERSION,
+                MAX_VERSION:DEFAULT_MAX_VERSION,
+                INCLUDE:[],
+                EXCLUDE:[],
+            },
         },
-        tablet: false,
-        mobile: false,
+        tablet: true,
+        mobile: true,
     }
 };
 
@@ -125,10 +119,10 @@ function _versionControl(browserName){
 export default function(){
     let browserSupportStatus = false;
     let browserNames = (BROWSER_SUPPORT[PID])? Object.keys(BROWSER_SUPPORT[PID]['browsers']):undefined;
-    // if does not exist the browsers-support-definition for current PID => DO NOT run the script independently.
+    // if does not exist the browsers-support-definition for current PID => run the script independently.
     //TODO: create a default browsers-support-definition.
     if (!browserNames){
-        return false;
+        return true;
     }
     //check if supports mobile-browsers:
     if (!BROWSER_SUPPORT[PID].mobile && bowser.mobile){

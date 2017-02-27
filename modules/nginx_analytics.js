@@ -1,4 +1,4 @@
-import {SERVER_URL} from 'constants';
+import {SERVER_URL,TRACKED_EVENTS} from 'constants';
 import {Query} from './utils';
 
 let nginx = {
@@ -23,14 +23,15 @@ nginx.init = function (userId) {
         resolve();
     });
 };
-
 nginx.track = function (event, properties) {
-    console.debug({Description: 'nginx.track', event, properties});
-    // send pixel
-    let img = new Image();
-    img.src = nginx.serverUrl + buildQueryString(event, properties);
-    img.onload = () => console.debug('fetched');
-    // (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
+    if (TRACKED_EVENTS.nginx.includes(event)){
+        console.debug({Description: 'nginx.track', event, properties});
+        // send pixel
+        let img = new Image();
+        img.src = nginx.serverUrl + buildQueryString(event, properties);
+        img.onload = () => console.debug('fetched');
+        // (new Image()).src = nginx.serverUrl + buildQueryString(event, properties);
+    }
 };
 
 export function buildQueryString (event, properties = {}) {

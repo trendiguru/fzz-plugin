@@ -3,8 +3,6 @@ const CURRENT_SCRIPT_ID = 'fzz-script';
 
 export default class FzzDataAttributes {
     constructor () {
-        console.log('document');
-        console.log(document);
         Object.assign(this, {
             pid: 'dev',
             api: extension ? 'nd' : 'pd',

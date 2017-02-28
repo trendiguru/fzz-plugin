@@ -19,18 +19,24 @@ ReactDOM.render(
 
 /*------ MESSAGES ------*/
 addEventListener('message', ({data: {imageURL, data}}) => {
+    console.log("FFFFF");
     if (store.images.state.imageURL !== imageURL) {
+        console.log("1");
         store.dispatch({
             type: 'newImageURL',
             payload: imageURL,
         });
         if (typeof data === 'object') {
+            console.log("addImageUrl");
+            console.log(data);
             store.dispatch({
                 type: 'addImageData',
                 payload: data
             });
         }
         else {
+            console.log("3");
+            console.log(imageURL);
             getImageData(imageURL)
             .then(data => {
                 if (data && data.items) {
@@ -49,13 +55,20 @@ addEventListener('message', ({data: {imageURL, data}}) => {
                     in #issue269 (MVC-promises-queue issue) or/and in release information of
                     the release 1.3.9.
                  */
+                console.log("4");
+                console.log(data);
                     if (store.images.state.imageURL === imageURL){
+                        console.log("5");
+                        console.log(data);
                         store.dispatch({
                         type: 'getImageData',
                         payload: data
                     });
                 }
-            }).catch((err)=>{console.debug(err)});
+            }).catch((err)=>{
+                console.log('HAKUNA MATATAAAAAAAA');
+                console.debug(err);
+            });
         }
     }
 });

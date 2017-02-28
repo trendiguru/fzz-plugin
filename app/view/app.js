@@ -21,6 +21,7 @@ class App extends React.Component {
     constructor (props) {
         super(props);
         store.observe('images', ({images}) => {
+            console.log(images);
             this.setState({images});
         });
         this.state = {

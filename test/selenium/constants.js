@@ -1,6 +1,7 @@
 const path = require('path');
 
-const WAIT_TIME = 3500,
+const WAIT_TIME = 5000,
+    WAIT_TIMEOUT = WAIT_TIME*3;
     DRIVER_DECLARATION = {
         browsers:['firefox', 'chrome']
     },
@@ -102,6 +103,7 @@ const WAIT_TIME = 3500,
 
 module.exports = {
     WAIT_TIME,
+    WAIT_TIMEOUT,
     URLS,
     INJECTED_FILES,
     TEST_TIMEOUT,

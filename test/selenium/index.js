@@ -8,6 +8,8 @@ const webdriver = require('selenium-webdriver'),
     BUTTON_CLASSNAME,
     IFRAME_ID,
     SNIPPET,
+    WAIT_TIME,
+    WAIT_TIMEOUT,
 } = require('./constants.js'),
 BROWSER = DRIVER_DECLARATION.browsers[1],
 By = webdriver.By,
@@ -20,8 +22,9 @@ executeFzzScript(INJECTED_SCRIPT.ID, SNIPPET);
 setDevData()//test: imitation of editing fzzDevReportData object.
 getDevData()//test
 waitForTgButton(BUTTON_CLASSNAME);
-clickOnTgButton(BUTTON_CLASSNAME);
+clickOn(BUTTON_CLASSNAME, 'button clicked');
 huntFzzIframe(IFRAME_ID);
+checkResults();
 driver.quit();
 //------------//
 
@@ -36,9 +39,9 @@ function navigateTo(URL){
 function executeFzzScript(scriptId, snippet){
     let script = driver.findElement(By.id(scriptId))
     .then(()=>{
-        //on error:
         console.log('the '+scriptId+' is already injected');
     },(err)=>{
+        //on error:
         driver.executeScript(snippet)
         .then(null,(err)=>{
             errorReport(err, 'injected script');
@@ -48,14 +51,25 @@ function executeFzzScript(scriptId, snippet){
 }
 
 function waitForTgButton(className){
-    driver.wait(until.elementLocated(By.className(className)))
+    driver.wait(until.elementLocated(By.className(className)),WAIT_TIMEOUT)
     .then(null,(err)=>{
         errorReport(err, 'button located');
     });
 }
 
-function clickOnTgButton(className){
-    let button = driver.findElement(By.className(className));
+/**
+ * @param target - object <WebElement> which will be clicked,
+ * or className <string> - the className of the object which will be clicked. 
+ * @param stage - string which describes on which stage the function was performed. 
+ */
+function clickOn(target, stage){
+    let button = null;
+    if (typeof(target)==='string'){
+        button = driver.findElement(By.className(target));
+    }
+    if (typeof(target)==='object'){
+        button = target;
+    }
     if (BROWSER === 'firefox'){
        /* geckodriver (firefox 47+) does not support actions
         * see:https://github.com/mozilla/geckodriver/issues/159 
@@ -65,13 +79,13 @@ function clickOnTgButton(className){
         driver.actions().mouseMove(button).click().perform();
     }
     driver.then(null,(err)=>{
-        errorReport(err, 'button clicked');
+        errorReport(err, stage);
     });
 }
 
 function huntFzzIframe(id){
     let iframe = driver.findElement(By.id(id));
-    driver.wait(until.elementIsVisible(iframe))
+    driver.wait(until.elementIsVisible(iframe), WAIT_TIMEOUT)
     .then(null,(err)=>{
         errorReport(err, 'app opened');
     });
@@ -82,19 +96,68 @@ function huntFzzIframe(id){
     });
 }
 
-function openResults(){
-    ////*[@id="lightbox"]/div/nav - navigation xpath
-    drive.wait(()=>{return 'done'}, 5000);
-    let categories = driver.findElement(By.className('main'))
-    .then(null,(err)=>{
-        errorReport(err, 'get main container');
+function checkResults(){
+    var snippet = function(){
+        var NAV_SELECTOR = '#lightbox > div > nav > ul';
+        var nav = window.document.querySelector(NAV_SELECTOR).children;
+        var navTabs = Array.from(nav).slice(0, -1);//TODO: change ARRAY.from!!!!!!
+        var results = [];
+        var resIndex;
+        var resSelector
+        for (var i=0; i< navTabs.length; i++){
+            resIndex = i+1;
+            resSelector = '#lightbox > div > div > section:nth-child('+resIndex
+            +') > div > div:nth-child(2) > a > img';
+            results.push(window.document.querySelector(resSelector));
+        }
+        return {
+            'navigation':navTabs,
+            'sections':results,
+            'aside':{
+                close:window.document.querySelector('#close'),
+                info:window.document.querySelector('#feedback'),
+            }
+        };
+    }
+
+    let openResult = function(navTab, result){
+        clickOn(navTab);
+        driver.wait(pause(WAIT_TIME/2),WAIT_TIMEOUT);
+        clickOn(result);
+        driver.wait(pause(WAIT_TIME/2),WAIT_TIMEOUT);
+    }
+
+    //wait for app to load:
+    driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
+    let main = function(data){
+        let navTabsNum = data.navigation.length;
+        for (let i=0; i<navTabsNum; i++ ){
+            openResult(data.navigation[i], data.sections[i]);
+        }
+    }
+    
+    driver.executeScript(snippet)
+    .then((response)=>{
+        console.log(response);
+        main(response);
+    },(err)=>{
+        errorReport(err, 'injected script');
     });
-    categories.
+    driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
 }
 
 function errorReport(errObj, stage){
     console.log('at '+stage+' an error occurred:');
     console.log(errObj.message);
+}
+
+function pause(interval){
+    return driver.then(()=>{
+        return new Promise((resolve, reject)=>{
+            console.log('the system is paused for '+interval+' miliseconds');
+            setTimeout(resolve, interval);
+        });
+    })
 }
 
 function getDevData(){
@@ -106,7 +169,7 @@ function getDevData(){
         console.log('fzzDevReportData:');
         console.log(response);
     },(err)=>{
-        errorReport(err, 'injected script');
+        errorReport(err, 'get dev data');
     });
 }
 
@@ -119,19 +182,11 @@ function setDevData(){
                 '1213afz':'msg1',
             }
         };
-        let test = driver.executeScript(snippet)
-        .then((response)=>{
-            console.log('fzzDevReportData:');
-            console.log(response);
-        },(err)=>{
-            errorReport(err, 'injected script');
-        });
     };
     let test = driver.executeScript(snippet)
     .then((response)=>{
-        console.log('fzzDevReportData:');
-        console.log(response);
+        console.log('fzzDevReportData was injected to the window');
     },(err)=>{
-        errorReport(err, 'injected script');
+        errorReport(err, 'set dev data');
     });
 }

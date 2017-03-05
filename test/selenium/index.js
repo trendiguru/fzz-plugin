@@ -14,7 +14,12 @@ const webdriver = require('selenium-webdriver'),
 BROWSER = DRIVER_DECLARATION.browsers[1],
 By = webdriver.By,
 until = webdriver.until,
-driver = new webdriver.Builder().forBrowser(BROWSER).build();
+driver = new webdriver.Builder().forBrowser(BROWSER).build(),
+window = driver.getWindowHandle();
+
+// driver.manage().timeouts().implicitlyWait(10000);
+driver.manage().timeouts().pageLoadTimeout(WAIT_TIMEOUT);
+driver.manage().timeouts().setScriptTimeout(WAIT_TIMEOUT);
 
 //----flow----//
 navigateTo(URLS.potential[3]);
@@ -27,7 +32,6 @@ huntFzzIframe(IFRAME_ID);
 checkResults();
 driver.quit();
 //------------//
-
 
 function navigateTo(URL){
     driver.get(URL)
@@ -125,20 +129,47 @@ function checkResults(){
         driver.wait(pause(WAIT_TIME/2),WAIT_TIMEOUT);
         clickOn(result);
         driver.wait(pause(WAIT_TIME/2),WAIT_TIMEOUT);
-    }
+    };
 
-    //wait for app to load:
-    driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
+    let checkIfIframeClosed = function(){
+        //TODO: check how to swith between the tubs and check if the result was opened properly.
+        //TODO: force quit when an error occurred.
+        driver.switchTo().window(window);
+        let iframe = driver.findElement(By.id(IFRAME_ID))
+        .then(null,(err)=>{
+            errorReport(err, 'get fzzIframe second time.');
+        });
+        driver.executeScript(function(){
+            return document.querySelector('#fazzi').style.display==='none';
+        })
+        .then((iframeIsInvisible)=>{
+            if (!iframeIsInvisible){
+                let err = {message: 'app is not closed'};
+                errorReport(err, 'check if app was closed')
+            }else{
+                console.log('iframe was successfully closed');
+            }
+        },(err)=>{
+            errorReport(err, 'check if app was closed');
+        });
+    };
+
     let main = function(data){
         let navTabsNum = data.navigation.length;
         for (let i=0; i<navTabsNum; i++ ){
             openResult(data.navigation[i], data.sections[i]);
         }
+        driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
+        clickOn(data.aside.close);
+        driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
+        checkIfIframeClosed();
     }
     
+    //wait for app to load:
+    driver.wait(until.elementLocated(By.css('#lightbox > div > div > section:nth-child(1) > div > div:nth-child(1) > a > img')),WAIT_TIMEOUT);
+    driver.wait(pause(WAIT_TIME),WAIT_TIMEOUT);
     driver.executeScript(snippet)
     .then((response)=>{
-        console.log(response);
         main(response);
     },(err)=>{
         errorReport(err, 'injected script');
@@ -147,8 +178,9 @@ function checkResults(){
 }
 
 function errorReport(errObj, stage){
-    console.log('at '+stage+' an error occurred:');
+    console.log('at '+stage+' an ERROR occurred:');
     console.log(errObj.message);
+    driver.quit();
 }
 
 function pause(interval){
@@ -173,6 +205,10 @@ function getDevData(){
     });
 }
 
+/**
+ * This function imitates the injection of data from fzzplugin into page.
+ * That will help to treck fzzplugin performence while testing.
+ */
 function setDevData(){
     let snippet = function(){
         window.fzzDevReportData = {

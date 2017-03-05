@@ -26,7 +26,7 @@ const WAIT_TIME = 5000,
     
     RESULT_SELECTOR = 'IMG',
     IFRAME_ID = 'fazzi',
-    BUTTON_CLASSNAME = 'fzz-button';
+    BUTTON_CLASSNAME = 'fzz-button',
     LOADING_CLASSNAME = 'fzz-loading',
     SNIPPET = [
             function injectScript(localFlag){
@@ -77,42 +77,14 @@ const WAIT_TIME = 5000,
         SRC: SNIPPET(true).SRC,
     },
 
-    //-------------trash----------------
-    RESULTS_SRC = 'ecx.images-amazon.com',
-    INJECTED_FILES = {
-        'fzz-publish': null,
-        'fzz-test': './test/src/snippet.js',
-        'local': 'b_plugin.js'
-    },
-    NIGHTMARE_DECLARATION = {
-        show: true,
-        openDevTools: true,
-        gotoTimeout: 30000,
-        loadTimeout: 30000,
-        waitTimeout: 30000,
-        'webPreferences': {
-            'webSecurity': false
-        }
-    },
-    VIEWPORT = {
-        height: 1000,
-        width: 2000,
-    },
-    TEST_TIMEOUT = 120000;
-    //--------------------------------------
-
 module.exports = {
     WAIT_TIME,
     WAIT_TIMEOUT,
     URLS,
-    INJECTED_FILES,
-    TEST_TIMEOUT,
     DRIVER_DECLARATION,
-    VIEWPORT,
     IFRAME_ID,
     RESULT_SELECTOR,
     INJECTED_SCRIPT,
-    RESULTS_SRC,
     LOADING_CLASSNAME,
     BUTTON_CLASSNAME,
     SNIPPET

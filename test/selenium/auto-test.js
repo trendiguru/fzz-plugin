@@ -4,7 +4,11 @@ until = webdriver.until,
 getIframesElems  = function(){
     var NAV_SELECTOR = '#lightbox > div > nav > ul';
     var nav = window.document.querySelector(NAV_SELECTOR).children;
-    var navTabs = Array.from(nav).slice(0, -1);//TODO: change ARRAY.from!!!!!!
+    var navTabs = [];
+    //Array.from(nav).slice(0, -1);
+    for(let i=0;i<nav.length-1; i++){
+        navTabs.push(nav[i]);
+    }
     var results = [];
     var resIndex;
     var resSelector

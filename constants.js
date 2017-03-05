@@ -26,7 +26,7 @@ export const HOST_DOMAIN = {
     BLACK_LIST = blacklist,
     WHITE_LIST = whitelist,
     // draw
-    INFO_URL = 'http://infashion.co',
+    INFO_URL = 'https://www.trendiguru.com/publishers-1/',
     // iframe
     IFRAME_ID = 'fazzi',
     CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,

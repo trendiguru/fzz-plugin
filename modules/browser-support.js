@@ -111,8 +111,8 @@ function _versionControl(browserName){
     }
     let minVersion = Number(BROWSER_SUPPORT[PID]['browsers'][browserName].MIN_VERSION.split('.')[0]);
     let maxVersion = Number(BROWSER_SUPPORT[PID]['browsers'][browserName].MAX_VERSION.split('.')[0]);
-    let currentVersion = Number(bowser.version.split('.')[0]);//checks only the first number before dot (main version).
-    return (currentVersion<=maxVersion && currentVersion>=minVersion);
+    //compareVersions returns -1, 1 or 0.
+    return (bowser.compareVersions([maxVersion, currentVersion])>=0 && bowser.compareVersions([currentVersion, minVersion])>=0);
 }
 
 

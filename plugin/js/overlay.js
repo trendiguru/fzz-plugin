@@ -40,7 +40,7 @@ const Round = Overlay.extend(buttonDiv => {
     if (!localStorage.getItem('infashion tutorial was shown')) {
         let tutorial = document.createElement('div');
         tutorial.classList.add('tutorial');
-        tutorial.appendChild(document.createTextNode('Find similar clothes'));
+        tutorial.appendChild(document.createTextNode('Look to Shop'));
         buttonDiv.appendChild(tutorial);
     }
 });

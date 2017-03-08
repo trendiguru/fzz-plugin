@@ -12,7 +12,7 @@ AutoTest = require('./auto-test'),
     WAIT_TIME,
     WAIT_TIMEOUT,
 } = require('./constants.js'),
-BROWSER = DRIVER_DECLARATION.browsers[1],
+BROWSER = DRIVER_DECLARATION.browsers[0],
 By = webdriver.By,
 until = webdriver.until,
 driver = new webdriver.Builder().forBrowser(BROWSER).build();
@@ -28,10 +28,10 @@ test.executeFzzScript(INJECTED_SCRIPT.ID, SNIPPET);
 test.waitForTgButton(BUTTON_CLASSNAME, WAIT_TIMEOUT);
 test.clickOn('.'+BUTTON_CLASSNAME, 'button clicked');
 test.huntFzzIframe(IFRAME_ID, WAIT_TIMEOUT);
-test.checkResults();
-// driver.wait(until.elementLocated(By.css('#lightbox > div > div > section:nth-child(1) > div > div:nth-child(1) > a > img')),WAIT_TIMEOUT);
-// test.clickOn('#close');
-// test.pause(WAIT_TIME);
-test.checkIfIframeClosed();
+// test.checkResults();
+driver.wait(until.elementLocated(By.css('#lightbox > div > div > section:nth-child(1) > div > div:nth-child(1) > a > img')),WAIT_TIMEOUT);
+test.clickOn('#close');
+test.pause(WAIT_TIME);
+test.checkIfIframeClosed(IFRAME_ID);
 driver.quit();
 

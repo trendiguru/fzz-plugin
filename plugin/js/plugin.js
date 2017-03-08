@@ -23,7 +23,9 @@ wgxpath.install();
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');
+let pageUrl = window.location.href;
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
+    pageUrl,
     refererDomain,
     PID,
     publisherDomain: refererDomain,
@@ -87,14 +89,12 @@ domready(() => {
             s.set('requests', 'Trendi Button Drawn');
             analytics.track('Trendi Button Drawn', {
                 imageURL,
-                pageUrl: window.location.href
             });
         });
         addEventListener('button clicked', ({url: imageURL}) => {
             s.set('requests', 'Trendi Button Clicked');
             analytics.track('Trendi Button Clicked', {
                 imageURL,
-                pageUrl: window.location.href
             });
             iframe.show();
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');

@@ -46,6 +46,7 @@ class AutoTest{
         this.checkIfIframeClosed = this.checkIfIframeClosed.bind(this);
         this.getDevData = this.getDevData.bind(this);
         this.setDevData = this.setDevData.bind(this);
+        this.pause = this.pause.bind(this);
         this._errorReport = this._errorReport.bind(this);
         this._pause = this._pause.bind(this);
         this._openResult = this._openResult.bind(this);
@@ -80,13 +81,13 @@ class AutoTest{
 
     /**
      * @param target - object <WebElement> which will be clicked,
-     * or className <string> - the className of the object which will be clicked. 
+     * or querySelector <string> - the selector of the object which will be clicked. 
      * @param stage - string which describes on which stage the function was performed. 
      */
     clickOn(target, stage){
         let button = null;
         if (typeof(target)==='string'){
-            button = this.driver.findElement(By.className(target));
+            button = this.driver.findElement(By.css(target));
         }
         if (typeof(target)==='object'){
             button = target;
@@ -139,7 +140,10 @@ class AutoTest{
     checkIfIframeClosed(){
         //TODO: check how to swith between the tubs and check if the result was opened properly.
         //TODO: force quit when an error occurred.
-        this.driver.switchTo().window(this.startWindow);
+        if (this.driver.getWindowHandle()!==this.startWindow){
+            console.log("vvvv")
+            this.driver.switchTo().window(this.startWindow);
+        }
         let iframe = this.driver.findElement(By.id(IFRAME_ID))
         .then(null,(err)=>{
             this._errorReport(err, 'get fzzIframe second time.');
@@ -159,6 +163,10 @@ class AutoTest{
         });
     }
 
+    pause(time){
+        this.driver.wait(this._pause(time));
+    }
+
     /**
      * @param navTab - tab  <WebElement>.
      * @param result - result <WebElement>.
@@ -171,6 +179,7 @@ class AutoTest{
     }
 
     _errorReport(errObj, stage){
+        console.log('***');
         console.log('at '+stage+' an ERROR occurred:');
         console.log(errObj.message);
         this.driver.quit();

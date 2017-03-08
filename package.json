@@ -37,6 +37,7 @@
     "imagesloaded": "",
     "js-cookie": "",
     "mixpanel-browser": "",
+    "mobx": "^3.1.5",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "whatwg-fetch": "",

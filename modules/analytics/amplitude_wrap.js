@@ -1,4 +1,4 @@
-import amplitude from '../ext/amplitude-3.3.2-min.gz';
+import amplitude from 'ext/amplitude-3.3.2-min.gz';
 import {AMPLITUDE_KEY, TRACKED_EVENTS} from 'constants';
 
 export default {

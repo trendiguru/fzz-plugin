@@ -1,5 +1,5 @@
 import {SERVER_URL,TRACKED_EVENTS} from 'constants';
-import {Query} from './utils';
+import {Query} from 'modules/utils';
 
 let nginx = {
     // more fields are added in init()

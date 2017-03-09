@@ -168,25 +168,25 @@ export default {'default': {
             },
         },
         nginx: {
-            'Page Hit': {
+            'Page Hit': {//closed//
                 multiple: false,
-                active: true,
+                active: false,
                 valid: defaultEventValidator,
             },
-            'Button Seen': {
+            'Button Seen': {//closed//
                 multiple: false,
-                active: true,
+                active: false,
                 valid: defaultEventValidator,
             },
-            'Trendi Button Clicked': {
+            'Trendi Button Clicked': {//closed//
                 multiple: true,
-                active: true,
+                active: false,
                 valid: defaultEventValidator,
             },
             //this event is not influenced by track-agent config
-            'Result Clicked': {
+            'Result Clicked': {//closed//
                 multiple: true,
-                active: true,
+                active: false,
                 valid: defaultEventValidator,
             },
             'Info Button Clicked': {//closed//

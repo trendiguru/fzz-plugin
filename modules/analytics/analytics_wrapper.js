@@ -4,17 +4,15 @@ import ga_wrap from './ga_wrap';
 import mp_wrap from './mp_wrap';
 import amplitude_wrap from './amplitude_wrap';
 import nginx, {buildQueryString} from './nginx_analytics';
+import TrackAgent from './track-agent';
 import {HOST_DOMAIN} from 'constants';
-import {REQUESTS} from 'modules/devTools';
 import 'ext/timeme';
 
-REQUESTS.active = true;
 
 export default class Analytics {
 
     constructor (client, sessionProps) {
         // console.debug({client, sessionProps});
-
         Object.assign(this, {
             sessionProps,
             inited: undefined,
@@ -25,10 +23,9 @@ export default class Analytics {
                 nginx
             }
         });
-
         this.loadAll();
-
         this[`${client}Init`]();
+        this.trackAgent = new TrackAgent(this.libs);
 
     }
 
@@ -62,20 +59,10 @@ export default class Analytics {
         return result;
     }
 
-    track (eventName, props = {}, libs) {
+    track (eventName, props = {}) {
         // console.debug({description: 'tracked', eventName, props, libs});
         let combinedProps = Object.assign({}, this.sessionProps, props);
-        this.inited.then(() => {
-            // Use all libs if not specified
-            libs = libs || Object.keys(this.libs);
-            for (let [lib_name, lib] of Object.entries(this.libs)) {
-                if (libs.includes(lib_name)) {
-                    REQUESTS.set(props, 'property');
-                    lib.inited.then(() => lib.track(eventName, combinedProps));
-                }
-            }
-        });
-
+        this.inited.then(this.trackAgent.track(eventName, combinedProps));
     }
 
     listen (event) {

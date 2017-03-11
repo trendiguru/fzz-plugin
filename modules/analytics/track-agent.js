@@ -8,7 +8,7 @@ REQUESTS.active = true;
 const TRACK_AGENT = {
     '6nGzEP7cp5s957P4':stylebookConfig,
     'default': defaultConfig,
-}
+};
 
 export default class TrackAgent {
     constructor(libs) {
@@ -31,11 +31,13 @@ export default class TrackAgent {
         }
     }
     correctPID(pid) {
+        console.log('correctPID');
+        console.log((this.trackAgentData[pid] ? pid : 'default'));
         return (this.trackAgentData[pid] ? pid : 'default');
     }
     isValid(eventName, libName){
         console.log(eventName+" "+libName);
-        let libConfig = TRACK_AGENT[this.correctPID(PID)][libName];
-        return (libConfig && liblibConfig[eventName] && liblibConfig[eventName].valid());
+        let libConfig = this.trackAgentData[this.correctPID(PID)][libName];
+        return (libConfig && libConfig[eventName] && libConfig[eventName].valid());
     }
 }

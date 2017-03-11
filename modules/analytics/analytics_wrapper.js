@@ -72,7 +72,7 @@ export default class Analytics {
             let initScrollTop = window.scrollY;
             window.addEventListener('scroll', () => {
                 if (window.scrollY - initScrollTop > 20) {
-                    this.track('Publisher Scroll', undefined, ['ga']);
+                    this.track('Publisher Scroll', undefined);
                     initScrollTop = 100000000;
                 }
             });

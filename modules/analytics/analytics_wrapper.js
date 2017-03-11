@@ -25,7 +25,7 @@ export default class Analytics {
         });
         this.loadAll();
         this[`${client}Init`]();
-        this.trackAgent = new TrackAgent(this.libs);
+        this.trackAgent = new TrackAgent();
 
     }
 
@@ -60,9 +60,12 @@ export default class Analytics {
     }
 
     track (eventName, props = {}) {
-        // console.debug({description: 'tracked', eventName, props, libs});
         let combinedProps = Object.assign({}, this.sessionProps, props);
-        this.inited.then(this.trackAgent.track(eventName, combinedProps));
+        this.inited.then(() => {
+            for (let [libName, lib] of Object.entries(this.libs)) {
+                lib.inited.then(() => this.trackAgent.track(eventName, combinedProps, lib, libName));
+            }
+        });
     }
 
     listen (event) {

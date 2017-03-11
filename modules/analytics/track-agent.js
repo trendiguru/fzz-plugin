@@ -11,32 +11,25 @@ const TRACK_AGENT = {
 };
 
 export default class TrackAgent {
-    constructor(libs) {
+    constructor() {
         this.trackAgentData = TRACK_AGENT;
-        this.libs = libs;
         this.track = this.track.bind(this);
         this.isValid = this.isValid.bind(this);
         this.correctPID = this.correctPID.bind(this);
     }
 
-    track(eventName, properties) {
-        for (let [lib_name, lib] of Object.entries(this.libs)) {
-            REQUESTS.set(properties, 'property');
-            if (this.isValid(eventName, lib_name)) {
-                console.log('valid');
-                lib.inited.then(() => {
-                    lib.track(eventName, combinedProps);
-                });
-            }
+    track(eventName, properties, lib, libName) {
+        REQUESTS.set(properties, 'property');
+        if (this.isValid(eventName, libName)) {
+            lib.inited.then(() => {
+                lib.track(eventName, properties);
+            });
         }
     }
     correctPID(pid) {
-        console.log('correctPID');
-        console.log((this.trackAgentData[pid] ? pid : 'default'));
         return (this.trackAgentData[pid] ? pid : 'default');
     }
     isValid(eventName, libName){
-        console.log(eventName+" "+libName);
         let libConfig = this.trackAgentData[this.correctPID(PID)][libName];
         return (libConfig && libConfig[eventName] && libConfig[eventName].valid());
     }

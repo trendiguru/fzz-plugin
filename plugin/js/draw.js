@@ -3,14 +3,14 @@ import {isVisible} from 'ext/visibility';
 // import {analytics} from 'modules/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 
-let trackedButton = false;
+let SEEN_IMGS = {};
 
 export default function draw (ui, tgImg) {
     if (!tgImg.buttonDiv) {
         ui.overlay(tgImg);
     }
     tgImg.contentBlock.appendChild(tgImg.buttonDiv);
-    trackButtonSeen(tgImg.contentBlock);
+    trackButtonSeen(tgImg);
     dispatchEvent(Object.assign(CustomEvent('button drawn'),tgImg));
     STACKS.set('content', tgImg.buttonDiv);
 }
@@ -59,14 +59,19 @@ export function makeContainable (element) {
     return container;
 }
 
-function trackButtonSeen (el) {
-    if (!trackedButton){
+function trackButtonSeen (tgImg) {
+    let el = tgImg.contentBlock;
+    let imgUrl = tgImg.url;
+    if (!SEEN_IMGS[imgUrl]){
         let IntervalID = setInterval(() => {
-            if (!trackedButton && isVisible(el)) {
-                trackedButton = true;
-                dispatchEvent(CustomEvent('button seen'));
+            if (!SEEN_IMGS[imgUrl] && isVisible(el)) {
+                SEEN_IMGS[imgUrl] = IntervalID;
+                dispatchEvent(Object.assign(CustomEvent('button seen'),tgImg));
             }
         }, BUTTON_SEEN_CHECK_INTERVAL);
-        addEventListener('button seen', () => clearInterval(IntervalID));
+        addEventListener('button seen', ({url: imageURL}) => {
+            let IntervalID = SEEN_IMGS[imageURL];
+            clearInterval(IntervalID);
+        });
     }
 }

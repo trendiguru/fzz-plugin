@@ -105,6 +105,10 @@ domready(() => {
             analytics.track('Button Seen', {
                 imageURL,
             });
+            s.set('requests', 'First Button Seen: '+imageURL);
+            analytics.track('First Button Seen', {
+                imageURL,
+            });
         });
         // INFO BUTTON
         addEventListener('info button clicked', () => {

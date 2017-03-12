@@ -12,6 +12,11 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
+        'First Button Seen': {
+            multiple: false,
+            active: true,
+            valid: defaultEventValidator,
+        },
         'Button Seen': {
             multiple: false,
             active: true,
@@ -66,6 +71,11 @@ export default {
     },
     amplitude: {
         'Page Hit': {
+            multiple: false,
+            active: true,
+            valid: defaultEventValidator,
+        },
+        'First Button Seen': {
             multiple: false,
             active: true,
             valid: defaultEventValidator,
@@ -128,6 +138,11 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
+        'First Button Seen': {
+            multiple: false,
+            active: true,
+            valid: defaultEventValidator,
+        },
         'Button Seen': {
             multiple: false,
             active: true,
@@ -182,6 +197,11 @@ export default {
     },
     nginx: {
         'Page Hit': {//closed//
+            multiple: false,
+            active: false,
+            valid: defaultEventValidator,
+        },
+        'First Button Seen': {//closed//
             multiple: false,
             active: false,
             valid: defaultEventValidator,

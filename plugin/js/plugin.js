@@ -105,8 +105,8 @@ domready(() => {
             analytics.track('Button Seen', {
                 imageURL,
             });
-            s.set('requests', 'First Button Seen: '+imageURL);
-            analytics.track('First Button Seen', {
+            s.set('requests', 'Button Seen Multiple: '+imageURL);
+            analytics.track('Button Seen Multiple', {
                 imageURL,
             });
         });

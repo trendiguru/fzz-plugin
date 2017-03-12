@@ -12,8 +12,8 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'First Button Seen': {
-            multiple: false,
+        'Button Seen Multiple': {
+            multiple: true,
             active: true,
             valid: defaultEventValidator,
         },
@@ -33,39 +33,39 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'Info Button Clicked': {//closed//
+        'Info Button Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'Trendi Button Drawn': {//closed//
+        'Trendi Button Drawn': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'Tutorial Closed': {//closed//
+        'Tutorial Closed': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'App Loaded': {//closed//
-            multiple: true,
-            active: false,
+        'App Loaded': {
+            multiple: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'app opened': {//closed//
+        'app opened': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'Category Clicked': {//closed//
+        'Category Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
-        'Publisher Scroll': {//closed//
+        'Publisher Scroll': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
     },
@@ -75,8 +75,8 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'First Button Seen': {
-            multiple: false,
+        'Button Seen Multiple': {
+            multiple: true,
             active: true,
             valid: defaultEventValidator,
         },
@@ -96,9 +96,9 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'Info Button Clicked': {//closed//
+        'Info Button Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'Trendi Button Drawn': {//closed//
@@ -106,13 +106,13 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
-        'Tutorial Closed': {//closed//
+        'Tutorial Closed': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'App Loaded': {//closed//
-            multiple: true,
+            multiple: false,
             active: false,
             valid: defaultEventValidator,
         },
@@ -121,9 +121,9 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
-        'Category Clicked': {//closed//
+        'Category Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'Publisher Scroll': {//closed//
@@ -138,8 +138,8 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'First Button Seen': {
-            multiple: false,
+        'Button Seen Multiple': {
+            multiple: true,
             active: true,
             valid: defaultEventValidator,
         },
@@ -159,9 +159,9 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
-        'Info Button Clicked': {//closed//
+        'Info Button Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'Trendi Button Drawn': {//closed//
@@ -169,13 +169,13 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
-        'Tutorial Closed': {//closed//
+        'Tutorial Closed': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'App Loaded': {//closed//
-            multiple: true,
+            multiple: false,
             active: false,
             valid: defaultEventValidator,
         },
@@ -184,9 +184,9 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
-        'Category Clicked': {//closed//
+        'Category Clicked': {
             multiple: true,
-            active: false,
+            active: true,
             valid: defaultEventValidator,
         },
         'Publisher Scroll': {//closed//
@@ -201,7 +201,7 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
-        'First Button Seen': {//closed//
+        'Button Seen Multiple': {//closed//
             multiple: false,
             active: false,
             valid: defaultEventValidator,
@@ -238,7 +238,7 @@ export default {
             valid: defaultEventValidator,
         },
         'App Loaded': {//closed//
-            multiple: true,
+            multiple: false,
             active: false,
             valid: defaultEventValidator,
         },

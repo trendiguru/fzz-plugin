@@ -19,8 +19,8 @@ export default class TrackAgent {
     }
 
     track(eventName, properties, lib, libName) {
-        REQUESTS.set(properties, 'property');
         if (this.isValid(eventName, libName)) {
+            REQUESTS.set(properties, 'property');
             lib.inited.then(() => {
                 lib.track(eventName, properties);
             });

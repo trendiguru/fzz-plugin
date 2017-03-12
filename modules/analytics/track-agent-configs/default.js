@@ -68,6 +68,11 @@ export default {
             active: true,
             valid: defaultEventValidator,
         },
+        'Recieved Results': {
+            multiple: false,
+            active: true,
+            valid: defaultEventValidator,
+        },
     },
     amplitude: {
         'Page Hit': {
@@ -129,6 +134,11 @@ export default {
         'Publisher Scroll': {//closed//
             multiple: true,
             active: false,
+            valid: defaultEventValidator,
+        },
+        'Recieved Results': {
+            multiple: false,
+            active: true,
             valid: defaultEventValidator,
         },
     },
@@ -194,6 +204,11 @@ export default {
             active: false,
             valid: defaultEventValidator,
         },
+        'Recieved Results': {
+            multiple: false,
+            active: true,
+            valid: defaultEventValidator,
+        },
     },
     nginx: {
         'Page Hit': {//closed//
@@ -254,6 +269,11 @@ export default {
         },
         'Publisher Scroll': {//closed//
             multiple: true,
+            active: false,
+            valid: defaultEventValidator,
+        },
+        'Recieved Results': {//closed//
+            multiple: false,
             active: false,
             valid: defaultEventValidator,
         },

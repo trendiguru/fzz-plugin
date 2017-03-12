@@ -100,9 +100,11 @@ domready(() => {
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
         addEventListener('recieved results', () => analytics.track('Recieved Results'));
-        addEventListener('button seen', () => {
-            s.set('requests', 'Button Seen');
-            analytics.track('Button Seen');
+        addEventListener('button seen', ({url: imageURL}) => {
+            s.set('requests', 'Button Seen: '+imageURL);
+            analytics.track('Button Seen', {
+                imageURL,
+            });
         });
         // INFO BUTTON
         addEventListener('info button clicked', () => {

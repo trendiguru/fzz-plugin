@@ -72,7 +72,7 @@ function getStyle(obj, property) {
 }
 
 function isFazzDescendant(elem) {
-    return (elem && elem.parentElement) ? elem.parentElement.classList.contains("fazz" || "fzz-wrap") : false
+    return (elem && elem.parentElement) ? elem.parentElement.classList.contains("fazz" || "fzz-wrap") : false;
 }
 
 // function visibleInPoint(x, y, obj, wndw){
@@ -93,7 +93,7 @@ function visibleInPoint(x, y, obj, wndw) {
         if (obj === elems[i]) {
             let elemIsNotCovered = true;
             for (let j = 0; j < i; j++) {
-                elemIsNotCovered = isTransparent(elems[j]) && elemIsNotCovered;
+            elemIsNotCovered = (isTransparent(elems[j]) ||  isFazzDescendant(elems[j])) && elemIsNotCovered;
             }
             return elemIsNotCovered;
         }

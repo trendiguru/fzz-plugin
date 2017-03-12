@@ -111,9 +111,11 @@ domready(() => {
             });
         });
         // INFO BUTTON
-        addEventListener('info button clicked', () => {
+        addEventListener('info button clicked', ({url: imageURL}) => {
             s.set('requests', 'Info Button Clicked');
-            analytics.track('Info Button Clicked');
+            analytics.track('Info Button Clicked', {
+                imageURL,
+            });
             window.open(INFO_URL, '_blank');
         });
         // TUTORIAL

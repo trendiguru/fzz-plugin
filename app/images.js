@@ -1,20 +1,8 @@
-import {Collection} from 'delux';
-import analytics from './analytics';
+import mobx from 'mobx';
 
-let images = new Collection({imageURL: ''});
-
-images.on('newImageURL', (images, action) => Object.assign({}, images, {
-    imageURL: action.payload
-}));
-
-images.on('addImageData', (images, action) => Object.assign({}, images, {data: action.payload}));
-
-images.on('getImageData', (images, action) => {
-    return Object.assign({}, images, {data: action.payload})});
-
-images.on('clearImageData', (images) => Object.assign({}, images, {
-    imageURL: '',
-    data: undefined
-}));
+let images = mobx.observable({
+        data:undefined,
+        imageURL:'',
+});
 
 export default images;

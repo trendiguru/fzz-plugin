@@ -113,11 +113,15 @@ function isSuspicious (tgImg) {
 let passedCheckRelevancy = false;
 
 function isRelevant (tgImg) {
+    let d1msecs = new Date().getTime();
     return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
             if (!passedCheckRelevancy) {
                 passedCheckRelevancy = true;
-                dispatchEvent(CustomEvent('recieved results'));
+                let d2msecs = new Date().getTime();
+                dispatchEvent(Object.assign(CustomEvent('recieved results'), {
+                    receivingTime: (d2msecs-d1msecs),
+                }));
             }
             s.set('smartCheckRelevancy', tgImg);
             return tgImg;

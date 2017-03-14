@@ -1,7 +1,7 @@
 /* globals wgxpath */
 import Cookies from 'js-cookie';
 import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API, AMPLITUDE_KEY} from 'constants';
-import Analytics from 'modules/analytics_wrapper';
+import Analytics from 'modules/analytics/analytics_wrapper';
 import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
 import UI from 'modules/ui';
@@ -23,7 +23,9 @@ wgxpath.install();
 let s = STACKS;
 let ui = new UI({overlay});
 let refererDomain = window.location.hostname.replace('www.', '');
+let pageUrl = window.location.href;
 let initAnaltics = Object.assign(JSON.parse(Cookies.get(COOKIE_NAME)), {
+    pageUrl,
     refererDomain,
     PID,
     publisherDomain: refererDomain,
@@ -87,27 +89,35 @@ domready(() => {
             s.set('requests', 'Trendi Button Drawn');
             analytics.track('Trendi Button Drawn', {
                 imageURL,
-                pageUrl: window.location.href
             });
         });
         addEventListener('button clicked', ({url: imageURL}) => {
             s.set('requests', 'Trendi Button Clicked');
             analytics.track('Trendi Button Clicked', {
                 imageURL,
-                pageUrl: window.location.href
             });
             iframe.show();
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
-        addEventListener('recieved results', () => analytics.track('Recieved Results'));
-        addEventListener('button seen', () => {
-            s.set('requests', 'Button Seen');
-            analytics.track('Button Seen');
+        addEventListener('recieved results', (receivingTime) => {
+            analytics.track('Recieved Results', receivingTime);
+        });
+        addEventListener('button seen', ({url: imageURL}) => {
+            s.set('requests', 'Button Seen: '+imageURL);
+            analytics.track('Button Seen', {
+                imageURL,
+            });
+            s.set('requests', 'Button Seen Multiple: '+imageURL);
+            analytics.track('Button Seen Multiple', {
+                imageURL,
+            });
         });
         // INFO BUTTON
-        addEventListener('info button clicked', () => {
+        addEventListener('info button clicked', ({url: imageURL}) => {
             s.set('requests', 'Info Button Clicked');
-            analytics.track('Info Button Clicked');
+            analytics.track('Info Button Clicked', {
+                imageURL,
+            });
             window.open(INFO_URL, '_blank');
         });
         // TUTORIAL

@@ -16,7 +16,7 @@ function Overlay (tgImg, classList = []) {
     buttonDiv.appendChild(button);
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));
-    info.addEventListener('click', click.info);
+    info.addEventListener('click', click.info.bind(tgImg));
     return buttonDiv;
 }
 
@@ -129,7 +129,7 @@ let click = {
     },
     info (e) {
         block(e);
-        dispatchEvent(CustomEvent ('info button clicked'));
+        dispatchEvent(Object.assign(CustomEvent ('info button clicked'), this));
     }
 };
 

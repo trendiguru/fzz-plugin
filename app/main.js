@@ -2,33 +2,22 @@
 import App from './view/app';
 // import './analytics';
 import analytics from './analytics';
-import store from './store';
 import {getImageData} from 'modules/server';
-
-store.use((action) => {
-    if (action.type === 'newImageURL') {
-        dispatchEvent(CustomEvent('app opened', {bubbles: true}));
-    }
-});
+import images from 'app/images';
 
 /*------ RENDER ------*/
 ReactDOM.render(
-    React.createElement(App, {close}),
+    React.createElement(App, {close, images}),
     document.getElementById('app')
 );
 
 /*------ MESSAGES ------*/
 addEventListener('message', ({data: {imageURL, data}}) => {
-    if (store.images.state.imageURL !== imageURL) {
-        store.dispatch({
-            type: 'newImageURL',
-            payload: imageURL,
-        });
+    if (images.imageURL !== imageURL) {
+        images.imageURL = imageURL;
+        dispatchEvent(CustomEvent('app opened', {bubbles: true}));
         if (typeof data === 'object') {
-            store.dispatch({
-                type: 'addImageData',
-                payload: data
-            });
+            images.data = data;
         }
         else {
             getImageData(imageURL)
@@ -49,11 +38,8 @@ addEventListener('message', ({data: {imageURL, data}}) => {
                     in #issue269 (MVC-promises-queue issue) or/and in release information of
                     the release 1.3.9.
                  */
-                    if (store.images.state.imageURL === imageURL){
-                        store.dispatch({
-                        type: 'getImageData',
-                        payload: data
-                    });
+                    if (images.imageURL === imageURL){
+                    images.data = data;
                 }
             }).catch((err)=>{console.debug(err)});
         }
@@ -65,8 +51,6 @@ addEventListener('app close', close);
 
 function close () {
     window.parent.postMessage('hide', '*');
-    store.dispatch({
-        type: 'clearImageData'
-    });
-    store.queued = Promise.resolve();
+    images.data=undefined;
+    images.imageURL = '';
 }

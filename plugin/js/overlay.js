@@ -16,7 +16,7 @@ function Overlay (tgImg, classList = []) {
     buttonDiv.appendChild(button);
     buttonDiv.appendChild(info);
     button.addEventListener('click', click.button.bind(tgImg));
-    info.addEventListener('click', click.info);
+    info.addEventListener('click', click.info.bind(tgImg));
     return buttonDiv;
 }
 
@@ -40,7 +40,7 @@ const Round = Overlay.extend(buttonDiv => {
     if (!localStorage.getItem('infashion tutorial was shown')) {
         let tutorial = document.createElement('div');
         tutorial.classList.add('tutorial');
-        tutorial.appendChild(document.createTextNode('Find similar clothes'));
+        tutorial.appendChild(document.createTextNode('Look to Shop'));
         buttonDiv.appendChild(tutorial);
     }
 });
@@ -129,7 +129,7 @@ let click = {
     },
     info (e) {
         block(e);
-        dispatchEvent(CustomEvent ('info button clicked'));
+        dispatchEvent(Object.assign(CustomEvent ('info button clicked'), this));
     }
 };
 

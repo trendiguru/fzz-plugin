@@ -113,11 +113,15 @@ function isSuspicious (tgImg) {
 let passedCheckRelevancy = false;
 
 function isRelevant (tgImg) {
+    let d1msecs = new Date().getTime();
     return smartCheckRelevancy(tgImg.url).then(res => {
         if (res) {
             if (!passedCheckRelevancy) {
                 passedCheckRelevancy = true;
-                dispatchEvent(CustomEvent('recieved results'));
+                let d2msecs = new Date().getTime();
+                dispatchEvent(Object.assign(CustomEvent('recieved results'), {
+                    receivingTime: (d2msecs-d1msecs),
+                }));
             }
             s.set('smartCheckRelevancy', tgImg);
             return tgImg;
@@ -157,13 +161,16 @@ export function cleanRelevantImgDict(){
         }
     };
     let observer = new MutationObserver((mutations) => {
-        for (let mutation of mutations) {
-            for (let node of mutation.removedNodes) {
+        let mutationsList = Object.values(mutations);
+        for (let mutation of mutationsList) {
+            let nodesList = Object.values(mutation.removedNodes);
+            for (let node of nodesList) {
                 //if it is realy deletet from dom and not replaced!
                 if (node.parentElement === null){
                     clean(node);
                     if (node.querySelectorAll){
-                        for (let el of node.querySelectorAll('*')){
+                    let elemsList = Array.from(node.querySelectorAll('*'));
+                        for (let el of elemsList ){
                             clean(el);
                         }
                     }

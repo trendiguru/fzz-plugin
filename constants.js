@@ -26,7 +26,7 @@ export const HOST_DOMAIN = {
     BLACK_LIST = blacklist,
     WHITE_LIST = whitelist,
     // draw
-    INFO_URL = 'http://infashion.co',
+    INFO_URL = 'https://www.trendiguru.com/publishers-1/',
     // iframe
     IFRAME_ID = 'fazzi',
     CSS_URL = `${HOST_DOMAIN}/b_plugin.css`,
@@ -79,11 +79,6 @@ export const HOST_DOMAIN = {
         '025s1Aorf58z0MtJ':'a75ce6b5011d4eeb1b7ee02ad2aedab1',//robsshelter
         'xuSiNIs695acaHPE':'26f5cfbe7f5217b1cea019ea71435edb'//amaze-magazine
     }[PID] || '3d4fa64b96ff312455271dade3170591',
-    TRACKED_EVENTS = {
-        amplitude:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
-        mixpanel:['Page Hit', 'Button Seen', 'Trendi Button Clicked'],
-        nginx:[],
-    },
     CRAZY_TAB_RECIPIENTS = ['dev', 'DEV'],
     CRAZY_AD_RECIPIENTS = ['dev', 'DEV'],
     UI = {

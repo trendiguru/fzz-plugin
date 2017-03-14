@@ -1,4 +1,4 @@
-import Analytics from 'modules/analytics_wrapper';
+import Analytics from 'modules/analytics/analytics_wrapper';
 import {REQUESTS} from 'modules/devTools';
 import {Query} from 'modules/utils';
 

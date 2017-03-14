@@ -1,6 +1,5 @@
 import {LOADING, APP} from 'constants';
 import UI from 'modules/ui';
-import store from '../store';
 import Lightbox from './lightbox';
 import {TabView, Tab} from './tab';
 import Assemblage from './assemblage';
@@ -9,10 +8,14 @@ import Aside from './aside';
 import Loading from './loading';
 import Labels from './labels';
 import Price from './price';
+import mobxReact from 'mobx-react';
+
+const {observer} = mobxReact;
+
 
 let ui = new UI ({loading: LOADING.IMAGES, classname: APP.CLASSNAME});
 
-class App extends React.Component {
+let App = observer(class App extends React.Component {
     static get propTypes () {
         return {
             close: React.PropTypes.func.isRequired
@@ -20,21 +23,13 @@ class App extends React.Component {
     }
     constructor (props) {
         super(props);
-        store.observe('images', ({images}) => {
-            this.setState({images});
-        });
-        this.state = {
-            images: {
-                imageURL: ''
-            }
-        };
     }
     close () {
         this.props.close();
         dispatchEvent(CustomEvent('app closed', {bubbles: true}));
     }
     render () {
-        let {data, imageURL} = this.state.images;
+        let {data, imageURL} = this.props.images;
         let TabNodes = [];
         let buttons = [
             {
@@ -87,6 +82,6 @@ class App extends React.Component {
             >{TabNodes}</TabView>
         </Lightbox>;
     }
-}
+});
 
 export default App;

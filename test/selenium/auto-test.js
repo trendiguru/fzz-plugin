@@ -134,13 +134,10 @@ class AutoTest{
                 for (let i=0; i<navTabsNum; i++ ){
                     this._openResult(data.navigation[i], data.sections[i]);
                 }
-                this.driver.wait(this._pause(this.waitTime),this.waitTimeout);
-                this.clickOn(data.aside.close);
-                this.driver.wait(this._pause(this.waitTime),this.waitTimeout);
             },(err)=>{
                 this._errorReport(err, 'injected script');
             });
-            this.driver.wait(this._pause(this.waitTime),this.waitTimeout);
+            this.driver.wait(this._pause(this.waitTime));
         });
     }
 

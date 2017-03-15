@@ -16,6 +16,7 @@ function session(performTest, sessionConfig){
         sessionId = session.id_; //need for API calls
     });
     performTest(driver);
+    driver.quit();
     //set the score as passing
     driver.call(setScore, null, 'pass');
     //Call API to set the score

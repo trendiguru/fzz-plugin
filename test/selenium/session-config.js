@@ -33,6 +33,22 @@ const CONFIG=[
             password : PASSWORD,
         },
     },
+    {
+        //Chrome56x64 Win7x64
+        remoteHub: 'http://hub.crossbrowsertesting.com:80/wd/hub', 
+        caps: {
+            name : 'Basic Example',
+            build :  '1.0',
+            browser_api_name : 'Chrome56x64', 
+            os_api_name : 'Win7x64-C1', 
+            screen_resolution : '1366x768',
+            record_video : 'true',
+            record_network : 'true',
+            browserName : 'chrome', // <---- this needs to be the browser type in lower case: firefox, internet explorer, chrome, opera, or safari
+            username : USER,
+            password : PASSWORD,
+        },
+    }
 ];
 
 module.exports = CONFIG;

@@ -1,6 +1,7 @@
 const webdriver = require('selenium-webdriver'), 
 By = webdriver.By,
 until = webdriver.until,
+FIRST_RESULT_SELECTOR = '#lightbox > div > div > section:nth-child(1) > div > div:nth-child(1) > a > img';
 getIframesElems  = function(){
     var NAV_SELECTOR = '#lightbox > div > nav > ul';
     var nav = window.document.querySelector(NAV_SELECTOR).children;
@@ -73,6 +74,7 @@ class AutoTest{
         });  
     }
 
+    //TODO: create waitFor() - general function which will receive object or string 
     waitForTgButton(className, waitTimeout){
         this.driver.wait(until.elementLocated(By.className(className)),waitTimeout)
         .then(null,(err)=>{
@@ -126,8 +128,8 @@ class AutoTest{
     checkResults(){
         this.driver.then(()=>{
             //wait for app to load:
-            this.driver.wait(until.elementLocated(By.css('#lightbox > div > div > section:nth-child(1) > div > div:nth-child(1) > a > img')),this.waitTimeout);
-            this.driver.wait(this._pause(this.waitTime),this.waitTimeout);
+            this.driver.wait(until.elementLocated(By.css(FIRST_RESULT_SELECTOR)),this.waitTimeout);
+            this.pause(this.waitTime);
             this.driver.executeScript(getIframesElems)
             .then((data)=>{
                 let navTabsNum = data.navigation.length;
@@ -137,7 +139,7 @@ class AutoTest{
             },(err)=>{
                 this._errorReport(err, 'injected script');
             });
-            this.driver.wait(this._pause(this.waitTime));
+            this.pause(this.waitTime);
         });
     }
 
@@ -179,9 +181,9 @@ class AutoTest{
     _openResult(navTab, result){
         this.driver.then(()=>{
             this.clickOn(navTab);
-            this.driver.wait(this._pause(this.waitTime/2),this.waitTimeout);
+            this.pause(this.waitTime/2);
             this.clickOn(result);
-            this.driver.wait(this._pause(this.waitTime/2),this.waitTimeout);
+            this.pause(this.waitTime/2);
         });
     }
 

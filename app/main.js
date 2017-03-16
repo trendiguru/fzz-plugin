@@ -3,6 +3,7 @@ import App from './view/app';
 // import './analytics';
 import analytics from './analytics';
 import {getImageData} from 'modules/server';
+import {devReport} from 'modules/devTools';
 import images from 'app/images';
 
 /*------ RENDER ------*/
@@ -14,6 +15,7 @@ ReactDOM.render(
 /*------ MESSAGES ------*/
 addEventListener('message', ({data: {imageURL, data}}) => {
     if (images.imageURL !== imageURL) {
+        devReport(imageURL, "app's main: message received");
         images.imageURL = imageURL;
         dispatchEvent(CustomEvent('app opened', {bubbles: true}));
         if (typeof data === 'object') {

@@ -20,7 +20,8 @@ const WAIT_TIME = 5000,
             'http://www.stylebistro.com/lookbook/Jessica+Alba/HMkKFqZGd_D',
             'http://gathery.recruit-lifestyle.co.jp/article/1147221855455488201',
             'http://www.plus-model-mag.com/',
-            'http://www.stylebook.de/fashion/topmodel-doutzen-kroes-launcht-eigene-dessous-kollektion-829220.html'
+            'http://www.stylebook.de/fashion/topmodel-doutzen-kroes-launcht-eigene-dessous-kollektion-829220.html',
+            'http://healthyceleb.com/marzia-bisognin-height-weight-body-statistics/58393',//healthyCeleb
         ]
     },
     
@@ -52,7 +53,7 @@ const WAIT_TIME = 5000,
         function injectScript(localFlag){
             var attributes = {
                 API: 'pd',
-                PID: 'DEV',//healthyCeleb
+                PID: 'DEV',
                 ID: 'fzz-script',
                 SRC: 'https://fzz-test.storage.googleapis.com/b_plugin.js',
             }

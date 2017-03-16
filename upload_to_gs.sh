@@ -1,5 +1,6 @@
 #!/bin/bash
 PROD_BUCKET='fzz'
+TEST_BUCKET='fzz-test'
 BUCKET_NAME=$1
 EXCLUDE_REGEX='(^(?!^b_).+\.js)|(^\.)|(\/\.)|(.+\.((map)|(pem)|(sh)))|(^npm)'
 
@@ -14,11 +15,16 @@ fi
 echo Refreshing node_modules
 
 rm -r node_modules
-yarn
+npm install
 
 echo Bundling minified version
 
+if [ $BUCKET_NAME = $PROD_BUCKET ]
+then
 ENVIRONMENT=PRODUCTION webpack --progress --colors
+else
+ENVIRONMENT=TEST webpack --progress --colors
+fi
 
 echo Pushing to Google Cloud Storage
 

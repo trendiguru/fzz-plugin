@@ -2,7 +2,7 @@
 import Cookies from 'js-cookie';
 import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API, AMPLITUDE_KEY} from 'constants';
 import Analytics from 'modules/analytics/analytics_wrapper';
-import {STACKS} from 'modules/devTools';
+import {STACKS, devReport} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
 import UI from 'modules/ui';
 import {listenToExtension} from 'modules/chrome-manipulation';
@@ -54,6 +54,7 @@ if (ENV === 'DEV'){
 domready(() => {
     if (isRelevantScript() && browserSupport()) {
         console.log('FZZ: domready');
+        devReport('FZZ: domready', 'when plugin starts');
         document.body.appendChild(iframe);
         document.head.appendChild(style);
         void new Observer({
@@ -97,6 +98,8 @@ domready(() => {
                 imageURL,
             });
             iframe.show();
+            devReport(imageURL, 'imageUrl from plugin');
+            devReport(urlStore.state[imageURL], 'data from plugin');
             iframe.contentWindow.postMessage({imageURL, data: urlStore.state[imageURL]}, '*');
         });
         addEventListener('recieved results', (receivingTime) => {

@@ -40,7 +40,7 @@ function firefoxStylebookBug(){
     //init driver
     let browser = DRIVER_DECLARATION.browsers[0];
     let driver = new webdriver.Builder().forBrowser(browser).build();
-    driver.manage().timeouts().pageLoadTimeout(WAIT_TIMEOUT);
+    driver.manage().timeouts().pageLoadTimeout(3*WAIT_TIMEOUT);
     driver.manage().timeouts().setScriptTimeout(WAIT_TIMEOUT);
     //run test
     testLibs.firefoxStylebookBug(driver);

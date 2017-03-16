@@ -22,10 +22,12 @@ function firefoxStylebookBug(driver){
     test.waitForTgButton(BUTTON_CLASSNAME, WAIT_TIMEOUT);
     test.clickOn('.'+BUTTON_CLASSNAME, 'button clicked');
     test.pause(WAIT_TIME);
-    test.setDevData();//test
     test.getDevData();
     test.huntFzzIframe(IFRAME_ID, WAIT_TIMEOUT);
+    test.pause(WAIT_TIME);
+    test.getDevData();
     driver.wait(until.elementLocated(By.css(FIRST_RESULT_SELECTOR)),WAIT_TIMEOUT);
+    test.getDevData();
 }
 
 function chromeReleaseTest(driver){
@@ -40,6 +42,7 @@ function chromeReleaseTest(driver){
     test.pause(WAIT_TIME);
     test.checkIfIframeClosed(IFRAME_ID);
 }
+
 module.exports = {chromeReleaseTest, firefoxStylebookBug};
 
 

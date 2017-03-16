@@ -4,17 +4,7 @@ import {postResponse} from './chrome-manipulation';
 import {ENV} from 'constants';//TODO: check why environment is undefind?
 
 let active = active || (ENV === 'DEV');
-window.fzzDevReportData={
-    storage: [],
-    description: "The purpose of the object is to collect fzz-script's performance bugs",
-};
 
-console.log('active:' + active);
-
-// let OPACITY = '0.01';
-export function devReport(msg, mark='test'){
-    window.fzzDevReportData.storage.push({msg,mark});
-};
 export let modules = {};
 
 export let REQUESTS = {

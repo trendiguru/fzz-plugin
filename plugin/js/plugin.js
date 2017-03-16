@@ -2,7 +2,7 @@
 import Cookies from 'js-cookie';
 import {WHITE_LIST, BLACK_LIST, INFO_URL, COOKIE_NAME, TUTORIAL_VERSION, ENV, PID, API, AMPLITUDE_KEY} from 'constants';
 import Analytics from 'modules/analytics/analytics_wrapper';
-import {STACKS, devReport} from 'modules/devTools';
+import {STACKS} from 'modules/devTools';
 import {Version, domready} from 'modules/utils';
 import UI from 'modules/ui';
 import {listenToExtension} from 'modules/chrome-manipulation';
@@ -15,6 +15,7 @@ import TGImage from './tgimage';
 import * as overlay from './overlay';
 import {getImageData} from 'modules/server';
 import addAd from './video';
+import devReport from 'test/selenium/reporter';
 // import * as tutorial from './tutorial';
 import browserSupport from 'modules/browser-support';
 

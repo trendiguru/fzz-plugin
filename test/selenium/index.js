@@ -14,4 +14,5 @@ SESSION_CONFIG = require('./session-config');
 
 // runCBTSession(testLibs.chromeReleaseTest, SESSION_CONFIG[2]);
 localTestLibs.firefoxStylebookBug();
+// runCBTSession(testLibs.chromeReleaseTest, SESSION_CONFIG[2]);
 // runCBTSession(testLibs.firefoxStylebookBug, SESSION_CONFIG[1]);

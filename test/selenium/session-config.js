@@ -2,7 +2,7 @@ const USER = 'admin@trendiguru.com';
 const PASSWORD = 'u1c12cb9333d4b94';
 const CONFIG=[
     {
-        //ie11 Win7x64
+        //ie10 Win7x64
         remoteHub: 'http://hub.crossbrowsertesting.com:80/wd/hub', 
         caps: {
             name : 'Basic Example',

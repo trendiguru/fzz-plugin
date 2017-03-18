@@ -1,8 +1,81 @@
-var fs = require('fs');
-fs.writeFile("/tmp/test.txt", "Hey there!", function(err) {
-    if(err) {
-        return console.log(err);
-    }
+let fs = require('fs');
+/**
+ * write the data:
+ * 'w' - Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
+ * 'wx' - Like 'w' but fails if path exists.
+ * 'w+' - Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
+ * 'wx+' - Like 'w+' but fails if path exists.
+ * 'a' - Open file for appending. The file is created if it does not exist.
+ * 'ax' - Like 'a' but fails if path exists.
+ * 'a+' - Open file for reading and appending. The file is created if it does not exist.
+ * 'ax+' - Like 'a+' but fails if path exists.
+ * ref: https://nodejs.org/docs/latest/api/fs.html 
+ **/
+const FLAG = 'wx';
+const DEFAULT_FILE = 'report.txt';
+const ALREADY_EXISTS_ERROR = 'File already exists.';
+const SAVED_MSG = 'File was successfully saved.';
+const CLOSED_MSG = 'File was successfully closed.';
+const OPENED_MSG = 'File was successfully opened.';
+const ERROR_CODE = 'EEXIST';
 
-    console.log("The file was saved!");
-}); 
+saveReport('sjdhssfdhsfksdfg');
+declareReport();
+
+function saveReport(reportString) {
+    let file = declareReport();
+    return Promise.resolve()
+        .then(() => openFile(file))
+        .then((fileDescriptor) => writeToFile(reportString, fileDescriptor))
+        .then(closeFile)
+        .catch((err) => console.log(err));
+}
+
+function declareReport(){
+    let date = new Date();
+    let current_hour = date.getHours();
+    return date+' '+current_hour;
+}
+
+function openFile(file) {
+    return new Promise((resolve, reject) => {
+        let fileDescriptor = fs.open(file, FLAG, (err, fileDescriptor) => {
+            if (err) {
+                if (err.code === ERROR_CODE) {
+                    console.error(ALREADY_EXISTS_ERROR);
+                    return;
+                } else {
+                    throw err;
+                }
+            }
+            console.log(OPENED_MSG);
+            resolve(fileDescriptor);
+        });
+    });
+}
+
+function writeToFile(str, fileDescriptor) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(fileDescriptor, str, (err) => {
+            if (err) {
+                throw err;
+            }else{
+                console.log(SAVED_MSG);
+                resolve(fileDescriptor);
+            }
+        });
+    });
+}
+
+function closeFile(fileDescriptor){
+    return new Promise((resolve, reject) => {
+        fs.close(fileDescriptor,(err) => {
+            if (err) {
+                throw err;
+            }else{
+                console.log(CLOSED_MSG);
+                resolve();
+            }
+        });
+    });
+}

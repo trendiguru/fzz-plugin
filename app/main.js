@@ -3,7 +3,7 @@ import App from './view/app';
 // import './analytics';
 import analytics from './analytics';
 import {getImageData} from 'modules/server';
-import {devReport} from 'modules/devTools';
+import devReport from 'test/selenium/reporter';
 import images from 'app/images';
 
 /*------ RENDER ------*/

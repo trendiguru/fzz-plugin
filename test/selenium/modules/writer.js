@@ -13,14 +13,21 @@ let fs = require('fs');
  **/
 const FLAG = 'wx';
 const DEFAULT_FILE = 'report.txt';
+const FILE_TYPE = 'json';
+const PATH_TO_REPORT_DIR = './reports/';
 const ALREADY_EXISTS_ERROR = 'File already exists.';
 const SAVED_MSG = 'File was successfully saved.';
 const CLOSED_MSG = 'File was successfully closed.';
 const OPENED_MSG = 'File was successfully opened.';
 const ERROR_CODE = 'EEXIST';
 
-saveReport('sjdhssfdhsfksdfg');
-declareReport();
+//If reports directory does not exist => create reports directory.
+fs.access(PATH_TO_REPORT_DIR, (err) => {
+  console.log(err ? 'no access!' : 'can read/write');
+  if (err.errno===-2){
+      fs.mkdir(PATH_TO_REPORT_DIR)
+  }
+});
 
 function saveReport(reportString) {
     let file = declareReport();
@@ -34,7 +41,7 @@ function saveReport(reportString) {
 function declareReport(){
     let date = new Date();
     let current_hour = date.getHours();
-    return date+' '+current_hour;
+    return PATH_TO_REPORT_DIR+date+' '+current_hour+'.'+FILE_TYPE;
 }
 
 function openFile(file) {
@@ -79,3 +86,4 @@ function closeFile(fileDescriptor){
         });
     });
 }
+module.exports = saveReport;

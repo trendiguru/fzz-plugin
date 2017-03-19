@@ -192,7 +192,7 @@ class AutoTest{
             console.log('***');
             console.log('at '+stage+' an ERROR occurred:');
             console.log(errObj.message);
-            this.driver.quit();
+            //this.driver.quit();
         });
     }
 
@@ -206,15 +206,12 @@ class AutoTest{
     }
 
     getDevData(){
-        this.driver.then(()=>{
+        return this.driver.then(()=>{
             let snippet = function(){
                 return window.fzzDevReportData;
             };
-            let test = this.driver.executeScript(snippet)
-            .then((response)=>{
-                console.log('fzzDevReportData:');
-                console.log(response);
-            },(err)=>{
+            return this.driver.executeScript(snippet)
+            .then((response)=>response,(err)=>{
                 this._errorReport(err, 'get dev data');
             });
         });
